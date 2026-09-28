@@ -82,7 +82,7 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 3. 語氣：friendly, calm, clear tutorial English（像耐心的電腦老師），不要逐字直譯
 4. 每行英文 ≤ 42 個字元（字幕單行上限）；若太長就精簡用詞，但仍然維持一行
 5. 固定句的英文對照：
-   - 嗨，大家好 → Hi everyone
+   - 哈囉，大家好，我是黑熊老師 → Hi everyone, I'm Black Bear Teacher（英文名稱暫定）
    - 好，那… → Alright, so… / OK, now…
    - 過了一會兒 → After a moment
    - 稍待片刻後 → Shortly after
@@ -91,8 +91,10 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
    - 舉例來說 → For example
    - 也就是所謂的「X」→ which is what we call "X"
    - 你可以把它想成是… → Think of it as…
-   - 那今天關於 X 的介紹，我們就聊到這邊 → That's all for today's introduction to X
-   - 我們下回再見，拜拜 → See you next time, bye!
+   - 好，今天關於 X 的介紹，就到這裡 → That's all for today's introduction to X
+   - 我是黑熊老師，感謝大家觀看這部影片 → I'm Black Bear Teacher, thank you for watching
+   - 如果你希望黑熊老師接下來拍什麼影片，請在底下的留言區留言告訴我 → If there's a video you'd like me to make next, let me know in the comments below
+   - 我們下次見，掰掰！ → See you next time, bye!
 6. UI 按鈕名稱：用軟體的**英文原始介面名稱**，並加上雙引號，例如 點擊「儲存」→ click "Save"
 7. 產品名、專有名詞保留原文；中文括號補充 (努力) 在英文版中刪除
 8. 台灣在地的內容（地名、機構）使用官方英文名稱，例如 台北 101 → Taipei 101、桃園機場 → Taoyuan Airport

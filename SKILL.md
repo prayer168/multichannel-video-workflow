@@ -61,13 +61,14 @@ description: 以「Papaya 電腦教室」風格規劃與製作不露臉、AI 配
 ### 3. 腳本（寫入 02_腳本.md）
 先產出章節表（名詞片語），再寫逐句稿。必須遵守：
 - 片頭 Logo 約 4.5 秒，旁白在 2.5–3 秒開始
-- 開場：`嗨，大家好` → 痛點或背景 → `今天我要跟大家介紹…` → `你可以把它想成是「…」` → 承諾好處；前 20 秒畫面先秀成果
+- 開場：`哈囉，大家好，我是黑熊老師。`（觀眾是教師時用「哈囉，各位老師大家好，我是黑熊老師。」）→ 痛點或背景 → `今天我要跟大家介紹…` → `你可以把它想成是「…」` → 承諾好處；前 20 秒畫面先秀成果
 - 一行一句，每句 ≤16 字；每分鐘約 310 字（字數 ÷ 310 = 分鐘）
 - 段落用 `好，` 開頭（每 35–45 秒一次）
 - UI 名稱用「」；新名詞立刻白話解釋；等待處寫 `過了一會兒`；成果句用 `…就能…囉` 或 `就 OK 了`
 - 高潮放在最後，並先預告 `好，最後我們來看一個很酷的功能`
-- 固定結尾：`好，那今天關於 X 的介紹，我們就聊到這邊，我們下回再見，拜拜`
-- 禁止：自我介紹、喊訂閱按讚、誇張形容詞（炸裂、神到不行）
+- 固定結語（黑熊老師版本，一行一句）：`好，今天關於 X 的介紹，就到這裡。`／`我是黑熊老師，感謝大家觀看這部影片。`／`如果你希望黑熊老師接下來拍什麼影片，`／`請在底下的留言區留言告訴我。`／`我們下次見，掰掰！`
+- **不可以使用 Papaya 的原句**（例如「嗨，大家好」開場、「我們就聊到這邊，我們下回再見，拜拜」結尾），以免有版權與辨識度問題；只模仿結構與節奏
+- 禁止：長篇自我介紹（只在開場與結語各說一次「我是黑熊老師」）、喊訂閱按讚、誇張形容詞（炸裂、神到不行）
 - SEO：開場 30 秒內，旁白要自然唸出主要關鍵字；章節開頭第一句自然提到該章的關鍵字（不要硬塞）
 每一段標出 `[畫面：…]`、`[標註：…]`。寫完後附上字數、預估時長、「好，」的次數。
 
@@ -76,7 +77,7 @@ description: 以「Papaya 電腦教室」風格規劃與製作不露臉、AI 配
 - 輸出成表格 `| # | 中文 | English |`，**一行對一行，行數與中文完全相同**，不可以合併或拆行
 - 語氣是 friendly, calm, clear tutorial English；每行 ≤ 42 字元
 - UI 名稱用軟體的英文原始介面名稱，並加雙引號（點擊「儲存」→ click "Save"）；中文括號補充的內容要刪除
-- 固定句對照：嗨，大家好 → Hi everyone｜好，那… → Alright, so…｜過了一會兒 → After a moment｜…就 OK 了 → …and you're all set｜也就是所謂的「X」→ which is what we call "X"｜你可以把它想成是… → Think of it as…｜結尾 → That's all for today's introduction to X. See you next time, bye!
+- 固定句對照：哈囉，大家好，我是黑熊老師 → Hi everyone, I'm Black Bear Teacher（英文名稱暫定）｜好，那… → Alright, so…｜過了一會兒 → After a moment｜…就 OK 了 → …and you're all set｜也就是所謂的「X」→ which is what we call "X"｜你可以把它想成是… → Think of it as…｜結語 → That's all for today's introduction to X. I'm Black Bear Teacher, thank you for watching. If there's a video you'd like me to make next, let me know in the comments below. See you next time, bye!
 - 台灣地名與機構使用官方英文名稱
 字幕階段：由 `字幕/字幕_zh-TW.srt` 產生 `字幕/字幕_en.srt`（序號與時間碼完全不變）；另外輸出純文字 `3_製作後/英文逐字稿.txt`。英文標題與說明欄（選用）見 references/prompts.md。
 
