@@ -3,7 +3,7 @@
 > 以「Papaya 電腦教室」風格規劃與製作 **不露臉、AI 配音、以螢幕錄影為主** 的軟體與 AI 工具教學影片的 Claude Skill。
 > A Claude Skill for planning faceless, AI-narrated, screen-recording software/AI tutorial videos in the style of the Taiwanese YouTube channel "Papaya 電腦教室".
 
-**Version:** 1.5.0（2026-09-29）
+**Version:** 1.6.0（2026-09-29）
 
 ---
 
@@ -28,7 +28,7 @@
 
 ## Papaya 風格 30 秒速記
 
-- 片頭約 4.5 秒 Logo → 「哈囉，大家好，我是黑熊老師」→ 20 秒內講完「是什麼、能做什麼、今天做什麼」
+- 黑熊老師品牌片頭（約 4 秒，動畫＋配音口號）→ 「哈囉，大家好，我是黑熊老師」→ 20 秒內講完「是什麼、能做什麼、今天做什麼」
 - 每分鐘約 310 字、每句 12–13 字、用「好，」切段、以「…就能…囉」收尾
 - 螢幕錄影持續推拉；右下角網址標籤、TIP 角標；AI 插畫讓畫面換氣
 - 高潮放在最後；固定結語「感謝大家觀看…想看什麼影片請在留言區留言…我們下次見，掰掰！」（黑熊老師版本，不用 Papaya 原句）；不喊訂閱
@@ -46,6 +46,7 @@ papaya-style-video/
 │   ├── topic_radar.py       抓 GitHub、Hugging Face、Hacker News 熱度原始資料
 │   └── seo_keywords.py      YouTube 搜尋建議＋競爭分析（SEO 關鍵字研究）
 └── references/
+    ├── intro-spec.md        黑熊老師品牌片頭規格
     ├── topic-radar.md       選題雷達：來源清單、步驟、報告格式
     ├── seo.md               YouTube SEO 規範
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
