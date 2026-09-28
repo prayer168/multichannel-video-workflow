@@ -3,7 +3,7 @@
 > 以「Papaya 電腦教室」風格規劃與製作 **不露臉、AI 配音、以螢幕錄影為主** 的軟體與 AI 工具教學影片的 Claude Skill。
 > A Claude Skill for planning faceless, AI-narrated, screen-recording software/AI tutorial videos in the style of the Taiwanese YouTube channel "Papaya 電腦教室".
 
-**Version:** 1.0.0（2026-09-29）
+**Version:** 1.1.0（2026-09-29）
 
 ---
 
@@ -17,10 +17,11 @@
 | 1. 選題評估 | 6 項指標評分、一句話承諾、敘事模式（A 圖層巡禮 / B 技巧清單 / C 故事主角 / D 從零建置） |
 | 2. 操作步驟 | 收集真實操作步驟與踩坑紀錄（不編造功能） |
 | 3. 腳本 | 章節表加上逐句稿（每句 ≤16 字，每分鐘約 310 字，用「好，」切段，結尾是固定句） |
+| 3.5 英文逐字稿 | 中英對照逐字稿（一行對一行）、英文 SRT（時間碼沿用中文版） |
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；40 秒法則 |
 | 5. 上架文案 | 標題 × 5、說明欄（🔹 格式）、標籤、縮圖文案 × 3、主視覺生圖提示詞 |
-| 6. 配音 | TTS 友善稿、聲線設定、對嘴吉祥物（選用） |
-| 7. 發布 | 剪輯規範、輸出與發布檢查清單、成效復盤 |
+| 6. 配音 | TTS 友善稿、聲線設定（不使用對嘴角色） |
+| 7. 發布 | 剪輯規範、免費授權的柔和配樂、中英雙字幕上傳、發布檢查、成效復盤 |
 
 ## Papaya 風格 30 秒速記
 
@@ -41,7 +42,7 @@ papaya-style-video/
 └── references/
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
     ├── templates.md         專案卡、選題、腳本、分鏡、剪輯、上架、發布、復盤範本
-    └── prompts.md           縮圖與插畫生圖、TTS 聲線、對嘴角色提示詞
+    └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿提示詞
 ```
 
 ## 安裝
@@ -67,6 +68,9 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 ```
 ```
 幫這支影片產生 5 個標題、說明欄和 3 組縮圖文案。
+```
+```
+把定稿腳本同步產生中英對照逐字稿，再把 zh-TW.srt 轉成英文 SRT。
 ```
 
 ## 聲明

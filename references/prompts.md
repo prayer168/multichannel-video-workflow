@@ -43,30 +43,7 @@ Dark navy background with floating glowing data particles and faint numbers, sof
 
 ---
 
-# 05 分鏡與剪輯指示提示詞
-
-```
-請把以下 Papaya 風格腳本轉成分鏡表（Markdown 表格）。
-
-【腳本】{{貼上腳本}}
-
-表格欄位：# | 預估時間 | 旁白（逐句）| 畫面類型（錄影/插畫/動態插畫/B-roll/標題卡/提示詞卡/角色）| 畫面內容 | 鏡頭（全景/推近×2/拉遠/平移/Ken Burns）| 標註（網址標籤/TIP 角標/紅箭頭/圈選）| 音效或音樂
-
-規則：
-- 0:00–0:05 是片頭 Logo，旁白從 0:03 開始
-- 前 20 秒使用成果蒙太奇（插畫、B-roll、標題卡），不放安裝畫面
-- 旁白提到「點擊、按下」的句子要推近到該按鈕；操作完成後拉遠
-- 每個網站第一次出現時，右下角加網址標籤（停留 4 秒）
-- 技巧型影片每個技巧開頭加「TIP N 主題」角標（停留 5 秒）
-- 「過了一會兒」處標示【跳剪】
-- 任何 40 秒內一定要有推拉、標註或換畫面；若沒有，請主動補上
-- 概念解釋段落建議插入 AI 插畫，並附上一句英文生圖提示詞
-- 最後輸出一份「素材清單」：需要錄的畫面、需要生成的插畫、需要的 B-roll
-```
-
----
-
-# 06 AI 配音與角色提示詞
+# 06 AI 配音提示詞
 
 ## A. 聲線描述（ElevenLabs Voice Design、MiniMax、OpenAI TTS 的 instructions 欄）
 ```
@@ -89,13 +66,61 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 腳本：{{貼上}}
 ```
 
-## D. 對嘴吉祥物（選用）
-**角色生成**
+---
+
+# 08 英文逐字稿（同步生成）提示詞
+
+> 用途：中文逐句腳本定稿後，**同步產生一行對一行的英文逐字稿**，用來：
+> ① 上傳英文 CC 字幕（en） ② 提供英文版說明欄或標題 ③ 日後製作英文配音版本
+> 原則：**行數與中文完全一致、一行對一行**，這樣就能直接沿用中文字幕的時間碼。
+
+## A. 腳本階段：中英對照逐字稿
 ```
-Cute mascot character for a computer-tutorial YouTube channel: {{例如 a friendly black bear teacher wearing round glasses and a hoodie}}, front-facing, mouth closed, neutral happy expression, soft 3D style, plain light background, full upper body, centered, 1:1, no text
+請把以下中文逐句腳本翻譯成英文逐字稿，規則如下：
+1. 一行中文對應一行英文，行數必須完全相同，不可以合併或拆行
+2. 輸出成 Markdown 表格：| # | 中文 | English |
+3. 語氣：friendly, calm, clear tutorial English（像耐心的電腦老師），不要逐字直譯
+4. 每行英文 ≤ 42 個字元（字幕單行上限）；若太長就精簡用詞，但仍然維持一行
+5. 固定句的英文對照：
+   - 嗨，大家好 → Hi everyone
+   - 好，那… → Alright, so… / OK, now…
+   - 過了一會兒 → After a moment
+   - 稍待片刻後 → Shortly after
+   - …就 OK 了 → …and you're all set
+   - …就能…囉 → …and you'll be able to…
+   - 舉例來說 → For example
+   - 也就是所謂的「X」→ which is what we call "X"
+   - 你可以把它想成是… → Think of it as…
+   - 那今天關於 X 的介紹，我們就聊到這邊 → That's all for today's introduction to X
+   - 我們下回再見，拜拜 → See you next time, bye!
+6. UI 按鈕名稱：用軟體的**英文原始介面名稱**，並加上雙引號，例如 點擊「儲存」→ click "Save"
+7. 產品名、專有名詞保留原文；中文括號補充 (努力) 在英文版中刪除
+8. 台灣在地的內容（地名、機構）使用官方英文名稱，例如 台北 101 → Taipei 101、桃園機場 → Taoyuan Airport
+
+中文腳本：
+{{貼上 02_腳本.md 的逐句稿}}
 ```
-**表情貼圖組**（同一角色）
+
+## B. 字幕階段：由中文 SRT 產生英文 SRT
 ```
-Same character as reference, sticker sheet of 8 expressions: surprised, thumbs up, thinking, OK hand sign, confused with question mark, excited, waving goodbye, pointing right. White outline sticker style, transparent background, consistent design.
+以下是中文 SRT 字幕檔。請產生英文 SRT：
+- 序號與時間碼完全保留，不做任何更動
+- 只把每一條字幕的文字翻譯成英文（規則同 A 的 3–8 點）
+- 輸出完整 SRT，不要省略
+{{貼上 zh-TW.srt}}
 ```
-**對嘴影片**：把角色正面圖和配音音檔上傳到 HeyGen（Photo Avatar）、Hedra 或 Kling Avatar，輸出後去背，當成子母畫面使用。
+
+## C. 上架階段：英文標題與說明欄（選用）
+```
+請為這支影片產生英文版上架文案：
+1. English title × 3（≤ 100 字元；結構：hook + tool name + concrete benefit）
+2. English description：用同樣的 🔹 區塊格式（Contents / Links / Support），時間碼沿用中文版
+請參考中文版內容：{{貼上中文標題與說明欄}}
+```
+
+## 檔案命名
+| 檔案 | 位置 |
+|------|------|
+| `02_腳本_中英對照.md` | `專案/1_製作前/` |
+| `字幕_zh-TW.srt`、`字幕_en.srt` | `專案/2_製作中/字幕/` |
+| `英文逐字稿.txt`（純文字、無時間碼） | `專案/3_製作後/` |
