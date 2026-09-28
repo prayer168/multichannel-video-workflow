@@ -2,6 +2,13 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.6.2] - 2026-09-29
+### Changed
+- 片頭聲音定案：M1 尤克里里（Pixabay，ShidenBeatsMusic）＋C1 粉筆聲，**片頭無人聲**；取消配音口號
+- 招呼語由主講旁白在片頭結束後說，避免重複打招呼
+- `references/intro-spec.md` 改寫為定案版（分鏡與聲音時間對齊、檔案位置、剪輯規則）
+- 音檔本身不放進本 repo（Pixabay 授權禁止單獨轉發素材）
+
 ## [1.6.1] - 2026-09-29
 ### Changed
 - 開場白統一為「哈囉，大家好，我是黑熊老師。」（使用者確認），移除「觀眾是教師時改用各位老師大家好」的變體
