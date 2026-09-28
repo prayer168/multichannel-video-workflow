@@ -3,7 +3,7 @@
 > 以「Papaya 電腦教室」風格規劃與製作 **不露臉、AI 配音、以螢幕錄影為主** 的軟體與 AI 工具教學影片的 Claude Skill。
 > A Claude Skill for planning faceless, AI-narrated, screen-recording software/AI tutorial videos in the style of the Taiwanese YouTube channel "Papaya 電腦教室".
 
-**Version:** 1.2.0（2026-09-29）
+**Version:** 1.1.0（2026-09-29）
 
 ---
 
@@ -21,7 +21,6 @@
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；40 秒法則 |
 | 5. 上架文案 | 標題 × 5、說明欄（🔹 格式）、標籤、縮圖文案 × 3、主視覺生圖提示詞 |
 | 6. 配音 | TTS 友善稿、聲線設定（不使用對嘴角色） |
-| 6.5 多語言配音 | 英文（可換成其他語言）音軌：M&E、受時間限制的配音稿、逐句 TTS、對齊、上傳 YouTube 多語言音軌，讓觀眾切換 |
 | 7. 發布 | 剪輯規範、免費授權的柔和配樂、中英雙字幕上傳、發布檢查、成效復盤 |
 
 ## Papaya 風格 30 秒速記
@@ -43,7 +42,7 @@ papaya-style-video/
 └── references/
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
     ├── templates.md         專案卡、選題、腳本、分鏡、剪輯、上架、發布、復盤範本
-    └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿、多語言配音提示詞
+    └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿提示詞
 ```
 
 ## 安裝
@@ -72,9 +71,6 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 ```
 ```
 把定稿腳本同步產生中英對照逐字稿，再把 zh-TW.srt 轉成英文 SRT。
-```
-```
-幫這支影片做英文配音音軌，讓觀眾可以在 YouTube 切換成英文。
 ```
 
 ## 聲明
