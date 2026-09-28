@@ -2,6 +2,17 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.3.0] - 2026-09-29
+### Added
+- 階段 0「選題雷達」：搜尋近 14 天國內外最新的 AI 模型、AI 工具或功能、開源專案、電腦軟體、組合技 → 15–25 筆候選（附來源與日期）→ 重複檢查（Papaya、YouTube 中文教學）→ 6 項評分 → 推薦前 3 名
+- `references/topic-radar.md`：國外量化來源、國外產品與新聞、國內與中文圈、競品檢查的來源清單，以及報告格式與品質規則
+- `scripts/topic_radar.py`：用公開 API 抓 GitHub 新興 repo、Hugging Face trending 模型與 Spaces、Hacker News 高分討論
+### Changed
+- 建立專案資料夾改為階段 0.5（題目選定後才建立）
+- 選題評估新增「題目來源」與「重複檢查」欄位
+
+> 1.2.0（多語言配音）已回滾，版本號不再使用。
+
 ## [1.1.0] - 2026-09-29
 ### Added
 - 階段 3.5「同步英文逐字稿」：中英對照逐字稿（一行對一行）、英文 SRT（時間碼沿用中文版）、英文逐字稿.txt、英文上架文案（選用）

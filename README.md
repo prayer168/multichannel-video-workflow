@@ -3,7 +3,7 @@
 > 以「Papaya 電腦教室」風格規劃與製作 **不露臉、AI 配音、以螢幕錄影為主** 的軟體與 AI 工具教學影片的 Claude Skill。
 > A Claude Skill for planning faceless, AI-narrated, screen-recording software/AI tutorial videos in the style of the Taiwanese YouTube channel "Papaya 電腦教室".
 
-**Version:** 1.1.0（2026-09-29）
+**Version:** 1.3.0（2026-09-29）
 
 ---
 
@@ -13,7 +13,8 @@
 
 | 階段 | 產出 |
 |------|------|
-| 0. 建立專案 | `1_製作前 / 2_製作中 / 3_製作後` 資料夾與專案卡 |
+| 0. 選題雷達 | 搜尋近 14 天國內外最新的 AI 模型、AI 新功能、爆紅開源專案、電腦軟體；15–25 筆候選（附來源）、重複檢查、評分、推薦前 3 名 |
+| 0.5 建立專案 | `1_製作前 / 2_製作中 / 3_製作後` 資料夾與專案卡 |
 | 1. 選題評估 | 6 項指標評分、一句話承諾、敘事模式（A 圖層巡禮 / B 技巧清單 / C 故事主角 / D 從零建置） |
 | 2. 操作步驟 | 收集真實操作步驟與踩坑紀錄（不編造功能） |
 | 3. 腳本 | 章節表加上逐句稿（每句 ≤16 字，每分鐘約 310 字，用「好，」切段，結尾是固定句） |
@@ -39,7 +40,10 @@ papaya-style-video/
 ├── README.md                本檔
 ├── CHANGELOG.md             版本紀錄
 ├── VERSION                  目前版本號
+├── scripts/
+│   └── topic_radar.py       抓 GitHub、Hugging Face、Hacker News 熱度原始資料
 └── references/
+    ├── topic-radar.md       選題雷達：來源清單、步驟、報告格式
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
     ├── templates.md         專案卡、選題、腳本、分鏡、剪輯、上架、發布、復盤範本
     └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿提示詞
@@ -60,6 +64,9 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 
 ## 使用範例
 
+```
+幫我跑一輪選題雷達，看看最近兩週有什麼值得拍的。
+```
 ```
 我想用 Papaya 風格做一支 Obsidian 入門教學，對象是國中老師，長度大約 12 分鐘。
 ```
