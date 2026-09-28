@@ -71,7 +71,7 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 # 08 英文逐字稿（同步生成）提示詞
 
 > 用途：中文逐句腳本定稿後，**同步產生一行對一行的英文逐字稿**，用來：
-> ① 上傳英文 CC 字幕（en） ② 提供英文版說明欄或標題 ③ 日後製作英文配音版本
+> ① 上傳英文 CC 字幕（en） ② 提供英文版說明欄或標題 ③ 製作英文配音音軌（見 09_多語言配音提示詞.md）
 > 原則：**行數與中文完全一致、一行對一行**，這樣就能直接沿用中文字幕的時間碼。
 
 ## A. 腳本階段：中英對照逐字稿
@@ -124,3 +124,56 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 | `02_腳本_中英對照.md` | `專案/1_製作前/` |
 | `字幕_zh-TW.srt`、`字幕_en.srt` | `專案/2_製作中/字幕/` |
 | `英文逐字稿.txt`（純文字、無時間碼） | `專案/3_製作後/` |
+
+---
+
+# 09 多語言配音提示詞（YouTube 多語言音軌）
+
+> 預設 `{{目標語言}}` = English（en）。要做日文、簡中等其他語言時，只要替換這個變數。
+> 流程說明：`03_影片製作工作流/2_製作中/06_多語言配音.md`
+
+## A. 配音稿（受時間限制的翻譯）
+```
+你是 YouTube 教學影片的配音翻譯。請把以下中文字幕翻譯成 {{目標語言}} 的「配音稿」，讓配音能放進原本中文每句的時間長度內。
+
+規則：
+1. 一條字幕對應一句配音，數量完全相同，不可以合併或拆開
+2. 每句的「可用秒數」＝本句開始時間到下一句開始時間
+3. 用這個語速估算：English 約每秒 2.7 個單字（日文約每秒 7 個假名、簡中約每秒 4.5 字）。若預估秒數大於可用秒數 × 0.95，就要精簡改寫：刪掉贅詞、改用短字，但保留操作步驟和按鈕名稱
+4. 語氣：friendly, calm, patient computer teacher；口語、自然，不要逐字直譯
+5. UI 按鈕名稱用軟體的 {{目標語言}} 原始介面名稱（English 加雙引號，例如 click "Save"）
+6. 產品名、專有名詞保留原文
+7. 若已經有中英對照逐字稿，請以它為基礎，只修改超時的句子
+8. 固定句：開場「Hi everyone」、結尾「That's all for today's introduction to X. See you next time, bye!」（其他語言請用對應的自然說法）
+
+輸出 Markdown 表格：
+| # | 開始時間 | 可用秒數 | 中文 | {{目標語言}}（配音用） | 預估秒數 | 是否改寫 |
+
+中文 SRT：
+{{貼上 字幕_zh-TW.srt}}
+（選用）既有的中英對照逐字稿：
+{{貼上 02_腳本_中英對照.md}}
+```
+
+## B. 聲線設定（多語言版本，與中文版保持同一個講者）
+```
+Same narrator as the Mandarin version, speaking {{目標語言}}: warm, calm, friendly male voice in his 30s, mid-low pitch, clear and neutral accent. Sounds like a patient computer teacher guiding a beginner step by step. Steady pace, slight smile in the voice, natural short pauses between sentences. Never excited, never salesy.
+```
+建議工具：ElevenLabs（Multilingual 模型＋聲音複製），或其他支援跨語言保留音色的 TTS。
+
+## C. 自動排列音檔的腳本（請 AI 撰寫）
+```
+請寫一個 Python 腳本（使用 ffmpeg），完成以下工作：
+1. 讀取 字幕_zh-TW.srt 取得每句的開始時間
+2. 讀取資料夾 逐句_{{語言代碼}}/ 裡的 001.wav、002.wav…（依序對應字幕的每一條）
+3. 每個音檔依照開始時間用 adelay 放到正確位置；若某個音檔比可用秒數長，就用 atempo 加速，但最多 1.1 倍，並在終端機列出超時的句號
+4. 把所有旁白混成一軌，再與 ME_音樂音效.wav 混音（旁白 -14 LUFS）
+5. 輸出 音軌_{{語言代碼}}.wav，長度必須與 ME_音樂音效.wav 完全相同（用 apad/atrim 修正）
+6. 最後輸出一份報告：總句數、加速的句子、超時仍無法放入的句子
+```
+
+## D. 檢查清單提示詞
+```
+以下是 {{目標語言}} 配音稿與每句實際 TTS 秒數。請找出：超過可用秒數的句子、加速超過 1.1 倍的句子、按鈕名稱和畫面可能不一致的句子，並提出改寫建議。
+{{貼上表格}}
+```
