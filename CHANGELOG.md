@@ -2,6 +2,13 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.10.1] - 2026-09-30
+### Added
+- `scripts/md2txt.py`：上架文案 Markdown → 純文字 .txt（UTF-8＋Windows 換行，去掉 Markdown 符號，方便複製到 YouTube）
+- `build.py` 輸出影片後自動把 `3_製作後/01_上架文案.md` 另存成 .txt
+### Changed
+- SKILL.md 階段 5：上架文案一律同時提供 .txt（使用者要求）
+
 ## [1.10.0] - 2026-09-30
 ### Added
 - 圖卡版型 `image`（截圖／素材圖）、`code`（程式碼／終端機視窗，逐行出現）、`line_chart`（折線圖比較）→ 共 40 種

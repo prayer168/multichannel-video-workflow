@@ -488,6 +488,12 @@ def main():
     rep = os.path.splitext(out)[0] + "_品質檢查報告.md"
     ok = qc(out, shots, total, rep, notes)
     log(("品質檢查全部通過" if ok else "品質檢查有項目要注意"), "→", rep)
+
+    # 8. 上架文案另存純文字 .txt（使用者要求：以後都要有 .txt，方便複製到 YouTube）
+    copy_md = os.path.join(proj, "3_製作後", "01_上架文案.md")
+    if os.path.exists(copy_md):
+        run([sys.executable, os.path.join(HERE, "..", "md2txt.py"), copy_md])
+        log("上架文案 .txt：", copy_md[:-3] + ".txt")
     log(f"完成，共花 {(time.time() - t_start) / 60:.1f} 分鐘")
 
 
