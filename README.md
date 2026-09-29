@@ -46,7 +46,7 @@ papaya-style-video/
 ├── scripts/
 │   ├── topic_radar.py       抓 GitHub、Hugging Face、Hacker News 熱度原始資料
 │   ├── seo_keywords.py      YouTube 搜尋建議＋競爭分析（SEO 關鍵字研究）
-│   ├── md2txt.py            上架文案轉成純文字 .txt
+│   ├── md2txt.py            上架文案轉成純文字 .txt＋YouTube標記.txt
 │   └── build/               一鍵產生影片：build.py、cards_lib.py（40 種圖卡版型）、say_batch.ps1
 └── references/
     ├── build-pipeline.md    一鍵產生影片：指令、畫面規格格式、版型一覽、配音與額度
