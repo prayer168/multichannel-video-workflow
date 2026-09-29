@@ -2,6 +2,12 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.7.0] - 2026-09-29
+### Changed
+- 片頭畫面定案：白色熊掌 Logo＋深海軍藍底 #091D38 的「可愛揮手」動畫（腳掌落下回彈、趾頭依序彈出、爪子伸出、揮手、星星閃爍、「黑熊老師」浮出），取代原本規劃的「黑板＋粉筆＋V 字」
+- `references/intro-spec.md` 改寫為定案版（視覺元素、分鏡時間軸、聲音、製作方式、剪輯規則、決策紀錄）
+- 片頭影片與 Logo 屬於使用者品牌資產，存放在使用者工作區，不放進本 repo
+
 ## [1.6.2] - 2026-09-29
 ### Changed
 - 片頭聲音定案：M1 尤克里里（Pixabay，ShidenBeatsMusic）＋C1 粉筆聲，**片頭無人聲**；取消配音口號

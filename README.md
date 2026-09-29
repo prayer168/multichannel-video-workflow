@@ -3,7 +3,7 @@
 > 以「Papaya 電腦教室」風格規劃與製作 **不露臉、AI 配音、以螢幕錄影為主** 的軟體與 AI 工具教學影片的 Claude Skill。
 > A Claude Skill for planning faceless, AI-narrated, screen-recording software/AI tutorial videos in the style of the Taiwanese YouTube channel "Papaya 電腦教室".
 
-**Version:** 1.6.2（2026-09-29）
+**Version:** 1.7.0（2026-09-29）
 
 ---
 
