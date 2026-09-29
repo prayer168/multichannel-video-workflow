@@ -2,6 +2,17 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.9.0] - 2026-09-29
+### Added
+- **一鍵產生影片** `scripts/build/build.py`：一個指令完成配音 → 切句 → 時間軸 → 圖卡 → 逐格畫面 → 混音 → 字幕 → 輸出 → 品質報告；中間檔沿用，輸出不覆寫
+- `scripts/build/cards_lib.py`：37 種通用圖卡版型，由 `畫面規格.yaml` 驅動；`steps` 讓項目隨旁白逐步出現（0.25 秒淡入）
+- 配音：Gemini API（格式依 AI Studio「Get code」；免費方案每分鐘 3 次、每天 10 次，`scenes_per_request: 2` 可減半請求）或 Windows Zhiwei 暫定配音；分場音檔自動切成逐句
+- 畫面：次像素推近、圖卡之間 0.3 秒溶接、浮水印逐格疊加（片頭與影片素材段關閉）、分段平行處理
+- 品質報告：長度、解析度、響度、峰值、黑畫面、推近平順度（變異係數，上集實測 zoompan 1.2–1.9、次像素 0.05–0.35）
+- `references/build-pipeline.md`：使用說明、規格格式、版型參數一覽
+### Changed
+- SKILL.md 階段 7：腳本定稿後優先使用一鍵產生
+
 ## [1.8.1] - 2026-09-29
 ### Fixed
 - `references/production-notes.md`：圖卡慢速推近改用 Pillow 次像素逐格產生，不再用 ffmpeg zoompan（zoompan 每格取整數像素，慢速推近時「停約 12 格、跳 2 像素」，成品畫面輕微晃動）；新增檢查方法，以及「中間檔遺失時用 SRT＋段落表反推時間、只重做畫面」的修復做法

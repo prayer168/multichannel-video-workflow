@@ -14,6 +14,7 @@ description: 以「Papaya 電腦教室」風格規劃與製作不露臉、AI 配
 - `references/seo.md`：YouTube SEO 規範（關鍵字研究、標題、說明欄、章節、Hashtag、標籤、導流、發布後優化）
 - `scripts/seo_keywords.py`：YouTube 搜尋建議（需求）＋搜尋結果競爭分析（供給）
 - `references/intro-spec.md`：黑熊老師品牌片頭規格（分鏡、品牌音樂與音效、製作方式）
+- `references/build-pipeline.md`：**一鍵產生影片**（`scripts/build/build.py`）：畫面規格格式、37 種圖卡版型、配音模式（Gemini API／Zhiwei）、額度、輸出與品質報告
 - `references/production-notes.md`：自動粗剪流程（暫定配音、圖卡、組合）、浮水印規則、常見陷阱與品質檢查
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、標題、縮圖、畫面、音樂）
 - `references/templates.md`：腳本、分鏡、說明欄、專案卡範本
@@ -102,6 +103,7 @@ description: 以「Papaya 電腦教室」風格規劃與製作不露臉、AI 配
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（zh-TW 與 en 兩種 CC 字幕都要上傳）。
 **音樂與音效**：只用免費、非商用授權素材（YouTube 音效庫、Pixabay Music、Freesound CC0），風格柔和、輕鬆、簡單（Lo-fi、輕原聲吉他、鋼琴，沒有人聲，BPM 大約 70–100）；把曲名、來源、授權記錄到專案資料夾；若是 CC-BY，說明欄要標示作者。
 **浮水印**：剪輯時疊加浮水印或上傳 YouTube「影片浮水印」**擇一**；本身已有熊掌的影片段落要關閉疊加浮水印（見 references/production-notes.md）。
+**一鍵產生（優先使用）**：腳本定稿後，AI 依腳本寫出 `2_製作中/畫面規格.yaml`，執行 `python scripts/build/build.py <專案資料夾>`，一次產出影片、中英字幕、章節與品質檢查報告；沒有 Gemini 配音時自動用 Zhiwei 暫定配音，正式配音到齊後同一個指令重跑即可（見 references/build-pipeline.md）。
 **沒有螢幕錄影時**：可以用「逐句暫定配音＋品牌圖卡＋自動組合」先做出粗剪，再替換正式配音（見 references/production-notes.md）。
 **導流設定**：加入主題播放清單（標題含關鍵字）、結束畫面推薦 1 支相關影片、在提到其他工具時插入資訊卡。
 

@@ -23,6 +23,7 @@
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；40 秒法則 |
 | 5. 上架文案（SEO 版） | 關鍵字在前 40 字內的標題 × 5、含摘要的說明欄、章節、Hashtag、標籤、英文標題與說明、置頂留言、縮圖文案 × 3 |
 | 6. 配音 | TTS 友善稿、聲線設定（不使用對嘴角色） |
+| 6.5 一鍵產生影片 | `scripts/build/build.py`：依腳本＋畫面規格一次輸出影片（配音、逐步出現的圖卡、平順推近、溶接、背景音樂、中英字幕、章節、品質報告） |
 | 7. 發布 | 剪輯規範、免費授權的柔和配樂、中英雙字幕上傳、播放清單與結束畫面導流、發布檢查 |
 | 8. 發布後 SEO 優化 | 點閱率、流量來源、搜尋字詞報表 → 調整標題、說明欄、縮圖 |
 
@@ -44,8 +45,10 @@ papaya-style-video/
 ├── VERSION                  目前版本號
 ├── scripts/
 │   ├── topic_radar.py       抓 GitHub、Hugging Face、Hacker News 熱度原始資料
-│   └── seo_keywords.py      YouTube 搜尋建議＋競爭分析（SEO 關鍵字研究）
+│   ├── seo_keywords.py      YouTube 搜尋建議＋競爭分析（SEO 關鍵字研究）
+│   └── build/               一鍵產生影片：build.py、cards_lib.py（37 種圖卡版型）、say_batch.ps1
 └── references/
+    ├── build-pipeline.md    一鍵產生影片：指令、畫面規格格式、版型一覽、配音與額度
     ├── intro-spec.md        黑熊老師品牌片頭規格（含透明版、縮到角落版、浮水印）
     ├── production-notes.md  自動粗剪、浮水印規則、常見陷阱與品質檢查
     ├── topic-radar.md       選題雷達：來源清單、步驟、報告格式
