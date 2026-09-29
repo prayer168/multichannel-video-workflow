@@ -2,6 +2,13 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.8.0] - 2026-09-29
+### Added
+- `references/production-notes.md`：沒有螢幕錄影時的自動粗剪流程（Windows Zhiwei 逐句暫定配音、品牌圖卡、自動組合）、浮水印規則、8 個常見陷阱與解法、輸出後品質檢查
+### Changed
+- `references/intro-spec.md` 同步：新增透明背景版、縮到角落版、深藍圓形徽章浮水印（1080p 疊加用、512、YouTube 150／300）
+- SKILL.md 階段 7：浮水印擇一使用、影片素材段落關閉疊加浮水印；沒有螢幕錄影時可以先做粗剪
+
 ## [1.7.0] - 2026-09-29
 ### Changed
 - 片頭畫面定案：白色熊掌 Logo＋深海軍藍底 #091D38 的「可愛揮手」動畫（腳掌落下回彈、趾頭依序彈出、爪子伸出、揮手、星星閃爍、「黑熊老師」浮出），取代原本規劃的「黑板＋粉筆＋V 字」
