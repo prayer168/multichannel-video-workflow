@@ -2,6 +2,10 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.10.3] - 2026-09-30
+### Added
+- `md2txt.py` 同時產生 `置頂留言.txt`（取上架文案「置頂留言」段落，直接全選複製）
+
 ## [1.10.2] - 2026-09-30
 ### Added
 - `md2txt.py` 同時產生 `YouTube標記.txt`：取上架文案「標籤」段落，去重複、檢查 YouTube 500 字元上限（有空白的標記多算 2 個引號），超過時從後面刪並列出

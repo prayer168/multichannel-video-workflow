@@ -50,7 +50,17 @@ def to_tags(src, dst):
     print(dst, f"{len(tags)} 個標記，{yt_length(tags)}/{YT_LIMIT} 字元" + (f"；超過上限，刪掉：{', '.join(dropped)}" if dropped else ""))
 
 
+def to_pinned(src, dst):
+    """找「置頂留言」標題後的第一個程式碼框 → 存成純文字（直接貼到影片留言區，再按「置頂」）"""
+    s = open(src, encoding="utf-8").read()
+    m = re.search(r"#+[^\n]*置頂留言[^\n]*\n+```[^\n]*\n(.*?)\n```", s, re.S)
+    if not m: return
+    open(dst, "w", encoding="utf-8-sig", newline="\r\n").write(m.group(1).strip() + "\n")
+    print(dst, len(m.group(1).strip()), "字")
+
+
 if __name__ == "__main__":
     src = sys.argv[1]
     to_txt(src, sys.argv[2] if len(sys.argv) > 2 else src[:-3] + ".txt")
     to_tags(src, re.sub(r"[^/\\]+$", "YouTube標記.txt", src))
+    to_pinned(src, re.sub(r"[^/\\]+$", "置頂留言.txt", src))
