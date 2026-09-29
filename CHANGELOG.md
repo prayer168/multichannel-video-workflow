@@ -2,6 +2,10 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.8.1] - 2026-09-29
+### Fixed
+- `references/production-notes.md`：圖卡慢速推近改用 Pillow 次像素逐格產生，不再用 ffmpeg zoompan（zoompan 每格取整數像素，慢速推近時「停約 12 格、跳 2 像素」，成品畫面輕微晃動）；新增檢查方法，以及「中間檔遺失時用 SRT＋段落表反推時間、只重做畫面」的修復做法
+
 ## [1.8.0] - 2026-09-29
 ### Added
 - `references/production-notes.md`：沒有螢幕錄影時的自動粗剪流程（Windows Zhiwei 逐句暫定配音、品牌圖卡、自動組合）、浮水印規則、8 個常見陷阱與解法、輸出後品質檢查
