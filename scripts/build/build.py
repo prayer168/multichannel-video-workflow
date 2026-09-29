@@ -209,7 +209,7 @@ def build_narration(lines, line_dir, work, intro_len):
 
 
 # ======================= 3. 畫面：鏡頭表＋圖卡 =======================
-def expand_shots(spec, lines, total, intro, cards_dir):
+def expand_shots(spec, lines, total, intro, cards_dir, root):
     """把畫面規格展開成鏡頭表：每個鏡頭 = 一個畫面（含逐步出現的各狀態）或一段影片"""
     os.makedirs(cards_dir, exist_ok=True)
     by = {(L["scene"], L["idx"]): L for L in lines}
@@ -224,8 +224,9 @@ def expand_shots(spec, lines, total, intro, cards_dir):
             at = b.get("at", 1)
             t0 = first[sid]["scene_start"] if k == 0 else by[(sid, at)]["start"] - 0.15
             if b["type"] == "video":
-                shots.append(dict(kind="video", path=b["src"], t0=t0, wm=b.get("watermark", False), loop=True)); continue
+                shots.append(dict(kind="video", path=b["src"], t0=t0, wm=b.get("watermark", False), loop=not b.get("ss"), ss=b.get("ss", 0))); continue
             params = {x: v for x, v in b.items() if x not in ("at", "steps")}
+            if params.get("image") and not os.path.isabs(params["image"]): params["image"] = os.path.join(root, params["image"])
             states = []
             if b.get("steps"):
                 st = b["steps"]
@@ -284,7 +285,7 @@ def _card_frame(s, f):
 def _video_frames(s):
     vf = f"scale={W}:{H}:force_original_aspect_ratio=decrease,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=0x091D38,fps={FPS}"
     n = s["f1"] - s["f0"]
-    cmd = ["ffmpeg", "-v", "error"] + (["-stream_loop", "-1"] if s.get("loop") else []) + ["-i", s["path"], "-vf", vf, "-frames:v", str(n),
+    cmd = ["ffmpeg", "-v", "error"] + (["-stream_loop", "-1"] if s.get("loop") else []) + (["-ss", str(s["ss"])] if s.get("ss") else []) + ["-i", s["path"], "-vf", vf, "-frames:v", str(n),
            "-f", "rawvideo", "-pix_fmt", "rgb24", "-"]
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
     last = None
@@ -459,7 +460,7 @@ def main():
     log(f"總長 {total / 60:.2f} 分鐘，{len(lines)} 句，{len(titles)} 幕")
 
     # 3. 圖卡
-    shots, jobs = expand_shots(spec, [L for L in lines], total, V(cfg["intro"]), os.path.join(work, "cards"))
+    shots, jobs = expand_shots(spec, [L for L in lines], total, V(cfg["intro"]), os.path.join(work, "cards"), root)
     shots = [s for s in shots if s["t0"] < total]; shots[-1]["t1"] = total; shots[-1]["f1"] = round(total * FPS)
     for s in shots:
         if s["kind"] == "video" and not os.path.isabs(s["path"]): s["path"] = V(s["path"])

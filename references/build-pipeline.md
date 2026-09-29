@@ -52,7 +52,7 @@ scenes:
   S01:
     - {at: 1, type: title, kicker: 老師也能懂的, title: GitHub, sub: 副標}
     - {at: 10, type: icons_plus, title: 五件事, items: [A, B, C, D, E], steps: [10, 11, 12, 13, 14]}
-    - {at: 16, type: video, src: 相對路徑.mp4, watermark: false}
+    - {at: 16, type: video, src: 相對路徑.mp4, ss: 30, watermark: false}   # ss＝從第幾秒開始播（不循環）
 ```
 - `at`：這個畫面從第幾句開始（每幕第一個畫面從換幕處開始，其餘提早 0.15 秒）
 - `steps`：**逐步出現**；第 i 個項目在第幾句出現（同一個畫面只寫一次，程式自動產生各個狀態，並以 0.25 秒淡入）
@@ -100,6 +100,13 @@ scenes:
 | `ring` ★ | 中心圖示＋環狀標籤 | title、center、items |
 | `thanks` | 結尾感謝 | name、text |
 | `cta_comment` | 留言邀請 | title、text、note |
+| `image` | 截圖或素材圖（自動縮放置中） | title、sub、image（工作區相對路徑）、caption、crop |
+| `code` ★ | 程式碼／終端機視窗（★ 逐行出現） | title、window、lines、hl（標亮行號）、note |
+| `line_chart` | 折線圖（上下分開比較） | title、series [{label, color, values}]、ymax、xlabel、stacked |
+
+- 影片片段：`ss` 指定起點；自己的成品片段通常已有浮水印，要設 `watermark: false`
+- YAML 字串要換行時寫成 `"第一行\n第二行"`（雙引號＋`\n`）；直接斷行會被合併成空格
+- 用 shell 的 heredoc 改檔時，`\\n` 可能被吃成真的換行 → 改用編輯工具，或在 Python 裡用 `chr(92)` 產生反斜線
 
 新增版型：在 `cards_lib.py` 寫一個 `t_名稱(im, d, p)`，加進 `TYPES`，再補進這張表。
 

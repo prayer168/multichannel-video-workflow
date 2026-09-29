@@ -14,7 +14,7 @@ description: 以「Papaya 電腦教室」風格規劃與製作不露臉、AI 配
 - `references/seo.md`：YouTube SEO 規範（關鍵字研究、標題、說明欄、章節、Hashtag、標籤、導流、發布後優化）
 - `scripts/seo_keywords.py`：YouTube 搜尋建議（需求）＋搜尋結果競爭分析（供給）
 - `references/intro-spec.md`：黑熊老師品牌片頭規格（分鏡、品牌音樂與音效、製作方式）
-- `references/build-pipeline.md`：**一鍵產生影片**（`scripts/build/build.py`）：畫面規格格式、37 種圖卡版型、配音模式（Gemini API／Zhiwei）、額度、輸出與品質報告
+- `references/build-pipeline.md`：**一鍵產生影片**（`scripts/build/build.py`）：畫面規格格式、40 種圖卡版型、配音模式（Gemini API／Zhiwei）、額度、輸出與品質報告
 - `references/production-notes.md`：自動粗剪流程（暫定配音、圖卡、組合）、浮水印規則、常見陷阱與品質檢查
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、標題、縮圖、畫面、音樂）
 - `references/templates.md`：腳本、分鏡、說明欄、專案卡範本

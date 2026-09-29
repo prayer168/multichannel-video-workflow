@@ -229,7 +229,7 @@ def flow_row(d, steps, y, cols=None, h=120, fs=44, x0=150, x1=W - 150, gap=56, a
     """一列流程；lit＝亮起的步數（其餘變淡）"""
     n = len(steps)
     f = font(fs)
-    widths = [tw(d, s.split("\n")[0], f)[0] + 60 for s in steps]
+    widths = [max(tw(d, x, f)[0] for x in s.split("\n")) + 60 for s in steps]
     scale = min(1, (x1 - x0 - gap * (n - 1)) / sum(widths))
     widths = [w * scale for w in widths]
     x = x0 + ((x1 - x0) - sum(widths) - gap * (n - 1)) / 2
@@ -678,7 +678,7 @@ def t_ai_chat(im, d, p):
     ic_robot(d, 1650, 700, 1.1)
     box(d, [300, 640, 1450, 960], fill=(24, 28, 36), shadow=False)
     for i, l in enumerate(p.get("code", [])):
-        d.text((340, 665 + i * 46), l, font=mono(36), fill=[(120, 220, 140), (230, 230, 230)][i % 2])
+        d.text((340, 665 + i * 46), l, font=font(34, False) if re_cjk(l) else mono(36), fill=[(120, 220, 140), (230, 230, 230)][i % 2])
     if p.get("note"): ctext(d, 1650, 880, p["note"], font(40), ORANGE)
 
 
@@ -798,6 +798,64 @@ def t_thanks(im, d, p):
     ctext(d, W / 2, 540, p.get("text", "感謝大家觀看這部影片"), font(60), CYAN)
 
 
+def t_image(im, d, p):
+    """圖片卡：image＝圖檔路徑（build.py 會換成絕對路徑）；caption＝下方說明"""
+    header(d, p.get("title"), p.get("sub"), p.get("dark", False))
+    top = 260 if p.get("sub") else (220 if p.get("title") else 90)
+    bottom = H - (150 if p.get("caption") else 90)
+    src = Image.open(p["image"]).convert("RGB")
+    if p.get("crop"): src = src.crop(tuple(p["crop"]))
+    s = min((W - 240) / src.width, (bottom - top) / src.height)
+    src = src.resize((int(src.width * s), int(src.height * s)), Image.LANCZOS)
+    x, y = (W - src.width) // 2, int(top + (bottom - top - src.height) / 2)
+    d.rounded_rectangle([x + 6, y + 10, x + src.width + 6, y + src.height + 10], radius=12, fill=(215, 220, 230) if not p.get("dark") else (4, 16, 34))
+    im.paste(src, (x, y))
+    if p.get("caption"): ctext(d, W / 2, H - 120, p["caption"], fit(d, p["caption"], 44, W - 300), GRAY if not p.get("dark") else CYAN)
+
+
+def t_code(im, d, p):
+    """程式碼／終端機視窗：lines；hl＝要標亮的行號（從 0 起）"""
+    header(d, p.get("title"), p.get("sub"))
+    lines = p["lines"]; n = shown(p, len(lines)); hl = set(p.get("hl", []))
+    top = 250 if p.get("sub") else 220
+    lh = min(84, (H - top - 170) / max(len(lines), 1))
+    box(d, [150, top, W - 150, top + 90 + lh * len(lines)], fill=(24, 28, 36), r=20)
+    for i, c in enumerate([(255, 95, 87), (255, 189, 46), (40, 200, 64)]):
+        d.ellipse([190 + i * 40, top + 26, 214 + i * 40, top + 50], fill=c)
+    if p.get("window"): d.text((330, top + 18), p["window"], font=font(32, False), fill=(150, 160, 180))
+    for i in range(n):
+        y = top + 75 + i * lh
+        if i in hl: d.rectangle([160, y - 6, W - 160, y + lh - 10], fill=(50, 60, 90))
+        l = lines[i]
+        colr = (120, 220, 140) if l.lstrip().startswith(("$", ">")) else (140, 150, 170) if l.lstrip().startswith("#") else (235, 238, 245)
+        d.text((200, y), l, font=fit(d, l, lh * 0.56, W - 400, False) if re_cjk(l) else mono(lh * 0.56), fill=colr)
+    if p.get("note"): pill(d, W / 2, H - 90, p["note"], ORANGE, font(40), h=76)
+
+
+def re_cjk(s):
+    return any("一" <= ch <= "鿿" for ch in s)
+
+
+def t_line_chart(im, d, p):
+    """折線圖：series＝[{label, color, values}]，上下分開各畫一條（stacked: true）或疊在一起"""
+    header(d, p.get("title"), p.get("sub"))
+    ser = p["series"]; stacked = p.get("stacked", True)
+    x0, x1, top, bottom = 260, W - 200, 280, H - 170
+    rows = len(ser) if stacked else 1
+    vmax = p.get("ymax") or max(max(s["values"]) for s in ser) * 1.1
+    for k, s in enumerate(ser):
+        r = k if stacked else 0
+        h = (bottom - top) / rows; y1 = top + r * h + h - 30; y0 = top + r * h + 30
+        if k == 0 or stacked:
+            d.line([(x0, y1), (x1, y1)], fill=LGRAY, width=3)
+        vals = s["values"]; c = col(s.get("color"), PALETTE[k])
+        pts = [(x0 + (x1 - x0) * i / (len(vals) - 1), y1 - (y1 - y0) * min(v, vmax) / vmax) for i, v in enumerate(vals)]
+        d.line(pts, fill=c, width=6, joint="curve")
+        for pt in pts: d.ellipse([pt[0] - 5, pt[1] - 5, pt[0] + 5, pt[1] + 5], fill=c)
+        d.text((80, (y0 + y1) / 2 - 30), s["label"], font=fit(d, s["label"], 44, 170), fill=c)
+    if p.get("xlabel"): ctext(d, (x0 + x1) / 2, H - 140, p["xlabel"], font(38, False), GRAY)
+
+
 TYPES = {  # 名稱：(函式, 預設深色背景)
     "title": (t_title, True), "statement": (t_statement, True), "word": (t_word, True), "chapter": (t_chapter, True),
     "check": (t_check, True), "bubbles": (t_bubbles, False), "split_code": (t_split_code, False), "icons_plus": (t_icons_plus, False),
@@ -809,6 +867,7 @@ TYPES = {  # 名稱：(函式, 預設深色背景)
     "ai_chat": (t_ai_chat, False), "warnings": (t_warnings, False), "flow_rows": (t_flow_rows, False), "columns": (t_columns, False),
     "duo": (t_duo, True), "sync_cycle": (t_sync_cycle, False), "stairs": (t_stairs, False), "ring": (t_ring, False),
     "cta_comment": (t_cta_comment, True), "thanks": (t_thanks, True),
+    "image": (t_image, False), "code": (t_code, False), "line_chart": (t_line_chart, False),
 }
 
 
