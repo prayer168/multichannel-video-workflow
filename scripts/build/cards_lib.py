@@ -813,6 +813,94 @@ def t_image(im, d, p):
     if p.get("caption"): ctext(d, W / 2, H - 120, p["caption"], fit(d, p["caption"], 44, W - 300), GRAY if not p.get("dark") else CYAN)
 
 
+def _shade(layer, box, fade, side, alpha=205):
+    """在透明圖層上畫一塊深藍半透明區，fade＝往外漸淡的寬度；side＝left／right／bottom"""
+    m = Image.new("L", (W, H), 0); md = ImageDraw.Draw(m)
+    x0, y0, x1, y1 = box
+    md.rectangle(box, fill=alpha)
+    for i in range(fade):
+        a = int(alpha * (1 - i / fade) ** 1.6)
+        if side == "left": md.line([(x1 + i, y0), (x1 + i, y1)], fill=a)
+        elif side == "right": md.line([(x0 - i, y0), (x0 - i, y1)], fill=a)
+        else: md.line([(x0, y0 - i), (x1, y0 - i)], fill=a)
+    sh = Image.new("RGBA", (W, H), NAVY + (0,)); sh.putalpha(m)
+    layer.alpha_composite(sh)
+
+
+_vig = None
+
+
+def _vignette():
+    """電影感暗角（中心透明、四角變暗）"""
+    global _vig
+    if _vig is None:
+        g = Image.radial_gradient("L").resize((W, H), Image.BICUBIC)       # 中心 0、外圍 255
+        _vig = g.point(lambda v: int(max(0, v - 120) * 0.95))
+    return _vig
+
+
+def photo_layers(p):
+    """全幅照片分成兩層：bg＝照片（可運鏡）；fg＝文字與底色（RGBA，固定不動）"""
+    src = Image.open(p["image"]).convert("RGB")
+    s = max(W / src.width, H / src.height)
+    src = src.resize((math.ceil(src.width * s), math.ceil(src.height * s)), Image.LANCZOS)
+    fx, fy = p.get("focus", (0.5, 0.5))
+    x, y = int((src.width - W) * fx), int((src.height - H) * fy)
+    bg = src.crop((x, y, x + W, y + H))
+    if p.get("vignette", True):
+        bg.paste(Image.new("RGB", (W, H), (0, 0, 0)), (0, 0), _vignette())
+    fg = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    side = p.get("side")
+    if side:
+        pw = p.get("panel_w", 780)
+        _shade(fg, (0, 0, pw, H) if side == "left" else (W - pw, 0, W, H), 220, side)
+    if p.get("lines"):
+        _shade(fg, (0, H - 330, W, H), 240, "bottom", 190)
+    if p.get("plate"):
+        _shade(fg, (0, H - 470, 1100, H), 200, "left", 170)
+    d = ImageDraw.Draw(fg)
+    if side:
+        x0 = 120 if side == "left" else W - p.get("panel_w", 780) + 60
+        mw = p.get("panel_w", 780) - 180
+        y = 190
+        if p.get("kicker"):
+            f = fit(d, p["kicker"], 50, mw); kw, kh = tw(d, p["kicker"], f)
+            kc = col(p.get("color"), CYAN_D)
+            d.rounded_rectangle([x0, y, x0 + kw + 56, y + 84], radius=42, fill=kc)
+            d.text((x0 + 28, y + 42 - f.size * 0.62), p["kicker"], font=f, fill=on_color(kc))
+            y += 130
+        if p.get("title"):
+            f = fit(d, p["title"], 74, mw)
+            for l in str(p["title"]).split(chr(10)):
+                d.text((x0, y), l, font=f, fill=WHITE); y += f.size * 1.3
+            y += 40
+        items = p.get("items", []); n = shown(p, len(items))
+        for i in range(n):
+            d.ellipse([x0 + 4, y + 22, x0 + 34, y + 52], fill=GOLD)
+            d.text((x0 + 60, y), items[i], font=fit(d, items[i], 56, mw - 60), fill=WHITE); y += 92
+    if p.get("lines"):
+        ls = p["lines"]; n = shown(p, len(ls)); hl = set(p.get("hl", []))
+        y0 = H - 150 - 104 * len(ls)
+        for i in range(n):
+            ctext(d, W / 2, y0 + i * 104, ls[i], fit(d, ls[i], 72, W - 520), GOLD if i in hl else WHITE)
+    if p.get("plate"):
+        pl = p["plate"]; y = H - 410
+        d.rounded_rectangle([110, y + 8, 124, y + 96], radius=6, fill=GOLD)
+        d.text((156, y), pl[0], font=font(84), fill=WHITE); y += 130
+        for l in pl[1:]:
+            d.text((158, y), l, font=font(48, False), fill=(200, 225, 245)); y += 70
+    return bg, fg
+
+
+def t_photo(im, d, p):
+    """全幅照片（課堂實景、分鏡圖）：image；focus＝裁切重心 [x, y]（0–1）；vignette＝暗角（預設開）
+    side＋kicker/title/items：左或右的半透明面板，items 支援逐步出現（show）
+    lines：下方字卡（hl＝金色行號，show＝顯示前幾行）；plate：左下名牌 [大字, 小字…]
+    build.py 會分兩層處理：照片運鏡、文字固定並淡入（見 photo_layers）"""
+    bg, fg = photo_layers(p)
+    bg = bg.convert("RGBA"); bg.alpha_composite(fg); im.paste(bg.convert("RGB"))
+
+
 def t_code(im, d, p):
     """程式碼／終端機視窗：lines；hl＝要標亮的行號（從 0 起）"""
     header(d, p.get("title"), p.get("sub"))
@@ -868,6 +956,7 @@ TYPES = {  # 名稱：(函式, 預設深色背景)
     "duo": (t_duo, True), "sync_cycle": (t_sync_cycle, False), "stairs": (t_stairs, False), "ring": (t_ring, False),
     "cta_comment": (t_cta_comment, True), "thanks": (t_thanks, True),
     "image": (t_image, False), "code": (t_code, False), "line_chart": (t_line_chart, False),
+    "photo": (t_photo, False),
 }
 
 

@@ -6,17 +6,18 @@
 流程：配音 → 切成逐句 → 時間軸 → 圖卡 → 逐格畫面（次像素推近、逐步出現、溶接）→ 混音 → 字幕 → 輸出 → 品質報告
 已完成的中間檔會沿用（改了哪張圖卡就只重畫那張）；輸出檔不覆寫，自動加上 _2、_3…
 """
-import argparse, hashlib, json, os, re, subprocess, sys, time
+import argparse, hashlib, math, json, os, re, subprocess, sys, time
 from concurrent.futures import ProcessPoolExecutor
 sys.stdout.reconfigure(encoding="utf-8")
 import numpy as np
 import soundfile as sf
 import yaml
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import cards_lib
+import anims_lib
 
 FPS, W, H, SR = 30, 1920, 1080, 48000
 GAP, GAP_STOP, SCENE_HEAD, SCENE_TAIL, END_PAD = 0.22, 0.45, 0.5, 0.6, 2.0
@@ -185,14 +186,17 @@ def split_scenes(lines, titles, scene_dir, out):
 
 
 # ======================= 2. 時間軸＋配音軌 =======================
-def build_narration(lines, line_dir, work, intro_len):
+def build_narration(lines, line_dir, work, intro_len, pause=None):
+    """pause＝{幕: 秒}：這一幕開始前多留的純音樂時間（片名動畫、段落呼吸）"""
     os.makedirs(os.path.join(work, "trim"), exist_ok=True)
+    pause = pause or {}
     t = intro_len; audio = [np.zeros(int(intro_len * SR), np.float32)]; prev = None
     for L in lines:
         if L["scene"] != prev:
             if prev: audio.append(np.zeros(int(SCENE_TAIL * SR), np.float32)); t += SCENE_TAIL
-            audio.append(np.zeros(int(SCENE_HEAD * SR), np.float32)); t += SCENE_HEAD
-            L["scene_start"] = t - SCENE_HEAD; prev = L["scene"]
+            L["scene_start"] = t
+            extra = SCENE_HEAD + pause.get(L["scene"], 0)
+            audio.append(np.zeros(int(extra * SR), np.float32)); t += extra; prev = L["scene"]
         src = os.path.join(line_dir, L["id"] + ".wav"); tw_ = os.path.join(work, "trim", L["id"] + ".wav")
         if not os.path.exists(tw_) or os.path.getmtime(tw_) < os.path.getmtime(src):
             run(["ffmpeg", "-y", "-v", "error", "-i", src, "-af",
@@ -209,7 +213,7 @@ def build_narration(lines, line_dir, work, intro_len):
 
 
 # ======================= 3. 畫面：鏡頭表＋圖卡 =======================
-def expand_shots(spec, lines, total, intro, cards_dir, root):
+def expand_shots(spec, lines, total, intro, cards_dir, root, proj=None):
     """把畫面規格展開成鏡頭表：每個鏡頭 = 一個畫面（含逐步出現的各狀態）或一段影片"""
     os.makedirs(cards_dir, exist_ok=True)
     by = {(L["scene"], L["idx"]): L for L in lines}
@@ -223,10 +227,19 @@ def expand_shots(spec, lines, total, intro, cards_dir, root):
         for k, b in enumerate(beats):
             at = b.get("at", 1)
             t0 = first[sid]["scene_start"] if k == 0 else by[(sid, at)]["start"] - 0.15
+            fx = dict(cam=b.get("cam"), trans=b.get("trans"), lb=b.get("lb"))
             if b["type"] == "video":
-                shots.append(dict(kind="video", path=b["src"], t0=t0, wm=b.get("watermark", False), loop=not b.get("ss"), ss=b.get("ss", 0))); continue
-            params = {x: v for x, v in b.items() if x not in ("at", "steps")}
-            if params.get("image") and not os.path.isabs(params["image"]): params["image"] = os.path.join(root, params["image"])
+                shots.append(dict(kind="video", path=b["src"], t0=t0, wm=b.get("watermark", False), loop=not b.get("ss"), ss=b.get("ss", 0), **fx)); continue
+            if b["type"] == "anim":
+                ap = {x: v for x, v in b.items() if x not in ("at", "steps", "cam", "trans", "lb", "type")}
+                if ap.get("images"):
+                    ap["images"] = [x if os.path.isabs(x) else os.path.join(proj or root, x) for x in ap["images"]]
+                evl = [by[(sid, ln)]["start"] - 0.15 - t0 for ln in b.get("steps", [])]
+                shots.append(dict(kind="anim", t0=t0, p=ap, ev=evl, wm=True, **fx)); continue
+            params = {x: v for x, v in b.items() if x not in ("at", "steps", "cam", "trans", "lb")}
+            if params.get("image") and not os.path.isabs(params["image"]):   # 先找影片專案資料夾，再找工作區根目錄
+                cand = os.path.join(proj, params["image"]) if proj else None
+                params["image"] = cand if cand and os.path.exists(cand) else os.path.join(root, params["image"])
             states = []
             if b.get("steps"):
                 st = b["steps"]
@@ -245,7 +258,13 @@ def expand_shots(spec, lines, total, intro, cards_dir, root):
                 png = os.path.join(cards_dir, f"{sid}_{k + 1:02d}{'' if show is None else f'_s{show}'}_{h}.png")
                 if not os.path.exists(png): jobs.append((p, png))
                 variants.append((ts, png))
-            shots.append(dict(kind="card", t0=t0, variants=variants, wm=True))
+            shots.append(dict(kind="card", t0=t0, variants=variants, wm=True, photo=b["type"] == "photo", **fx))
+    # 預設：照片依序換不同運鏡；照片與動畫加電影黑邊
+    cams = ["push", "pan_r", "pull", "pan_l", "tilt_up", "push_r", "pull", "pan_l"]; ci = 0
+    for s in shots:
+        if s["kind"] == "card" and s.get("photo") and not s.get("cam"): s["cam"] = cams[ci % len(cams)]; ci += 1
+        if s.get("lb") is None: s["lb"] = bool(spec["video"].get("letterbox")) and (s.get("photo") or s["kind"] == "anim")
+        if not s.get("trans"): s["trans"] = "dissolve"
     for i, s in enumerate(shots):
         s["t1"] = shots[i + 1]["t0"] if i + 1 < len(shots) else total
         s["f0"], s["f1"] = round(s["t0"] * FPS), round(s["t1"] * FPS)
@@ -253,7 +272,13 @@ def expand_shots(spec, lines, total, intro, cards_dir, root):
 
 
 def _card_job(a):
-    cards_lib.render(*a); return a[1]
+    p, png = a
+    if p.get("type") == "photo":                    # 照片分兩層：照片（運鏡）＋文字（固定、淡入）
+        bg, fg = cards_lib.photo_layers(p)
+        bg.save(png); fg.save(png[:-4] + "_fg.png")
+    else:
+        cards_lib.render(p, png)
+    return png
 
 
 # ======================= 4. 逐格產生畫面（分段平行） =======================
@@ -272,14 +297,69 @@ def _zoomed(png, z):
     return _img(png).transform((W, H), Image.AFFINE, (1 / z, 0, c * W / 2, 0, 1 / z, c * H / 2), Image.BICUBIC)
 
 
+def _cam_params(cam, u):
+    """運鏡：u＝鏡頭進度 0–1，回傳 (縮放, 水平位移, 垂直位移)；位移以像素計、不超出畫面"""
+    u = u * 0.75 + (u * u * (3 - 2 * u)) * 0.25       # 大致等速，頭尾略緩
+    if cam == "push": z, x, y = 1.0 + 0.09 * u, 0, 0
+    elif cam == "pull": z, x, y = 1.11 - 0.09 * u, 0, 0
+    elif cam in ("pan_r", "pan_l"):
+        z = 1.12; m = (1 - 1 / z) * W / 2 * 0.92; x = (-m + 2 * m * u) * (1 if cam == "pan_r" else -1); y = 0
+    elif cam in ("tilt_up", "tilt_down"):
+        z = 1.12; m = (1 - 1 / z) * H / 2 * 0.92; y = (m - 2 * m * u) * (1 if cam == "tilt_up" else -1); x = 0
+    elif cam in ("push_r", "push_l"):
+        z = 1.03 + 0.08 * u; m = (1 - 1 / z) * W / 2 * 0.8; x = m * u * (1 if cam == "push_r" else -1); y = 0
+    elif cam == "still": z, x, y = 1.0, 0, 0
+    else: z, x, y = 1 + ZOOM * u, 0, 0               # 圖卡預設：緩慢推近
+    return z, x, y
+
+
+def _camera(png, z, dx, dy):
+    c = 1 - 1 / z
+    return _img(png).transform((W, H), Image.AFFINE, (1 / z, 0, c * W / 2 + dx, 0, 1 / z, c * H / 2 + dy), Image.BICUBIC)
+
+
+def _fg(png):
+    k = png + "#fg"
+    if k not in _img_cache:
+        if len(_img_cache) > 12: _img_cache.clear()
+        _img_cache[k] = Image.open(png[:-4] + "_fg.png").convert("RGBA")
+    return _img_cache[k]
+
+
+def _fade_fg(fg, a, slide):
+    """文字層淡入＋往上滑入"""
+    if a >= 1: return fg
+    lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    lay.paste(fg, (0, int(slide * (1 - a))))
+    al = lay.getchannel("A").point(lambda v: int(v * a)); lay.putalpha(al)
+    return lay
+
+
 def _card_frame(s, f):
     n = s["f1"] - s["f0"]; i = f - s["f0"]; t = f / FPS
-    z = 1 + ZOOM * i / max(n, 1)
+    z, dx, dy = _cam_params(s.get("cam"), i / max(n, 1))
     vs = s["variants"]; k = max(j for j, (ts, _) in enumerate(vs) if ts <= t + 1e-9) if t >= vs[0][0] else 0
-    im = _zoomed(vs[k][1], z)
+    if s.get("photo"):                                # 照片運鏡、文字固定
+        im = _camera(vs[0][1], z, dx, dy).convert("RGBA")
+        a0 = (t - s["t0"] - 0.35) / 0.55              # 第一個狀態：鏡頭開始後淡入
+        if k == 0: im.alpha_composite(_fade_fg(_fg(vs[0][1]), max(0.0, min(1.0, a0)), 24))
+        else:
+            a = (t - vs[k][0]) / 0.45
+            if a < 1: im.alpha_composite(_fg(vs[k - 1][1]))
+            im.alpha_composite(_fade_fg(_fg(vs[k][1]), max(0.0, min(1.0, a)), 18))
+        return im.convert("RGB")
+    im = _camera(vs[k][1], z, dx, dy)
     if k > 0 and t - vs[k][0] < XFADE:              # 逐步出現：新狀態淡入
-        im = Image.blend(_zoomed(vs[k - 1][1], z), im, (t - vs[k][0]) / XFADE)
+        im = Image.blend(_camera(vs[k - 1][1], z, dx, dy), im, (t - vs[k][0]) / XFADE)
     return im
+
+
+def _anim_frame(s, f):
+    return anims_lib.frame(s["p"], f / FPS - s["t0"], s["t1"] - s["t0"], s["ev"])
+
+
+def _shot_frame(s, f):
+    return _anim_frame(s, f) if s["kind"] == "anim" else _card_frame(s, f)
 
 
 def _video_frames(s):
@@ -296,21 +376,98 @@ def _video_frames(s):
     p.stdout.close(); p.wait()
 
 
+TRANS_LEN = dict(dissolve=0.35, whip_l=0.42, whip_r=0.42, flash=0.45, zoom=0.5, dip=0.7, leak=0.8, cut=0)
+LB_H, LB_RAMP = 112, 0.6
+_leak_cache = {}
+
+
+def _hblur(im, k):
+    k = max(1.0, k)
+    return im.resize((max(8, int(W / k)), H), Image.BILINEAR).resize((W, H), Image.BILINEAR)
+
+
+def _leak(q):
+    """暖色漏光：從左到右掃過的柔光"""
+    key = "g"
+    if key not in _leak_cache:
+        g = Image.radial_gradient("L").resize((W, W), Image.BICUBIC).point(lambda v: max(0, 255 - v))
+        _leak_cache[key] = g
+    g = _leak_cache[key]
+    lay = Image.new("L", (W, H), 0); x = int(-W * 0.6 + q * W * 1.2)
+    lay.paste(g, (x, (H - W) // 2))
+    a = math.sin(math.pi * q) * 0.85
+    col = Image.new("RGB", (W, H), (255, 170, 80))
+    return col, lay.point(lambda v: int(v * a))
+
+
+def _transition(kind, prev, cur, q):
+    """q：轉場進度 0–1"""
+    if kind == "whip_l" or kind == "whip_r":
+        d = -1 if kind == "whip_l" else 1
+        e = q * q * (3 - 2 * q)
+        can = Image.new("RGB", (W, H))
+        can.paste(prev, (int(-d * e * W), 0)); can.paste(cur, (int(d * (1 - e) * W), 0))
+        return _hblur(can, 1 + 40 * math.sin(math.pi * q))
+    if kind == "flash":
+        white = Image.new("RGB", (W, H), (255, 252, 240))
+        return Image.blend(prev, white, min(1, q * 2.2)) if q < 0.45 else Image.blend(white, cur, min(1, (q - 0.45) / 0.55))
+    if kind == "zoom":
+        e = q * q * (3 - 2 * q)
+        a = prev.resize((int(W * (1 + e * 0.6)), int(H * (1 + e * 0.6))), Image.BILINEAR)
+        a = a.crop(((a.width - W) // 2, (a.height - H) // 2, (a.width - W) // 2 + W, (a.height - H) // 2 + H))
+        zb = 1.25 - 0.25 * e
+        b = cur.resize((int(W * zb), int(H * zb)), Image.BILINEAR)
+        b = b.crop(((b.width - W) // 2, (b.height - H) // 2, (b.width - W) // 2 + W, (b.height - H) // 2 + H))
+        return Image.blend(a, b, e)
+    if kind == "dip":
+        black = Image.new("RGB", (W, H))
+        return Image.blend(prev, black, min(1, q * 2)) if q < 0.5 else Image.blend(black, cur, (q - 0.5) * 2)
+    if kind == "leak":
+        im = Image.blend(prev, cur, q * q * (3 - 2 * q))
+        col, m = _leak(q)
+        return Image.composite(ImageChops.screen(im, col), im, m)
+    return Image.blend(prev, cur, q)
+
+
+def _lb_value(shots, si, t):
+    s = shots[si]; v = 1.0 if s.get("lb") else 0.0
+    if si > 0:
+        pv = 1.0 if shots[si - 1].get("lb") else 0.0
+        if pv != v:
+            q = max(0.0, min(1.0, (t - s["t0"]) / LB_RAMP)); q = q * q * (3 - 2 * q)
+            return pv + (v - pv) * q
+    return v
+
+
 def render_part(args):
     shots, idxs, out, wm_path = args
     wm = Image.open(wm_path).convert("RGBA")
     enc = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-                            "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p", "-g", "60", out], stdin=subprocess.PIPE)
+                            "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-g", "60", out], stdin=subprocess.PIPE)
     for si in idxs:
         s = shots[si]; prev = shots[si - 1] if si > 0 else None
-        dissolve = prev is not None and s["kind"] == "card" and prev["kind"] == "card"
-        last_prev = _card_frame(prev, prev["f1"] - 1) if dissolve else None
-        frames = _video_frames(s) if s["kind"] == "video" else (_card_frame(s, f) for f in range(s["f0"], s["f1"]))
+        kind = s.get("trans", "dissolve")
+        can = prev is not None and prev["kind"] in ("card", "anim") and s["kind"] in ("card", "anim") and kind != "cut"
+        if prev is not None and prev["kind"] == "video" and s["kind"] != "video" and kind != "cut": kind, can = "dissolve", True
+        last_prev = None
+        if can:
+            if prev["kind"] == "video":
+                last_prev = None
+                for last_prev in _video_frames(dict(prev, f0=prev["f1"] - 1, ss=max(0, prev.get("ss", 0) + (prev["f1"] - prev["f0"] - 1) / FPS), loop=False)): pass
+            else:
+                last_prev = _shot_frame(prev, prev["f1"] - 1)
+        nt = int(TRANS_LEN.get(kind, 0.35) * FPS)
+        frames = _video_frames(s) if s["kind"] == "video" else (_shot_frame(s, f) for f in range(s["f0"], s["f1"]))
         for j, im in enumerate(frames):
-            if dissolve and j < DISSOLVE * FPS:
-                im = Image.blend(last_prev, im, (j + 1) / (DISSOLVE * FPS + 1))
-            if s["wm"]:
-                im = im.convert("RGBA"); im.alpha_composite(wm); im = im.convert("RGB")
+            if last_prev is not None and j < nt:
+                im = _transition(kind, last_prev, im, (j + 1) / (nt + 1))
+            lb = _lb_value(shots, si, (s["f0"] + j) / FPS)
+            h = int(LB_H * lb)
+            if lb > 0:
+                d = ImageDraw.Draw(im)
+                d.rectangle([0, 0, W, h], fill=(0, 0, 0)); d.rectangle([0, H - h, W, H], fill=(0, 0, 0))
+            if s["wm"]:                                   # 浮水印最後疊，有黑邊時往上移到畫面內
+                im = im.convert("RGBA"); im.alpha_composite(wm, (0, 0), (0, h, W, H)) if h else im.alpha_composite(wm); im = im.convert("RGB")
             enc.stdin.write(im.tobytes())
     enc.stdin.close(); enc.wait()
     return out
@@ -338,7 +495,83 @@ def measure_i(path):
     return float(re.findall(r"I:\s+(-?[\d.]+) LUFS", r.stderr)[-1])
 
 
-def mix_audio(root, work, cfg, total, intro_len):
+def fit_bgm(src, dst, length, fit, work):
+    """把配樂剪成片長：開頭照原曲、中段循環 [loop_from, loop_to]、最後一段（tail_from 到曲尾）對齊片尾
+    接點以 bar 秒數對齊拍子，並做 xfade 秒的等功率交叉淡化；多出來的零頭從前奏裁掉"""
+    tmp = os.path.join(work, "_bgm_src.wav")
+    run(["ffmpeg", "-y", "-v", "error", "-i", src, "-ar", str(SR), "-ac", "2", tmp])
+    y, _ = sf.read(tmp, dtype="float32"); os.remove(tmp)
+    bar, xf = fit.get("bar", 1.7266), fit.get("xfade", 1.2)
+    lf, lt, tf = fit["loop_from"], fit["loop_to"], fit["tail_from"]
+    tail = len(y) / SR - tf; need = length - tail
+    if need <= tf:
+        c = tf - math.ceil((tf - need) / bar) * bar
+        segs, pad = [(0.0, c)], need - c
+    else:
+        segs, cur = [(0.0, lt)], lt
+        while need - cur > lt - lf: segs.append((lf, lt)); cur += lt - lf
+        k = int((need - cur) / bar)
+        if k: segs.append((lt - k * bar, lt)); cur += k * bar
+        pad = need - cur
+    segs.append((tf, len(y) / SR))
+    n = int(xf * SR); ramp = np.sin(np.linspace(0, np.pi / 2, n))[:, None]
+    out = y[int(segs[0][0] * SR): int(segs[0][1] * SR)]
+    for s0, e0 in segs[1:]:
+        seg = y[max(0, int(s0 * SR) - n): int(e0 * SR)]
+        a, b = out[-n:] * ramp[::-1], seg[:n] * ramp
+        out = np.concatenate([out[:-n], a + b, seg[n:]])
+    out = np.concatenate([np.zeros((int(pad * SR), 2), np.float32), out])[: int(length * SR)]
+    if len(out) < int(length * SR): out = np.concatenate([out, np.zeros((int(length * SR) - len(out), 2), np.float32)])
+    sf.write(dst, out, SR, subtype="FLOAT")
+    log(f"配樂剪接：前面留白 {pad:.2f}s＋" + " + ".join(f"{a:.1f}–{b:.1f}s" for a, b in segs))
+
+
+def make_sfx(shots, total, whoosh_on=True, hit_on=True):
+    """自製音效（不需授權）：whoosh（甩鏡、推進轉場）、hit（閃白、片名）"""
+    rng = np.random.default_rng(5); out = np.zeros((int(total * SR) + SR, 2), np.float32)
+
+    def lowpass(x, fc):
+        """二階低通（兩次一階），fc 可以是陣列（隨時間變化）"""
+        fc = np.broadcast_to(np.asarray(fc, np.float64), x.shape)
+        k = 2 * np.pi * fc / SR; k = k / (1 + k)
+        y1 = np.zeros_like(x); y2 = np.zeros_like(x); a1 = a2 = 0.0
+        for i in range(len(x)):
+            a1 += k[i] * (x[i] - a1); a2 += k[i] * (a1 - a2); y2[i] = a2
+        return y2
+
+    def whoosh(d=0.6):
+        """柔和的「咻」：布朗雜訊（能量集中低頻）＋低通掃頻 200→900→200 Hz，沒有高頻沙沙聲"""
+        n = int(d * SR); t = np.linspace(0, 1, n)
+        x = np.cumsum(rng.standard_normal(n)); x -= np.convolve(x, np.ones(2001) / 2001, "same")   # 布朗雜訊去直流
+        y = lowpass(x, 200 + 700 * np.sin(np.pi * t) ** 2)
+        y = y - lowpass(y, 110)                                                                      # 去掉聽不到的超低頻
+        y += 0.35 * np.sin(2 * np.pi * np.cumsum(90 + 110 * np.sin(np.pi * t)) / SR)                # 低頻音高滑動，增加「掠過」感
+        env = np.sin(np.pi * t) ** 3
+        y = y / (np.abs(y).max() + 1e-9) * env
+        pan = np.sin(np.pi * (t - 0.5)) * 0.5
+        return np.stack([y * (1 - pan), y * (1 + pan)], 1).astype(np.float32) * 0.55
+
+    def hit(d=1.8):
+        """低頻重擊（純正弦下滑＋很短的低通撞擊，不含高頻雜訊）"""
+        n = int(d * SR); t = np.arange(n) / SR
+        f = 50 + 70 * np.exp(-t * 16)
+        y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 2.4)
+        y += lowpass(rng.standard_normal(n), 300) * np.exp(-t * 40) * 3
+        y = y / np.abs(y).max()
+        return np.stack([y, y], 1).astype(np.float32) * 0.9
+
+    W_, H_ = whoosh(), hit()
+    for s in shots:
+        k = s.get("trans"); at = None; snd = None
+        if k in ("whip_l", "whip_r", "zoom") and whoosh_on: snd, at = W_, s["t0"] - 0.12
+        elif k == "flash" and hit_on: snd, at = H_, s["t0"] + 0.1
+        if s["kind"] == "anim" and s["p"].get("anim") == "title_reveal" and hit_on: snd, at = H_, s["t0"] + 0.45
+        if snd is None or at is None or at < 0: continue
+        i = int(at * SR); j = min(len(out), i + len(snd)); out[i:j] += snd[: j - i]
+    return out
+
+
+def mix_audio(root, work, cfg, total, intro_len, sfx=None):
     nar, norm = os.path.join(work, "narration.wav"), os.path.join(work, "narration_norm.wav")
     gain = -14 - measure_i(nar)
     for _ in range(2):
@@ -346,15 +579,25 @@ def mix_audio(root, work, cfg, total, intro_len):
         gain += -14 - measure_i(norm)
     body = total - intro_len
     bgm = os.path.join(work, "bgm.wav")
-    run(["ffmpeg", "-y", "-v", "error", "-stream_loop", "-1", "-i", os.path.join(root, cfg["bgm"]), "-t", f"{body:.3f}", "-ar", str(SR), "-ac", "2", bgm])
+    if cfg.get("bgm_fit"):
+        fit_bgm(os.path.join(root, cfg["bgm"]), bgm, body, cfg["bgm_fit"], work)
+    else:
+        run(["ffmpeg", "-y", "-v", "error", "-stream_loop", "-1", "-i", os.path.join(root, cfg["bgm"]), "-t", f"{body:.3f}", "-ar", str(SR), "-ac", "2", bgm])
     bgain = cfg.get("bgm_lufs", -33) - measure_i(bgm)
+    if sfx is not None:                               # 音效混進配樂軌（一起被旁白壓低前先加上）
+        yb, _ = sf.read(bgm, dtype="float32")
+        g = 10 ** (bgain / 20); ys = np.zeros_like(yb); n = min(len(ys), len(sfx) - int(intro_len * SR))
+        if n > 0: ys[:n] = sfx[int(intro_len * SR): int(intro_len * SR) + n]
+        sf.write(bgm, yb * g + ys * 10 ** (cfg.get("sfx_db", -16) / 20), SR, subtype="FLOAT"); bgain = 0.0
     out = os.path.join(work, "mix.m4a")
+    # 最後的 alimiter：總輸出限幅在 -3.6 dBFS（密集配樂經 AAC 編碼會往上衝約 2 dB；實測真峰值 -1.4 dBFS）（預告片配樂較大聲，旁白重疊時避免破音）
     fc = ("[0:a]apad[ia];[1:a]atrim=start=%.3f,asetpts=PTS-STARTPTS,adelay=%d|%d[na];[na]asplit[na1][na2];"
           "[2:a]volume=%.2fdB,afade=t=in:d=1.5,afade=t=out:st=%.2f:d=4,adelay=%d|%d[bg];"
           "[bg][na2]sidechaincompress=threshold=0.03:ratio=4:attack=30:release=600[bgd];"
-          "[ia][na1][bgd]amix=inputs=3:normalize=0:duration=longest[a]") % (intro_len, intro_len * 1000, intro_len * 1000, bgain, body - 4, intro_len * 1000, intro_len * 1000)
+          + ("[na1]volume=0[nz];[ia][nz]" if cfg.get("_mute_narration") else "[ia][na1]")      # 預覽模式：旁白只用來壓低配樂
+          + "[bgd]amix=inputs=3:normalize=0:duration=longest[m];[m]alimiter=limit=0.66:attack=3:release=80:level=false[a]") % (intro_len, intro_len * 1000, intro_len * 1000, bgain, body - 4, intro_len * 1000, intro_len * 1000)
     run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(root, cfg["intro_audio"]), "-i", norm, "-i", bgm, "-filter_complex", fc,
-         "-map", "[a]", "-t", f"{total:.3f}", "-c:a", "aac", "-b:a", "192k", out])
+         "-map", "[a]", "-t", f"{total:.3f}", "-c:a", "aac", "-b:a", "256k", out])   # 192k 遇到密集鼓點會過衝到 -0.2 dBTP；256k 實測 -2.8
     return out
 
 
@@ -397,7 +640,8 @@ def qc(out, shots, total, report_path, notes):
     # 推近平順度：抽查最長、沒有逐步出現的圖卡段；平順時逐格變化量穩定（變異係數小），整數像素取整時會「0、0、0、跳」
     cands = [s for s in shots if s["kind"] == "card" and len(s["variants"]) == 1] or [s for s in shots if s["kind"] == "card"]
     card = max(cands, key=lambda s: s["f1"] - s["f0"])
-    a = card["f0"] / FPS + 0.5; dur = min(5, (card["f1"] - card["f0"]) / FPS - 1)
+    skip = 0.5 + TRANS_LEN.get(card.get("trans"), 0.35)     # 避開進場轉場
+    a = card["f0"] / FPS + skip; dur = min(5, (card["f1"] - card["f0"]) / FPS - skip - 0.5)
     raw = run_bytes(["ffmpeg", "-v", "error", "-ss", f"{a:.2f}", "-i", out, "-t", f"{dur:.2f}", "-vf", "format=gray", "-f", "rawvideo", "-"])
     fr = np.frombuffer(raw, np.uint8).reshape(-1, H, W).astype(np.int16)
     dd = np.abs(fr[1:] - fr[:-1]).mean((1, 2))
@@ -425,7 +669,8 @@ def run_bytes(cmd):
 # ======================= 主流程 =======================
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("project"); ap.add_argument("--voice", default="auto", choices=["auto", "gemini", "zhiwei"])
+    ap.add_argument("project"); ap.add_argument("--voice", default="auto", choices=["auto", "gemini", "zhiwei", "timing"])
+    ap.add_argument("--post", default=None, help="輸出資料夾（預設 3_製作後/輸出成品；timing 預覽建議指定到暫存資料夾）")
     ap.add_argument("--workers", type=int, default=max(2, min(8, (os.cpu_count() or 4) // 2)))
     ap.add_argument("--only", type=float, default=None, help="只輸出前 N 秒（快速預覽）")
     a = ap.parse_args()
@@ -433,7 +678,7 @@ def main():
     root, mid, spec, lines, titles = load_project(proj)
     cfg = spec["video"]; V = lambda p: os.path.join(root, p)
     work = os.path.join(mid, "剪輯專案", "build"); os.makedirs(work, exist_ok=True)
-    post = os.path.join(proj, "3_製作後", "輸出成品"); os.makedirs(post, exist_ok=True)
+    post = os.path.abspath(a.post) if a.post else os.path.join(proj, "3_製作後", "輸出成品"); os.makedirs(post, exist_ok=True)
     notes = []
     t_start = time.time()
 
@@ -445,7 +690,15 @@ def main():
         if not ok and engine == "gemini": raise SystemExit("Gemini 配音不完整")
         engine = "gemini" if ok else "zhiwei"
         if not ok: notes.append("Gemini 配音不完整，本次使用 Zhiwei 暫定配音")
-    if engine == "gemini":
+    if engine == "timing":                          # 沒有配音時的畫面預覽：依字數估長度，用極小聲的雜訊代替旁白
+        work = os.path.join(mid, "剪輯專案", "build_timing"); os.makedirs(work, exist_ok=True)
+        cfg["_mute_narration"] = True
+        line_dir = os.path.join(work, "逐句_timing"); os.makedirs(line_dir, exist_ok=True)
+        rng = np.random.default_rng(1)
+        for L in lines:
+            n = len(re.findall(r"[一-鿿]", L["text"])) + 1.5 * len(re.findall(r"[A-Za-z]+", L["text"]))
+            sf.write(os.path.join(line_dir, L["id"] + ".wav"), (rng.standard_normal(int(n / 4.5 * SR)) * 0.02).astype(np.float32), SR, subtype="PCM_16")
+    elif engine == "gemini":
         line_dir = os.path.join(mid, "配音", "逐句_gemini")
         notes += split_scenes(lines, titles, scene_dir, line_dir)
     else:
@@ -455,12 +708,12 @@ def main():
 
     # 2. 時間軸
     intro_len = cfg.get("intro_len", 4.0)
-    total = build_narration(lines, line_dir, work, intro_len)
+    total = build_narration(lines, line_dir, work, intro_len, cfg.get("pause_before"))
     if a.only: total = min(total, a.only)
     log(f"總長 {total / 60:.2f} 分鐘，{len(lines)} 句，{len(titles)} 幕")
 
     # 3. 圖卡
-    shots, jobs = expand_shots(spec, [L for L in lines], total, V(cfg["intro"]), os.path.join(work, "cards"), root)
+    shots, jobs = expand_shots(spec, [L for L in lines], total, V(cfg["intro"]), os.path.join(work, "cards"), root, proj)
     shots = [s for s in shots if s["t0"] < total]; shots[-1]["t1"] = total; shots[-1]["f1"] = round(total * FPS)
     for s in shots:
         if s["kind"] == "video" and not os.path.isabs(s["path"]): s["path"] = V(s["path"])
@@ -472,7 +725,8 @@ def main():
     lst = render_video(shots, work, V(cfg["watermark"]), a.workers)
 
     # 5. 混音＋輸出
-    mix = mix_audio(root, work, cfg, total, intro_len)
+    sfx = make_sfx(shots, total, cfg.get("sfx_whoosh", True), cfg.get("sfx_hit", True)) if cfg.get("sfx", True) else None
+    mix = mix_audio(root, work, cfg, total, intro_len, sfx)
     tag = engine if not a.only else f"{engine}_預覽"
     out = free_path(os.path.join(post, f"{cfg['name']}_{tag}.mp4"))
     run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", lst, "-i", mix, "-map", "0:v", "-map", "1:a",

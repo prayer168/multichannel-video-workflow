@@ -128,3 +128,32 @@ scenes:
 
 ## 八、推近平順度的判斷依據
 上集實測（同一段圖卡、5 秒）：zoompan 版變異係數 1.23–1.91（停 12 格、跳 2 像素）；次像素版 0.05–0.35。報告以 < 0.6 為通過。
+
+
+## 九、電影預告片風格（v1.11.0）
+第一次實作：《讓數位工具走進科學探究》（畫面規格範例在該專案 `2_製作中/畫面規格.yaml`）
+
+```yaml
+video:
+  letterbox: true              # 照片與動畫段加上下黑邊
+  pause_before: {S01: 3.8, S07: 1.6}   # 幕前純音樂時間
+  bgm_fit: {loop_from: 16, loop_to: 112, tail_from: 112, bar: 1.7266, xfade: 1.2}
+  sfx: false                   # 不加轉場音效（使用者偏好）
+scenes:
+  S03:
+    - {at: 1, type: photo, image: 分鏡圖/05.png, cam: push, trans: zoom, side: left, color: purple, kicker: Kahoot｜探究前, title: "在探究前\n看見學生的想法", items: [課前診斷, 迷思概念], steps: [2, 2]}
+    - {at: 4, type: anim, anim: moon, trans: dissolve, steps: [5]}
+```
+
+| 參數 | 值 |
+|------|----|
+| `type: photo` | image、focus、side＋kicker/title/items/color、lines＋hl、plate、vignette |
+| `type: anim` | anim（title_reveal、moon、poll、wall、compare、sort、variables、dashboard、cycle）＋各自參數；steps＝動畫事件的句號 |
+| `cam` | push、pull、pan_l、pan_r、tilt_up、tilt_down、push_l、push_r、still |
+| `trans` | dissolve、whip_l、whip_r、flash、zoom、dip、leak、cut |
+
+- **配樂剪接 `bgm_fit`**：先量每 2 秒響度找出曲子的段落（前奏、漸強、斷點、再起飛）；`tail_from` 設在斷點前，讓高潮落在最後幾幕
+- **選配樂**：Pixabay 預告片類幾乎都有登記 Content ID（2026-09-30 掃 990 首只有 17 首沒有）→ 逐頁檢查「Content ID Registered」
+- **預覽**：`build.py <專案> --voice timing --post <暫存資料夾>`（約 5 分鐘輸出整支無旁白預覽）
+- **動畫規則**：內容放在 y 130–950（上下黑邊）、右下角留給浮水印；回彈動畫進度 ≤ 0 時要回傳 0
+- **峰值**：預告片配樂較大聲，總輸出限幅＋AAC 256k，否則密集鼓點會過衝
