@@ -3,7 +3,7 @@
 > 以「Papaya 電腦教室」風格規劃與製作 **不露臉、AI 配音、以螢幕錄影為主** 的軟體與 AI 工具教學影片的 Claude Skill。
 > A Claude Skill for planning faceless, AI-narrated, screen-recording software/AI tutorial videos in the style of the Taiwanese YouTube channel "Papaya 電腦教室".
 
-**Version:** 1.12.0（2026-10-01）
+**Version:** 1.12.1（2026-10-01）
 
 ---
 
@@ -111,6 +111,7 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 1.12.1 | 2026-10-01 | 臉書發文方式說明（避免貼出後沒有縮圖） |
 | 1.12.0 | 2026-10-01 | 臉書宣傳文：影片完成時一起產生中英文案、分享圖、一鍵複製頁 |
 | 1.11.1 | 2026-10-01 | 修正 TTS 頭尾雜訊、轉場凍結造成的頓挫、字卡與動畫重疊；配樂依頻譜相似度跳接 |
 | 1.11.0 | 2026-10-01 | 電影預告片風格（運鏡、轉場、黑邊）、全幅照片版型、9 種教學模擬動畫、timing 預覽 |

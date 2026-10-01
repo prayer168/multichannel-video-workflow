@@ -54,7 +54,7 @@ PAGE = """<!DOCTYPE html>
     <div class="seg"><div class="seg-head"><span class="tag">English</span><button class="copy-one small" data-target="en">Copy</button></div>
       <div id="en" class="post">{en}</div></div>
   </div>
-  <p class="foot">黑熊老師 · 點按鈕即可複製文案；分享圖在同一個資料夾（臉書分享圖_1200x630.png），貼文時一起上傳</p>
+  <p class="foot">黑熊老師 · 點按鈕即可複製文案<br>發文小技巧：先只貼 YouTube 網址、等預覽縮圖出現，再貼上文案（不要關掉預覽卡）；沒有出現就到 <a href="https://developers.facebook.com/tools/debug/" style="color:inherit">分享偵錯工具</a> 按「再次抓取」</p>
 </div>
 <script>
 (function () {{
