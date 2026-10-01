@@ -3,7 +3,7 @@
 > 以「Papaya 電腦教室」風格規劃與製作 **不露臉、AI 配音、以螢幕錄影為主** 的軟體與 AI 工具教學影片的 Claude Skill。
 > A Claude Skill for planning faceless, AI-narrated, screen-recording software/AI tutorial videos in the style of the Taiwanese YouTube channel "Papaya 電腦教室".
 
-**Version:** 1.8.0（2026-09-29）
+**Version:** 1.12.0（2026-10-01）
 
 ---
 
@@ -23,8 +23,9 @@
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；40 秒法則 |
 | 5. 上架文案（SEO 版） | 關鍵字在前 40 字內的標題 × 5、含摘要的說明欄、章節、Hashtag、標籤、英文標題與說明、置頂留言、縮圖文案 × 3 |
 | 6. 配音 | TTS 友善稿、聲線設定（不使用對嘴角色） |
-| 6.5 一鍵產生影片 | `scripts/build/build.py`：依腳本＋畫面規格一次輸出影片（配音、逐步出現的圖卡、平順推近、溶接、背景音樂、中英字幕、章節、品質報告） |
-| 7. 發布 | 剪輯規範、免費授權的柔和配樂、中英雙字幕上傳、播放清單與結束畫面導流、發布檢查 |
+| 6.5 一鍵產生影片 | `scripts/build/build.py`：依腳本＋畫面規格一次輸出影片（Gemini TTS 配音並自動清除頭尾雜訊、41 種圖卡含全幅照片、9 種教學模擬動畫、運鏡、7 種電影轉場、電影黑邊、配樂依相似度剪接、中英字幕、章節、品質報告）；`--voice timing` 可在沒有配音時先看畫面預覽 |
+| 7. 發布 | 剪輯規範、免費授權配樂（查 Content ID）、中英雙字幕上傳、播放清單與結束畫面導流、發布檢查 |
+| 7.5 臉書宣傳文 | 影片完成時自動一起做：中英文活潑文案、1200×630 分享圖（`fb_cover.py`）、一鍵複製頁（`fb_post.py`），放在 `3_製作後/臉書宣傳/` |
 | 8. 發布後 SEO 優化 | 點閱率、流量來源、搜尋字詞報表 → 調整標題、說明欄、縮圖 |
 
 ## Papaya 風格 30 秒速記
@@ -47,9 +48,11 @@ papaya-style-video/
 │   ├── topic_radar.py       抓 GitHub、Hugging Face、Hacker News 熱度原始資料
 │   ├── seo_keywords.py      YouTube 搜尋建議＋競爭分析（SEO 關鍵字研究）
 │   ├── md2txt.py            上架文案 .txt＋YouTube標記.txt＋置頂留言.txt
-│   └── build/               一鍵產生影片：build.py、cards_lib.py（40 種圖卡版型）、say_batch.ps1
+│   ├── fb_cover.py          臉書分享圖 1200×630
+│   ├── fb_post.py           臉書文一鍵複製頁（中英雙語；上傳後可代入 YouTube 網址）
+│   └── build/               一鍵產生影片：build.py、cards_lib.py（41 種圖卡版型）、anims_lib.py（教學模擬動畫）、say_batch.ps1
 └── references/
-    ├── build-pipeline.md    一鍵產生影片：指令、畫面規格格式、版型一覽、配音與額度
+    ├── build-pipeline.md    一鍵產生影片：指令、畫面規格格式、版型一覽、配音與額度、電影預告片風格、雜音／晃動／重疊的檢查方法
     ├── intro-spec.md        黑熊老師品牌片頭規格（含透明版、縮到角落版、浮水印）
     ├── production-notes.md  自動粗剪、浮水印規則、常見陷阱與品質檢查
     ├── topic-radar.md       選題雷達：來源清單、步驟、報告格式
@@ -90,6 +93,12 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 幫這支影片產生 5 個標題、說明欄和 3 組縮圖文案。
 ```
 ```
+用電影預告片的風格，加上教學模擬動畫，把這份腳本和分鏡圖做成影片。
+```
+```
+影片做好了，幫我做臉書宣傳文。
+```
+```
 把定稿腳本同步產生中英對照逐字稿，再把 zh-TW.srt 轉成英文 SRT。
 ```
 
@@ -97,6 +106,16 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 
 本技能只歸納公開影片的**結構、節奏與風格規律**，供學習與創作參考。
 不包含也不應使用 Papaya 電腦教室的 Logo、片頭動畫、音樂或縮圖素材；請建立自己的品牌資產。
+
+## 最近更新
+
+| 版本 | 日期 | 重點 |
+|------|------|------|
+| 1.12.0 | 2026-10-01 | 臉書宣傳文：影片完成時一起產生中英文案、分享圖、一鍵複製頁 |
+| 1.11.1 | 2026-10-01 | 修正 TTS 頭尾雜訊、轉場凍結造成的頓挫、字卡與動畫重疊；配樂依頻譜相似度跳接 |
+| 1.11.0 | 2026-10-01 | 電影預告片風格（運鏡、轉場、黑邊）、全幅照片版型、9 種教學模擬動畫、timing 預覽 |
+
+實作範例：《讓數位工具走進科學探究》（2026-10-07 蓮潭國小研習引起動機影片）
 
 ## 版本
 
