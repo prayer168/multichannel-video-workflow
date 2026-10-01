@@ -82,6 +82,7 @@ def gemini_scene(text, style, voice, model, key):
     with urllib.request.urlopen(req, timeout=600) as r:
         resp = json.load(r)
     part = resp["candidates"][0]["content"]["parts"][0]["inlineData"]
+    # 註：有時資料前面帶 WAV 標頭、或頭尾有非語音的位元組，會變成喀聲／滿格雜訊 → 在 clean_tts() 清掉
     rate = int(re.search(r"rate=(\d+)", part.get("mimeType", "")).group(1)) if "rate=" in part.get("mimeType", "") else 24000
     return base64.b64decode(part["data"]), rate
 
@@ -133,6 +134,26 @@ def voice_gemini(lines, titles, scene_dir, cfg):
     return True
 
 
+def clean_tts(y, sr, name=""):
+    """清掉 TTS 音檔頭尾的雜訊（2026-10-01 實測：Gemini 每個檔案開頭 10 ms 喀聲、結尾約 130 ms 滿格雜訊）
+    做法：以 10 ms 為單位看峰值；開頭若一開始就很大聲、接著安靜 → 歸零；結尾連續大聲且前面是安靜 → 剪掉；再加 5 ms 淡入淡出"""
+    h = int(0.01 * sr); n = len(y) // h
+    pk = 20 * np.log10(np.abs(y[: n * h]).reshape(n, h).max(1) + 1e-9)
+    notes = []
+    k = 0
+    while k < min(n, 5) and pk[k] > -12: k += 1                      # 開頭的喀聲／突波
+    if 0 < k < 5 and pk[k] < -35:
+        y = y.copy(); y[: (k + 1) * h] = 0; notes.append(f"開頭 {k * 10} ms 突波")
+    j = n
+    while j > 0 and pk[j - 1] > -6: j -= 1                          # 結尾的滿格雜訊
+    if j < n and (n - j) <= 40 and j > 0 and pk[max(0, j - 5): j].max() < -30:
+        y = y[: j * h]; notes.append(f"結尾 {(n - j) * 10} ms 滿格雜訊")
+    f = int(0.005 * sr); r = np.linspace(0, 1, f, dtype=np.float32)
+    y = y.astype(np.float32).copy(); y[:f] *= r; y[-f:] *= r[::-1]
+    if notes: log(f"清理 TTS {name}：" + "、".join(notes))
+    return y
+
+
 def split_scenes(lines, titles, scene_dir, out):
     """分場音檔 → 逐句（依停頓位置＋每句字數，用動態規劃找切點）；一個音檔可以包含多幕"""
     os.makedirs(out, exist_ok=True)
@@ -148,6 +169,7 @@ def split_scenes(lines, titles, scene_dir, out):
         tmp = os.path.join(out, f"_{sid}.wav")
         run(["ffmpeg", "-y", "-v", "error", "-i", path, "-ar", str(SR), "-ac", "1", tmp])
         y, _ = sf.read(tmp, dtype="float32"); os.remove(tmp)
+        y = clean_tts(y, SR, sid)
         hop = 0.01; h = int(hop * SR)
         db = 20 * np.log10(np.sqrt(np.mean(y[: len(y) // h * h].reshape(-1, h) ** 2, axis=1) + 1e-12))
         silent = db < max(db.max() - 38, -50); voiced = np.flatnonzero(~silent); lo, hi = voiced[0], voiced[-1]
@@ -203,6 +225,9 @@ def build_narration(lines, line_dir, work, intro_len, pause=None):
                  "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.03,areverse,"
                  "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.06,areverse", "-ar", str(SR), "-ac", "1", tw_])
         y, _ = sf.read(tw_, dtype="float32")
+        fz = min(len(y) // 4, int(0.005 * SR))                    # 每句頭尾 5 ms 淡入淡出，避免接縫喀聲
+        if fz > 0:
+            rr = np.linspace(0, 1, fz, dtype=np.float32); y = y.copy(); y[:fz] *= rr; y[-fz:] *= rr[::-1]
         L["start"], L["end"] = t, t + len(y) / SR
         audio.append(y); t = L["end"]
         g = GAP_STOP if L["text"][-1] in "。！？" else GAP
@@ -310,7 +335,8 @@ def _cam_params(cam, u):
         z = 1.03 + 0.08 * u; m = (1 - 1 / z) * W / 2 * 0.8; x = m * u * (1 if cam == "push_r" else -1); y = 0
     elif cam == "still": z, x, y = 1.0, 0, 0
     else: z, x, y = 1 + ZOOM * u, 0, 0               # 圖卡預設：緩慢推近
-    return z, x, y
+    mx, my = (1 - 1 / z) * W / 2, (1 - 1 / z) * H / 2   # 轉場延長時不能露出畫面外的黑邊
+    return z, max(-mx, min(mx, x)), max(-my, min(my, y))
 
 
 def _camera(png, z, dx, dy):
@@ -335,18 +361,21 @@ def _fade_fg(fg, a, slide):
     return lay
 
 
-def _card_frame(s, f):
+def _card_frame(s, f, fg_alpha=1.0):
     n = s["f1"] - s["f0"]; i = f - s["f0"]; t = f / FPS
-    z, dx, dy = _cam_params(s.get("cam"), i / max(n, 1))
+    u = i / max(n, 1)
+    if u > 1: u = 1 + (u - 1) * 0.6                   # 轉場時稍微延續原本的運鏡（不凍結）
+    z, dx, dy = _cam_params(s.get("cam"), min(u, 1.08))
     vs = s["variants"]; k = max(j for j, (ts, _) in enumerate(vs) if ts <= t + 1e-9) if t >= vs[0][0] else 0
     if s.get("photo"):                                # 照片運鏡、文字固定
         im = _camera(vs[0][1], z, dx, dy).convert("RGBA")
         a0 = (t - s["t0"] - 0.35) / 0.55              # 第一個狀態：鏡頭開始後淡入
-        if k == 0: im.alpha_composite(_fade_fg(_fg(vs[0][1]), max(0.0, min(1.0, a0)), 24))
+        if fg_alpha <= 0: return im.convert("RGB")      # 轉場中舊鏡頭的文字已淡出
+        if k == 0: im.alpha_composite(_fade_fg(_fg(vs[0][1]), max(0.0, min(1.0, a0)) * fg_alpha, 24))
         else:
             a = (t - vs[k][0]) / 0.45
-            if a < 1: im.alpha_composite(_fg(vs[k - 1][1]))
-            im.alpha_composite(_fade_fg(_fg(vs[k][1]), max(0.0, min(1.0, a)), 18))
+            if a < 1: im.alpha_composite(_fade_fg(_fg(vs[k - 1][1]), fg_alpha, 0))
+            im.alpha_composite(_fade_fg(_fg(vs[k][1]), max(0.0, min(1.0, a)) * fg_alpha, 18))
         return im.convert("RGB")
     im = _camera(vs[k][1], z, dx, dy)
     if k > 0 and t - vs[k][0] < XFADE:              # 逐步出現：新狀態淡入
@@ -358,8 +387,8 @@ def _anim_frame(s, f):
     return anims_lib.frame(s["p"], f / FPS - s["t0"], s["t1"] - s["t0"], s["ev"])
 
 
-def _shot_frame(s, f):
-    return _anim_frame(s, f) if s["kind"] == "anim" else _card_frame(s, f)
+def _shot_frame(s, f, fg_alpha=1.0):
+    return _anim_frame(s, f) if s["kind"] == "anim" else _card_frame(s, f, fg_alpha)
 
 
 def _video_frames(s):
@@ -376,7 +405,7 @@ def _video_frames(s):
     p.stdout.close(); p.wait()
 
 
-TRANS_LEN = dict(dissolve=0.35, whip_l=0.42, whip_r=0.42, flash=0.45, zoom=0.5, dip=0.7, leak=0.8, cut=0)
+TRANS_LEN = dict(dissolve=0.35, whip_l=0.42, whip_r=0.42, flash=0.45, zoom=0.5, dip=0.7, leak=0.55, cut=0)
 LB_H, LB_RAMP = 112, 0.6
 _leak_cache = {}
 
@@ -411,14 +440,13 @@ def _transition(kind, prev, cur, q):
     if kind == "flash":
         white = Image.new("RGB", (W, H), (255, 252, 240))
         return Image.blend(prev, white, min(1, q * 2.2)) if q < 0.45 else Image.blend(white, cur, min(1, (q - 0.45) / 0.55))
-    if kind == "zoom":
-        e = q * q * (3 - 2 * q)
-        a = prev.resize((int(W * (1 + e * 0.6)), int(H * (1 + e * 0.6))), Image.BILINEAR)
-        a = a.crop(((a.width - W) // 2, (a.height - H) // 2, (a.width - W) // 2 + W, (a.height - H) // 2 + H))
-        zb = 1.25 - 0.25 * e
-        b = cur.resize((int(W * zb), int(H * zb)), Image.BILINEAR)
-        b = b.crop(((b.width - W) // 2, (b.height - H) // 2, (b.width - W) // 2 + W, (b.height - H) // 2 + H))
-        return Image.blend(a, b, e)
+    if kind == "zoom":                                # 前半：舊畫面加速推進；後半：新畫面從放大退回；只在中點 2 格交疊
+        def zc(img, z):
+            z = max(1.0, z); a = img.resize((int(W * z), int(H * z)), Image.BILINEAR)
+            return a.crop(((a.width - W) // 2, (a.height - H) // 2, (a.width - W) // 2 + W, (a.height - H) // 2 + H))
+        if q < 0.45: return zc(prev, 1 + 0.35 * (q / 0.45) ** 2)
+        if q > 0.55: return zc(cur, 1 + 0.25 * (1 - (q - 0.55) / 0.45) ** 2)
+        return Image.blend(zc(prev, 1.35), zc(cur, 1.25), (q - 0.45) / 0.1)
     if kind == "dip":
         black = Image.new("RGB", (W, H))
         return Image.blend(prev, black, min(1, q * 2)) if q < 0.5 else Image.blend(black, cur, (q - 0.5) * 2)
@@ -449,18 +477,20 @@ def render_part(args):
         kind = s.get("trans", "dissolve")
         can = prev is not None and prev["kind"] in ("card", "anim") and s["kind"] in ("card", "anim") and kind != "cut"
         if prev is not None and prev["kind"] == "video" and s["kind"] != "video" and kind != "cut": kind, can = "dissolve", True
-        last_prev = None
+        last_prev = None; prev_moving = False
         if can:
             if prev["kind"] == "video":
                 last_prev = None
                 for last_prev in _video_frames(dict(prev, f0=prev["f1"] - 1, ss=max(0, prev.get("ss", 0) + (prev["f1"] - prev["f0"] - 1) / FPS), loop=False)): pass
             else:
-                last_prev = _shot_frame(prev, prev["f1"] - 1)
+                last_prev = _shot_frame(prev, prev["f1"] - 1); prev_moving = True
         nt = int(TRANS_LEN.get(kind, 0.35) * FPS)
         frames = _video_frames(s) if s["kind"] == "video" else (_shot_frame(s, f) for f in range(s["f0"], s["f1"]))
         for j, im in enumerate(frames):
             if last_prev is not None and j < nt:
-                im = _transition(kind, last_prev, im, (j + 1) / (nt + 1))
+                q = (j + 1) / (nt + 1)
+                pf = _shot_frame(prev, prev["f1"] + j, max(0.0, 1 - 3 * q)) if prev_moving else last_prev   # 舊鏡頭繼續運鏡；字卡在前 1/3 淡出，避免兩張字卡重疊
+                im = _transition(kind, pf, im, (j + 1) / (nt + 1))
             lb = _lb_value(shots, si, (s["f0"] + j) / FPS)
             h = int(LB_H * lb)
             if lb > 0:
@@ -502,18 +532,30 @@ def fit_bgm(src, dst, length, fit, work):
     run(["ffmpeg", "-y", "-v", "error", "-i", src, "-ar", str(SR), "-ac", "2", tmp])
     y, _ = sf.read(tmp, dtype="float32"); os.remove(tmp)
     bar, xf = fit.get("bar", 1.7266), fit.get("xfade", 1.2)
-    lf, lt, tf = fit["loop_from"], fit["loop_to"], fit["tail_from"]
-    tail = len(y) / SR - tf; need = length - tail
-    if need <= tf:
-        c = tf - math.ceil((tf - need) / bar) * bar
-        segs, pad = [(0.0, c)], need - c
-    else:
-        segs, cur = [(0.0, lt)], lt
-        while need - cur > lt - lf: segs.append((lf, lt)); cur += lt - lf
-        k = int((need - cur) / bar)
-        if k: segs.append((lt - k * bar, lt)); cur += k * bar
-        pad = need - cur
-    segs.append((tf, len(y) / SR))
+    dur = len(y) / SR
+    if fit.get("jumps"):
+        # 跳接模式：在「音樂真的重複」的位置跳回去（用頻譜自我相似度找到的接點），其餘照原曲播完
+        # jumps: [[在第幾秒, 跳回第幾秒], ...]；多出／不足的長度用前奏補（開頭留白或從前奏中間開始）
+        segs, cur = [], 0.0
+        for a, b in fit["jumps"]:
+            segs.append((cur, a)); cur = b
+        segs.append((cur, dur))
+        total_len = sum(e - s for s, e in segs)
+        pad = length - total_len
+        if pad < 0: segs[0] = (min(segs[0][1] - 1, -pad), segs[0][1]); pad = 0.0
+    else:                                              # 循環模式（舊）：中段依小節循環、最後一段對齊片尾
+        lf, lt, tf = fit["loop_from"], fit["loop_to"], fit["tail_from"]
+        need = length - (dur - tf)
+        if need <= tf:
+            c = tf - math.ceil((tf - need) / bar) * bar
+            segs, pad = [(0.0, c)], need - c
+        else:
+            segs, cur = [(0.0, lt)], lt
+            while need - cur > lt - lf: segs.append((lf, lt)); cur += lt - lf
+            k = int((need - cur) / bar)
+            if k: segs.append((lt - k * bar, lt)); cur += k * bar
+            pad = need - cur
+        segs.append((tf, dur))
     n = int(xf * SR); ramp = np.sin(np.linspace(0, np.pi / 2, n))[:, None]
     out = y[int(segs[0][0] * SR): int(segs[0][1] * SR)]
     for s0, e0 in segs[1:]:
@@ -575,7 +617,7 @@ def mix_audio(root, work, cfg, total, intro_len, sfx=None):
     nar, norm = os.path.join(work, "narration.wav"), os.path.join(work, "narration_norm.wav")
     gain = -14 - measure_i(nar)
     for _ in range(2):
-        run(["ffmpeg", "-y", "-v", "error", "-i", nar, "-af", f"volume={gain:.2f}dB,alimiter=limit=0.84:level=false", "-ar", str(SR), norm])
+        run(["ffmpeg", "-y", "-v", "error", "-i", nar, "-af", f"volume={gain:.2f}dB,deesser=i=0.35:m=0.5:f=0.5,alimiter=limit=0.84:level=false", "-ar", str(SR), norm])   # 輕度去齒音（ㄙ、ㄕ太亮會刺耳）
         gain += -14 - measure_i(norm)
     body = total - intro_len
     bgm = os.path.join(work, "bgm.wav")

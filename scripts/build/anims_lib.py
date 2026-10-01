@@ -24,7 +24,7 @@ def ease(x):
 def back(x):
     """回彈（超過一點再回來）"""
     if x <= 0: return 0.0
-    x = clamp(x); c = 1.70158
+    x = clamp(x); c = 0.9                             # 回彈幅度（原 1.70 太晃）
     return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2
 
 
@@ -247,7 +247,7 @@ def a_poll(p, t, dur, ev):
         ctext(d, 1530, 200, "他為什麼這樣想？", font(56), GOLD)
     # 即時溫度計
     e2 = ev_at(ev, 1, dur * 0.7)
-    a = prog(t, e2, 0.4)
+    a = clamp((t - e2) / 0.36)                        # 先淡出舊版面、再淡入新版面（不同時疊在一起）
     if a > 0:
         im2 = dark_bg("poll").copy(); d2 = ImageDraw.Draw(im2)
         tx = 1500
@@ -264,7 +264,8 @@ def a_poll(p, t, dur, ev):
         # 左半邊縮小保留長條圖
         small = im.crop((100, 260, 1200, 900)).resize((770, 448), Image.LANCZOS)
         im2.paste(small, (120, 330))
-        im = Image.blend(im, im2, a)
+        bg = dark_bg("poll")
+        im = Image.blend(im, bg, a * 2) if a < 0.5 else Image.blend(bg, im2, (a - 0.5) * 2)
     return im
 
 
@@ -309,7 +310,7 @@ def a_wall(p, t, dur, ev):
         a = back((t - e) / 0.6)
         if a <= 0: continue
         x = x0 + g * (cw + gx); y = y0 + 90 + k * 214
-        sy = y + 260 * (1 - clamp(a)) ; sx = x + jx * 200 * (1 - clamp(a))
+        sy = y + 120 * (1 - clamp(a)) ; sx = x + jx * 40 * (1 - clamp(a))
         cc = c if a >= 1 else c.resize((max(1, int(cw * (0.6 + 0.4 * min(a, 1.05)))), max(1, int(190 * (0.6 + 0.4 * min(a, 1.05))))))
         paste_alpha(im, cc, (sx + (cw - cc.width) / 2, sy + (190 - cc.height) / 2), clamp(a * 1.5))
     return im
@@ -380,19 +381,25 @@ def a_sort(p, t, dur, ev):
         _bin_icon(d, kind, x + 30, by + 100, bw - 60, 120)
     placed = [0] * 4
     start = 0.8; step = max(0.55, (dur - start - 1.0) / len(items))
-    for j, (name, b) in enumerate(items):
+    flying = [j for j in range(len(items)) if 0 < ease((t - start - j * step) / (step * 0.8)) < 1]
+    order = [j for j in range(len(items)) if j not in flying] + flying
+    slot = {}
+    for j, (name, b) in enumerate(items):               # 先算好每張卡落點（依原順序）
+        if ease((t - start - j * step) / (step * 0.8)) >= 1 or j in flying: slot[j] = placed[b]; placed[b] += 1
+    placed = [0] * 4
+    for j in order:
+        name, b = items[j]
         e = start + j * step; a = ease((t - e) / (step * 0.8))
         sx, sy = 240 + (j % 4) * 400, 250 + (j // 4) * 120
-        tx, ty = bx0 + b * (bw + 40) + 40 + (placed[b] % 2) * 160, by + 250 + (placed[b] // 2) * 80
+        sl = slot.get(j, 0)
+        tx, ty = bx0 + b * (bw + 40) + 40 + (sl % 2) * 160, by + 250 + (sl // 2) * 80
         x = sx + (tx - sx) * a; y = sy + (ty - sy) * a - math.sin(a * math.pi) * 120
         f = font(40 if a < 1 else 34); wdt = tw(d, name, f)[0] + 40
         d.rounded_rectangle([x, y, x + wdt, y + 64], radius=16, fill=WHITE if a < 1 else (230, 245, 235), outline=C.PALETTE[b] if a >= 1 else LGRAY, width=4)
         d.text((x + 20, y + 10), name, font=f, fill=INK)
         if 0 < a < 1:                                    # 拖曳中的手指游標
             d.ellipse([x + wdt - 20, y + 40, x + wdt + 14, y + 74], fill=(255, 255, 255), outline=INK, width=3)
-        if a >= 1:
-            placed[b] += 1
-            if t - e - step * 0.8 < 0.5: C.mark(d, x + wdt + 5, y + 5, 22, True)
+        if a >= 1 and t - e - step * 0.8 < 0.5: C.mark(d, x + wdt + 5, y + 5, 22, True)
     return im
 
 
@@ -405,14 +412,20 @@ def a_variables(p, t, dur, ev):
     a_out = prog(t, e0, 0.5)
     if a_out < 1:
         title_bar(im, d, "重新排列實驗步驟", prog(t, 0, 0.6) * (1 - a_out), 140)
+        # 所有卡片同時移動：往上的從右側繞、往下的從左側繞、不動的留在原位 → 卡片不會互相重疊
+        k = ease((t - 0.9) / max(0.8, e0 - 1.6))
+        cw = 760; x0 = (W - cw) / 2
         for idx, s in enumerate(steps):
             y_from = 280 + shuffled.index(idx) * 150; y_to = 280 + idx * 150
-            k = ease((t - 0.9 - idx * 0.35) / 0.8); y = y_from + (y_to - y_from) * k
-            x = 460 + math.sin(k * math.pi) * 60
-            d.rounded_rectangle([x, y, x + 1000, y + 120], radius=24, fill=(250, 251, 253), outline=GREEN if k >= 1 else LGRAY, width=5)
-            d.ellipse([x + 24, y + 24, x + 96, y + 96], fill=GREEN if k >= 1 else GRAY)
-            ctext(d, x + 60, y + 30, str(idx + 1) if k >= 1 else "?", font(44), WHITE)
-            d.text((x + 130, y + 30), s, font=font(52), fill=INK)
+            side = 0 if y_to == y_from else (1 if y_to < y_from else -1)
+            ka, kb, kc = ease(k / 0.3), ease((k - 0.3) / 0.4), ease((k - 0.7) / 0.3)   # 側移 → 上下 → 歸位
+            y = y_from + (y_to - y_from) * kb
+            x = x0 + side * 430 * (ka - kc)
+            done = k >= 1
+            d.rounded_rectangle([x, y, x + cw, y + 120], radius=24, fill=(250, 251, 253), outline=GREEN if done else LGRAY, width=5)
+            d.ellipse([x + 24, y + 24, x + 96, y + 96], fill=GREEN if done else GRAY)
+            ctext(d, x + 60, y + 30, str(idx + 1) if done else "?", font(44), WHITE)
+            d.text((x + 130, y + 30), s, font=C.fit(d, s, 52, cw - 160), fill=INK)
         if a_out > 0: im = Image.blend(im, dark_bg("var"), a_out)
     if t >= e0:
         d = ImageDraw.Draw(im)
@@ -463,14 +476,15 @@ def a_dashboard(p, t, dur, ev):
             a = prog(t, 0.3 + (s * len(cols) + c) * 0.012, 0.3)
             v = lv[s][c]; colr = RED if v < .4 else (GOLD if v < .7 else GREEN)
             colr = tuple(int(30 + (q - 30) * a) for q in colr)
-            if mv < 1: d.rectangle([x0 + c * cw + 4, y + 3, x0 + (c + 1) * cw - 4, y + rh - 3], fill=colr)
-        if mv < 1: d.text((x0 - 120, y - 2), f"{s + 1:02d} 號", font=font(26, False), fill=(170, 190, 215))
-    if t > e0 and mv < 1:                                   # 需要重新說明的概念
+            fade = clamp(1 - mv * 2.5)                     # 學生開始分流時，熱度圖先淡出
+            if fade > 0: d.rectangle([x0 + c * cw + 4, y + 3, x0 + (c + 1) * cw - 4, y + rh - 3], fill=tuple(int(14 + (q - 14) * fade) for q in colr))
+        if mv < 0.4: d.text((x0 - 120, y - 2), f"{s + 1:02d} 號", font=font(26, False), fill=tuple(int(v * clamp(1 - mv * 2.5)) for v in (170, 190, 215)))
+    if t > e0 and mv < 0.4:                                 # 需要重新說明的概念
         weak = min(range(len(cols)), key=lambda c: sum(lv[s][c] for s in range(n)))
         pul = 4 + 2 * math.sin((t - e0) * 6)
         d.rounded_rectangle([x0 + weak * cw - 6, y0 - 70, x0 + (weak + 1) * cw + 6, y0 + n * rh + 6], radius=10, outline=GOLD, width=int(pul))
         ctext(d, x0 + weak * cw + cw / 2, y0 + n * rh + 20, "需要重新說明", font(38), GOLD)
-    if t > e1 and mv < 1:
+    if t > e1 and mv < 0.4:
         for s in range(n):
             if group(s) == 0: d.rectangle([x0 - 130, y0 + s * rh + 2, x0 - 10, y0 + (s + 1) * rh - 2], outline=RED, width=3)
     if mv > 0:                                               # 學生分流到差異化任務
@@ -488,8 +502,8 @@ def a_dashboard(p, t, dur, ev):
             x, y = sx + (tx - sx) * a, sy + (ty - sy) * a
             d.rounded_rectangle([x, y, x + 70, y + 38], radius=12, fill=gcol[g])
             ctext(d, x + 35, y + 2, f"{s + 1}", font(26), WHITE if g != 1 else INK)
-        if mv >= 1 or True:
-            aa = prog(t, e2 + 0.6, 0.6)
+        if mv >= 1:                                       # 熱度圖完全消失、學生都到位後才出現結論字
+            aa = prog(t, e2 + 1.25, 0.5)
             ctext(d, 640, 520, "同一個概念", font(64), tuple(int(v * aa) for v in WHITE))
             ctext(d, 640, 620, "不同的下一步", font(64), tuple(int(v * aa) for v in GOLD))
     return im
