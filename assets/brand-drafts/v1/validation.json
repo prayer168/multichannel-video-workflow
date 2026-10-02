@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "videos": [
+    {
+      "file": "assets/brand-drafts/v1/ai-watch/intro_draft.mp4",
+      "duration": "4.000000",
+      "video_codec": "h264",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "assets/brand-drafts/v1/ai-watch/outro_draft.mp4",
+      "duration": "6.000000",
+      "video_codec": "h264",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "assets/brand-drafts/v1/blackbear-science/outro_draft.mp4",
+      "duration": "6.000000",
+      "video_codec": "h264",
+      "audio_codec": "aac"
+    }
+  ],
+  "watermark": "RGBA 1920x1080 with transparent background",
+  "audio": "48kHz 16-bit mono"
+}

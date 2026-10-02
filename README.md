@@ -3,7 +3,7 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 1.13.1（2026-10-02）
+**Version:** 1.14.2（2026-10-02）
 
 ---
 
@@ -99,6 +99,12 @@ repo 名稱與技能 frontmatter `name: papaya-style-video` 是兩件事。為�
 
 ## 品牌素材與程式限制
 
+自然教室已完成 [v3 熊掌片尾草案](assets/brand-drafts/v3/README.md)：依使用者截圖參考清理重建，非原始 Logo 檔，待對照核定。
+
+最新 [v2 主題片尾](assets/brand-drafts/v2/README.md)：AI Watch 趨勢、工具、Coding、開源四版，品牌一致而文案／CTA 分題材。自然教室 v1 葉片方案已淘汰；已有 v3 截圖參考熊掌重建片尾，原始高解析圖檔仍待提供。
+
+已補製 [品牌素材草案 v1](assets/brand-drafts/v1/README.md)：AI Watch 的 Logo、片頭片尾、獨立音訊、浮水印與原創音床，以及自然教室片尾；全部待核定。可用 scripts/create_brand_drafts.py 重製，manifest.json 記錄檔案，validation.json 記錄驗證。下列缺口指正式核定素材，不能把草案當成已核定。
+
 自然教室片頭文件記載路徑為 `04_品牌資產/片頭動畫/黑熊老師片頭_4s.mp4`；片頭音訊及浮水印見 `references/intro-spec.md`。這些外部檔案未附 repo，存在與授權仍需確認；自然教室片尾【待提供】。AI Watch 片頭、片尾、聲音、Logo、色彩、浮水印與品牌配樂【待建立／核定】。
 
 `build.py` 實際要求 `intro`、`intro_audio`、`watermark`、`bgm` 檔案，不支援 `outro`／`outro_audio` 或自動讀取 profiles。片尾可作最後一幕的畫面，但完整影音／長度需後製接入。無品牌預覽也須建立真實中性或靜音／透明檔案；不能拿待建立文字當路徑。詳見 `references/build-pipeline.md`。
@@ -161,6 +167,9 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 1.14.2 | 2026-10-02 | 依影片截圖完成熊掌片尾重建草案，待核定 |
+| 1.14.1 | 2026-10-02 | AI Watch 四種主題片尾；自然教室改用原熊掌，等待素材 |
+| 1.14.0 | 2026-10-02 | 新增分頻道原創品牌素材草案與重製腳本；待核定，保留正式素材缺口 |
 | 1.13.1 | 2026-10-02 | 完成多頻道規則查漏、製作器實際素材欄位與片尾限制、品牌缺口及改名相容說明；Facebook 複製頁支援頻道識別與選用英文 |
 | 1.13.0 | 2026-10-02 | 新增自然教室與 AI 觀測站兩個頻道設定檔、頻道路由與品牌資產隔離規則；標題、旁白節奏與英文素材改為依頻道設定，不再一律套用同一品牌 |
 | 1.12.1 | 2026-10-01 | 臉書發文方式說明（避免貼出後沒有縮圖） |
@@ -178,4 +187,4 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 執行 `python -X utf8 -m unittest discover -s tests -v` 驗證 Facebook 頻道頁尾、無英文輸入、HTML 跳脫、連結更新與原稿／多次匯出保留；執行 `python -X utf8 -m compileall -q scripts tests` 檢查 Python 語法。文件以版本比對、資源路徑／連結、表格欄位、程式碼區塊、舊規則搜尋與 `git diff --check` 檢查。
 
-本次沒有執行 Gemini API 配音、完整影片渲染或平台發布；外部品牌素材未找到實檔，素材狀態已據實標示。原有 build、TTS、字幕、SEO、上架文字轉換與熊掌分享圖程式均保留。
+1.13.1 更新未執行 Gemini API 配音、完整教學影片渲染或平台發布；1.14.0 已實際生成並驗證三支品牌短片草案，未執行旁白 API 或發布。外部品牌素材未找到實檔，素材狀態已據實標示。原有 build、TTS、字幕、SEO、上架文字轉換與熊掌分享圖程式均保留。

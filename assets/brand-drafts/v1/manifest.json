@@ -1,0 +1,17 @@
+{
+  "status": "draft_pending_approval",
+  "created": "2026-10-02",
+  "provenance": "Original code-native graphics and synthesized audio; no third-party assets",
+  "ai-watch": {
+    "intro": "ai-watch/intro_draft.mp4",
+    "intro_len": 4,
+    "intro_audio": "ai-watch/intro_audio_draft.wav",
+    "watermark": "ai-watch/watermark_draft.png",
+    "bgm": "ai-watch/bgm_draft.wav",
+    "outro_postproduction": "ai-watch/outro_draft.mp4"
+  },
+  "blackbear-science": {
+    "outro_postproduction": "blackbear-science/outro_draft.mp4",
+    "intro": "Existing approved intro remains external; file not confirmed"
+  }
+}

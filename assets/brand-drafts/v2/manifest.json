@@ -1,0 +1,24 @@
+{
+  "status": "draft_pending_approval",
+  "created": "2026-10-02",
+  "provenance": "Original code-native graphics and synthesized audio; no third-party assets",
+  "ai-watch": {
+    "intro": "ai-watch/intro_draft.mp4",
+    "intro_len": 4,
+    "intro_audio": "ai-watch/intro_audio_draft.wav",
+    "watermark": "ai-watch/watermark_draft.png",
+    "bgm": "ai-watch/bgm_draft.wav",
+    "outro_postproduction": "ai-watch/outro_draft.mp4",
+    "outro_variants": {
+      "trends": "ai-watch/outros/trends/outro_draft.mp4",
+      "tools": "ai-watch/outros/tools/outro_draft.mp4",
+      "coding": "ai-watch/outros/coding/outro_draft.mp4",
+      "opensource": "ai-watch/outros/opensource/outro_draft.mp4"
+    }
+  },
+  "blackbear-science": {
+    "outro_postproduction": null,
+    "status": "pending_approved_paw_logo_file",
+    "intro": "Existing approved intro remains external; file not confirmed"
+  }
+}
