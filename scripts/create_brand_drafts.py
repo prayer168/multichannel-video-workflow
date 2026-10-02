@@ -18,6 +18,12 @@ from PIL import Image, ImageDraw, ImageFont
 W, H, FPS, SR = 960, 540, 30, 48000
 AI = {'bg': '#101626', 'fg': '#F5F8FF', 'accent': '#58E0CF', 'muted': '#A5B2CB'}
 SCI = {'bg': '#091D38', 'fg': '#FFFFFF', 'accent': '#FFD166', 'muted': '#BED6DD'}
+THEMES = {
+    'trends': ('看懂這次更新，再決定怎麼用', '留言分享：下一個想追蹤的 AI 趨勢？'),
+    'tools': ('實際試過，才知道適不適合你', '留言分享：你最想測試哪個功能？'),
+    'coding': ('把概念寫成程式，把程式做成作品', '留言分享：你卡在哪個開發步驟？'),
+    'opensource': ('讀懂專案，親手驗證，再開始使用', '留言分享：下一個想拆解的開源專案？'),
+}
 
 
 def text(d, xy, value, size, color, font, anchor='mm'):
@@ -45,7 +51,7 @@ def leaf(d, x, y, color):
     d.line((x, y-22, x+19, y-40), fill=color, width=3)
 
 
-def frame(channel, kind, t, duration, font):
+def frame(channel, kind, t, duration, font, theme=None, blackbear_logo=None):
     c = AI if channel == 'ai-watch' else SCI
     im = Image.new('RGB', (W, H), c['bg'])
     d = ImageDraw.Draw(im)
@@ -56,8 +62,14 @@ def frame(channel, kind, t, duration, font):
         title, subtitle = 'AI 觀測站', 'AI WATCH'
         message = '看懂 AI 變化，親手做出能用的工具' if kind == 'intro' else '把概念變成作品，下一次一起實測'
         cta = '留言分享：你想測試哪個工具或專案？'
+        if kind == 'outro' and theme:
+            message, cta = THEMES[theme]
     else:
-        leaf(d, 480, 168, c['accent'])
+        if blackbear_logo is None:
+            raise ValueError('Natural Classroom outro requires the approved paw logo file.')
+        badge = blackbear_logo.copy()
+        badge.thumbnail((120, 120), Image.Resampling.LANCZOS)
+        im.paste(badge, (480-badge.width//2, 168-badge.height//2), badge)
         title, subtitle = '黑熊老師的自然教室', '觀察 · 提問 · 探究'
         message = '把今天的發現，帶回生活裡'
         cta = '留言分享：你觀察到了什麼？'
@@ -98,7 +110,7 @@ def sound(path, duration, notes=None, bgm=False):
         out.writeframes(data.tobytes())
 
 
-def movie(directory, channel, kind, duration, font):
+def movie(directory, channel, kind, duration, font, theme=None, blackbear_logo=None):
     audio = directory / f'{kind}_audio_draft.wav'
     frequencies = [440, 660, 880] if channel == 'ai-watch' else [392, 494, 587]
     sound(audio, duration, list(zip([.35, .62, .9], frequencies)))
@@ -111,12 +123,12 @@ def movie(directory, channel, kind, duration, font):
     with subprocess.Popen(cmd, stdin=subprocess.PIPE) as proc:
         try:
             for n in range(round(duration*FPS)):
-                proc.stdin.write(frame(channel, kind, n/FPS, duration, font).tobytes())
+                proc.stdin.write(frame(channel, kind, n/FPS, duration, font, theme, blackbear_logo).tobytes())
         finally:
             proc.stdin.close()
         if proc.wait() != 0:
             raise RuntimeError(f'ffmpeg failed: {output}')
-    still = frame(channel, kind, 2, duration, font).resize((1920, 1080), Image.Resampling.LANCZOS)
+    still = frame(channel, kind, 2, duration, font, theme, blackbear_logo).resize((1920, 1080), Image.Resampling.LANCZOS)
     still.save(directory / f'{kind}_still_draft.png')
     print(output, flush=True)
 
@@ -125,11 +137,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--font', type=Path, default=Path('C:/Windows/Fonts/msjhbd.ttc'))
+    ap.add_argument('--blackbear-logo', type=Path, help='Approved paw logo, matching the video watermark; no substitute icon')
     args = ap.parse_args()
     if args.out.exists():
         ap.error('Output directory already exists; choose a new versioned path.')
     if not shutil.which('ffmpeg') or not args.font.is_file():
         ap.error('ffmpeg and a valid font are required.')
+    blackbear_logo = None
+    if args.blackbear_logo:
+        blackbear_logo = Image.open(args.blackbear_logo).convert('RGBA')
     args.out.mkdir(parents=True)
     ai, sci = args.out/'ai-watch', args.out/'blackbear-science'
     ai.mkdir(); sci.mkdir()
@@ -146,7 +162,12 @@ def main():
     wm.save(ai/'watermark_draft.png')
     movie(ai, 'ai-watch', 'intro', 4, args.font)
     movie(ai, 'ai-watch', 'outro', 6, args.font)
-    movie(sci, 'blackbear-science', 'outro', 6, args.font)
+    for theme in THEMES:
+        folder = ai/'outros'/theme
+        folder.mkdir(parents=True)
+        movie(folder, 'ai-watch', 'outro', 6, args.font, theme=theme)
+    if blackbear_logo:
+        movie(sci, 'blackbear-science', 'outro', 6, args.font, blackbear_logo=blackbear_logo)
     sound(ai/'bgm_draft.wav', 16, bgm=True)
     manifest = {'status': 'draft_pending_approval', 'created': '2026-10-02',
                 'provenance': 'Original code-native graphics and synthesized audio; no third-party assets',
@@ -154,12 +175,17 @@ def main():
                              'intro_audio': 'ai-watch/intro_audio_draft.wav',
                              'watermark': 'ai-watch/watermark_draft.png', 'bgm': 'ai-watch/bgm_draft.wav',
                              'outro_postproduction': 'ai-watch/outro_draft.mp4'},
-                'blackbear-science': {'outro_postproduction': 'blackbear-science/outro_draft.mp4',
+                'blackbear-science': {'outro_postproduction': 'blackbear-science/outro_draft.mp4' if blackbear_logo else None,
+                                     'status': 'draft_pending_approval' if blackbear_logo else 'pending_approved_paw_logo_file',
                                      'intro': 'Existing approved intro remains external; file not confirmed'}}
+    manifest['ai-watch']['outro_variants'] = {key: f'ai-watch/outros/{key}/outro_draft.mp4' for key in THEMES}
     (args.out/'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     sheet = Image.new('RGB', (960, 900), '#EFF2F6')
-    for i, (ch, kind, seconds) in enumerate([('ai-watch','intro',4), ('ai-watch','outro',6), ('blackbear-science','outro',6)]):
-        panel = frame(ch, kind, 2, seconds, args.font).resize((480, 270))
+    panels = [('ai-watch','intro',4), ('ai-watch','outro',6)]
+    if blackbear_logo:
+        panels.append(('blackbear-science','outro',6))
+    for i, (ch, kind, seconds) in enumerate(panels):
+        panel = frame(ch, kind, 2, seconds, args.font, blackbear_logo=blackbear_logo).resize((480, 270))
         sheet.paste(panel, (240, 20+i*295))
     sheet.save(args.out/'review_draft.png')
 

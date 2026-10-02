@@ -2,6 +2,12 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.14.1] - 2026-10-02
+### Changed
+- AI Watch 增加趨勢、工具實測、Coding、開源四種主題片尾，保留一致的品牌骨架。
+- 自然教室片尾改為必須使用與右下角相同的熊掌原素材；v1 葉片草案淘汰，尚待原素材，不以替代圖示冒充。
+- 生成腳本新增 --blackbear-logo，未提供時跳過自然教室片尾。
+
 ## [1.14.0] - 2026-10-02
 ### Added
 - AI Watch 原創 Logo、4 秒片頭、6 秒片尾、獨立合成音訊、透明浮水印與 16 秒音床草案。
