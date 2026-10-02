@@ -1,0 +1,18 @@
+{
+  "status": "approved",
+  "approved_date": "2026-10-02",
+  "approval_scope": "Four AI Watch themed outros and Blackbear Science screenshot-reconstructed paw outro only",
+  "ai-watch": {
+    "outro_variants": {
+      "trends": "ai-watch/outros/trends/outro.mp4",
+      "tools": "ai-watch/outros/tools/outro.mp4",
+      "coding": "ai-watch/outros/coding/outro.mp4",
+      "opensource": "ai-watch/outros/opensource/outro.mp4"
+    }
+  },
+  "blackbear-science": {
+    "outro": "blackbear-science/outro.mp4",
+    "paw": "blackbear-science/paw_approved.png",
+    "provenance": "Screenshot-reference AI reconstruction approved by user; not original high-resolution logo file"
+  }
+}

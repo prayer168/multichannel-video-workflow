@@ -30,12 +30,11 @@
 - 旁白速度、句長、分段口頭禪和影片長度依內容調整；不強制沿用某一頻道的固定語助詞。
 
 ## 品牌影音
-- 片尾採「固定品牌骨架＋主題文案／CTA」：Logo、品牌色、聲音識別維持一致；依本片主要題材選趨勢 `trends`、工具實測 `tools`、開發 `coding`、開源 `opensource`，未符合時使用通用版。不要每集換一套頻道身份；可以依使用者要求調整文案、成果畫面與導流。v2 實際影片位於 `assets/brand-drafts/v2/ai-watch/outros/<主題>/outro_draft.mp4`，均待核定，不自動啟用。
-- 已製作 v1 草案：assets/brand-drafts/v1/ai-watch/，含 Logo、4 秒片頭、6 秒片尾、獨立音訊、透明浮水印與背景音樂；全部待核定，詳見 ../assets/brand-drafts/v1/README.md。正式素材狀態與路徑仍依下列規則，不自動啟用草案。
-- 片頭與片尾固定使用「AI 觀測站（AI Watch）」專屬核定影音，並讓片頭短而易辨識。
-- AI Watch 的片頭、片尾、聲音識別、Logo、色彩和浮水印如尚未提供，標示【待建立 AI Watch 品牌影音】，不可借用自然教室的熊掌片頭、尤克里里品牌音樂或浮水印。
-- 素材狀態：片頭、片尾、片頭音訊、聲音識別、Logo、色彩、浮水印與品牌配樂已有 v1 草案；正式版本仍【待核定】，沒有核定路徑。`build.py` 實際讀取 `video.intro`、`intro_audio`、`watermark`、`bgm`，皆為必填檔案；沒有 `outro` 或 `outro_audio`。片尾畫面可放最後一幕，但來源影片音訊不會自動保留，完整影音應後製接入；詳見 `../references/build-pipeline.md`。
-- 教學方法可以沿用案例式、循序操作、白話解釋和觀眾卡點預判；品牌文案、片頭台詞和視覺資產必須自行建立。
+- 2026-10-02 使用者核定四支主題片尾，正式路徑：assets/brand-approved/v1/ai-watch/outros/<主題>/outro.mp4，主題為 trends、tools、coding、opensource。每支六秒，已移除 DRAFT；核定涵蓋片尾內的識別、文案及音樂。
+- 片尾維持固定品牌骨架，依主要題材選片尾／CTA。題材不符合時以最接近的核定版本判斷或提出新草案，不自動使用尚未核定的通用版。
+- 核定範圍與清單見 ../assets/brand-approved/v1/README.md。獨立片頭、片頭音訊、浮水印、通用片尾、背景音床及旁白聲線仍待核定，不因片尾核定自動啟用；既有草案留在 assets/brand-drafts/。
+- 片頭片尾只用 AI Watch 識別，不借用自然教室熊掌、品牌音樂或浮水印。
+- build.py 必填 video.intro、intro_audio、watermark、bgm；沒有 outro／outro_audio。完整核定片尾以後製接入，詳見 ../references/build-pipeline.md。不得把正式片尾路徑填入不存在的設定欄位。
 
 社群使用本頻道文案、標籤、CTA；不使用熊掌版 `fb_cover.py`。使用 `fb_post.py --channel ai-watch`，英文文案按需求。`thanks` 圖卡必須填 `name: AI 觀測站（AI Watch）`，避免自然教室預設姓名。
 

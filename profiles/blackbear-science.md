@@ -29,16 +29,15 @@
 - 標題溫和、清楚、具體；不使用誇張保證、恐嚇或沒有證據的數字承諾。
 
 ## 品牌影音
-- 已依使用者影片截圖產生熊掌片尾 v3：`assets/brand-drafts/v3/blackbear-science/outro_draft.mp4`；Logo 為截圖參考的影像工具清理重建，非原始檔逐像素擷取，仍待對照核定，詳見 `../assets/brand-drafts/v3/README.md`。取得原始圖檔後優先使用原檔；v1 葉片已淘汰。
-- 使用者於 2026-10-02 指定：片尾 Logo 必須是與影片右下角相同的熊掌。v1 葉片片尾已淘汰，不得用作正式片尾；目前已有 v3 截圖參考重建草案，原始熊掌／浮水印高解析圖檔仍待提供。以 `--blackbear-logo` 明確傳入原素材才產生新片尾，不以新畫熊掌冒充相同 Logo。
-- 已補製 6 秒片尾草案及獨立音訊：assets/brand-drafts/v1/blackbear-science/；待核定，不取代既有片頭，詳見 ../assets/brand-drafts/v1/README.md。下列待提供狀態指正式核定素材。
+- 2026-10-02 使用者核定熊掌片尾的畫面、文案與音樂。正式片尾：assets/brand-approved/v1/blackbear-science/outro.mp4，六秒，無 DRAFT；徽章：assets/brand-approved/v1/blackbear-science/paw_approved.png。來源為使用者核定的截圖參考重建，非原始高解析檔，詳見 ../assets/brand-approved/v1/README.md。
+- v1 葉片草案淘汰，v3 熊掌草案保留歷史；不取代既有核定片頭，不借用 AI Watch 素材。
 - 自然教室既有開場：「哈囉，大家好，我是黑熊老師。」；既有結語：「好，今天關於 X 的介紹，就到這裡。我是黑熊老師，感謝大家觀看這部影片。如果你希望黑熊老師接下來拍什麼影片，請在底下的留言區留言告訴我。我們下次見，掰掰！」。僅本頻道適用，使用者本次指示仍優先；旁白結語與固定片尾影音分別檢查。
 - 片頭與片尾固定使用「黑熊老師的自然教室」核定品牌影音。
 - 已知自然教室片頭：`04_品牌資產/片頭動畫/黑熊老師片頭_4s.mp4`；實際專案開始前確認檔案存在。
-- 片尾資產路徑尚未在此技能中指定時，標示【待提供自然教室片尾素材】，不可自行假設或用 AI 觀測站素材代替。
+- 正式片尾使用上述核定路徑；替換或新版本須另記核定狀態。
 - 使用黑熊老師品牌色、熊掌／黑熊老師識別與自然科相關畫面；不得使用 PAPAYA 的 Logo、音樂、片頭或其他專屬素材。
 
-片頭音訊、延伸版與浮水印路徑見 `../references/intro-spec.md`；素材不隨 repo 發送，檔案存在與授權狀態須另確認。片尾仍【待提供自然教室片尾素材】，旁白結語不能視為已核定片尾。`build.py` 沒有獨立片尾影音欄位，接入方式見 `../references/build-pipeline.md`。社群使用自然教室文案、熊掌版 `fb_cover.py` 與 `fb_post.py --channel blackbear-science`；英文按需求。
+片頭音訊、延伸版與浮水印路徑見 `../references/intro-spec.md`；素材不隨 repo 發送，檔案存在與授權狀態須另確認。片尾已核定，旁白結語與片尾影音仍分別檢查。`build.py` 沒有獨立片尾影音欄位，接入方式見 `../references/build-pipeline.md`。社群使用自然教室文案、熊掌版 `fb_cover.py` 與 `fb_post.py --channel blackbear-science`；英文按需求。
 
 ## 成效與隱私檢查
 - 檢查概念是否正確、年級是否合適、步驟是否可重現、學生資訊是否安全、字幕是否清楚。
