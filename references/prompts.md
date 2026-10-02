@@ -1,5 +1,7 @@
 # 提示詞集
 
+所有提示詞先代入頻道 ID、受眾與本集成果，讀取對應 `profiles/`；英文與 TTS 範例僅在有需求時使用。視覺模板依本頻道核定品牌調整，不沿用其他創作者縮圖。
+
 ---
 
 # 04 縮圖與插畫生圖提示詞
@@ -16,12 +18,12 @@
 Cinematic product-style 3D render of {{象徵物件，例如 a glossy clapperboard with a play icon}}, placed on the right third of the frame, {{主色}} monochrome color palette, soft studio lighting, subtle floating particles, shallow depth of field, clean empty negative space on the left for title text, minimal, premium, high detail, 16:9, no text, no letters, no logo, no people
 ```
 
-## C. 版型 A（黃色 Ep. 縮圖）的排版指示（給 Canva AI 或設計師）
+## C. 本頻道縮圖的排版指示（給 Canva AI 或設計師）
 ```
-1280×720 YouTube 縮圖。背景 #FFC72C 黃色，右下角有一個較淺的 #FFD95A 大圓弧色塊。左上角放 {{App 名稱}} 的圓角方形圖示（帶陰影）。
-正中央偏左放主標「{{主標}}」：圓潤粗黑體、顏色 #2B2B2B、白色描邊 8px、再加一層外陰影。
-主標右下方放黑色圓角膠囊，白字寫副標「{{副標}}」。
-裝飾：右上角兩個深灰細線膠囊外框加短橫線、左下角兩條短橫線、底部一條細長橫線，線寬 2px。不要人臉、不要箭頭、不要 emoji。
+為 {{頻道 ID}} 製作 1280×720 縮圖，使用 {{本頻道核定品牌色與素材}}。
+以 {{本集真實成果或觀察問題}} 為主視覺，主標「{{主標}}」、副標「{{副標}}」簡短、手機可讀。
+未核定識別時交付無品牌草稿，列出待建立素材；不套用另一頻道或 Papaya 的縮圖模板。
+自然教室照片確認學生個資與授權；AI Watch 截圖遮蔽金鑰及帳號資料。
 ```
 
 ## D. 影片內插畫（概念解釋、故事主角）
@@ -47,12 +49,12 @@ Dark navy background with floating glowing data particles and faint numbers, sof
 
 ## A. 聲線描述（ElevenLabs Voice Design、MiniMax、OpenAI TTS 的 instructions 欄）
 ```
-A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitch, clear standard Taiwanese pronunciation (no retroflex exaggeration). Speaks like a patient computer teacher guiding a beginner step by step: steady pace around 310 Chinese characters per minute, slight smile in the voice, gentle rising tone on sentence-final particles like 囉 and 喔. Short natural pauses between sentences, a slightly longer pause after "好，". Never excited, never salesy, no dramatic emphasis.
+A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitch, clear standard Taiwanese pronunciation (no retroflex exaggeration). Speaks like a patient computer teacher guiding a beginner step by step: a pace appropriate to the selected audience and topic, slight smile in the voice, gentle rising tone on sentence-final particles like 囉 and 喔. Short natural pauses between sentences, a slightly longer pause after "好，". Never excited, never salesy, no dramatic emphasis.
 ```
 
 ## B. 中文版（給支援中文指令的 TTS）
 ```
-台灣國語男聲，30 多歲，中低音，溫和、沉穩、帶微笑感，像一位很有耐心的電腦老師一步一步帶新手操作。語速平穩（每分鐘約 310 字），句尾的「囉、喔」輕輕上揚，句與句之間自然停頓，「好，」之後停頓稍長。不要激動、不要推銷感、不要戲劇化的重音。
+台灣國語男聲，30 多歲，中低音，溫和、沉穩、帶微笑感，像一位很有耐心的電腦老師一步一步帶新手操作。語速依所選頻道觀眾與內容調整，句尾的「囉、喔」輕輕上揚，句與句之間自然停頓，「好，」之後停頓稍長。不要激動、不要推銷感、不要戲劇化的重音。
 ```
 
 ## C. TTS 前的文稿處理提示詞
@@ -68,7 +70,7 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 
 ---
 
-# 08 英文逐字稿（同步生成）提示詞
+# 08 英文逐字稿（依需求生成）提示詞
 
 > 用途：中文逐句腳本定稿後，**同步產生一行對一行的英文逐字稿**，用來：
 > ① 上傳英文 CC 字幕（en） ② 提供英文版說明欄或標題 ③ 日後製作英文配音版本
@@ -80,8 +82,8 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 1. 一行中文對應一行英文，行數必須完全相同，不可以合併或拆行
 2. 輸出成 Markdown 表格：| # | 中文 | English |
 3. 語氣：friendly, calm, clear tutorial English（像耐心的電腦老師），不要逐字直譯
-4. 每行英文 ≤ 42 個字元（字幕單行上限）；若太長就精簡用詞，但仍然維持一行
-5. 固定句的英文對照：
+4. 保留必要資訊；逐字稿以句子 ID 對齊，字幕可在同一時間區段換行，不用固定行長刪除內容
+5. 以下固定句對照僅自然教室適用；AI Watch 依自己的核定招呼與 CTA，不借用姓名：
    - 哈囉，大家好，我是黑熊老師 → Hi everyone, I'm Black Bear Teacher（英文名稱暫定）
    - 好，那… → Alright, so… / OK, now…
    - 過了一會兒 → After a moment
@@ -132,47 +134,25 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 # 09 選題雷達提示詞
 
 > 需要**有網路搜尋功能**的 AI（ChatGPT 搜尋或深度研究、Gemini、Claude 網頁搜尋、Perplexity…）。
-> 完整規範：`03_影片製作工作流/1_製作前/00_選題雷達.md`
+> 完整規範：`references/topic-radar.md`
 
 ```
-你是 Papaya 電腦教室風格教學頻道的選題研究員。今天是 {{今天日期}}。
-請搜尋近 {{14}} 天國內外最新的：
-1. AI 模型（新模型、版本升級、排行榜變動；LLM、生圖、影片、語音、本地模型）
-2. AI 工具或新功能（ChatGPT、Claude、Gemini、Copilot、Notion、Canva、Adobe…）
-3. 爆紅的開源專案（GitHub trending、Hugging Face trending、Hacker News）
-4. 電腦軟體（生產力、系統工具、免費替代品）
-5. 組合技或工作流（MCP、Skills、Agent、自動化串接）
-
-請至少查以下來源：
-- 國外：官方部落格或更新日誌（OpenAI、Anthropic、Google、Microsoft、Apple、Adobe）、GitHub Trending、Hugging Face、Hacker News、Product Hunt、Reddit（r/LocalLLaMA、r/ChatGPT、r/selfhosted）、The Verge、TechCrunch
-- 國內與中文圈：iThome、數位時代、INSIDE、T客邦、電腦王阿達、Threads 科技圈、少數派、機器之心
-- 重複檢查：YouTube 頻道 @papayaclass 最近的影片，以及 YouTube 上「工具名＋教學」的中文影片
-
-篩選規則：
-- 排除純論文、純開發者函式庫、加密貨幣、台灣無法使用的服務、沒有畫面可以展示的東西
-- 優先：台灣可以使用、有免費方案、有 GUI、新手能在 15 分鐘內成功
-- 近 3 個月已有中文教學的，標示「已有」；除非有新角度，否則淘汰
-
-評分（每項 0–2 分，滿分 12）：熱度、省錢（免費、開源、取代訂閱）、具體成果（看完能帶走一個東西）、視覺衝擊、組合拳、門檻（越低越高分）
-
-輸出格式：
-# 選題雷達 {{日期}}（近 14 天）
-## 本期重點（3 句話）
-## 候選清單（15–25 筆）
-| # | 名稱 | 類別 | 發布日 | 一句話說明 | 熱度證據 | 免費/開源 | 可展示畫面 | 重複檢查 | 熱度 | 省錢 | 成果 | 視覺 | 組合 | 門檻 | 總分 | 來源連結 |
-## 推薦前 3 名（不要全部同一類）
-每一名附上：為什麼現在拍、一句話承諾（看完你將能夠＿＿，而且不需要＿＿）、敘事模式（A 圖層巡禮／B 技巧清單／C 故事主角／D 從零建置）、暫定標題（Papaya 句型）、縮圖主標（≤6 字）與副標（≤12 字）、風險
-## 放入選題庫
-## 資料來源（名稱、網址、日期）
-
-嚴格規則：每一筆都要有可以點開的來源連結與絕對日期；不確定的標示【待確認】；不可以編造產品、版本或功能。
+你是 {{頻道 ID}} 的選題研究員。今天是 {{查證日期}}。
+先讀取本頻道設定檔與 references/topic-radar.md，只搜尋相關題材。
+自然教室以課綱、科學權威來源、觀察和課堂問題為主；AI Watch 以官方文件、公告、原始 GitHub、版本紀錄、論文及可重現實測為主，熱度僅供參考。
+廣泛掃描可列較多候選，聚焦型不硬湊筆數。每筆附頻道、來源、發布與查證日期、觀眾需求、成果、重複檢查、評分理由與限制。
+重複檢查以本頻道影片、選題庫與同類內容為主；Papaya 僅可能是 AI／軟體案例，不是自然教室淘汰條件。
+各 0–2 分：受眾需求、可信度、具體成果、展示方式、差異化、製作可行性；補充本頻道適切性。
+推薦至多三題，交代承諾、案例、暫定標題、縮圖、風險與為何適合本頻道。
+有明確搜尋意圖才使用 SEO 工具；否則記錄學習或工作需求證據。
+不能查證的資訊標示待確認，不編造功能、日期或實測。
 ```
 
 ---
 
 # 10 SEO 提示詞
 
-> 完整規範：`03_影片製作工作流/SEO規範.md`
+> 完整規範：`references/seo.md`
 > A 段需要有網路搜尋功能的 AI；B、C 段任何 AI 都可以用。
 
 ## A. 關鍵字研究（沒有執行 seo_keywords.py 時使用）
@@ -188,7 +168,7 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 
 ## B. SEO 版上架文案
 ```
-請依照 Papaya 電腦教室風格，加上 SEO 規則，為這支影片產生上架文案。
+請讀取 {{頻道 ID}} 設定檔，依本頻道語氣與適用的 SEO 規則產生上架文案。
 
 【主要關鍵字】{{例如 Claude Skills 教學}}
 【次要關鍵字】{{3–5 個}}
@@ -196,10 +176,10 @@ A warm, calm, friendly Taiwanese Mandarin male narrator in his 30s. Mid-low pitc
 【章節與時間碼】{{貼上}}
 
 規則：
-1. 標題 × 5：保留 Papaya 鉤子句型，但主要關鍵字必須出現在前 40 字內；總長 40–60 字；使用觀眾的搜尋寫法。每個標題標示關鍵字的位置（第幾字），並推薦 1 個
+1. 標題 × 5：清楚、可信、具體，準確反映成果；有搜尋意圖才自然加入關鍵字，不硬湊字數，不使用未經量測的數字承諾；推薦 1 個並說明理由
 2. 說明欄：開頭 1–2 句摘要（150 字以內，自然融入主要與次要關鍵字）→ 🔹 內容綱要（章節名稱盡量包含觀眾會搜尋的詞）→ 🔹 提示詞連結 → 🔹 網站連結 → 🔹 支持 → 🔹 會員目錄 → Hashtag 3–5 個（依重要性排序，前 3 個會顯示在標題上方）
 3. 標籤：主要關鍵字、次要關鍵字、工具名的各種寫法（英文、中文、簡體、常見錯字），總長 500 字元以內
-4. 英文版：English title（≤100 字元，關鍵字在前）與 English description 摘要
+4. 英文版（依需求）：English title（≤100 字元，關鍵字在前）與 English description 摘要
 5. 置頂留言：重點摘要＋提示詞連結＋一個引導留言的問題
 6. 禁止關鍵字堆疊、誤導性標題
 ```

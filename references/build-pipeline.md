@@ -36,6 +36,24 @@ python scripts/build/build.py <影片專案資料夾> --only 60        # 只輸�
 - AI Studio 顯示的 403「Link a paid API key」其實是額度用完（Rate Limit 頁寫著 You have reached a rate limit）
 - 分場音檔 → 逐句：依停頓位置＋每句字數，用動態規劃找切點；長度異常的句子會寫進報告
 
+## 品牌設定的實際支援（2026-10-02 原始碼檢查）
+
+`build.py` 不讀取 profiles，也沒有 channel_id 路由；品牌隔離由企劃與人工檢查完成。
+
+| 項目 | 真實行為 |
+|---|---|
+| `video.intro` | 必填影片檔案；`intro_len` 預設 4 秒，須與核定片頭長度一致 |
+| `video.intro_audio` | 必填音訊檔，混音直接讀取；不使用片頭影片內建音訊 |
+| `video.watermark` | 必填 PNG；沒有省略／false 代表全片停用的介面。無品牌預覽用實際透明 1920×1080 PNG |
+| `video.bgm` | 必填音訊；依需求用核定配樂或實際靜音檔，不能填空字串 |
+| `outro`／`outro_audio` | 不支援；填入不會自動處理 |
+| 片尾接入 | 最後一幕可設 `type: video`、`src`、`ss`、`watermark: false`；片尾長度受旁白時間軸限制，來源影片音訊不保留。完整核定片尾影音優先後製接入，再核對總長、字幕、章節與音量 |
+| `type: thanks` | `cards_lib.py` 預設 name 是黑熊老師；AI Watch 明確指定 `name: AI 觀測站（AI Watch）` |
+
+`intro`、`watermark`、`intro_audio`、`bgm` 的相對路徑以 `<專案>/../..` 為根；絕對路徑可直接使用。圖卡圖片先找專案再找工作區；不要把圖片解析方式誤套到品牌音訊。例示素材是自然教室外部資產，不隨 repo 附上，AI Watch 不可直接複製下列 YAML。專案卡記錄完整解析路徑、核定狀態、檔案存在與授權檢查。
+
+尚缺 AI Watch 識別時只交付企劃、腳本與分鏡；無品牌粗剪需先建立實際中性片頭、靜音 WAV、透明 PNG 和所需授權配樂檔案。`--voice timing` 只替代旁白，仍需要上述品牌欄位與檔案，不代表免素材模式。正式發布前補齊所選頻道核定片頭片尾。
+
 ## 四、畫面規格（`2_製作中/畫面規格.yaml`）
 ```yaml
 video:

@@ -2,6 +2,26 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.13.1] - 2026-10-02
+### Fixed
+- 修正共用選題評分、SEO、提示詞與範本中殘留的軟體限定、Papaya 標題套路、未驗證省錢承諾、固定句長／語速與強制英文產出。
+- Facebook 文案標籤按頻道；`fb_post.py` 新增 `--channel`，未指定使用中性頁尾，英文文案改為選用，保留連結另存與複製能力。
+### Docs
+- 補齊兩頻道素材核定與缺口、生成器必填欄位、路徑解析、thanks 圖卡姓名與片尾後製限制。
+- 將 style-guide 改為共用風格與精簡歷史研究摘要，不再保留其他創作者原句／縮圖範本作為生成規則。
+- 依使用者授權將 GitHub repo 改名為 `multichannel-video-workflow`，更新文件與安裝網址；保留 `papaya-style-video` 技能識別與安裝路徑，記錄其他 clone 及外部引用遷移步驟。
+### Tests
+- 新增 Facebook CLI 回歸測試：三種頁尾、英文選用、HTML 跳脫、網址更新及多次匯出不覆蓋原稿。
+
+## [1.13.0] - 2026-10-02
+### Added
+- `profiles/blackbear-science.md`：自然教室專屬受眾、選題、科學查證、課堂隱私與品牌影音規則
+- `profiles/ai-watch.md`：AI 觀測站專屬受眾、趨勢與開源查證、實測、非聳動標題與品牌影音規則
+- `references/channel-routing.md`：單一頻道路由、規則優先順序與跨頻道品牌隔離
+### Changed
+- `SKILL.md` 和 README 改為多頻道工作流；SEO 標題、語速、英文素材和社群宣傳依頻道設定檔及使用者指示調整
+- 未備妥的 AI Watch 片頭／片尾標示待建立，不會套用自然教室熊掌與音樂
+
 ## [1.12.1] - 2026-10-01
 ### Docs
 - 階段 7.5 加入發文方式：臉書連結預覽卡只在發文前產生（先貼網址等縮圖、分享偵錯工具「再次抓取」、已發出的貼文要刪掉重發）；用 YouTube oEmbed 檢查影片公開與縮圖

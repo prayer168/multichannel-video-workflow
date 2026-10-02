@@ -1,7 +1,7 @@
 """影片完成後的臉書宣傳套件：把 3_製作後/臉書宣傳/ 裡的中英文案做成「一鍵複製」頁
-用法：python fb_post.py <影片專案資料夾> [--title 影片名稱] [--url YouTube網址]
+用法：python fb_post.py <影片專案資料夾> [--channel blackbear-science|ai-watch] [--title 影片名稱] [--url YouTube網址]
 輸入（AI 先寫好）：
-  3_製作後/臉書宣傳/臉書文_中文.txt、臉書文_英文.txt
+  3_製作後/臉書宣傳/臉書文_中文.txt、臉書文_英文.txt（英文選用）
   3_製作後/臉書宣傳/臉書分享圖_1200x630.png（選用；貼文時當圖片上傳）
 輸出：
   3_製作後/臉書宣傳/facebook-post.html（中英雙語、「複製」「複製全部」按鈕；雙擊用瀏覽器開啟即可）
@@ -54,7 +54,7 @@ PAGE = """<!DOCTYPE html>
     <div class="seg"><div class="seg-head"><span class="tag">English</span><button class="copy-one small" data-target="en">Copy</button></div>
       <div id="en" class="post">{en}</div></div>
   </div>
-  <p class="foot">黑熊老師 · 點按鈕即可複製文案<br>發文小技巧：先只貼 YouTube 網址、等預覽縮圖出現，再貼上文案（不要關掉預覽卡）；沒有出現就到 <a href="https://developers.facebook.com/tools/debug/" style="color:inherit">分享偵錯工具</a> 按「再次抓取」</p>
+  <p class="foot">{channel} · 點按鈕即可複製文案<br>發文小技巧：先只貼 YouTube 網址、等預覽縮圖出現，再貼上文案（不要關掉預覽卡）；沒有出現就到 <a href="https://developers.facebook.com/tools/debug/" style="color:inherit">分享偵錯工具</a> 按「再次抓取」</p>
 </div>
 <script>
 (function () {{
@@ -64,7 +64,8 @@ PAGE = """<!DOCTYPE html>
   function copy(t, b, ok) {{ if (navigator.clipboard && navigator.clipboard.writeText) {{
       navigator.clipboard.writeText(t).then(function () {{ flash(b, ok); }}).catch(function () {{ fallback(t, b, ok); }}); }} else {{ fallback(t, b, ok); }} }}
   var zh = document.getElementById('zh').textContent, en = document.getElementById('en').textContent;
-  document.getElementById('copy-all').addEventListener('click', function () {{ copy(zh + '\\n\\n— — —\\n\\n' + en, this, '已複製！'); }});
+  if (!en) document.getElementById('en').parentElement.style.display = 'none';
+  document.getElementById('copy-all').addEventListener('click', function () {{ copy(en ? zh + '\\n\\n— — —\\n\\n' + en : zh, this, '已複製！'); }});
   document.querySelectorAll('.copy-one').forEach(function (b) {{ b.addEventListener('click', function () {{
     var t = this.getAttribute('data-target'); copy(document.getElementById(t).textContent, this, t === 'zh' ? '已複製！' : 'Copied!'); }}); }});
 }})();
@@ -82,19 +83,24 @@ def free_path(p):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("project"); ap.add_argument("--title", default=None); ap.add_argument("--url", default=None)
+    ap.add_argument("--channel", choices=["blackbear-science", "ai-watch"], default=None,
+                    help="複製頁的頻道識別；未指定時使用中性頁尾")
     a = ap.parse_args()
     d = os.path.join(os.path.abspath(a.project), "3_製作後", "臉書宣傳")
     zh = open(os.path.join(d, "臉書文_中文.txt"), encoding="utf-8-sig").read().strip()
-    en = open(os.path.join(d, "臉書文_英文.txt"), encoding="utf-8-sig").read().strip()
+    en_path = os.path.join(d, "臉書文_英文.txt")
+    en = open(en_path, encoding="utf-8-sig").read().strip() if os.path.exists(en_path) else ""
     if a.url:
         zh, en = zh.replace("【YouTube 連結】", a.url), en.replace("[YouTube link]", a.url)
         for name, txt in (("臉書文_中文_含連結.txt", zh), ("臉書文_英文_含連結.txt", en)):
+            if not txt: continue
             p = free_path(os.path.join(d, name)); open(p, "w", encoding="utf-8").write(txt + "\n"); print("另存：", p)
     title = a.title or os.path.basename(os.path.abspath(a.project))
     cover = '<img class="cover" src="臉書分享圖_1200x630.png" alt="分享圖">' if os.path.exists(os.path.join(d, "臉書分享圖_1200x630.png")) else ""
     out = os.path.join(d, "facebook-post.html")
     if os.path.exists(out) and not a.url: out = free_path(out)
-    open(out, "w", encoding="utf-8").write(PAGE.format(title=html.escape(title), cover=cover, zh=html.escape(zh), en=html.escape(en)))
+    channel = {"blackbear-science": "黑熊老師的自然教室", "ai-watch": "AI 觀測站（AI Watch）"}.get(a.channel, "影片宣傳")
+    open(out, "w", encoding="utf-8").write(PAGE.format(title=html.escape(title), channel=html.escape(channel), cover=cover, zh=html.escape(zh), en=html.escape(en)))
     print("一鍵複製頁：", out)
     left = [x for x in ("【YouTube 連結】", "[YouTube link]") if x in zh + en]
     if left: print("提醒：文案裡還有連結佔位字", left, "→ 上傳 YouTube 後用 --url 重跑")
