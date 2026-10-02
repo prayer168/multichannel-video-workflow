@@ -9,7 +9,7 @@
 ### Docs
 - 補齊兩頻道素材核定與缺口、生成器必填欄位、路徑解析、thanks 圖卡姓名與片尾後製限制。
 - 將 style-guide 改為共用風格與精簡歷史研究摘要，不再保留其他創作者原句／縮圖範本作為生成規則。
-- 記錄 repo 建議名稱、保留技能識別的相容方案與人工改名步驟；未修改 GitHub repo 設定。
+- 依使用者授權將 GitHub repo 改名為 `multichannel-video-workflow`，更新文件與安裝網址；保留 `papaya-style-video` 技能識別與安裝路徑，記錄其他 clone 及外部引用遷移步驟。
 ### Tests
 - 新增 Facebook CLI 回歸測試：三種頁尾、英文選用、HTML 跳脫、網址更新及多次匯出不覆蓋原稿。
 

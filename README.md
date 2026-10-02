@@ -1,4 +1,4 @@
-# papaya-style-video
+# multichannel-video-workflow
 
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
@@ -55,7 +55,7 @@
 ## 檔案結構
 
 ```
-papaya-style-video/
+multichannel-video-workflow/
 ├── SKILL.md                 技能主檔（工作流程 + 核心規則）
 ├── README.md                本檔
 ├── CHANGELOG.md             版本紀錄
@@ -84,14 +84,14 @@ papaya-style-video/
 
 ## Repo 名稱與技能識別相容性
 
-`papaya-style-video` 已不能完整反映兩頻道定位。建議 repo 改為 **`multichannel-video-workflow`**；本次未變更 GitHub 設定，安裝網址仍有效。
+GitHub repo 已於 2026-10-02 從 `papaya-style-video` 改名為 **`multichannel-video-workflow`**。文件與安裝指令使用新網址。
 
 repo 名稱與技能 frontmatter `name: papaya-style-video` 是兩件事。為維持既有安裝與 `$papaya-style-video` 使用方式，本版保留技能識別、安裝資料夾與 `topic_radar.py` User-Agent。若日後只改 repo 名稱，仍 clone 到舊技能資料夾，不自動改技能名稱。
 
-實際改名步驟（需使用者另行授權／操作）：
-1. GitHub Settings → General → Repository name 改為 `multichannel-video-workflow`。
+既有 clone 與外部引用遷移：
+1. GitHub repo 改名已完成；既有草稿 PR #1 位於 `https://github.com/prayer168/multichannel-video-workflow/pull/1`。
 2. 各 clone 執行 `git remote set-url origin https://github.com/prayer168/multichannel-video-workflow.git`。
-3. 更新本 README 的標題、結構根目錄、安裝網址、外部 PR／文件連結與其他引用；搜尋 `papaya-style-video`，區分 repo URL 和保留的技能識別，不做全域替換。
+3. 本 README 的標題、結構根目錄與安裝網址已更新；其他外部文件／書籤請改用新網址。搜尋 `papaya-style-video` 時區分 repo URL 和保留的技能識別，不做全域替換。
 4. 本 README 全域 clone 指令的目的資料夾仍為 `~/.claude/skills/papaya-style-video`。本地既有 clone 不需搬動。檢查外部安裝器、書籤、CI 與發布文件。
 5. 若另要改技能識別，視為獨立遷移：更新 SKILL.md frontmatter、安裝目的資料夾、呼叫方式與外部技能目錄；保留舊安裝／呼叫的轉接說明，避免同時安裝兩份自動發現的完整技能。另版公告後再遷移，不能假設 GitHub 改名會完成上述工作。
 
@@ -109,7 +109,7 @@ repo 名稱與技能 frontmatter `name: papaya-style-video` 是兩件事。為�
 
 **Claude Code（全域）**
 ```bash
-git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/papaya-style-video
+git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude/skills/papaya-style-video
 ```
 
 **Claude Code（單一專案）**：clone 到專案的 `.claude/skills/papaya-style-video`
