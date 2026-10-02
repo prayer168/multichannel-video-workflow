@@ -2,6 +2,15 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.13.0] - 2026-10-02
+### Added
+- `profiles/blackbear-science.md`：自然教室專屬受眾、選題、科學查證、課堂隱私與品牌影音規則
+- `profiles/ai-watch.md`：AI 觀測站專屬受眾、趨勢與開源查證、實測、非聳動標題與品牌影音規則
+- `references/channel-routing.md`：單一頻道路由、規則優先順序與跨頻道品牌隔離
+### Changed
+- `SKILL.md` 和 README 改為多頻道工作流；SEO 標題、語速、英文素材和社群宣傳依頻道設定檔及使用者指示調整
+- 未備妥的 AI Watch 片頭／片尾標示待建立，不會套用自然教室熊掌與音樂
+
 ## [1.12.1] - 2026-10-01
 ### Docs
 - 階段 7.5 加入發文方式：臉書連結預覽卡只在發文前產生（先貼網址等縮圖、分享偵錯工具「再次抓取」、已發出的貼文要刪掉重發）；用 YouTube oEmbed 檢查影片公開與縮圖
