@@ -2,6 +2,14 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.14.0] - 2026-10-02
+### Added
+- AI Watch 原創 Logo、4 秒片頭、6 秒片尾、獨立合成音訊、透明浮水印與 16 秒音床草案。
+- 自然教室 6 秒片尾與獨立音訊草案，不取代核定片頭。
+- scripts/create_brand_drafts.py、素材 manifest、視覺概覽與影音驗證記錄；所有草案待使用者核定，不自動啟用。
+### Docs
+- profiles 與 README 加入草案路徑、來源、用途及核定狀態；正式品牌素材缺口仍保留。
+
 ## [1.13.1] - 2026-10-02
 ### Fixed
 - 修正共用選題評分、SEO、提示詞與範本中殘留的軟體限定、Papaya 標題套路、未驗證省錢承諾、固定句長／語速與強制英文產出。
