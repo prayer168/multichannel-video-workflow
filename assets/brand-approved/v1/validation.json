@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "files": [
+    {
+      "file": "blackbear-science/outro.mp4",
+      "duration": 6,
+      "resolution": "1920x1080",
+      "fps": 30,
+      "decode": "passed",
+      "audio_unchanged": true
+    },
+    {
+      "file": "ai-watch/outros/coding/outro.mp4",
+      "duration": 6,
+      "resolution": "1920x1080",
+      "fps": 30,
+      "decode": "passed",
+      "audio_unchanged": true
+    },
+    {
+      "file": "ai-watch/outros/opensource/outro.mp4",
+      "duration": 6,
+      "resolution": "1920x1080",
+      "fps": 30,
+      "decode": "passed",
+      "audio_unchanged": true
+    },
+    {
+      "file": "ai-watch/outros/tools/outro.mp4",
+      "duration": 6,
+      "resolution": "1920x1080",
+      "fps": 30,
+      "decode": "passed",
+      "audio_unchanged": true
+    },
+    {
+      "file": "ai-watch/outros/trends/outro.mp4",
+      "duration": 6,
+      "resolution": "1920x1080",
+      "fps": 30,
+      "decode": "passed",
+      "audio_unchanged": true
+    }
+  ],
+  "visual_content": "Only draft label removed; approved content preserved"
+}

@@ -51,7 +51,7 @@ def leaf(d, x, y, color):
     d.line((x, y-22, x+19, y-40), fill=color, width=3)
 
 
-def frame(channel, kind, t, duration, font, theme=None, blackbear_logo=None):
+def frame(channel, kind, t, duration, font, theme=None, blackbear_logo=None, approved=False):
     c = AI if channel == 'ai-watch' else SCI
     im = Image.new('RGB', (W, H), c['bg'])
     d = ImageDraw.Draw(im)
@@ -79,7 +79,8 @@ def frame(channel, kind, t, duration, font, theme=None, blackbear_logo=None):
     text(d, (480, 373), message, 24, c['fg'], font)
     if kind == 'outro':
         text(d, (480, 420), cta, 19, c['muted'], font)
-    text(d, (896, 505), 'DRAFT / 待核定', 13, c['muted'], font, 'rm')
+    if not approved:
+        text(d, (896, 505), 'DRAFT / 待核定', 13, c['muted'], font, 'rm')
     fade = min(1, t/.25, (duration-t)/.4)
     if fade < 1:
         im = Image.blend(Image.new('RGB', im.size, c['bg']), im, max(0, fade))
@@ -110,11 +111,12 @@ def sound(path, duration, notes=None, bgm=False):
         out.writeframes(data.tobytes())
 
 
-def movie(directory, channel, kind, duration, font, theme=None, blackbear_logo=None):
-    audio = directory / f'{kind}_audio_draft.wav'
+def movie(directory, channel, kind, duration, font, theme=None, blackbear_logo=None, approved=False):
+    suffix = '' if approved else '_draft'
+    audio = directory / f'{kind}_audio{suffix}.wav'
     frequencies = [440, 660, 880] if channel == 'ai-watch' else [392, 494, 587]
     sound(audio, duration, list(zip([.35, .62, .9], frequencies)))
-    output = directory / f'{kind}_draft.mp4'
+    output = directory / f'{kind}{suffix}.mp4'
     cmd = ['ffmpeg', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24',
            '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-', '-i', str(audio),
            '-vf', 'scale=1920:1080:flags=lanczos', '-c:v', 'libx264', '-preset', 'fast',
@@ -123,13 +125,13 @@ def movie(directory, channel, kind, duration, font, theme=None, blackbear_logo=N
     with subprocess.Popen(cmd, stdin=subprocess.PIPE) as proc:
         try:
             for n in range(round(duration*FPS)):
-                proc.stdin.write(frame(channel, kind, n/FPS, duration, font, theme, blackbear_logo).tobytes())
+                proc.stdin.write(frame(channel, kind, n/FPS, duration, font, theme, blackbear_logo, approved).tobytes())
         finally:
             proc.stdin.close()
         if proc.wait() != 0:
             raise RuntimeError(f'ffmpeg failed: {output}')
-    still = frame(channel, kind, 2, duration, font, theme, blackbear_logo).resize((1920, 1080), Image.Resampling.LANCZOS)
-    still.save(directory / f'{kind}_still_draft.png')
+    still = frame(channel, kind, 2, duration, font, theme, blackbear_logo, approved).resize((1920, 1080), Image.Resampling.LANCZOS)
+    still.save(directory / f'{kind}_still{suffix}.png')
     print(output, flush=True)
 
 
