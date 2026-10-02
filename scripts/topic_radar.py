@@ -21,7 +21,7 @@ import sys
 import urllib.parse
 import urllib.request
 
-UA = {"User-Agent": "papaya-style-video-topic-radar"}
+UA = {"User-Agent": "multichannel-video-workflow-topic-radar"}
 
 
 def get_json(url):

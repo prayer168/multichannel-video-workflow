@@ -1,11 +1,11 @@
 ---
-name: papaya-style-video
+name: multichannel-video-workflow
 description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-版本：1.14.3（2026-10-02）；技能識別仍為 `papaya-style-video`，repo 名稱與遷移見 README。
+版本：2.0.0（2026-10-02）；repo、技能識別與新安裝資料夾統一為 `multichannel-video-workflow`；既有安裝遷移見 README。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 

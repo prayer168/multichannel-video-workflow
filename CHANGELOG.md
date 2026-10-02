@@ -2,6 +2,12 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.0.0] - 2026-10-02
+### Changed
+- 使用者要求技能識別改名為 multichannel-video-workflow；同步 SKILL.md name、新安裝資料夾、呼叫方式及 topic_radar.py User-Agent。
+- 舊識別不再使用；這是需要遷移的識別變更，因此升主版本。README 提供保留未提交工作、避免覆蓋與重複安裝的遷移步驟。
+- 影片流程、兩頻道設定及五支核定片尾保留。
+
 ## [1.14.3] - 2026-10-02
 ### Changed
 - 使用者核定五支片尾；正式版移除 DRAFT，保留畫面、文案、音樂與六秒節奏，另存 assets/brand-approved/v1。

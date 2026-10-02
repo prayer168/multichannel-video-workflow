@@ -3,7 +3,7 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 1.14.3（2026-10-02）
+**Version:** 2.0.0（2026-10-02）
 
 ---
 
@@ -82,20 +82,20 @@ multichannel-video-workflow/
     └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿、選題雷達、SEO 提示詞
 ```
 
-## Repo 名稱與技能識別相容性
+## 技能名稱與既有安裝遷移
 
-GitHub repo 已於 2026-10-02 從 `papaya-style-video` 改名為 **`multichannel-video-workflow`**。文件與安裝指令使用新網址。
+自 2.0.0 起，GitHub repo、SKILL.md 的 `name`、新安裝資料夾與技能呼叫名稱統一為 **`multichannel-video-workflow`**。請以新名稱呼叫技能；具體呼叫語法依所用工具而定。
 
-repo 名稱與技能 frontmatter `name: papaya-style-video` 是兩件事。為維持既有安裝與 `$papaya-style-video` 使用方式，本版保留技能識別、安裝資料夾與 `topic_radar.py` User-Agent。若日後只改 repo 名稱，仍 clone 到舊技能資料夾，不自動改技能名稱。
+先前技能識別為 `papaya-style-video`；此名稱只保留在歷史紀錄與遷移說明，不再作為有效技能識別。改名不會自動搬動既有本機資料夾。
 
-既有 clone 與外部引用遷移：
-1. GitHub repo 改名已完成；既有草稿 PR #1 位於 `https://github.com/prayer168/multichannel-video-workflow/pull/1`。
-2. 各 clone 執行 `git remote set-url origin https://github.com/prayer168/multichannel-video-workflow.git`。
-3. 本 README 的標題、結構根目錄與安裝網址已更新；其他外部文件／書籤請改用新網址。搜尋 `papaya-style-video` 時區分 repo URL 和保留的技能識別，不做全域替換。
-4. 本 README 全域 clone 指令的目的資料夾仍為 `~/.claude/skills/papaya-style-video`。本地既有 clone 不需搬動。檢查外部安裝器、書籤、CI 與發布文件。
-5. 若另要改技能識別，視為獨立遷移：更新 SKILL.md frontmatter、安裝目的資料夾、呼叫方式與外部技能目錄；保留舊安裝／呼叫的轉接說明，避免同時安裝兩份自動發現的完整技能。另版公告後再遷移，不能假設 GitHub 改名會完成上述工作。
+既有安裝遷移：
+1. 檢查舊資料夾 `~/.claude/skills/papaya-style-video`（或專案 `.claude/skills/papaya-style-video`）的 git status，保留未提交變更與自訂素材。
+2. 確認目的資料夾 `multichannel-video-workflow` 尚不存在，將原資料夾改名；若目的地已有安裝，先比對／備份，不覆蓋或直接刪除。
+3. 將 remote 設為 `https://github.com/prayer168/multichannel-video-workflow.git`，以 `git pull --ff-only` 更新。遇到本地變更或分歧時先處理，不能 reset 丟棄工作。
+4. 更新提示詞、快捷指令及外部引用為新技能名稱；Claude Code 重新開啟工作階段後確認新技能可用。其他工具同樣更新其 skills 根目錄中的資料夾名稱。
+5. 不同時保留兩份完整技能供自動發現；舊呼叫不設隱藏別名，改用新呼叫方式。
 
-本 repo 沒有 agents metadata、套件 manifest 或 CI 設定；現有名稱引用集中於 README 安裝／結構、SKILL.md name 及 topic_radar.py User-Agent。
+本 repo 沒有 agents metadata、套件 manifest 或 CI 設定；SKILL metadata、安裝指令和 topic_radar.py 的 User-Agent 已同步使用新名稱。工作用 clone 的本機資料夾可以保留原路徑，不影響新安裝的技能名稱。
 
 ## 品牌素材與程式限制
 
@@ -109,10 +109,10 @@ repo 名稱與技能 frontmatter `name: papaya-style-video` 是兩件事。為�
 
 **Claude Code（全域）**
 ```bash
-git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude/skills/papaya-style-video
+git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude/skills/multichannel-video-workflow
 ```
 
-**Claude Code（單一專案）**：clone 到專案的 `.claude/skills/papaya-style-video`
+**Claude Code（單一專案）**：clone 到專案的 `.claude/skills/multichannel-video-workflow`
 
 **Claude.ai / Claude 桌面版**：把整個資料夾壓縮成 zip → 設定 → Capabilities → Skills → 上傳
 
@@ -161,6 +161,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.0.0 | 2026-10-02 | 技能識別與安裝資料夾統一改名 multichannel-video-workflow；提供既有安裝遷移說明 |
 | 1.14.3 | 2026-10-02 | 五支片尾經使用者核定，正式版移除 DRAFT 並更新路徑 |
 | 1.14.2 | 2026-10-02 | 依影片截圖完成熊掌片尾重建草案，待核定 |
 | 1.14.1 | 2026-10-02 | AI Watch 四種主題片尾；自然教室改用原熊掌，等待素材 |
