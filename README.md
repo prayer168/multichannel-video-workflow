@@ -110,10 +110,10 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 幫我做「Claude Skills」的 SEO 關鍵字研究，看看有沒有機會。
 ```
 ```
-我想用 Papaya 風格做一支 Obsidian 入門教學，對象是國中老師，長度大約 12 分鐘。
+幫我為「AI 觀測站（AI Watch）」規劃一支 Obsidian 教學影片，用生活工作案例帶觀眾完成一個可用的筆記流程。
 ```
 ```
-幫我把這份操作步驟寫成 Papaya 風格的逐句腳本，用故事主角型。
+幫我為「黑熊老師的自然教室」把月相觀察教材寫成逐句腳本，適合四年級學生，加入生活例子與科學查證。
 ```
 ```
 幫這支影片產生 5 個標題、說明欄和 3 組縮圖文案。
