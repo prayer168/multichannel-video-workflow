@@ -2,6 +2,17 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.13.1] - 2026-10-02
+### Fixed
+- 修正共用選題評分、SEO、提示詞與範本中殘留的軟體限定、Papaya 標題套路、未驗證省錢承諾、固定句長／語速與強制英文產出。
+- Facebook 文案標籤按頻道；`fb_post.py` 新增 `--channel`，未指定使用中性頁尾，英文文案改為選用，保留連結另存與複製能力。
+### Docs
+- 補齊兩頻道素材核定與缺口、生成器必填欄位、路徑解析、thanks 圖卡姓名與片尾後製限制。
+- 將 style-guide 改為共用風格與精簡歷史研究摘要，不再保留其他創作者原句／縮圖範本作為生成規則。
+- 記錄 repo 建議名稱、保留技能識別的相容方案與人工改名步驟；未修改 GitHub repo 設定。
+### Tests
+- 新增 Facebook CLI 回歸測試：三種頁尾、英文選用、HTML 跳脫、網址更新及多次匯出不覆蓋原稿。
+
 ## [1.13.0] - 2026-10-02
 ### Added
 - `profiles/blackbear-science.md`：自然教室專屬受眾、選題、科學查證、課堂隱私與品牌影音規則

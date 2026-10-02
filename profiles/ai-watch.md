@@ -32,8 +32,10 @@
 ## 品牌影音
 - 片頭與片尾固定使用「AI 觀測站（AI Watch）」專屬核定影音，並讓片頭短而易辨識。
 - AI Watch 的片頭、片尾、聲音識別、Logo、色彩和浮水印如尚未提供，標示【待建立 AI Watch 品牌影音】，不可借用自然教室的熊掌片頭、尤克里里品牌音樂或浮水印。
-- 可在品牌素材核定後，把專屬 intro、outro、intro_audio、outro_audio、watermark 與 BGM 路徑寫入專案畫面規格；目前影片產生器示例直接支援 intro、intro_audio、watermark 和 bgm。outro 若沒有專用欄位，放在最後一幕或於剪輯階段接入。
+- 素材狀態：片頭、片尾、片頭音訊、聲音識別、Logo、色彩、浮水印與品牌配樂均【待建立／核定】，沒有已確認路徑。`build.py` 實際讀取 `video.intro`、`intro_audio`、`watermark`、`bgm`，皆為必填檔案；沒有 `outro` 或 `outro_audio`。片尾畫面可放最後一幕，但來源影片音訊不會自動保留，完整影音應後製接入；詳見 `../references/build-pipeline.md`。
 - 教學方法可以沿用案例式、循序操作、白話解釋和觀眾卡點預判；品牌文案、片頭台詞和視覺資產必須自行建立。
+
+社群使用本頻道文案、標籤、CTA；不使用熊掌版 `fb_cover.py`。使用 `fb_post.py --channel ai-watch`，英文文案按需求。`thanks` 圖卡必須填 `name: AI 觀測站（AI Watch）`，避免自然教室預設姓名。
 
 ## 成效與迭代
 - 復盤觀眾留存、搜尋詞、留言中的卡點、實測可重現性與觀眾實際完成率。

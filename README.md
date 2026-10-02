@@ -3,7 +3,7 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 1.13.0（2026-10-02）
+**Version:** 1.13.1（2026-10-02）
 
 ---
 
@@ -31,7 +31,7 @@
 | 2. 操作步驟 | 收集真實操作步驟與踩坑紀錄（不編造功能） |
 | 3. 腳本 | 章節表加上逐句稿（語氣、句長、語速、開場與結尾依頻道設定檔） |
 | 3.5 英文逐字稿 | 依頻道與使用者需求產出中英逐字稿或字幕 |
-| 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；40 秒法則 |
+| 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；依內容調整節奏 |
 | 5. 上架文案（SEO 版） | 依搜尋意圖與頻道語氣提出標題、說明欄、章節、Hashtag、標籤、需要時的英文文案、置頂留言與縮圖文案 |
 | 6. 配音 | TTS 友善稿、聲線設定（不使用對嘴角色） |
 | 6.5 一鍵產生影片 | `scripts/build/build.py`：依腳本＋畫面規格一次輸出影片（Gemini TTS 配音並自動清除頭尾雜訊、41 種圖卡含全幅照片、9 種教學模擬動畫、運鏡、7 種電影轉場、電影黑邊、配樂依相似度剪接、中英字幕、章節、品質報告）；`--voice timing` 可在沒有配音時先看畫面預覽 |
@@ -60,6 +60,7 @@ papaya-style-video/
 ├── README.md                本檔
 ├── CHANGELOG.md             版本紀錄
 ├── VERSION                  目前版本號
+├── tests/test_fb_post.py     Facebook 頻道隔離、選用英文與保留原稿的 CLI 回歸測試
 ├── scripts/
 │   ├── topic_radar.py       抓 GitHub、Hugging Face、Hacker News 熱度原始資料
 │   ├── seo_keywords.py      YouTube 搜尋建議＋競爭分析（SEO 關鍵字研究）
@@ -81,6 +82,29 @@ papaya-style-video/
     └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿、選題雷達、SEO 提示詞
 ```
 
+## Repo 名稱與技能識別相容性
+
+`papaya-style-video` 已不能完整反映兩頻道定位。建議 repo 改為 **`multichannel-video-workflow`**；本次未變更 GitHub 設定，安裝網址仍有效。
+
+repo 名稱與技能 frontmatter `name: papaya-style-video` 是兩件事。為維持既有安裝與 `$papaya-style-video` 使用方式，本版保留技能識別、安裝資料夾與 `topic_radar.py` User-Agent。若日後只改 repo 名稱，仍 clone 到舊技能資料夾，不自動改技能名稱。
+
+實際改名步驟（需使用者另行授權／操作）：
+1. GitHub Settings → General → Repository name 改為 `multichannel-video-workflow`。
+2. 各 clone 執行 `git remote set-url origin https://github.com/prayer168/multichannel-video-workflow.git`。
+3. 更新本 README 的標題、結構根目錄、安裝網址、外部 PR／文件連結與其他引用；搜尋 `papaya-style-video`，區分 repo URL 和保留的技能識別，不做全域替換。
+4. 本 README 全域 clone 指令的目的資料夾仍為 `~/.claude/skills/papaya-style-video`。本地既有 clone 不需搬動。檢查外部安裝器、書籤、CI 與發布文件。
+5. 若另要改技能識別，視為獨立遷移：更新 SKILL.md frontmatter、安裝目的資料夾、呼叫方式與外部技能目錄；保留舊安裝／呼叫的轉接說明，避免同時安裝兩份自動發現的完整技能。另版公告後再遷移，不能假設 GitHub 改名會完成上述工作。
+
+本 repo 沒有 agents metadata、套件 manifest 或 CI 設定；現有名稱引用集中於 README 安裝／結構、SKILL.md name 及 topic_radar.py User-Agent。
+
+## 品牌素材與程式限制
+
+自然教室片頭文件記載路徑為 `04_品牌資產/片頭動畫/黑熊老師片頭_4s.mp4`；片頭音訊及浮水印見 `references/intro-spec.md`。這些外部檔案未附 repo，存在與授權仍需確認；自然教室片尾【待提供】。AI Watch 片頭、片尾、聲音、Logo、色彩、浮水印與品牌配樂【待建立／核定】。
+
+`build.py` 實際要求 `intro`、`intro_audio`、`watermark`、`bgm` 檔案，不支援 `outro`／`outro_audio` 或自動讀取 profiles。片尾可作最後一幕的畫面，但完整影音／長度需後製接入。無品牌預覽也須建立真實中性或靜音／透明檔案；不能拿待建立文字當路徑。詳見 `references/build-pipeline.md`。
+
+`fb_cover.py` 有熊掌自動尋找邏輯，沒有無品牌開關，只用於自然教室。AI Watch 另製核定或無品牌分享圖。`fb_post.py --channel ai-watch`／`--channel blackbear-science` 指定頁尾；不指定為中性頁尾，英文文案可省略。之後用 `--url` 更新時仍帶相同 channel。所有宣傳文案、標籤與 CTA 依本頻道。
+
 ## 安裝
 
 **Claude Code（全域）**
@@ -92,7 +116,7 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 
 **Claude.ai / Claude 桌面版**：把整個資料夾壓縮成 zip → 設定 → Capabilities → Skills → 上傳
 
-**ChatGPT GPTs / Gemini Gem / Coze / Dify**：把 `SKILL.md` 的內容貼到指令欄，`references/` 的三個檔案上傳到知識庫
+**ChatGPT GPTs / Gemini Gem / Coze / Dify**：把 `SKILL.md` 的內容貼到指令欄，`profiles/` 兩個設定檔與 `references/` 需要的文件上傳到知識庫，保留相對路徑關係
 
 ## 使用範例
 
@@ -137,6 +161,7 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 1.13.1 | 2026-10-02 | 完成多頻道規則查漏、製作器實際素材欄位與片尾限制、品牌缺口及改名相容說明；Facebook 複製頁支援頻道識別與選用英文 |
 | 1.13.0 | 2026-10-02 | 新增自然教室與 AI 觀測站兩個頻道設定檔、頻道路由與品牌資產隔離規則；標題、旁白節奏與英文素材改為依頻道設定，不再一律套用同一品牌 |
 | 1.12.1 | 2026-10-01 | 臉書發文方式說明（避免貼出後沒有縮圖） |
 | 1.12.0 | 2026-10-01 | 臉書宣傳文：影片完成時一起產生中英文案、分享圖、一鍵複製頁 |
@@ -148,3 +173,9 @@ git clone https://github.com/prayer168/papaya-style-video.git ~/.claude/skills/p
 ## 版本
 
 請見 [CHANGELOG.md](CHANGELOG.md)。
+
+## 本版檢查
+
+執行 `python -X utf8 -m unittest discover -s tests -v` 驗證 Facebook 頻道頁尾、無英文輸入、HTML 跳脫、連結更新與原稿／多次匯出保留；執行 `python -X utf8 -m compileall -q scripts tests` 檢查 Python 語法。文件以版本比對、資源路徑／連結、表格欄位、程式碼區塊、舊規則搜尋與 `git diff --check` 檢查。
+
+本次沒有執行 Gemini API 配音、完整影片渲染或平台發布；外部品牌素材未找到實檔，素材狀態已據實標示。原有 build、TTS、字幕、SEO、上架文字轉換與熊掌分享圖程式均保留。
