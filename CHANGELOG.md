@@ -2,6 +2,10 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [1.14.2] - 2026-10-02
+### Changed
+- 依使用者影片截圖參考，透過影像工具清理重建熊掌徽章並合成六秒自然教室片尾；記錄重建來源與非原始檔限制，仍待核定。
+
 ## [1.14.1] - 2026-10-02
 ### Changed
 - AI Watch 增加趨勢、工具實測、Coding、開源四種主題片尾，保留一致的品牌骨架。

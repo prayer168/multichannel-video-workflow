@@ -3,7 +3,7 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 1.14.1（2026-10-02）
+**Version:** 1.14.2（2026-10-02）
 
 ---
 
@@ -99,7 +99,9 @@ repo 名稱與技能 frontmatter `name: papaya-style-video` 是兩件事。為�
 
 ## 品牌素材與程式限制
 
-最新 [v2 主題片尾](assets/brand-drafts/v2/README.md)：AI Watch 趨勢、工具、Coding、開源四版，品牌一致而文案／CTA 分題材。自然教室 v1 葉片方案已淘汰；等待與右下角相同的熊掌原圖後重製。
+自然教室已完成 [v3 熊掌片尾草案](assets/brand-drafts/v3/README.md)：依使用者截圖參考清理重建，非原始 Logo 檔，待對照核定。
+
+最新 [v2 主題片尾](assets/brand-drafts/v2/README.md)：AI Watch 趨勢、工具、Coding、開源四版，品牌一致而文案／CTA 分題材。自然教室 v1 葉片方案已淘汰；已有 v3 截圖參考熊掌重建片尾，原始高解析圖檔仍待提供。
 
 已補製 [品牌素材草案 v1](assets/brand-drafts/v1/README.md)：AI Watch 的 Logo、片頭片尾、獨立音訊、浮水印與原創音床，以及自然教室片尾；全部待核定。可用 scripts/create_brand_drafts.py 重製，manifest.json 記錄檔案，validation.json 記錄驗證。下列缺口指正式核定素材，不能把草案當成已核定。
 
@@ -165,6 +167,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 1.14.2 | 2026-10-02 | 依影片截圖完成熊掌片尾重建草案，待核定 |
 | 1.14.1 | 2026-10-02 | AI Watch 四種主題片尾；自然教室改用原熊掌，等待素材 |
 | 1.14.0 | 2026-10-02 | 新增分頻道原創品牌素材草案與重製腳本；待核定，保留正式素材缺口 |
 | 1.13.1 | 2026-10-02 | 完成多頻道規則查漏、製作器實際素材欄位與片尾限制、品牌缺口及改名相容說明；Facebook 複製頁支援頻道識別與選用英文 |
