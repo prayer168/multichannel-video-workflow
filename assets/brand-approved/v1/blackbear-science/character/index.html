@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黑熊老師角色</title>
+<link rel="stylesheet" href="character.css">
+<style>
+  :root { --bg: #F4F1EA; --ink: #091D38; --btn: #fff; --on: #2D4E9E; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Noto Sans TC", system-ui, sans-serif; }
+  main { display: grid; grid-template-columns: minmax(260px, 420px) 1fr; gap: 24px; padding: 24px; max-width: 1100px; margin: auto; }
+  .bbt-stage { aspect-ratio: 560/530; }
+  h1 { font-size: 22px; margin: 0 0 12px; }
+  h2 { font-size: 14px; margin: 18px 0 6px; opacity: .7; }
+  button { border: 1.5px solid var(--ink); background: var(--btn); border-radius: 8px; padding: 6px 12px; margin: 0 6px 6px 0; cursor: pointer; font: inherit; }
+  button.on { background: var(--on); color: #fff; border-color: var(--on); }
+  @media (max-width: 700px) { main { grid-template-columns: 1fr; padding: 16px; } .bbt-stage { max-width: 320px; margin: auto; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="bbt-stage" id="stage"></div>
+  <section>
+    <h1>Black Bear Teacher｜黑熊老師</h1>
+    <h2>表情 Expression</h2><div id="ex"></div>
+    <h2>嘴型 Mouth</h2><div id="mo"></div>
+    <h2>手勢 Gesture</h2><div id="ge"></div>
+    <h2>動作</h2>
+    <button id="talk">Talk</button><button id="blink">Blink</button><button id="ab" class="on">Auto Blink</button>
+  </section>
+</main>
+<script src="character.js"></script>
+<script>
+  const B = BlackBearTeacher;
+  B.mount("#stage", "character.svg").then(() => {
+    const group = (id, list, fn) => {
+      const box = document.getElementById(id);
+      list.forEach((v) => {
+        const b = document.createElement("button"); b.textContent = v;
+        b.onclick = () => { fn(v); box.querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b)); };
+        box.appendChild(b);
+      });
+    };
+    group("ex", B.EXPRESSIONS, (v) => B.setExpression(v));
+    group("mo", B.MOUTHS, (v) => B.setMouth(v));
+    group("ge", B.GESTURES, (v) => B.setGesture(v));
+    const talk = document.getElementById("talk");
+    talk.onclick = () => {
+      const on = !B.state.talking;
+      on ? B.startTalking() : B.stopTalking();
+      talk.textContent = on ? "Stop Talk" : "Talk"; talk.classList.toggle("on", on);
+    };
+    document.getElementById("blink").onclick = () => B.blink();
+    const ab = document.getElementById("ab");
+    ab.onclick = () => { const on = !B.state.autoBlink; on ? B.startAutoBlink() : B.stopAutoBlink(); ab.classList.toggle("on", on); };
+  });
+</script>
+</body>
+</html>

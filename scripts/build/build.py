@@ -777,7 +777,7 @@ def main():
 
     # 6. 字幕、章節
     for p in write_subs([L for L in lines if L["start"] < total], titles, mid, post, tag): log("字幕／章節：", p)
-    json.dump(dict(total=total, engine=engine, shots=[{k: v for k, v in s.items() if k != "variants"} | {"n": len(s.get("variants", []))} for s in shots]),
+    json.dump(dict(total=total, engine=engine, intro_len=intro_len, scene_starts=[L["scene_start"] for L in lines if "scene_start" in L and L["scene_start"] < total], shots=[{k: v for k, v in s.items() if k != "variants"} | {"n": len(s.get("variants", []))} for s in shots]),
               open(os.path.join(work, "timeline.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
     # 7. 品質檢查

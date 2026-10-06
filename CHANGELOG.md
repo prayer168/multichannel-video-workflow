@@ -2,6 +2,21 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.1.0] - 2026-10-06
+### Added
+- `references/fixed-settings.md`：使用者定案、兩頻道通用的固定製作設定——Gemini Achird＋固定 Style（暫定配音只用 Zhiwei，禁止其他 TTS）、黑熊老師片頭、原創 lo-fi 配樂、右下角黑熊老師講課、片尾、Windows 一鍵檔與踩坑紀錄。
+- `scripts/build/bear_presenter.py`：分層 SVG 黑熊老師角色依配音音量對嘴、眨眼、手勢，疊加到主片右下角（Playwright 逐格、透明背景）。
+- `scripts/build/append_outro.py`：把核定片尾（含音樂）接到主片後。
+- `scripts/build/產生影片.bat`：Windows 一鍵檔（自動找技能資料夾、安裝套件、檢查 ffmpeg、build → 黑熊講課 → 接片尾，全程寫 `產生紀錄.log`）。
+- 資產：`assets/brand-approved/v1/blackbear-science/intro/`（黑熊老師片頭與定案片頭音訊）、`character/`（黑熊老師分層 SVG 角色）、`music/`（原創配樂產生程式與授權紀錄）、`assets/common/watermark_transparent_1920x1080.png`。
+- `.gitattributes`：.bat 固定 CRLF。
+### Changed
+- `build.py`：`timeline.json` 新增 `intro_len`、`scene_starts`。
+- SKILL.md 規則優先順序加入固定製作設定；AI Watch 改用黑熊老師片頭與講課角色（取消「不借用自然教室素材」限制）；配音章節改為固定 Achird 設定。
+- `profiles/ai-watch.md`、`profiles/blackbear-science.md`、`references/build-pipeline.md` 同步。
+### Fixed
+- 記錄 2026-10-06 實作踩坑：LF 換行的 .bat 不會執行、`setx` 需新視窗、新電腦缺 numpy、AI Studio 下載暫存檔被清掉、D:／G: 雲端硬碟代號不同。
+
 ## [2.0.0] - 2026-10-02
 ### Changed
 - 使用者要求技能識別改名為 multichannel-video-workflow；同步 SKILL.md name、新安裝資料夾、呼叫方式及 topic_radar.py User-Agent。

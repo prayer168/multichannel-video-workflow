@@ -3,9 +3,22 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.0.0（2026-10-02）
+**Version:** 2.1.0（2026-10-06）
 
 ---
+
+## 固定製作設定（2.1.0 起，兩頻道通用）
+
+使用者 2026-10-06 定案，詳見 [references/fixed-settings.md](references/fixed-settings.md)：
+
+| 項目 | 固定做法 |
+|---|---|
+| 片頭 | 黑熊老師片頭 4 秒＋定案片頭音訊（`assets/brand-approved/v1/blackbear-science/intro/`） |
+| 配音 | Gemini `gemini-3.8-flash-tts`／**Achird**＋固定 Style（只換術語清單）；暫定只用 Windows Zhiwei，不用其他 TTS |
+| 背景音樂 | 原創 lo-fi（`music/make_music.py` 產生），不用 Pixabay 曲當 BGM |
+| 講課角色 | 畫面右下角黑熊老師，依配音對嘴（`scripts/build/bear_presenter.py`） |
+| 片尾 | AI Watch 四種主題核定片尾／自然教室熊掌片尾（`scripts/build/append_outro.py`） |
+| 一鍵產生 | Windows：`scripts/build/產生影片.bat` 複製到專案資料夾雙擊，進度寫入 `產生紀錄.log` |
 
 ## 頻道模式
 
@@ -161,6 +174,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.1.0 | 2026-10-06 | 固定製作設定寫入技能：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課（bear_presenter.py）、片尾後製（append_outro.py）、Windows 一鍵檔；AI Watch 改用黑熊品牌；首支實作《Claude Mods vs ChatGPT Dots》 |
 | 2.0.0 | 2026-10-02 | 技能識別與安裝資料夾統一改名 multichannel-video-workflow；提供既有安裝遷移說明 |
 | 1.14.3 | 2026-10-02 | 五支片尾經使用者核定，正式版移除 DRAFT 並更新路徑 |
 | 1.14.2 | 2026-10-02 | 依影片截圖完成熊掌片尾重建草案，待核定 |
@@ -180,6 +194,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.1.0：`bear_presenter.py` 已在雲端容器以 45 秒片段實測（對嘴、手勢、片頭不出現角色）；`產生影片.bat` 的 build／配音流程已在使用者 Windows 實跑。
 
 執行 `python -X utf8 -m unittest discover -s tests -v` 驗證 Facebook 頻道頁尾、無英文輸入、HTML 跳脫、連結更新與原稿／多次匯出保留；執行 `python -X utf8 -m compileall -q scripts tests` 檢查 Python 語法。文件以版本比對、資源路徑／連結、表格欄位、程式碼區塊、舊規則搜尋與 `git diff --check` 檢查。
 

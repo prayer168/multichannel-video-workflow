@@ -30,13 +30,12 @@
 - 旁白速度、句長、分段口頭禪和影片長度依內容調整；不強制沿用某一頻道的固定語助詞。
 
 ## 品牌影音
-- 2026-10-02 使用者核定四支主題片尾，正式路徑：assets/brand-approved/v1/ai-watch/outros/<主題>/outro.mp4，主題為 trends、tools、coding、opensource。每支六秒，已移除 DRAFT；核定涵蓋片尾內的識別、文案及音樂。
-- 片尾維持固定品牌骨架，依主要題材選片尾／CTA。題材不符合時以最接近的核定版本判斷或提出新草案，不自動使用尚未核定的通用版。
-- 核定範圍與清單見 ../assets/brand-approved/v1/README.md。獨立片頭、片頭音訊、浮水印、通用片尾、背景音床及旁白聲線仍待核定，不因片尾核定自動啟用；既有草案留在 assets/brand-drafts/。
-- 片頭片尾只用 AI Watch 識別，不借用自然教室熊掌、品牌音樂或浮水印。
-- build.py 必填 video.intro、intro_audio、watermark、bgm；沒有 outro／outro_audio。完整核定片尾以後製接入，詳見 ../references/build-pipeline.md。不得把正式片尾路徑填入不存在的設定欄位。
+- **2026-10-06 使用者定案（優先於下列舊規則）**：片頭、配音、背景音樂與黑熊老師講課角色一律依 `../references/fixed-settings.md`。AI Watch 也使用黑熊老師片頭（`assets/brand-approved/v1/blackbear-science/intro/`）、Achird 固定 Style、原創 lo-fi 配樂，並在右下角疊加黑熊老師講課（`scripts/build/bear_presenter.py`）。先前「AI Watch 不借用自然教室熊掌／黑熊素材」的限制因此取消。
+- 片尾：2026-10-02 使用者核定四支主題片尾，正式路徑 `assets/brand-approved/v1/ai-watch/outros/<主題>/outro.mp4`，主題為 trends、tools、coding、opensource，每支六秒、含音樂。依主要題材選一支，以 `scripts/build/append_outro.py` 後製接入（build.py 沒有 outro／outro_audio 欄位）。
+- 浮水印：有黑熊老師講課時不疊浮水印，`watermark` 填 `assets/common/watermark_transparent_1920x1080.png`（或工作區同名檔）。
+- AI Watch 原創 Logo 片頭、通用片尾、音床草案仍留在 `assets/brand-drafts/`，不自動啟用。
 
-社群使用本頻道文案、標籤、CTA；不使用熊掌版 `fb_cover.py`。使用 `fb_post.py --channel ai-watch`，英文文案按需求。`thanks` 圖卡必須填 `name: AI 觀測站（AI Watch）`，避免自然教室預設姓名。
+社群使用本頻道文案、標籤、CTA；`fb_post.py --channel ai-watch`，英文文案按需求。`thanks` 圖卡填 `name: AI 觀測站（AI Watch）`；結尾自我介紹可用「我是黑熊老師」（使用者腳本即如此）。
 
 ## 成效與迭代
 - 復盤觀眾留存、搜尋詞、留言中的卡點、實測可重現性與觀眾實際完成率。
