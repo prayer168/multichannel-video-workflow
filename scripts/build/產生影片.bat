@@ -14,6 +14,8 @@ if "%OUTRO%"=="" set "OUTRO=assets\brand-approved\v1\ai-watch\outros\trends\outr
 set "CHAR=%REPO%\assets\brand-approved\v1\blackbear-science\character"
 echo REPO=%REPO% >> "%LOG%"
 if not exist "%REPO%\scripts\build\build.py" goto norepo
+echo [更新] 下載最新版技能（git pull）...
+git -C "%REPO%" pull --ff-only >> "%LOG%" 2>&1
 if defined GEMINI_API_KEY (echo [配音] Gemini Achird 正式配音) else (echo [配音] 沒有 GEMINI_API_KEY，改用 Windows Zhiwei 臺灣國語暫定配音)
 if defined GEMINI_API_KEY (echo KEY=yes >> "%LOG%") else (echo KEY=no >> "%LOG%")
 set PYTHONIOENCODING=utf-8
@@ -29,7 +31,9 @@ echo [黑熊老師] 疊加右下角講課角色...
 python -m playwright install chromium >> "%LOG%" 2>&1
 python -u "%REPO%\scripts\build\bear_presenter.py" "%PROJ%" --character "%CHAR%" >> "%LOG%" 2>&1
 if errorlevel 1 (echo [注意] 黑熊老師疊加失敗，改用沒有角色的版本接片尾 >> "%LOG%" & echo [注意] 黑熊老師疊加失敗，先輸出沒有角色的版本)
-python -u "%REPO%\scripts\build\append_outro.py" "%PROJ%" "%REPO%\%OUTRO%" >> "%LOG%" 2>&1
+set "AO=%REPO%\scripts\build\append_outro.py"
+if not exist "%AO%" set "AO=%PROJ%\2_製作中\接片尾.py"
+python -u "%AO%" "%PROJ%" "%REPO%\%OUTRO%" >> "%LOG%" 2>&1
 if errorlevel 1 goto fail
 echo [完成] >> "%LOG%"
 echo [完成] 影片在 3_製作後\輸出成品（檔名結尾 _完整版.mp4）
