@@ -2,6 +2,20 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.2.0] - 2026-10-08
+### Added
+- `references/animation-handoff.md`：生活化故事、可愛原創配角、動畫提示詞、角色與分鏡預覽、類比邊界及製作交接。
+- `scripts/pack_video_bundle.py`：白名單素材 ZIP、待補項目、CRC 與 SHA-256；拒絕危險路徑、符號連結與缺少的必填檔案。
+- 實測前預寫成功／部分成功／失敗旁白；依證據選擇配音分支，不虛構 UI 或成果。
+- README／START_HERE 製作包範本，交給 Claude Code／Codex 製作時間軸、預覽與缺件清單。
+### Changed
+- SKILL.md 新增動畫預覽與素材包交接階段，保留固定品牌、配音、配樂與影片建置流程。
+- README.md、VERSION、SKILL.md 與本更新紀錄統一標示 2.2.0；首頁補齊功能表及新增資源。
+- 修正 README 中與 2.1.0 固定設定衝突的 AI Watch 品牌與對嘴角色舊說明。
+### Tests
+- 已驗證中文路徑、ZIP／SHA-256 完整性、缺件報告、必填缺件失敗、危險路徑與符號連結拒絕。
+- 以 Docker 影片題目驗證動畫、品牌設定、未實測分支與代理交接流程；未執行完整影片渲染或平台發布。
+
 ## [2.1.0] - 2026-10-06
 ### Added
 - `references/fixed-settings.md`：使用者定案、兩頻道通用的固定製作設定——Gemini Achird＋固定 Style（暫定配音只用 Zhiwei，禁止其他 TTS）、黑熊老師片頭、原創 lo-fi 配樂、右下角黑熊老師講課、片尾、Windows 一鍵檔與踩坑紀錄。

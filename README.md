@@ -3,7 +3,7 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.1.0（2026-10-06）
+**Version:** 2.2.0（2026-10-08）
 
 ---
 
@@ -27,7 +27,7 @@
 | 設定檔 | 主要內容 | 品牌規則 |
 |---|---|---|
 | `profiles/blackbear-science.md` | 自然科教學、AI 數位教材、教學紀錄、科展與 STEAM | 使用自然教室核定片頭片尾與黑熊老師品牌素材 |
-| `profiles/ai-watch.md` | AI 趨勢、AI Coding、開源軟體、軟體／網站／App 開發 | 使用 AI Watch 專屬品牌影音；尚未提供的素材列為待建立，不借用自然教室素材 |
+| `profiles/ai-watch.md` | AI 趨勢、AI Coding、開源軟體、軟體／網站／App 開發 | 沿用固定設定的黑熊片頭、主持人、Achird 與原創配樂，片尾依 AI Watch 主題選擇 |
 
 兩個頻道共用案例式教學、生活例子、術語白話解釋、操作查證、分鏡、製作與復盤。PAPAYA 電腦教室只作為公開教學結構的研究參考，不使用其 Logo、音樂、片頭、原句或縮圖素材。
 
@@ -45,16 +45,18 @@
 | 3. 腳本 | 章節表加上逐句稿（語氣、句長、語速、開場與結尾依頻道設定檔） |
 | 3.5 英文逐字稿 | 依頻道與使用者需求產出中英逐字稿或字幕 |
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；依內容調整節奏 |
+| 4.5 動畫與角色預覽 | 生活例子、原創配角、逐鏡動畫提示詞與多格場景預覽；核定黑熊角色保持原設定 |
 | 5. 上架文案（SEO 版） | 依搜尋意圖與頻道語氣提出標題、說明欄、章節、Hashtag、標籤、需要時的英文文案、置頂留言與縮圖文案 |
-| 6. 配音 | TTS 友善稿、聲線設定（不使用對嘴角色） |
+| 6. 配音 | TTS 友善稿、固定 Achird 聲線與 Style；核定黑熊主持人依配音對嘴 |
 | 6.5 一鍵產生影片 | `scripts/build/build.py`：依腳本＋畫面規格一次輸出影片（Gemini TTS 配音並自動清除頭尾雜訊、41 種圖卡含全幅照片、9 種教學模擬動畫、運鏡、7 種電影轉場、電影黑邊、配樂依相似度剪接、中英字幕、章節、品質報告）；`--voice timing` 可在沒有配音時先看畫面預覽 |
 | 7. 發布 | 依頻道品牌與授權條款檢查配樂、字幕、播放清單、結束畫面導流與發布設定 |
+| 7.2 製作素材包 | README、START_HERE、白名單素材清單、實測驗收資料與已有圖片；ZIP 附缺件清單、CRC 和 SHA-256 驗證 |
 | 7.5 臉書宣傳文 | 影片完成時一併製作符合所選頻道品牌的宣傳文與分享圖；熊掌版 `fb_cover.py` 僅用於自然教室，AI Watch 使用核定素材或無品牌暫代版 |
 | 8. 發布後 SEO 優化 | 點閱率、流量來源、搜尋字詞報表 → 調整標題、說明欄、縮圖 |
 
 ## 共用教學方法與頻道識別
 
-- 各頻道使用自己的固定片頭與片尾；黑熊老師自然教室可使用既有熊掌片頭，AI Watch 使用專屬素材（尚未提供時標示待建立）
+- 兩頻道片頭、配音、配樂與黑熊主持人依固定設定；片尾按頻道與 AI Watch 主題選核定素材
 - 共同方法是白話、循序、帶觀眾完成一個具體成果；速度、句長、口頭禪依頻道和主題調整
 - 依頻道設定檔使用自己的開場、結尾、CTA、縮圖色彩和品牌元素；不套用另一頻道的固定台詞或視覺模板
 
@@ -77,6 +79,7 @@ multichannel-video-workflow/
 ├── scripts/
 │   ├── topic_radar.py       抓 GitHub、Hugging Face、Hacker News 熱度原始資料
 │   ├── seo_keywords.py      YouTube 搜尋建議＋競爭分析（SEO 關鍵字研究）
+│   ├── pack_video_bundle.py 白名單素材 ZIP、缺件清單與完整性驗證
 │   ├── md2txt.py            上架文案 .txt＋YouTube標記.txt＋置頂留言.txt
 │   ├── fb_cover.py          臉書分享圖 1200×630
 │   ├── fb_post.py           臉書文一鍵複製頁（中英雙語；上傳後可代入 YouTube 網址）
@@ -91,6 +94,7 @@ multichannel-video-workflow/
     ├── topic-radar.md       選題雷達：來源清單、步驟、報告格式
     ├── seo.md               YouTube SEO 規範
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
+    ├── animation-handoff.md 生活化角色動畫、實測旁白分支、素材包與代理交接
     ├── templates.md         專案卡、選題、腳本、分鏡、剪輯、上架、發布、復盤範本
     └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿、選題雷達、SEO 提示詞
 ```
@@ -112,7 +116,7 @@ multichannel-video-workflow/
 
 ## 品牌素材與程式限制
 
-2026-10-02 使用者已核定 AI Watch 四種主題片尾與自然教室熊掌片尾。正式檔案、核定範圍與來源見 [已核定片尾](assets/brand-approved/v1/README.md)，五支正式影片皆移除 DRAFT。獨立片頭、浮水印、通用片尾、背景音床與旁白聲線沒有因這次片尾核定而自動核定；自然教室既有片頭實檔與授權仍需確認。歷史草案保留在 assets/brand-drafts/。
+2026-10-02 使用者已核定 AI Watch 四種主題片尾與自然教室熊掌片尾。正式檔案、核定範圍與來源見 [已核定片尾](assets/brand-approved/v1/README.md)，五支正式影片皆移除 DRAFT。片尾核定範圍不推導到其他資產；2026-10-06 新增的片頭、聲線、原創配樂與主持人固定設定以 `references/fixed-settings.md` 為準。歷史草案保留在 assets/brand-drafts/。
 
 `build.py` 實際要求 `intro`、`intro_audio`、`watermark`、`bgm` 檔案，不支援 `outro`／`outro_audio` 或自動讀取 profiles。片尾可作最後一幕的畫面，但完整影音／長度需後製接入。無品牌預覽也須建立真實中性或靜音／透明檔案；不能拿待建立文字當路徑。詳見 `references/build-pipeline.md`。
 
@@ -174,6 +178,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.2.0 | 2026-10-08 | 生活化角色動畫、逐鏡動畫提示詞、分鏡預覽、實測旁白分支、Claude Code／Codex 製作交接與 ZIP 打包驗證 |
 | 2.1.0 | 2026-10-06 | 固定製作設定寫入技能：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課（bear_presenter.py）、片尾後製（append_outro.py）、Windows 一鍵檔；AI Watch 改用黑熊品牌；首支實作《Claude Mods vs ChatGPT Dots》 |
 | 2.0.0 | 2026-10-02 | 技能識別與安裝資料夾統一改名 multichannel-video-workflow；提供既有安裝遷移說明 |
 | 1.14.3 | 2026-10-02 | 五支片尾經使用者核定，正式版移除 DRAFT 並更新路徑 |
@@ -194,6 +199,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.2.0：素材打包已測試中文檔名、ZIP CRC 與 SHA-256、待補清單、必填缺件、危險路徑與符號連結拒絕；以 Docker 題目完成流程驗證。未執行本版完整影片渲染或平台發布。首頁版本、VERSION、SKILL.md 與 CHANGELOG 已同步。
 
 2.1.0：`bear_presenter.py` 已在雲端容器以 45 秒片段實測（對嘴、手勢、片頭不出現角色）；`產生影片.bat` 的 build／配音流程已在使用者 Windows 實跑。
 

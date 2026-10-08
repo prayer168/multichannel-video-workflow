@@ -5,7 +5,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-版本：2.2.0（2026-10-08）；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定；新增兩頻道共用的**固定製作設定**（`references/fixed-settings.md`：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課、Windows 一鍵檔）。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
+版本：2.2.0（2026-10-08）；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 
