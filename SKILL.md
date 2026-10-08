@@ -155,3 +155,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - 品牌（名稱、Logo、主色、聲線、吉祥物）尚未定案時，使用暫代方案，不要自行決定；見使用者工作區的 `04_品牌資產/品牌待建立清單.md`
 - 每次復盤得到的心得，建議使用者回寫到 references/style-guide.md
 
+
+## 技能版本更新與遠端核對
+
+每次更新本技能版本，**一定同步更新 README.md**（2026-10-08 使用者固定要求）。在同一次提交中更新 README 的目前版本、日期、新功能與最近更新表，以及 VERSION、SKILL.md 與 CHANGELOG.md；歷史版本紀錄保留，不把所有舊版本字串一律替換。
+
+提交前核對四處目前版本一致、新增資源與流程在 README 可見；README 的品牌與配音說明須符合 fixed-settings.md。推送後讀取遠端 main 的 README、VERSION、SKILL.md 與 CHANGELOG，確認首頁版本與提交一致，再回報完成。只更新 SKILL.md 或只建立提交，不能宣稱版本更新已完整完成。若另有 Release／tag，明確區分來源分支版本與已發布版本，不把舊 Release 當作此次已更新。
