@@ -1,11 +1,11 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、動畫提示詞、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-版本：2.1.0（2026-10-06）；新增兩頻道共用的**固定製作設定**（`references/fixed-settings.md`：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課、Windows 一鍵檔）。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
+版本：2.2.0（2026-10-08）；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定；新增兩頻道共用的**固定製作設定**（`references/fixed-settings.md`：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課、Windows 一鍵檔）。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 
@@ -24,6 +24,8 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/build-pipeline.md`：**一鍵產生影片**（`scripts/build/build.py`）：畫面規格格式、41 種圖卡版型（含全幅照片 photo）、教學模擬動畫（anims_lib）、電影預告片風格（運鏡、轉場、黑邊、配樂剪接；第九節）、配音模式（Gemini API／Zhiwei／timing 預覽）、額度、輸出與品質報告。AI Studio 網頁版 TTS 若回「The caller does not have permission」，改請使用者建立免費 API 金鑰並設環境變數 GEMINI_API_KEY
 - `references/production-notes.md`：自動粗剪流程（暫定配音、圖卡、組合）、浮水印規則、常見陷阱與品質檢查
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、標題、縮圖、畫面、音樂）
+- `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
+- `scripts/pack_video_bundle.py`：以白名單清單打包，檢查缺件、CRC 與 SHA-256，附交接索引；只收錄實際存在且可交付的素材。
 - `references/templates.md`：腳本、分鏡、說明欄、專案卡範本
 - `references/prompts.md`：生圖、TTS、英文逐字稿提示詞
 
@@ -85,6 +87,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - 不複製 Papaya 的原句或專屬素材；僅參考公開可觀察的教學結構。
 - 自我介紹與 CTA 依本頻道規範，不在共用稿套用「我是黑熊老師」；避免長篇閒聊與無證據的誇張形容。
 - SEO 適用時自然提到主題與關鍵字，不硬塞或強制出現時點。
+動畫解說採生活任務串聯，用角色反應說明概念，並標類比邊界；角色須有敘事功能，品牌黑熊沿用核定素材。尚未實測時，先寫成功／部分成功／失敗分支，配音前按證據只選一支；詳細流程見 `references/animation-handoff.md`。
 每一段標出 `[畫面：…]`、`[標註：…]`。寫完後附上依實際配音估計的時長與待查證清單。
 
 ### 3.5 同步英文逐字稿（寫入 02_腳本_中英對照.md）
@@ -99,6 +102,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 ### 4. 分鏡與素材清單（寫入 03_分鏡表.md）
 欄位：# | 時間 | 旁白 | 畫面類型 | 內容 | 鏡頭 | 標註 | 音效
 以理解為目的檢查節奏；40 秒是可選檢視提示，不應干擾持續觀察或必要實驗步驟。最後列出要錄的畫面、要生成的插畫（附英文提示詞）、要找的 B-roll。
+
+### 4.5 動畫提示詞與角色預覽
+依 `references/animation-handoff.md` 建立角色表、素材 ID 與逐鏡動畫提示詞。提示詞列共同美術設定、角色參考、動作、鏡頭、時長、留白與後製項目；長段落拆短片。需要分鏡圖時產生並檢查多格預覽，標明概念示意；它不能代替真實介面或實測成果，也不自動核定品牌角色。沒有生成工具時交付提示詞與缺件清單，不宣稱已完成動畫。
 
 ### 5. 標題、縮圖、說明欄（SEO 版；寫入 04_標題與縮圖.md、3_製作後/01_上架文案.md）
 - 標題候選 × 5，優先清楚、準確、符合該頻道語氣；主要關鍵字自然放入標題，不為了 SEO 堆疊或硬拉長。原有鉤子句型只在符合當前頻道設定檔與使用者要求時使用；不採用聳動、恐嚇、誇大或未經量測的數字承諾。
@@ -119,6 +125,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 **一鍵產生（優先使用）**：Windows 上把 `scripts/build/產生影片.bat` 複製到專案資料夾雙擊（build.py → bear_presenter.py → append_outro.py，進度寫入 `產生紀錄.log`）。片頭、配音、配樂依 fixed-settings.md。以下為 build.py 細節：腳本定稿後，AI 依腳本與所選頻道設定檔寫出 `2_製作中/畫面規格.yaml`。片頭、片尾、配音、浮水印與配樂只可引用該頻道核定資產；`video.intro`、`intro_audio`、`watermark`、`bgm` 都必須是存在的檔案，不能填文字佔位或省略。產生器沒有 `outro`／`outro_audio` 欄位；片尾影片可放最後一幕，但音訊與完整長度需後製接入（見 build-pipeline）。`thanks` 圖卡明確填本頻道 `name`，避免舊預設姓名。若 AI Watch 品牌影音尚未提供，在專案卡列待建立；要產生無品牌預覽，須先準備實際中性片頭、靜音 WAV、透明 1920×1080 PNG 和已授權 BGM 等必填檔案，否則只交付企劃與分鏡。（2026-10-06 起兩頻道都用黑熊老師片頭與講課角色，見 fixed-settings.md。）再執行 `python scripts/build/build.py <專案資料夾>`，一次產出影片、所需字幕、章節與品質檢查報告；沒有 Gemini 配音時自動用 Zhiwei 暫定配音，正式配音到齊後同一個指令重跑即可（見 references/build-pipeline.md）。
 **沒有螢幕錄影時**：可以用「逐句暫定配音＋品牌圖卡＋自動組合」先做出粗剪，再替換正式配音（見 references/production-notes.md）。
 **導流設定**：加入主題播放清單（標題含關鍵字）、結束畫面推薦 1 支相關影片、在提到其他工具時插入資訊卡。
+
+### 7.2 製作素材 ZIP 與代理交接
+使用者要求壓縮、素材包或交給 Claude Code／Codex 時，完成腳本、分鏡、動畫提示詞、角色表、實測提示詞與驗收表（適用時），把已有圖片、前集結尾和錄屏一併收錄。按 `references/animation-handoff.md` 與 `references/templates.md` 產生 README、START_HERE、白名單素材清單，執行 `scripts/pack_video_bundle.py` 驗證並打包，提供 ZIP 下載。缺素材列待補，未選旁白分支不能送進 TTS；交接沿用 fixed-settings 與 build-pipeline，不自動發布或換聲線。專案及最終 ZIP 依當前環境的檔案保存規則處理，不把單集素材混入技能。
 
 ### 7.5 臉書宣傳文（每支影片完成時製作；放在 3_製作後/臉書宣傳/）
 依使用者先前的固定要求，每支影片完成時一併產出臉書宣傳素材，不需再次詢問。文案、圖卡、Hashtag 和 CTA 依所選頻道設定檔；AI Watch 不自動加自然教室品牌標籤。若目前的 `fb_cover.py` 會加上熊掌識別，只能用於自然教室；AI Watch 的圖卡需使用核定品牌素材或無品牌暫代版。產出中文文案、分享圖與複製頁；英文文案按需求：
@@ -145,3 +154,4 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - 只參考公開可觀察的教學結構，不使用 Papaya 的 Logo、片頭、音樂或縮圖素材
 - 品牌（名稱、Logo、主色、聲線、吉祥物）尚未定案時，使用暫代方案，不要自行決定；見使用者工作區的 `04_品牌資產/品牌待建立清單.md`
 - 每次復盤得到的心得，建議使用者回寫到 references/style-guide.md
+
