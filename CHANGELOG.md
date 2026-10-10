@@ -2,7 +2,7 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
-## [2.2.0] - 2026-10-08
+## [2.3.0] - 2026-10-10\n### Added\n- `references/youtube-growth-experiment.md`：流量來源辨識、三關固定資料實測、影片和 Shorts 交接及 24h／72h／7d／28d 數據複盤。\n### Changed\n- SKILL 與 README 增加以證據驅動的成長閉環，保留原有固定配音、品牌、素材驗證規則。\n\n## [2.2.0] - 2026-10-08
 ### Added
 - `references/animation-handoff.md`：生活化故事、可愛原創配角、動畫提示詞、角色與分鏡預覽、類比邊界及製作交接。
 - `scripts/pack_video_bundle.py`：白名單素材 ZIP、待補項目、CRC 與 SHA-256；拒絕危險路徑、符號連結與缺少的必填檔案。
