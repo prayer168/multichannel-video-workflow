@@ -5,7 +5,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-版本：2.2.0（2026-10-08）；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
+版本：2.3.0（2026-10-10）；加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 
@@ -24,7 +24,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/build-pipeline.md`：**一鍵產生影片**（`scripts/build/build.py`）：畫面規格格式、41 種圖卡版型（含全幅照片 photo）、教學模擬動畫（anims_lib）、電影預告片風格（運鏡、轉場、黑邊、配樂剪接；第九節）、配音模式（Gemini API／Zhiwei／timing 預覽）、額度、輸出與品質報告。AI Studio 網頁版 TTS 若回「The caller does not have permission」，改請使用者建立免費 API 金鑰並設環境變數 GEMINI_API_KEY
 - `references/production-notes.md`：自動粗剪流程（暫定配音、圖卡、組合）、浮水印規則、常見陷阱與品質檢查
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、標題、縮圖、畫面、音樂）
-- `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
+- `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。\n- `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
 - `scripts/pack_video_bundle.py`：以白名單清單打包，檢查缺件、CRC 與 SHA-256，附交接索引；只收錄實際存在且可交付的素材。
 - `references/templates.md`：腳本、分鏡、說明欄、專案卡範本
 - `references/prompts.md`：生圖、TTS、英文逐字稿提示詞
@@ -129,7 +129,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 ### 7.2 製作素材 ZIP 與代理交接
 使用者要求壓縮、素材包或交給 Claude Code／Codex 時，完成腳本、分鏡、動畫提示詞、角色表、實測提示詞與驗收表（適用時），把已有圖片、前集結尾和錄屏一併收錄。按 `references/animation-handoff.md` 與 `references/templates.md` 產生 README、START_HERE、白名單素材清單，執行 `scripts/pack_video_bundle.py` 驗證並打包，提供 ZIP 下載。缺素材列待補，未選旁白分支不能送進 TTS；交接沿用 fixed-settings 與 build-pipeline，不自動發布或換聲線。專案及最終 ZIP 依當前環境的檔案保存規則處理，不把單集素材混入技能。
 
-### 7.5 臉書宣傳文（每支影片完成時製作；放在 3_製作後/臉書宣傳/）
+### 7.4 YouTube 成長驗證與實測門檻\n涉及工具比較、成長計畫或上架優化時必讀 `references/youtube-growth-experiment.md`。先記錄推薦／搜尋／外部流量來源，任何工具勝負或節省時間宣稱均需實測證據。長影片規劃 3 支可獨立觀看的 Shorts；發布後記錄 24h、72h、7d、28d，按數據調整。\n\n### 7.5 臉書宣傳文（每支影片完成時製作；放在 3_製作後/臉書宣傳/）
 依使用者先前的固定要求，每支影片完成時一併產出臉書宣傳素材，不需再次詢問。文案、圖卡、Hashtag 和 CTA 依所選頻道設定檔；AI Watch 不自動加自然教室品牌標籤。若目前的 `fb_cover.py` 會加上熊掌識別，只能用於自然教室；AI Watch 的圖卡需使用核定品牌素材或無品牌暫代版。產出中文文案、分享圖與複製頁；英文文案按需求：
 1. `臉書文_中文.txt`：活潑風格
    - 開頭一句「反差鉤子」＋ emoji（例：「一堂自然課用滿四套軟體，學生就會比較懂嗎？」）
