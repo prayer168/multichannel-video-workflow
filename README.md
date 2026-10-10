@@ -3,11 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.2.0（2026-10-08）
+**Version:** 2.3.0（2026-10-10）
 
 ---
 
-## 固定製作設定（2.1.0 起，兩頻道通用）
+## 2.3.0：以證據驅動的 YouTube 成長與實測流程\n\n新增 [references/youtube-growth-experiment.md](references/youtube-growth-experiment.md)，要求把「觀眾需求 → 產品能力查證 → 固定資料的三關公平實測 → 長片與 Shorts → 24h／72h／7d／28d 成效複盤」串成閉環。不得憑觀看數斷定推薦來源、虛構操作成果或預寫比較勝負；保留既有固定品牌與配音設定。\n\n## 固定製作設定（2.1.0 起，兩頻道通用）
 
 使用者 2026-10-06 定案，詳見 [references/fixed-settings.md](references/fixed-settings.md)：
 
@@ -178,7 +178,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
-| 2.2.0 | 2026-10-08 | 生活化角色動畫、逐鏡動畫提示詞、分鏡預覽、實測旁白分支、Claude Code／Codex 製作交接與 ZIP 打包驗證 |
+| 2.3.0 | 2026-10-10 | YouTube 成長與實測驗證：流量來源、三關公平任務、短長影片導流、四時間點複盤 |\n| 2.2.0 | 2026-10-08 | 生活化角色動畫、逐鏡動畫提示詞、分鏡預覽、實測旁白分支、Claude Code／Codex 製作交接與 ZIP 打包驗證 |
 | 2.1.0 | 2026-10-06 | 固定製作設定寫入技能：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課（bear_presenter.py）、片尾後製（append_outro.py）、Windows 一鍵檔；AI Watch 改用黑熊品牌；首支實作《Claude Mods vs ChatGPT Dots》 |
 | 2.0.0 | 2026-10-02 | 技能識別與安裝資料夾統一改名 multichannel-video-workflow；提供既有安裝遷移說明 |
 | 1.14.3 | 2026-10-02 | 五支片尾經使用者核定，正式版移除 DRAFT 並更新路徑 |
