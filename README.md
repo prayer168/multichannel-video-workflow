@@ -3,11 +3,26 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.3.0（2026-10-10）
+**Version:** 2.4.0（2026-10-10）
 
 ---
 
-## 2.3.0：以證據驅動的 YouTube 成長與實測流程\n\n新增 [references/youtube-growth-experiment.md](references/youtube-growth-experiment.md)，要求把「觀眾需求 → 產品能力查證 → 固定資料的三關公平實測 → 長片與 Shorts → 24h／72h／7d／28d 成效複盤」串成閉環。不得憑觀看數斷定推薦來源、虛構操作成果或預寫比較勝負；保留既有固定品牌與配音設定。\n\n## 固定製作設定（2.1.0 起，兩頻道通用）
+## 2.4.0：實測錄屏影片、AI 影片生成工具、旁白產生器
+
+| 項目 | 內容 |
+|---|---|
+| 實測錄屏流程 | [references/real-test-workflow.md](references/real-test-workflow.md)：判定 AI 行為前一定回看錄影、先確認方案權限、實測當天檢查表、`--permission-mode default`、卡片框合成、片段表與抽格核對、分享版壓縮 |
+| AI 影片生成工具 | [references/ai-animation.md](references/ai-animation.md)：Google Flow／Veo 等工具的建立角色、英文提示詞、挑選與命名；資訊動畫由程式繪製（角色表與素材 ID 依 animation-handoff.md） |
+| 旁白產生器 | `scripts/build/產生旁白.bat`＋`產生旁白.py`：在使用者 Windows 依 `旁白資料.json` 以 Gemini Achird 兩幕一組產生 `配音/Sxx-Syy.wav`；只用標準函式庫、自動間隔 21 秒、額度用完可隔天接續 |
+| 開發歷程 | [History.md](History.md)：每個版本的背景、實作案例與學到的事 |
+
+實作案例：《AI 觀測站｜實測 Claude Mods》（2026-10-09～10）。
+
+## 2.3.0：以證據驅動的 YouTube 成長與實測流程
+
+新增 [references/youtube-growth-experiment.md](references/youtube-growth-experiment.md)，要求把「觀眾需求 → 產品能力查證 → 固定資料的三關公平實測 → 長片與 Shorts → 24h／72h／7d／28d 成效複盤」串成閉環。不得憑觀看數斷定推薦來源、虛構操作成果或預寫比較勝負；保留既有固定品牌與配音設定。
+
+## 固定製作設定（2.1.0 起，兩頻道通用）
 
 使用者 2026-10-06 定案，詳見 [references/fixed-settings.md](references/fixed-settings.md)：
 
@@ -19,6 +34,7 @@
 | 講課角色 | 畫面右下角黑熊老師，依配音對嘴（`scripts/build/bear_presenter.py`） |
 | 片尾 | AI Watch 四種主題核定片尾／自然教室熊掌片尾（`scripts/build/append_outro.py`） |
 | 一鍵產生 | Windows：`scripts/build/產生影片.bat` 複製到專案資料夾雙擊，進度寫入 `產生紀錄.log` |
+| 只產生旁白 | Windows：`scripts/build/產生旁白.bat`＋`旁白資料.json`（2.4.0 起） |
 
 ## 頻道模式
 
@@ -73,7 +89,8 @@
 multichannel-video-workflow/
 ├── SKILL.md                 技能主檔（工作流程 + 核心規則）
 ├── README.md                本檔
-├── CHANGELOG.md             版本紀錄
+├── CHANGELOG.md             版本紀錄（Keep a Changelog 格式）
+├── History.md               開發歷程：每版的背景、實作案例與學到的事
 ├── VERSION                  目前版本號
 ├── tests/test_fb_post.py     Facebook 頻道隔離、選用英文與保留原稿的 CLI 回歸測試
 ├── scripts/
@@ -83,7 +100,8 @@ multichannel-video-workflow/
 │   ├── md2txt.py            上架文案 .txt＋YouTube標記.txt＋置頂留言.txt
 │   ├── fb_cover.py          臉書分享圖 1200×630
 │   ├── fb_post.py           臉書文一鍵複製頁（中英雙語；上傳後可代入 YouTube 網址）
-│   └── build/               一鍵產生影片：build.py、cards_lib.py（41 種圖卡版型）、anims_lib.py（教學模擬動畫）、say_batch.ps1
+│   └── build/               一鍵產生影片：build.py、cards_lib.py（41 種圖卡版型）、anims_lib.py（教學模擬動畫）、say_batch.ps1、
+│                            bear_presenter.py（黑熊老師講課）、append_outro.py（接片尾）、產生影片.bat、產生旁白.bat／產生旁白.py（Gemini 旁白）
 ├── profiles/              自然教室與 AI 觀測站頻道設定
 │   ├── blackbear-science.md
 │   └── ai-watch.md
@@ -94,6 +112,9 @@ multichannel-video-workflow/
     ├── topic-radar.md       選題雷達：來源清單、步驟、報告格式
     ├── seo.md               YouTube SEO 規範
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
+    ├── fixed-settings.md    固定製作設定（片頭、Achird 配音、原創配樂、講課角色、片尾、一鍵檔）
+    ├── real-test-workflow.md 實測錄屏影片流程（錄影為準、卡片框合成、片段表、旁白產生）
+    ├── ai-animation.md      AI 影片生成工具操作（Google Flow 建立角色、英文提示詞、挑選命名）
     ├── animation-handoff.md 生活化角色動畫、實測旁白分支、素材包與代理交接
     ├── templates.md         專案卡、選題、腳本、分鏡、剪輯、上架、發布、復盤範本
     └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿、選題雷達、SEO 提示詞
@@ -148,6 +169,12 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 幫我跑一輪選題雷達，看看最近兩週有什麼值得拍的。
 ```
 ```
+帶我一步一步實測 Claude Code 的這個新功能，錄下來剪成 AI 觀測站影片；結論要以錄影為準。
+```
+```
+幫我把這幾段角色動畫的參考圖和 Google Flow 提示詞準備好。
+```
+```
 幫我做「Claude Skills」的 SEO 關鍵字研究，看看有沒有機會。
 ```
 ```
@@ -178,7 +205,9 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
-| 2.3.0 | 2026-10-10 | YouTube 成長與實測驗證：流量來源、三關公平任務、短長影片導流、四時間點複盤 |\n| 2.2.0 | 2026-10-08 | 生活化角色動畫、逐鏡動畫提示詞、分鏡預覽、實測旁白分支、Claude Code／Codex 製作交接與 ZIP 打包驗證 |
+| 2.4.0 | 2026-10-10 | 實測錄屏影片流程（錄影為準、卡片框合成、片段表與抽格核對）、AI 影片生成工具補充（Google Flow）、Windows 旁白產生器 `產生旁白.bat`；新增 History.md；修正 2.3.0 字面 `\n` 換行；實作《AI 觀測站｜實測 Claude Mods》 |
+| 2.3.0 | 2026-10-10 | YouTube 成長與實測驗證：流量來源、三關公平任務、短長影片導流、四時間點複盤 |
+| 2.2.0 | 2026-10-08 | 生活化角色動畫、逐鏡動畫提示詞、分鏡預覽、實測旁白分支、Claude Code／Codex 製作交接與 ZIP 打包驗證 |
 | 2.1.0 | 2026-10-06 | 固定製作設定寫入技能：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課（bear_presenter.py）、片尾後製（append_outro.py）、Windows 一鍵檔；AI Watch 改用黑熊品牌；首支實作《Claude Mods vs ChatGPT Dots》 |
 | 2.0.0 | 2026-10-02 | 技能識別與安裝資料夾統一改名 multichannel-video-workflow；提供既有安裝遷移說明 |
 | 1.14.3 | 2026-10-02 | 五支片尾經使用者核定，正式版移除 DRAFT 並更新路徑 |
@@ -199,6 +228,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.4.0：`產生旁白.py` 已做語法檢查與無金鑰路徑測試；同一份程式（固定路徑版）已交付使用者 Windows 使用，實際呼叫 Gemini 待使用者執行後確認。卡片框合成、片段表與分享版壓縮流程已用於《實測 Claude Mods》預覽 v0.1～v0.4（7:14，1920×1080）。Google Flow 流程為首次導入，以使用者截圖為準逐步帶操作。
 
 2.2.0：素材打包已測試中文檔名、ZIP CRC 與 SHA-256、待補清單、必填缺件、危險路徑與符號連結拒絕；以 Docker 題目完成流程驗證。未執行本版完整影片渲染或平台發布。首頁版本、VERSION、SKILL.md 與 CHANGELOG 已同步。
 

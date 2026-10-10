@@ -5,7 +5,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-版本：2.3.0（2026-10-10）；加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
+版本：2.4.0（2026-10-10）；新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 
@@ -24,7 +24,10 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/build-pipeline.md`：**一鍵產生影片**（`scripts/build/build.py`）：畫面規格格式、41 種圖卡版型（含全幅照片 photo）、教學模擬動畫（anims_lib）、電影預告片風格（運鏡、轉場、黑邊、配樂剪接；第九節）、配音模式（Gemini API／Zhiwei／timing 預覽）、額度、輸出與品質報告。AI Studio 網頁版 TTS 若回「The caller does not have permission」，改請使用者建立免費 API 金鑰並設環境變數 GEMINI_API_KEY
 - `references/production-notes.md`：自動粗剪流程（暫定配音、圖卡、組合）、浮水印規則、常見陷阱與品質檢查
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、標題、縮圖、畫面、音樂）
-- `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。\n- `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
+- `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。
+- `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
+- `references/real-test-workflow.md`：**實測錄屏影片**（AI 工具實測類）——判定前回看錄影、方案權限、實測當天準備、卡片框合成與片段表、Gemini 旁白在使用者電腦產生、交付節奏
+- `references/ai-animation.md`：**AI 影片生成工具操作補充**（Google Flow／Veo 等）——建立角色、英文提示詞結構、挑選與命名；角色表與素材 ID 依 animation-handoff.md
 - `scripts/pack_video_bundle.py`：以白名單清單打包，檢查缺件、CRC 與 SHA-256，附交接索引；只收錄實際存在且可交付的素材。
 - `references/templates.md`：腳本、分鏡、說明欄、專案卡範本
 - `references/prompts.md`：生圖、TTS、英文逐字稿提示詞
@@ -76,6 +79,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 2. 收集可驗證的內容與操作步驟
 優先使用使用者提供的材料；也可依公開官方文件、可存取的軟體或原始專案自行查證與實測。需要登入、私有資料或特定設備時，才請使用者提供操作結果。**不可以編造 UI 位置、功能、價格、科學證據或測試結果**，不確定的標示【待確認】。
+實測類影片依 `references/real-test-workflow.md`：先確認使用者方案能用到該功能；判定 AI 的行為（守住限制、成功、失敗）之前**一定先回看完整錄影**，不能只看 git 紀錄或最後狀態；誤判一經發現立即告知使用者並更正所有文件。
 
 ### 3. 腳本（寫入 02_腳本.md）
 先產出章節表（名詞片語），再寫逐句稿。語氣、生活案例、年齡與術語解釋、句長、語速、開場和結尾依本次頻道設定檔；共同要求為真實、清楚、可跟做且不編造。必須遵守：
@@ -104,7 +108,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 以理解為目的檢查節奏；40 秒是可選檢視提示，不應干擾持續觀察或必要實驗步驟。最後列出要錄的畫面、要生成的插畫（附英文提示詞）、要找的 B-roll。
 
 ### 4.5 動畫提示詞與角色預覽
-依 `references/animation-handoff.md` 建立角色表、素材 ID 與逐鏡動畫提示詞。提示詞列共同美術設定、角色參考、動作、鏡頭、時長、留白與後製項目；長段落拆短片。需要分鏡圖時產生並檢查多格預覽，標明概念示意；它不能代替真實介面或實測成果，也不自動核定品牌角色。沒有生成工具時交付提示詞與缺件清單，不宣稱已完成動畫。
+依 `references/animation-handoff.md` 建立角色表、素材 ID 與逐鏡動畫提示詞。提示詞列共同美術設定、角色參考、動作、鏡頭、時長、留白與後製項目；長段落拆短片。需要分鏡圖時產生並檢查多格預覽，標明概念示意；它不能代替真實介面或實測成果，也不自動核定品牌角色。沒有生成工具時交付提示詞與缺件清單，不宣稱已完成動畫。使用者用 Google Flow 等影片生成工具時，依 `references/ai-animation.md` 準備角色參考圖、建立角色與英文提示詞，並以使用者截圖為準逐步帶操作；資訊動畫（計數、比對）仍由程式繪製。
 
 ### 5. 標題、縮圖、說明欄（SEO 版；寫入 04_標題與縮圖.md、3_製作後/01_上架文案.md）
 - 標題候選 × 5，優先清楚、準確、符合該頻道語氣；主要關鍵字自然放入標題，不為了 SEO 堆疊或硬拉長。原有鉤子句型只在符合當前頻道設定檔與使用者要求時使用；不採用聳動、恐嚇、誇大或未經量測的數字承諾。
@@ -116,7 +120,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - **上架文案一律另存純文字 `3_製作後/01_上架文案.txt`**（使用者要求）：`python scripts/md2txt.py 3_製作後/01_上架文案.md`，同時產生 `3_製作後/YouTube標記.txt`（標籤段落去重複後存成一行，檢查 500 字元上限，直接貼到 YouTube 工作室「標記」欄）與 `3_製作後/置頂留言.txt`（影片公開後貼到留言區再按「置頂」）；`build.py` 每次輸出影片後也會自動轉一次；.md 保留作為原稿
 
 ### 6. 配音稿
-一律依 `references/fixed-settings.md`：正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面右下角固定疊加黑熊老師講課角色（`scripts/build/bear_presenter.py`）。
+一律依 `references/fixed-settings.md`：正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面右下角固定疊加黑熊老師講課角色（`scripts/build/bear_presenter.py`）。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/產生旁白.py`、`產生旁白.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
 
 ### 7. 剪輯指示與發布檢查
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。
@@ -129,7 +133,10 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 ### 7.2 製作素材 ZIP 與代理交接
 使用者要求壓縮、素材包或交給 Claude Code／Codex 時，完成腳本、分鏡、動畫提示詞、角色表、實測提示詞與驗收表（適用時），把已有圖片、前集結尾和錄屏一併收錄。按 `references/animation-handoff.md` 與 `references/templates.md` 產生 README、START_HERE、白名單素材清單，執行 `scripts/pack_video_bundle.py` 驗證並打包，提供 ZIP 下載。缺素材列待補，未選旁白分支不能送進 TTS；交接沿用 fixed-settings 與 build-pipeline，不自動發布或換聲線。專案及最終 ZIP 依當前環境的檔案保存規則處理，不把單集素材混入技能。
 
-### 7.4 YouTube 成長驗證與實測門檻\n涉及工具比較、成長計畫或上架優化時必讀 `references/youtube-growth-experiment.md`。先記錄推薦／搜尋／外部流量來源，任何工具勝負或節省時間宣稱均需實測證據。長影片規劃 3 支可獨立觀看的 Shorts；發布後記錄 24h、72h、7d、28d，按數據調整。\n\n### 7.5 臉書宣傳文（每支影片完成時製作；放在 3_製作後/臉書宣傳/）
+### 7.4 YouTube 成長驗證與實測門檻
+涉及工具比較、成長計畫或上架優化時必讀 `references/youtube-growth-experiment.md`。先記錄推薦／搜尋／外部流量來源，任何工具勝負或節省時間宣稱均需實測證據。長影片規劃 3 支可獨立觀看的 Shorts；發布後記錄 24h、72h、7d、28d，按數據調整。
+
+### 7.5 臉書宣傳文（每支影片完成時製作；放在 3_製作後/臉書宣傳/）
 依使用者先前的固定要求，每支影片完成時一併產出臉書宣傳素材，不需再次詢問。文案、圖卡、Hashtag 和 CTA 依所選頻道設定檔；AI Watch 不自動加自然教室品牌標籤。若目前的 `fb_cover.py` 會加上熊掌識別，只能用於自然教室；AI Watch 的圖卡需使用核定品牌素材或無品牌暫代版。產出中文文案、分享圖與複製頁；英文文案按需求：
 1. `臉書文_中文.txt`：活潑風格
    - 開頭一句「反差鉤子」＋ emoji（例：「一堂自然課用滿四套軟體，學生就會比較懂嗎？」）

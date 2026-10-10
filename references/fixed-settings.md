@@ -10,7 +10,7 @@
 | 正式配音 | Google AI Studio（Generate speech）／ Gemini API，模型 `gemini-3.8-flash-tts`，聲音 **Achird**（單一講者），`scenes_per_request: 2` |
 | 語速 | 每分鐘約 240～260 字 |
 | 暫定配音 | 只能用 Windows 臺灣國語 **Zhiwei**（`build.py --voice zhiwei`）；**禁止**改用 Kokoro、espeak、Edge TTS 等其他聲音當暫定或正式配音（2026-10-06 使用者退件：大陸腔、不是黑熊老師的聲音） |
-| 雲端環境 | 雲端容器連不到 Gemini 也沒有 Zhiwei → 不要在雲端自行產生配音；改請使用者在 Windows 執行 `scripts/build/產生影片.bat`，或用 AI Studio 網頁產生後存進 `2_製作中/配音/Gemini/Sxx-Syy.wav` |
+| 雲端環境 | 雲端容器連不到 Gemini 也沒有 Zhiwei → 不要在雲端自行產生配音；改請使用者在 Windows 執行 `scripts/build/產生影片.bat`（整支影片）或 `scripts/build/產生旁白.bat`（只產生旁白，讀 `旁白資料.json`，2026-10-10 起），或用 AI Studio 網頁產生後存進 `2_製作中/配音/Gemini/Sxx-Syy.wav` |
 
 Style 一字不改，只替換最後一行的「本片術語清單」：
 
@@ -23,7 +23,7 @@ Style 一字不改，只替換最後一行的「本片術語清單」：
 
 - AI Studio 網頁版：Speaker 1 選 Achird → Style 貼上全文 → 每次貼兩幕旁白（一行一句）→ Run → 下載 WAV，依幕號改名（`S01-S02.wav`）。下載是 24 kHz 單聲道，build.py 會自動清頭尾雜訊、切句。
 - Gemini 語音是生成的：音色固定，但每次語氣、停頓略有差異；同一支影片同一天用同一組設定一次產生完。
-- 免費額度每天 10 次（API）；403 代表額度用完，隔天重跑會從缺的幕接續。
+- 免費額度每天 10 次、每分鐘 3 次（API）；403／429 代表額度用完，隔天重跑會從缺的幕接續。`產生旁白.py` 已內建 21 秒間隔與接續。
 
 ## 二、片頭（固定）
 

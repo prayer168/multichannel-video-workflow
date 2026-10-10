@@ -2,7 +2,28 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
-## [2.3.0] - 2026-10-10\n### Added\n- `references/youtube-growth-experiment.md`：流量來源辨識、三關固定資料實測、影片和 Shorts 交接及 24h／72h／7d／28d 數據複盤。\n### Changed\n- SKILL 與 README 增加以證據驅動的成長閉環，保留原有固定配音、品牌、素材驗證規則。\n\n## [2.2.0] - 2026-10-08
+## [2.4.0] - 2026-10-10
+### Added
+- `references/real-test-workflow.md`：實測錄屏影片流程——結論只能來自錄影、開拍前確認方案權限、實測當天檢查表、`claude --permission-mode default`、乾淨資料夾與新對話、OBS 設定、卡片框合成（透明窗＋overlay）、片段表格式、抽格核對時間點、中斷 mkv 重新封裝、快轉標示、分享版壓縮、預覽版本與缺件清單。
+- `references/ai-animation.md`：AI 影片生成工具操作補充（Google Flow／Veo 等）——角色動畫與資訊動畫分工、角色參考圖與「建立角色」、英文提示詞結構（共用 Style＋Avoid）、挑選與命名；角色表與素材 ID 仍依 `animation-handoff.md`。
+- `scripts/build/產生旁白.py`、`產生旁白.bat`：在使用者 Windows 依 `旁白資料.json` 以 Gemini `gemini-3.8-flash-tts`／Achird 兩幕一組產生 `配音/Sxx-Syy.wav`；只用標準函式庫、可指定 `--data`／`--out`／`--model`／`--voice`／`--wait`、自動間隔 21 秒、已存在跳過、403／429 停下隔天接續。
+- `History.md`：開發歷程（每版背景、實作案例、學到的事）。
+### Changed
+- SKILL.md：引用新文件；階段 2 加入「判定 AI 行為前一定回看錄影」；階段 4.5 加入 AI 影片生成工具補充；階段 6 加入旁白產生器。
+- `references/fixed-settings.md`：雲端環境配音可用 `產生旁白.bat`；額度補上每分鐘 3 次。固定設定本身不變。
+- `profiles/ai-watch.md`：補充實測集指引。
+- README：2.4.0 摘要、檔案結構、使用範例、最近更新、本版檢查。
+### Fixed
+- 2.3.0 的 CHANGELOG、README、SKILL.md 有幾處把換行寫成字面 `\n`，導致標題與表格列黏在同一行；已改回真正換行。
+- 記錄 2026-10-09 誤判：把使用者按 Tab 接受的灰色建議字當成 AI 自行 commit／push；改為以錄影判定並寫入技能規則。
+
+## [2.3.0] - 2026-10-10
+### Added
+- `references/youtube-growth-experiment.md`：流量來源辨識、三關固定資料實測、影片和 Shorts 交接及 24h／72h／7d／28d 數據複盤。
+### Changed
+- SKILL 與 README 增加以證據驅動的成長閉環，保留原有固定配音、品牌、素材驗證規則。
+
+## [2.2.0] - 2026-10-08
 ### Added
 - `references/animation-handoff.md`：生活化故事、可愛原創配角、動畫提示詞、角色與分鏡預覽、類比邊界及製作交接。
 - `scripts/pack_video_bundle.py`：白名單素材 ZIP、待補項目、CRC 與 SHA-256；拒絕危險路徑、符號連結與缺少的必填檔案。
