@@ -1,5 +1,7 @@
 # 多頻道製作範本
 
+資料夾、正式 MP4 時戳、四區段 `上架文案.txt` 及獨立最終逐字稿，依 [project-layout.md](project-layout.md)；本檔其他欄位是內容範本，舊路徑不作為正式交付結構。
+
 先讀取 `channel-routing.md` 與所選 `../profiles/` 設定檔。下列欄位依本集需求填寫；英文素材、SEO、螢幕錄影與 TTS 是條件式產出。
 
 ## 專案卡

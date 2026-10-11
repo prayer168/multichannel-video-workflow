@@ -2,6 +2,12 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.4.1] - 2026-10-11
+### Changed
+- 主題根目錄以主影片名稱命名，下設主片及三支 Shorts，各有製作前／製作中／製作後。
+- 正式 MP4 加上台灣時間 YYYYMMDD_HHMMSS；上架標題、說明欄、Tags、置頂留言整合為單一 TXT，最終逐字稿獨立。
+- 新增 references/project-layout.md，交付目錄與舊工具工作區分開；現有專案不因技能更新自動搬移。
+
 ## [2.4.0] - 2026-10-10
 ### Added
 - `references/real-test-workflow.md`：實測錄屏影片流程——結論只能來自錄影、開拍前確認方案權限、實測當天檢查表、`claude --permission-mode default`、乾淨資料夾與新對話、OBS 設定、卡片框合成（透明窗＋overlay）、片段表格式、抽格核對時間點、中斷 mkv 重新封裝、快轉標示、分享版壓縮、預覽版本與缺件清單。
