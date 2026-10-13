@@ -89,3 +89,8 @@ video:
   bgm_lufs: -33
   sfx: false
 ```
+
+
+## 八、進階動畫與片頭變體（2.5.0）
+
+依 [advanced-animation.md](advanced-animation.md) 選材質與模組。預設仍為核定4秒黑熊片頭；新增繪本、紙藝、木作、科技桌版本為設計提案，未選定前不替換。核定Logo、角色造型、Achird固定Style與原創音樂不因材質切換而改變。長片插段不內嵌片頭片尾，主持由主片疊一次。新配置與轉接器待實作，不等於既有build.py已支援。

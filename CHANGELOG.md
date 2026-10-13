@@ -2,6 +2,16 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.5.0] - 2026-10-13
+### Added
+- references/advanced-animation.md：雙頻道溫馨動畫工作流、六套材質模板、九種模組契約、片頭變體提案、需求表、生圖與動畫提示詞、分鏡與驗收。
+- 同一18秒內容的紙藝／毛氈／數位插畫文字分鏡與相對成本，MVP及擴充順序。
+### Changed
+- SKILL.md加入進階動畫按需路由與階段4.6；animation-handoff與fixed-settings加入銜接說明。
+- README補齊2.4.1交付目錄、版本紀錄及2.5.0可用範圍。
+### Implementation status
+- 新配置、渲染器與片頭仍為設計；既有品牌、聲線、配樂和影片管線保持核定設定。
+
 ## [2.4.1] - 2026-10-11
 ### Changed
 - 主題根目錄以主影片名稱命名，下設主片及三支 Shorts，各有製作前／製作中／製作後。

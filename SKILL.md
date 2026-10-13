@@ -1,11 +1,11 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、動畫提示詞、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、可選黑熊片頭、動畫提示詞、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-版本：2.4.1（2026-10-11）；新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
+版本：2.5.0（2026-10-13）；新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 
@@ -25,6 +25,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/production-notes.md`：自動粗剪流程（暫定配音、圖卡、組合）、浮水印規則、常見陷阱與品質檢查
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、標題、縮圖、畫面、音樂）
 - `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。
+- `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
 - `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
 - `references/real-test-workflow.md`：**實測錄屏影片**（AI 工具實測類）——判定前回看錄影、方案權限、實測當天準備、卡片框合成與片段表、Gemini 旁白在使用者電腦產生、交付節奏
 - `references/ai-animation.md`：**AI 影片生成工具操作補充**（Google Flow／Veo 等）——建立角色、英文提示詞結構、挑選與命名；角色表與素材 ID 依 animation-handoff.md
@@ -104,6 +105,14 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 4.5 動畫提示詞與角色預覽
 依 `references/animation-handoff.md` 建立角色表、素材 ID 與逐鏡動畫提示詞。提示詞列共同美術設定、角色參考、動作、鏡頭、時長、留白與後製項目；長段落拆短片。需要分鏡圖時產生並檢查多格預覽，標明概念示意；它不能代替真實介面或實測成果，也不自動核定品牌角色。沒有生成工具時交付提示詞與缺件清單，不宣稱已完成動畫。使用者用 Google Flow 等影片生成工具時，依 `references/ai-animation.md` 準備角色參考圖、建立角色與英文提示詞，並以使用者截圖為準逐步帶操作；資訊動畫（計數、比對）仍由程式繪製。
+
+### 4.6 進階動畫模組（按需求啟用）
+要求溫馨動畫、材質模板、可重用模組或黑熊片頭選項時，讀 `references/advanced-animation.md`，先依頻道、用途與教學概念選模板與模組；以單集需求表、分鏡和代表片段確立方向，再擴充素材。
+- 共用品牌與聲線依 fixed-settings；預設核定4秒片頭。新片頭只作變體提案，沿用核定Logo／角色，未選定前不自動替換。
+- 六材質是美術模板；M01–M09是模組契約。新JSON欄位尚未被現有build.py支援，需實作並驗證轉接器或外掛渲染後才能宣稱可執行。
+- 區分獨立成片與長片插段：插段不內嵌片頭片尾，主持只疊一次。保留字幕、主持安全區；真UI用錄屏，科學狀態變化依已查證規則。
+- 時間以實際旁白校正；首尾可剪接、隨機效果固定種子，模板切換不改聲線。素材缺件與draft品牌不得進正式版。
+- MVP先用紙藝與溫暖數位插畫，沿用現有管線；水彩、毛氈、木作與黏土依實際素材成本擴充。只要求規劃時交付規格，不自行生成大量素材或完整影片。
 
 ### 5. 標題、縮圖、說明欄（SEO 版；寫入 04_標題與縮圖.md、製作後/上架文案.txt）
 - 標題候選 × 5，優先清楚、準確、符合該頻道語氣；主要關鍵字自然放入標題，不為了 SEO 堆疊或硬拉長。原有鉤子句型只在符合當前頻道設定檔與使用者要求時使用；不採用聳動、恐嚇、誇大或未經量測的數字承諾。
