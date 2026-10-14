@@ -3,9 +3,13 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.5.0（2026-10-13）
+**Version:** 2.5.1（2026-10-14）
 
 ---
+
+## 2.5.1：先選擇，再製作
+
+新增 [references/guided-production.md](references/guided-production.md)：先選頻道，接受自訂題目或查證後推薦候選，再選材質、形式與時長、片頭，確認故事腳本及代表預覽後才製作完整影片。最新AI選題可依要求列10題附日期、來源、切入點與門檻。每輪只處理目前選擇，保留已選項；明確授權自行完成時不額外加關卡。未選風格不生成大量素材，預览未確認不製作全片。
 
 ## 2.5.0：進階動畫模組與溫馨材質模板
 
@@ -130,6 +134,7 @@ multichannel-video-workflow/
     ├── fixed-settings.md    固定製作設定（片頭、Achird 配音、原創配樂、講課角色、片尾、一鍵檔）
     ├── real-test-workflow.md 實測錄屏影片流程（錄影為準、卡片框合成、片段表、旁白產生）
     ├── ai-animation.md      AI 影片生成工具操作（Google Flow 建立角色、英文提示詞、挑選命名）
+    ├── guided-production.md 逐步引導選題、風格、形式、腳本、預覽與製作
     ├── advanced-animation.md 進階動畫模組：六材質、九模組、片頭選項、配置、分鏡、驗收與MVP
     ├── project-layout.md    正式主片與Shorts目錄、時間戳與整合上架文案
     ├── animation-handoff.md 生活化角色動畫、實測旁白分支、素材包與代理交接
@@ -222,6 +227,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.5.1 | 2026-10-14 | 加入逐步引導：頻道、自訂或推薦主題、風格、形式與時長、腳本、代表預覽，確認後製作；保留已選設定 |
 | 2.5.0 | 2026-10-13 | 整合進階動畫規格：六種溫馨材質、九種模組契約、黑熊片頭變體提案、三材質文字分鏡、字幕與主持安全區、驗收與MVP；新渲染器待實作 |
 | 2.4.1 | 2026-10-11 | 主片與三支Shorts交付結構、台灣時間戳、單一上架文案TXT與獨立最終逐字稿 |
 | 2.4.0 | 2026-10-10 | 實測錄屏影片流程（錄影為準、卡片框合成、片段表與抽格核對）、AI 影片生成工具補充（Google Flow）、Windows 旁白產生器 `產生旁白.bat`；新增 History.md；修正 2.3.0 字面 `\n` 換行；實作《AI 觀測站｜實測 Claude Mods》 |
@@ -247,6 +253,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.5.1：檢查技能格式、版本與新增參考鏈結；以不同階段的使用者訊息檢查流程銜接。未製作新的完整影片，2.5.0渲染器仍為待實作設計。
 
 2.5.0：規格、路由與參考鏈結整合；核對既有產生器和品牌檔案，檢查版本一致性、技能格式與新JSON示例。未執行新動畫渲染或服務API，不將設計版宣稱為可執行模組庫。
 

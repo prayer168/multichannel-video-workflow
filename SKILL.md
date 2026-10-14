@@ -5,7 +5,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-版本：2.5.0（2026-10-13）；新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
+版本：2.5.1（2026-10-14）；新增逐步引導製作（references/guided-production.md）：先選頻道與主題，再選風格、形式、腳本和代表預覽，確認後才製作。2.5.0（2026-10-13）：新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 
@@ -25,6 +25,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/production-notes.md`：自動粗剪流程（暫定配音、圖卡、組合）、浮水印規則、常見陷阱與品質檢查
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、標題、縮圖、畫面、音樂）
 - `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。
+- `references/guided-production.md`：**逐步引導製作**——接受自訂或搜尋推薦題目，再選風格、形式與時長、確認故事腳本、代表預覽，最後製作。要求一起選擇或未提供完整製作需求時讀取；已明確授權自行完成時不增加逐關確認。
 - `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
 - `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
 - `references/real-test-workflow.md`：**實測錄屏影片**（AI 工具實測類）——判定前回看錄影、方案權限、實測當天準備、卡片框合成與片段表、Gemini 旁白在使用者電腦產生、交付節奏
@@ -44,6 +45,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 正式資料夾與命名以 `references/project-layout.md` 為準。以下專案路徑相對於單支影片資料夾；舊版腳本的硬編碼路徑依該文件的工具工作區相容方式處理，不直接假設新路徑可執行。
 
 預設逐階段確認；若使用者要求完整交付或已授權自行完成，依所需範圍連續完成後再回報，不必在每個階段停下。
+
+### 開始前：逐步引導選擇
+使用者要求一起挑題、選風格、一步一步製作，或只說試做新版技能但尚未提供完整需求時，依 `references/guided-production.md`：頻道 → 自訂或推薦主題 → 材質風格 → 形式／時長／片頭 → 故事腳本 → 代表預覽 → 正式製作。每輪只處理目前決定；已選項直接沿用。推薦不等於定案，選題／風格前不生圖或配音，腳本與代表預覽確認前不製作全片。若本次要求最新AI題目，先完成來源查證與指定數量候選，再讓使用者選題。停下後保留決策，從下一個未解決項恢復。
 
 ### 0. 選題雷達（使用者還沒有確定題目時，一定要先做）
 先依頻道設定檔調整來源、題材範圍與候選評分；自然教室增加科學教育與課堂需求查證，AI 觀測站聚焦 AI／軟體／開源專案及可重現實測。詳細規範見 `references/topic-radar.md` 與對應頻道設定檔。步驟：

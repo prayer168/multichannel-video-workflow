@@ -2,6 +2,13 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.5.1] - 2026-10-14
+### Added
+- references/guided-production.md：逐步引導模式、七階段選擇、最新AI候選搜尋、決策狀態與停止恢復規則。
+### Changed
+- 技能入口先路由引導模式：接受自訂或推薦主題，依序選風格、形式／時長、腳本、預覽，再製作。
+- 未選設定不視為定案；已選項不重問；明確完整製作授權不額外插入關卡。
+
 ## [2.5.0] - 2026-10-13
 ### Added
 - references/advanced-animation.md：雙頻道溫馨動畫工作流、六套材質模板、九種模組契約、片頭變體提案、需求表、生圖與動畫提示詞、分鏡與驗收。
