@@ -44,7 +44,7 @@ Style 一字不改，只替換最後一行的「本片術語清單」：
 
 ## 四、黑熊老師講課角色（固定）
 
-- 每支影片在**畫面右下角**放黑熊老師講課，依配音音量對嘴、眨眼、呼吸；每幕開頭 2.5 秒做手勢（第一幕揮手、其餘指向、片尾前 3 秒揮手），其他時間 idle。片頭、片尾不出現。
+- 每支影片疊加核定黑熊老師講課角色；一般影片沿用**右下角**，進階動畫講解可改用2026-10-15確認的**左側放大講者／右側動畫**配置（見 [ui-narration-animation.md](ui-narration-animation.md)），依配音音量對嘴、眨眼、呼吸；舊管線每幕開頭2.5秒做手勢；進階動畫依實際旁白事件與目標安排指向、解說及回應，不用固定開場手勢取代語意同步。片頭、片尾不出現。
 - 角色來源：`assets/brand-approved/v1/blackbear-science/character/`（分層 SVG＋`character.js` 手動時鐘 API；造型依使用者的《黑熊老師角色表情與姿勢圖鑑》）。不得自行重畫或換造型。
 - 程式：`scripts/build/bear_presenter.py <專案> --character <character 資料夾>`；預設高度 330 px、15 fps、右下距邊 20 px。需要 `pip install playwright` 與 `python -m playwright install chromium`。
 - 圖卡右下角原本保留給浮水印；有黑熊老師時不再疊浮水印（AI Watch 用透明 PNG）。

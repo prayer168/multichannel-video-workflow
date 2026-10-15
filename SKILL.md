@@ -5,7 +5,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-版本：2.5.1（2026-10-14）；新增逐步引導製作（references/guided-production.md）：先選頻道與主題，再選風格、形式、腳本和代表預覽，確認後才製作。2.5.0（2026-10-13）：新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
+版本：2.6.0（2026-10-15）；新增元件動畫、旁白逐句對齊及左講者／右動畫版型（references/ui-narration-animation.md）。2.5.1（2026-10-14）：新增逐步引導製作（references/guided-production.md）：先選頻道與主題，再選風格、形式、腳本和代表預覽，確認後才製作。2.5.0（2026-10-13）：新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 
@@ -26,6 +26,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、標題、縮圖、畫面、音樂）
 - `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。
 - `references/guided-production.md`：**逐步引導製作**——接受自訂或搜尋推薦題目，再選風格、形式與時長、確認故事腳本、代表預覽，最後製作。要求一起選擇或未提供完整製作需求時讀取；已明確授權自行完成時不增加逐關確認。
+- `references/ui-narration-animation.md`：**UI元件與旁白對齊**——狀態與動作逐句演出、持續角色與機構、木質程式模擬、左側放大講者、Flow回退及實際影格驗收；製作動畫講解時讀取。
 - `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
 - `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
 - `references/real-test-workflow.md`：**實測錄屏影片**（AI 工具實測類）——判定前回看錄影、方案權限、實測當天準備、卡片框合成與片段表、Gemini 旁白在使用者電腦產生、交付節奏
@@ -111,7 +112,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 依 `references/animation-handoff.md` 建立角色表、素材 ID 與逐鏡動畫提示詞。提示詞列共同美術設定、角色參考、動作、鏡頭、時長、留白與後製項目；長段落拆短片。需要分鏡圖時產生並檢查多格預覽，標明概念示意；它不能代替真實介面或實測成果，也不自動核定品牌角色。沒有生成工具時交付提示詞與缺件清單，不宣稱已完成動畫。使用者用 Google Flow 等影片生成工具時，依 `references/ai-animation.md` 準備角色參考圖、建立角色與英文提示詞，並以使用者截圖為準逐步帶操作；資訊動畫（計數、比對）仍由程式繪製。
 
 ### 4.6 進階動畫模組（按需求啟用）
-要求溫馨動畫、材質模板、可重用模組或黑熊片頭選項時，讀 `references/advanced-animation.md`，先依頻道、用途與教學概念選模板與模組；以單集需求表、分鏡和代表片段確立方向，再擴充素材。
+要求溫馨動畫、材質模板、可重用模組或黑熊片頭選項時，讀 `references/advanced-animation.md`；涉及UI元件、角色／機關持續動作、旁白同步或講者位置時，同時讀 `references/ui-narration-animation.md`，先依頻道、用途與教學概念選模板與模組；以單集需求表、分鏡和代表片段確立方向，再擴充素材。
 - 共用品牌與聲線依 fixed-settings；預設核定4秒片頭。新片頭只作變體提案，沿用核定Logo／角色，未選定前不自動替換。
 - 六材質是美術模板；M01–M09是模組契約。新JSON欄位尚未被現有build.py支援，需實作並驗證轉接器或外掛渲染後才能宣稱可執行。
 - 區分獨立成片與長片插段：插段不內嵌片頭片尾，主持只疊一次。保留字幕、主持安全區；真UI用錄屏，科學狀態變化依已查證規則。
@@ -128,7 +129,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - **每支影片只交付一份 `製作後/上架文案.txt`**，按 `references/project-layout.md` 包含 YouTube 標題、說明欄、標記 Tags、置頂留言；逐字稿另存。舊工具自動產出的 MD／分項 TXT 留在內部工具工作區，合併核對後才正式交付。
 
 ### 6. 配音稿
-一律依 `references/fixed-settings.md`：正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面右下角固定疊加黑熊老師講課角色（`scripts/build/bear_presenter.py`）。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/產生旁白.py`、`產生旁白.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
+一律依 `references/fixed-settings.md`：正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/產生旁白.py`、`產生旁白.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
 
 ### 7. 剪輯指示與發布檢查
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。

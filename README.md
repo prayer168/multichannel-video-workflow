@@ -3,9 +3,15 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.5.1（2026-10-14）
+**Version:** 2.6.0（2026-10-15）
 
 ---
+
+## 2.6.0：元件動畫與旁白逐句對齊
+
+新增 [references/ui-narration-animation.md](references/ui-narration-animation.md)：UI 中有操作或教學用途的元件要有實際狀態變化；角色、鍵盤、螢幕、連動機關與遊戲角色各自有動作，語意事件依實際旁白時間觸發。加入木質程式模擬與真實錄屏的界線、左側放大黑熊講者／右側動畫版型、Flow 補段回退，以及逐句、逐元件與實際編碼影格驗收。解說文字以字幕為主。
+
+此版整合製作與驗收契約；單集可外掛渲染。通用 JSON 轉接器和所有材質的共用渲染器尚未完成，不宣稱既有 build.py 能直接執行新契約。品牌造型、聲線及核定影音保持既有設定。
 
 ## 2.5.1：先選擇，再製作
 
@@ -49,7 +55,7 @@
 | 片頭 | 黑熊老師片頭 4 秒＋定案片頭音訊（`assets/brand-approved/v1/blackbear-science/intro/`） |
 | 配音 | Gemini `gemini-3.8-flash-tts`／**Achird**＋固定 Style（只換術語清單）；暫定只用 Windows Zhiwei，不用其他 TTS |
 | 背景音樂 | 原創 lo-fi（`music/make_music.py` 產生），不用 Pixabay 曲當 BGM |
-| 講課角色 | 畫面右下角黑熊老師，依配音對嘴（`scripts/build/bear_presenter.py`） |
+| 講課角色 | 核定黑熊老師依配音對嘴；一般沿用右下，動畫講解可採左側放大講者／右側動畫，需明確合成 |
 | 片尾 | AI Watch 四種主題核定片尾／自然教室熊掌片尾（`scripts/build/append_outro.py`） |
 | 一鍵產生 | Windows：`scripts/build/產生影片.bat` 複製到專案資料夾雙擊，進度寫入 `產生紀錄.log` |
 | 只產生旁白 | Windows：`scripts/build/產生旁白.bat`＋`旁白資料.json`（2.4.0 起） |
@@ -227,6 +233,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.6.0 | 2026-10-15 | 元件狀態與旁白逐句對齊、持續角色與機關、木質UI模擬、左講者／右動畫、Flow回退與影格驗收 |
 | 2.5.1 | 2026-10-14 | 加入逐步引導：頻道、自訂或推薦主題、風格、形式與時長、腳本、代表預覽，確認後製作；保留已選設定 |
 | 2.5.0 | 2026-10-13 | 整合進階動畫規格：六種溫馨材質、九種模組契約、黑熊片頭變體提案、三材質文字分鏡、字幕與主持安全區、驗收與MVP；新渲染器待實作 |
 | 2.4.1 | 2026-10-11 | 主片與三支Shorts交付結構、台灣時間戳、單一上架文案TXT與獨立最終逐字稿 |

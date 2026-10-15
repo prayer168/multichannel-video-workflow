@@ -2,6 +2,14 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.6.0] - 2026-10-15
+### Added
+- references/ui-narration-animation.md：逐句事件契約、UI元件狀態、持續角色與機構動作、木質程式模擬、左側放大講者及右側動畫、Flow回退與逐元件實際影格驗收。
+### Changed
+- 動畫講解以畫面演出旁白的動詞、順序與結果，解說以字幕為主；不能只讓整張素材移動或隨機亮鍵。
+- 核定角色與品牌保持不變；新增左講者／右動畫配置，保留既有右下模式，舊工具須經合成轉接才能採新位置。
+- 同步README、VERSION及相關動畫與固定設定引用，區分契約規格與通用渲染器的實作狀態。
+
 ## [2.5.1] - 2026-10-14
 ### Added
 - references/guided-production.md：逐步引導模式、七階段選擇、最新AI候選搜尋、決策狀態與停止恢復規則。
