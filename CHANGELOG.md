@@ -2,6 +2,15 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.7.0] - 2026-10-17
+### Added
+- `video-editing-workflow/SKILL.md`：獨立剪輯技能，涵蓋素材盤點、敘事剪輯、AI 輔助粗剪、動畫／錄屏混剪、DaVinci 後製分工與人工驗收。
+- `references/editing-workflow-methods.md`：把 AI 剪輯助手、分鏡及角色連續性、Remotion＋DaVinci 的互補流程接入現有影片企劃管線。
+- `references/three-video-editing-analysis.md`：記錄三份使用者提供逐字稿的摘要、時間碼與方法限制。
+### Changed
+- `SKILL.md` 加入剪輯任務路由及新參考文件；維持頻道品牌、配音和核定資產規則優先。
+- `README.md`、`VERSION`、`CHANGELOG.md`、`SKILL.md` 版本同步至 2.7.0。
+
 ## [2.6.0] - 2026-10-15
 ### Added
 - references/ui-narration-animation.md：逐句事件契約、UI元件狀態、持續角色與機構動作、木質程式模擬、左側放大講者及右側動畫、Flow回退與逐元件實際影格驗收。

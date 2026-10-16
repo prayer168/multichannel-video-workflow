@@ -3,7 +3,13 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.6.0（2026-10-15）
+**Version:** 2.7.0（2026-10-17）
+
+## 2.7.0：AI 輔助剪輯與程式化動畫剪輯銜接
+
+新增 `video-editing-workflow/SKILL.md` 作為可獨立使用的剪輯技能，並由本技能按素材量與剪輯任務路由。新增 [references/editing-workflow-methods.md](references/editing-workflow-methods.md) 與 [references/three-video-editing-analysis.md](references/three-video-editing-analysis.md)：彙整三份使用者提供逐字稿中的故事與分鏡設計、角色／場景連續性、素材盤點、AI 輔助粗剪、Remotion 動畫與 DaVinci 後製分工。
+
+影片中的工具示範屬個別案例；技能把 AI 放在可檢查的粗剪和重複操作位置，保留人工確認鏡頭適用性、故事連貫、音訊與輸出的關卡。LibTV、DaVinci MCP、Remotion 等工具介面和可用能力須依當前官方資料與本機環境核對。
 
 ---
 
@@ -87,6 +93,7 @@
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；依內容調整節奏 |
 | 4.5 動畫與角色預覽 | 生活例子、原創配角、逐鏡動畫提示詞與多格場景預覽；核定黑熊角色保持原設定 |
 | 4.6 進階動畫模組 | 六材質、九模組、片頭變體提案、配置與驗收；獨立影片和插段分開；新渲染器待實作 |
+| 4.7 剪輯工作流 | 另用 `video-editing-workflow/SKILL.md` 處理大量素材、AI 輔助粗剪、動畫／錄屏混剪和成片驗收；本技能傳遞故事、旁白、分鏡、品牌和素材來源 |
 | 5. 上架文案（SEO 版） | 依搜尋意圖與頻道語氣提出標題、說明欄、章節、Hashtag、標籤、需要時的英文文案、置頂留言與縮圖文案 |
 | 6. 配音 | TTS 友善稿、固定 Achird 聲線與 Style；核定黑熊主持人依配音對嘴 |
 | 6.5 一鍵產生影片 | `scripts/build/build.py`：依腳本＋畫面規格一次輸出影片（Gemini TTS 配音並自動清除頭尾雜訊、41 種圖卡含全幅照片、9 種教學模擬動畫、運鏡、7 種電影轉場、電影黑邊、配樂依相似度剪接、中英字幕、章節、品質報告）；`--voice timing` 可在沒有配音時先看畫面預覽 |
@@ -107,12 +114,14 @@
 - `profiles/blackbear-science.md`：自然教室專屬規格
 - `profiles/ai-watch.md`：AI 觀測站專屬規格
 - 若兩個頻道片頭、片尾或聲音資產尚未備齊，技能仍可完成選題、腳本與分鏡，並將缺少的素材列入交付清單。
+- 素材剪輯、AI 時間軸與程式動畫任務另讀 [video-editing-workflow/SKILL.md](video-editing-workflow/SKILL.md)；完整方法與三份字幕分析見 `references/editing-workflow-methods.md`、`references/three-video-editing-analysis.md`。
 
 ## 檔案結構
 
 ```
 multichannel-video-workflow/
 ├── SKILL.md                 技能主檔（工作流程 + 核心規則）
+├── video-editing-workflow/SKILL.md  獨立剪輯技能（與企劃技能共用交接契約）
 ├── README.md                本檔
 ├── CHANGELOG.md             版本紀錄（Keep a Changelog 格式）
 ├── History.md               開發歷程：每版的背景、實作案例與學到的事
@@ -233,6 +242,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.7.0 | 2026-10-17 | 新增影片剪輯技能；整合素材盤點、AI粗剪、角色／場景連戲、Remotion與DaVinci分工及三份逐字稿時間碼分析 |
 | 2.6.0 | 2026-10-15 | 元件狀態與旁白逐句對齊、持續角色與機關、木質UI模擬、左講者／右動畫、Flow回退與影格驗收 |
 | 2.5.1 | 2026-10-14 | 加入逐步引導：頻道、自訂或推薦主題、風格、形式與時長、腳本、代表預覽，確認後製作；保留已選設定 |
 | 2.5.0 | 2026-10-13 | 整合進階動畫規格：六種溫馨材質、九種模組契約、黑熊片頭變體提案、三材質文字分鏡、字幕與主持安全區、驗收與MVP；新渲染器待實作 |
@@ -260,6 +270,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.7.0：核對三份 SRT 摘要與時間碼、技能路由、參考連結及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`git diff --check` 通過。此版新增的是工作流程文件與技能說明，沒有新增程式或渲染功能，也未執行程式測試或完整影片剪輯驗收。
 
 2.5.1：檢查技能格式、版本與新增參考鏈結；以不同階段的使用者訊息檢查流程銜接。未製作新的完整影片，2.5.0渲染器仍為待實作設計。
 

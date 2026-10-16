@@ -1,9 +1,11 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、可選黑熊片頭、動畫提示詞、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
+
+目前版本：2.7.0（2026-10-17）。本版新增剪輯技能銜接與三份影片逐字稿分析，詳見 `video-editing-workflow/SKILL.md`、`references/three-video-editing-analysis.md`、`references/editing-workflow-methods.md`。以下版本敘述保留歷史功能紀錄。
 
 版本：2.6.0（2026-10-15）；新增元件動畫、旁白逐句對齊及左講者／右動畫版型（references/ui-narration-animation.md）。2.5.1（2026-10-14）：新增逐步引導製作（references/guided-production.md）：先選頻道與主題，再選風格、形式、腳本和代表預覽，確認後才製作。2.5.0（2026-10-13）：新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
@@ -28,6 +30,8 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/guided-production.md`：**逐步引導製作**——接受自訂或搜尋推薦題目，再選風格、形式與時長、確認故事腳本、代表預覽，最後製作。要求一起選擇或未提供完整製作需求時讀取；已明確授權自行完成時不增加逐關確認。
 - `references/ui-narration-animation.md`：**UI元件與旁白對齊**——狀態與動作逐句演出、持續角色與機構、木質程式模擬、左側放大講者、Flow回退及實際影格驗收；製作動畫講解時讀取。
 - `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
+- `references/editing-workflow-methods.md`：**剪輯工作流銜接**——AI 輔助素材盤點與粗剪、分鏡與角色連續性、Remotion 動畫片段與 DaVinci 後製的分工及人工驗收；涉及大量素材、AI 時間軸剪輯或程式動畫時搭配 `video-editing-workflow/SKILL.md`。
+- `references/three-video-editing-analysis.md`：三份使用者提供逐字稿的證據摘要與時間碼；作為方法來源與限制紀錄，不當成工具能力或成效的獨立驗證。
 - `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
 - `references/real-test-workflow.md`：**實測錄屏影片**（AI 工具實測類）——判定前回看錄影、方案權限、實測當天準備、卡片框合成與片段表、Gemini 旁白在使用者電腦產生、交付節奏
 - `references/ai-animation.md`：**AI 影片生成工具操作補充**（Google Flow／Veo 等）——建立角色、英文提示詞結構、挑選與命名；角色表與素材 ID 依 animation-handoff.md
