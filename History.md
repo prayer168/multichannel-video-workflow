@@ -26,10 +26,10 @@
 - **結論只能來自錄影。** 第一次錄影後，git 紀錄顯示有 commit＋push，當下誤判 Claude 沒守住「不要 commit／推送」。回看錄影才發現它已明說「沒有 commit、推送或部署」，是輸入框的灰色建議字被使用者按 Tab 接受、送出，它才照做。腳本、字幕、進度紀錄全部更正，這個插曲也變成影片的教學點：「最需要我自己看的，是到底是誰下了指令。」
 - 依記憶填的錄影時間點會錯（以為是 Claude 畫面，其實是 YouTube 或 OBS 視窗）→ 每次改片段表都要抽格確認。
 - 「卡片框版」（實錄放在圖卡中央的透明窗，右側放步驟與計數）比全螢幕錄影更好讀，使用者選定。
-- 雲端容器連不到 Gemini → 把旁白產生做成使用者雙擊即可的 `產生旁白.bat`，只用標準函式庫、額度用完可隔天接續。
+- 雲端容器連不到 Gemini → 把旁白產生做成使用者雙擊即可的 `make_narration.bat`，只用標準函式庫、額度用完可隔天接續。
 - 角色動畫交給 AI 影片生成（使用者選 Google Flow），先建立角色維持一致性；資訊動畫（計數、比對）仍由程式繪製，數字才不會錯。
 
-**新增**：`references/real-test-workflow.md`、`references/ai-animation.md`（animation-handoff.md 的工具操作補充）、`scripts/build/產生旁白.py`／`.bat`、本檔。
+**新增**：`references/real-test-workflow.md`、`references/ai-animation.md`（animation-handoff.md 的工具操作補充）、`scripts/build/make_narration.py`／`.bat`、本檔。
 
 **版本號插曲**：這版原本在本機標成 2.2.0，推送時才發現遠端已有 2.2.0（10-08）與 2.3.0（10-10 早上）。依「推送前核對遠端」規則改為 2.4.0，並順手修正 2.3.0 留下的字面 `\n` 換行。
 

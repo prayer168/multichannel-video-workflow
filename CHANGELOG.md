@@ -46,11 +46,11 @@
 ### Added
 - `references/real-test-workflow.md`：實測錄屏影片流程——結論只能來自錄影、開拍前確認方案權限、實測當天檢查表、`claude --permission-mode default`、乾淨資料夾與新對話、OBS 設定、卡片框合成（透明窗＋overlay）、片段表格式、抽格核對時間點、中斷 mkv 重新封裝、快轉標示、分享版壓縮、預覽版本與缺件清單。
 - `references/ai-animation.md`：AI 影片生成工具操作補充（Google Flow／Veo 等）——角色動畫與資訊動畫分工、角色參考圖與「建立角色」、英文提示詞結構（共用 Style＋Avoid）、挑選與命名；角色表與素材 ID 仍依 `animation-handoff.md`。
-- `scripts/build/產生旁白.py`、`產生旁白.bat`：在使用者 Windows 依 `旁白資料.json` 以 Gemini `gemini-3.8-flash-tts`／Achird 兩幕一組產生 `配音/Sxx-Syy.wav`；只用標準函式庫、可指定 `--data`／`--out`／`--model`／`--voice`／`--wait`、自動間隔 21 秒、已存在跳過、403／429 停下隔天接續。
+- `scripts/build/make_narration.py`、`make_narration.bat`：在使用者 Windows 依 `旁白資料.json` 以 Gemini `gemini-3.8-flash-tts`／Achird 兩幕一組產生 `配音/Sxx-Syy.wav`；只用標準函式庫、可指定 `--data`／`--out`／`--model`／`--voice`／`--wait`、自動間隔 21 秒、已存在跳過、403／429 停下隔天接續。
 - `History.md`：開發歷程（每版背景、實作案例、學到的事）。
 ### Changed
 - SKILL.md：引用新文件；階段 2 加入「判定 AI 行為前一定回看錄影」；階段 4.5 加入 AI 影片生成工具補充；階段 6 加入旁白產生器。
-- `references/fixed-settings.md`：雲端環境配音可用 `產生旁白.bat`；額度補上每分鐘 3 次。固定設定本身不變。
+- `references/fixed-settings.md`：雲端環境配音可用 `make_narration.bat`；額度補上每分鐘 3 次。固定設定本身不變。
 - `profiles/ai-watch.md`：補充實測集指引。
 - README：2.4.0 摘要、檔案結構、使用範例、最近更新、本版檢查。
 ### Fixed
@@ -82,7 +82,7 @@
 - `references/fixed-settings.md`：使用者定案、兩頻道通用的固定製作設定——Gemini Achird＋固定 Style（暫定配音只用 Zhiwei，禁止其他 TTS）、黑熊老師片頭、原創 lo-fi 配樂、右下角黑熊老師講課、片尾、Windows 一鍵檔與踩坑紀錄。
 - `scripts/build/bear_presenter.py`：分層 SVG 黑熊老師角色依配音音量對嘴、眨眼、手勢，疊加到主片右下角（Playwright 逐格、透明背景）。
 - `scripts/build/append_outro.py`：把核定片尾（含音樂）接到主片後。
-- `scripts/build/產生影片.bat`：Windows 一鍵檔（自動找技能資料夾、安裝套件、檢查 ffmpeg、build → 黑熊講課 → 接片尾，全程寫 `產生紀錄.log`）。
+- `scripts/build/build_video.bat`：Windows 一鍵檔（自動找技能資料夾、安裝套件、檢查 ffmpeg、build → 黑熊講課 → 接片尾，全程寫 `產生紀錄.log`）。
 - 資產：`assets/brand-approved/v1/blackbear-science/intro/`（黑熊老師片頭與定案片頭音訊）、`character/`（黑熊老師分層 SVG 角色）、`music/`（原創配樂產生程式與授權紀錄）、`assets/common/watermark_transparent_1920x1080.png`。
 - `.gitattributes`：.bat 固定 CRLF。
 ### Changed

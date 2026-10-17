@@ -77,4 +77,4 @@ BlackBearTeacher.tick(12.3667);   // 影片時間（秒）
 - `character.svg` — 分層向量角色（由 `make_svg.py` 產生；改造型請改 `make_svg.py` 再執行）
 - `character.css` — 容器與狀態樣式
 - `character.js` — 表情、嘴型、眨眼、說話、手勢 API 與手動時鐘
-- `sheet.py` — 產生 `角色總覽.png`（全部表情與手勢一張圖，檢查用）
+- `sheet.py` — 產生 `character_overview.png`（全部表情與手勢一張圖，檢查用）

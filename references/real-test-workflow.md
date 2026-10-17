@@ -36,8 +36,8 @@
 
 雲端容器連不到 Gemini，也沒有 Zhiwei。依 `fixed-settings.md` 第一節，由使用者在 Windows 產生：
 
-1. Claude 依定稿腳本產生 `旁白資料.json`（只放黑熊老師要講的句子；角色台詞若由後製字卡處理就不放），連同 `scripts/build/產生旁白.py`、`產生旁白.bat` 一起放到使用者的專案資料夾。
-2. 使用者確認已設定 `GEMINI_API_KEY`（`setx` 後要開新視窗），雙擊 `產生旁白.bat`。
+1. Claude 依定稿腳本產生 `旁白資料.json`（只放黑熊老師要講的句子；角色台詞若由後製字卡處理就不放），連同 `scripts/build/make_narration.py`、`make_narration.bat` 一起放到使用者的專案資料夾。
+2. 使用者確認已設定 `GEMINI_API_KEY`（`setx` 後要開新視窗），雙擊 `make_narration.bat`。
 3. 每組兩幕，間隔 21 秒（免費方案每分鐘 3 次、每天 10 次）；403／429 會停下，隔天再雙擊從缺的組接續。
 4. 輸出 `配音/S01-S02.wav`…，Claude 再取回切成每鏡一檔、依旁白長度重排每鏡時間、配樂 ducking。
 

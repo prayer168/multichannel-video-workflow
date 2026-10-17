@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """用 Gemini（gemini-3.8-flash-tts／Achird＋固定 Style）在使用者的 Windows 電腦產生旁白，兩幕一組。
 
-用法：把本檔、產生旁白.bat、旁白資料.json 放在同一個資料夾，雙擊 產生旁白.bat。
-  python 產生旁白.py [--data 旁白資料.json] [--out 配音] [--model ...] [--voice Achird] [--wait 21]
+用法：把本檔、make_narration.bat、旁白資料.json 放在同一個資料夾，雙擊 make_narration.bat。
+  python make_narration.py [--data 旁白資料.json] [--out 配音] [--model ...] [--voice Achird] [--wait 21]
 
 旁白資料.json 格式（見 references/real-test-workflow.md 第四節）：
   {"style": "<fixed-settings.md 第一節 Style 全文，最後一行換成本片術語>",

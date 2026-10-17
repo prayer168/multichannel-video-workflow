@@ -7,7 +7,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 目前版本：2.7.0（2026-10-17）。本版新增剪輯技能銜接與三份影片逐字稿分析，詳見 `video-editing-workflow/SKILL.md`、`references/three-video-editing-analysis.md`、`references/editing-workflow-methods.md`。以下版本敘述保留歷史功能紀錄。
 
-版本：2.6.0（2026-10-15）；新增元件動畫、旁白逐句對齊及左講者／右動畫版型（references/ui-narration-animation.md）。2.5.1（2026-10-14）：新增逐步引導製作（references/guided-production.md）：先選頻道與主題，再選風格、形式、腳本和代表預覽，確認後才製作。2.5.0（2026-10-13）：新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/產生旁白.bat`／`產生旁白.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
+版本：2.6.0（2026-10-15）；新增元件動畫、旁白逐句對齊及左講者／右動畫版型（references/ui-narration-animation.md）。2.5.1（2026-10-14）：新增逐步引導製作（references/guided-production.md）：先選頻道與主題，再選風格、形式、腳本和代表預覽，確認後才製作。2.5.0（2026-10-13）：新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/make_narration.bat`／`make_narration.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
 已核定片尾：AI Watch 四種主題片尾與自然教室熊掌片尾的正式路徑、來源及核定範圍見 `assets/brand-approved/v1/README.md`。其他獨立品牌資產依各頻道設定檔判定，不由片尾核定推導。
 
@@ -133,13 +133,13 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - **每支影片只交付一份 `製作後/上架文案.txt`**，按 `references/project-layout.md` 包含 YouTube 標題、說明欄、標記 Tags、置頂留言；逐字稿另存。舊工具自動產出的 MD／分項 TXT 留在內部工具工作區，合併核對後才正式交付。
 
 ### 6. 配音稿
-一律依 `references/fixed-settings.md`：正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/產生旁白.py`、`產生旁白.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
+一律依 `references/fixed-settings.md`：正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/make_narration.py`、`make_narration.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
 
 ### 7. 剪輯指示與發布檢查
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。
 **音樂與音效**：只使用符合影片用途與授權條款的素材；記錄曲名、來源與授權，必要時標示作者。音樂情緒依頻道設定檔選擇。
 **浮水印**：依所選頻道設定檔使用品牌浮水印；剪輯疊加或 YouTube 浮水印擇一。自然教室熊掌素材段落依 `references/production-notes.md` 避免重複；有黑熊老師講課角色時右下角不再疊浮水印（用透明 PNG）。
-**一鍵產生（優先使用）**：Windows 上把 `scripts/build/產生影片.bat` 複製到專案資料夾雙擊（build.py → bear_presenter.py → append_outro.py，進度寫入 `產生紀錄.log`）。片頭、配音、配樂依 fixed-settings.md。以下為 build.py 細節：腳本定稿後，AI 依腳本與所選頻道設定檔寫出 `製作中/畫面規格.yaml`。片頭、片尾、配音、浮水印與配樂只可引用該頻道核定資產；`video.intro`、`intro_audio`、`watermark`、`bgm` 都必須是存在的檔案，不能填文字佔位或省略。產生器沒有 `outro`／`outro_audio` 欄位；片尾影片可放最後一幕，但音訊與完整長度需後製接入（見 build-pipeline）。`thanks` 圖卡明確填本頻道 `name`，避免舊預設姓名。若 AI Watch 品牌影音尚未提供，在專案卡列待建立；要產生無品牌預覽，須先準備實際中性片頭、靜音 WAV、透明 1920×1080 PNG 和已授權 BGM 等必填檔案，否則只交付企劃與分鏡。（2026-10-06 起兩頻道都用黑熊老師片頭與講課角色，見 fixed-settings.md。）再執行 `python scripts/build/build.py <專案資料夾>`，一次產出影片、所需字幕、章節與品質檢查報告；沒有 Gemini 配音時自動用 Zhiwei 暫定配音，正式配音到齊後同一個指令重跑即可（見 references/build-pipeline.md）。
+**一鍵產生（優先使用）**：Windows 上把 `scripts/build/build_video.bat` 複製到專案資料夾雙擊（build.py → bear_presenter.py → append_outro.py，進度寫入 `產生紀錄.log`）。片頭、配音、配樂依 fixed-settings.md。以下為 build.py 細節：腳本定稿後，AI 依腳本與所選頻道設定檔寫出 `製作中/畫面規格.yaml`。片頭、片尾、配音、浮水印與配樂只可引用該頻道核定資產；`video.intro`、`intro_audio`、`watermark`、`bgm` 都必須是存在的檔案，不能填文字佔位或省略。產生器沒有 `outro`／`outro_audio` 欄位；片尾影片可放最後一幕，但音訊與完整長度需後製接入（見 build-pipeline）。`thanks` 圖卡明確填本頻道 `name`，避免舊預設姓名。若 AI Watch 品牌影音尚未提供，在專案卡列待建立；要產生無品牌預覽，須先準備實際中性片頭、靜音 WAV、透明 1920×1080 PNG 和已授權 BGM 等必填檔案，否則只交付企劃與分鏡。（2026-10-06 起兩頻道都用黑熊老師片頭與講課角色，見 fixed-settings.md。）再執行 `python scripts/build/build.py <專案資料夾>`，一次產出影片、所需字幕、章節與品質檢查報告；沒有 Gemini 配音時自動用 Zhiwei 暫定配音，正式配音到齊後同一個指令重跑即可（見 references/build-pipeline.md）。
 **沒有螢幕錄影時**：可以用「逐句暫定配音＋品牌圖卡＋自動組合」先做出粗剪，再替換正式配音（見 references/production-notes.md）。
 **導流設定**：加入主題播放清單（標題含關鍵字）、結束畫面推薦 1 支相關影片、在提到其他工具時插入資訊卡。
 

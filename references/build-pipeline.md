@@ -1,6 +1,6 @@
 # 一鍵產生影片（build.py）
 
-> 2.1.0 起：Windows 用 `scripts/build/產生影片.bat`（build.py → bear_presenter.py → append_outro.py）。片頭、配音、配樂、黑熊老師講課等固定設定見 `fixed-settings.md`。
+> 2.1.0 起：Windows 用 `scripts/build/build_video.bat`（build.py → bear_presenter.py → append_outro.py）。片頭、配音、配樂、黑熊老師講課等固定設定見 `fixed-settings.md`。
 
 > 程式：`scripts/build/`（`build.py` 主流程、`cards_lib.py` 圖卡範本庫、`say_batch.ps1` Windows 暫定配音）
 > 第一支實作：《老師也能懂的 GitHub》（20 幕、80 個畫面、289 句）
@@ -196,7 +196,7 @@ scenes:
 |------|------|
 | `bear_presenter.py <專案> --character <角色資料夾>` | 讀 `build/timeline.json`（片頭長度、`scene_starts`）與 `build/narration_norm.wav`，用 Playwright 逐格算出角色畫格（15 fps、透明背景），依音量對嘴，疊到主片右下角 → `<主片>_黑熊講課.mp4`。舊版 timeline 沒有 `scene_starts` 時改讀 `章節_*.txt` |
 | `append_outro.py <專案> <outro.mp4>` | 取輸出成品中最新、非「完整版」的 mp4，接上片尾（含片尾原音樂）→ `_完整版.mp4` |
-| `產生影片.bat` | 上面三步一次完成；CRLF；自動安裝套件；`產生紀錄.log` |
+| `build_video.bat` | 上面三步一次完成；CRLF；自動安裝套件；`產生紀錄.log` |
 
 - `timeline.json` 新增 `intro_len`、`scene_starts`（每幕開始秒數），供角色手勢與後製對齊。
 - 2 核心雲端容器實測：角色畫格約 9 格／秒；8 分鐘影片約 13 分鐘＋重新編碼。

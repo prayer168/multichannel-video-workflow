@@ -10,7 +10,7 @@
 | 正式配音 | Google AI Studio（Generate speech）／ Gemini API，模型 `gemini-3.8-flash-tts`，聲音 **Achird**（單一講者），`scenes_per_request: 2` |
 | 語速 | 每分鐘約 240～260 字 |
 | 暫定配音 | 只能用 Windows 臺灣國語 **Zhiwei**（`build.py --voice zhiwei`）；**禁止**改用 Kokoro、espeak、Edge TTS 等其他聲音當暫定或正式配音（2026-10-06 使用者退件：大陸腔、不是黑熊老師的聲音） |
-| 雲端環境 | 雲端容器連不到 Gemini 也沒有 Zhiwei → 不要在雲端自行產生配音；改請使用者在 Windows 執行 `scripts/build/產生影片.bat`（整支影片）或 `scripts/build/產生旁白.bat`（只產生旁白，讀 `旁白資料.json`，2026-10-10 起），或用 AI Studio 網頁產生後存進 `2_製作中/配音/Gemini/Sxx-Syy.wav` |
+| 雲端環境 | 雲端容器連不到 Gemini 也沒有 Zhiwei → 不要在雲端自行產生配音；改請使用者在 Windows 執行 `scripts/build/build_video.bat`（整支影片）或 `scripts/build/make_narration.bat`（只產生旁白，讀 `旁白資料.json`，2026-10-10 起），或用 AI Studio 網頁產生後存進 `2_製作中/配音/Gemini/Sxx-Syy.wav` |
 
 Style 一字不改，只替換最後一行的「本片術語清單」：
 
@@ -23,14 +23,14 @@ Style 一字不改，只替換最後一行的「本片術語清單」：
 
 - AI Studio 網頁版：Speaker 1 選 Achird → Style 貼上全文 → 每次貼兩幕旁白（一行一句）→ Run → 下載 WAV，依幕號改名（`S01-S02.wav`）。下載是 24 kHz 單聲道，build.py 會自動清頭尾雜訊、切句。
 - Gemini 語音是生成的：音色固定，但每次語氣、停頓略有差異；同一支影片同一天用同一組設定一次產生完。
-- 免費額度每天 10 次、每分鐘 3 次（API）；403／429 代表額度用完，隔天重跑會從缺的幕接續。`產生旁白.py` 已內建 21 秒間隔與接續。
+- 免費額度每天 10 次、每分鐘 3 次（API）；403／429 代表額度用完，隔天重跑會從缺的幕接續。`make_narration.py` 已內建 21 秒間隔與接續。
 
 ## 二、片頭（固定）
 
 | 項目 | 檔案（repo） |
 |---|---|
-| 片頭影片 4 秒 | `assets/brand-approved/v1/blackbear-science/intro/黑熊老師片頭_4s.mp4` |
-| 片頭音訊 4 秒 | `assets/brand-approved/v1/blackbear-science/intro/片頭音訊_定案_M1＋粉筆_4秒.wav` |
+| 片頭影片 4 秒 | `assets/brand-approved/v1/blackbear-science/intro/blackbear_intro_4s.mp4` |
+| 片頭音訊 4 秒 | `assets/brand-approved/v1/blackbear-science/intro/intro_audio_final_M1_chalk_4s.wav` |
 
 - 兩個頻道都用黑熊老師片頭（2026-10-06 使用者：AI Watch「片頭還是用黑熊的 logo 來做」，並選用原有黑熊老師片頭）。
 - build.py 的 `intro`／`intro_audio` 以工作區根目錄解析：先把兩個檔案複製到工作區 `04_品牌資產/黑熊老師_共用/`，YAML 填相對路徑；或直接填 repo 內的絕對路徑。
@@ -40,7 +40,7 @@ Style 一字不改，只替換最後一行的「本片術語清單」：
 - 一律用**原創合成配樂**，不用 Pixabay 曲當 BGM（2026-10-02 事件：EP1 用 M1、M2 被第三方 Content ID 聲明）。
 - 章節鋪底：`原創_章節鋪底_lofi.wav`（84 BPM lo-fi，約 12 分鐘，不循環）。由 `assets/brand-approved/v1/blackbear-science/music/make_music.py` 產生：`python make_music.py 720`。
 - YAML：`bgm: 04_品牌資產/黑熊老師_共用/原創_章節鋪底_lofi.wav`、`bgm_lufs: -33`、`sfx: false`。
-- 授權紀錄：`assets/brand-approved/v1/blackbear-science/music/授權紀錄.md`。片頭音訊內含 M1（Pixabay，查證時未登記 Content ID），只在片頭 4 秒使用。
+- 授權紀錄：`assets/brand-approved/v1/blackbear-science/music/license-record.md`。片頭音訊內含 M1（Pixabay，查證時未登記 Content ID），只在片頭 4 秒使用。
 
 ## 四、黑熊老師講課角色（固定）
 
@@ -57,7 +57,7 @@ Style 一字不改，只替換最後一行的「本片術語清單」：
 
 ## 六、一鍵產生（Windows）
 
-把 `scripts/build/產生影片.bat` 複製到影片專案資料夾，雙擊即可：
+把 `scripts/build/build_video.bat` 複製到影片專案資料夾，雙擊即可：
 
 1. 自動找技能資料夾（`%USERPROFILE%\multichannel-video-workflow` → `%USERPROFILE%\.claude\skills\multichannel-video-workflow`，或先 `set REPO=…`）
 2. 自動安裝 numpy、soundfile、pyyaml、pillow、playwright；檢查 ffmpeg
