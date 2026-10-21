@@ -6,6 +6,7 @@
 ### Added
 - 子技能 `motion-explainer-workflow/`（v0.1.0，建置第 1 步）：`SKILL.md`（分工、何時使用、固定原則、依風格決定幀率、流程總覽、Remotion／HyperFrames 暫定選用、建置進度、來源）。
 - `motion-explainer-workflow/scripts/preflight.py`：檢查 Node ≥22、FFmpeg／FFprobe、專案內 Noto Sans TC 與 OFL.txt、Remotion 4 專案、HyperFrames 固定版本與渲染用無頭 Chrome；`--json`、`--root`、`--skip-hyperframes-doctor`。
+- `motion-explainer-workflow/SKILL.md`「安裝與環境檢查」：一鍵複製安裝提示詞（貼進 Windows 上的 Claude Code／Codex 執行，與 setup_windows.bat 同流程）及 PowerShell 一行指令。
 - `motion-explainer-workflow/scripts/setup_windows.bat`：Windows 一次安裝（Remotion `npm install`、`remotion browser ensure`、`hyperframes@0.8.183 browser ensure`、選擇性安裝 HyperFrames Claude Code 外掛、跑 preflight），寫入 `安裝紀錄.log`。
 ### Changed
 - **所有影片改為不燒錄字幕**（使用者決定）：`subs_oneline.py` 預設只產生 SRT／ASS，新增 `--burn`（`--no-burn` 保留相容）；`build_video.bat` 最後一步不再輸出 `_單行字幕.mp4`。
