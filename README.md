@@ -3,7 +3,17 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.10.0（2026-10-21）
+**Version:** 2.11.0（2026-10-21）
+
+## 2.11.0：黑熊老師的自然教室頻道定位
+
+- 三句定位並存：主標語（頻道簡介）、身分標語（社群與片頭字卡）、選題標語（每次選題的檢核問句）
+- 八個內容系列：黑熊實驗室、自然月曆、黑熊散步、一張白板看懂、自然故事屋、家裡的科學、黑熊的 AI 教具箱、老師的另一面
+- 台灣自然月曆：每月季節錨點，選題先看接下來 1–2 個月
+- 每月節奏（時令＋長青＋故事／老師／AI）與固定元素「考考你」「黑熊觀察任務」「迷思破解」
+- 選題以時序與季節性為主，不以各校教科書版本或教學進度表排序
+
+細節見 [profiles/blackbear-science.md](profiles/blackbear-science.md)。
 
 ## 2.10.0：嵌入字幕固定樣式與字幕安全區
 
@@ -297,6 +307,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.11.0 | 2026-10-21 | 自然教室頻道定位：三句定位標語、八個內容系列、台灣自然月曆、每月節奏與固定趣味元素；選題改以時序與季節性為主 |
 | 2.10.0 | 2026-10-21 | 嵌入字幕固定樣式（一行、白字黑框、置中離下緣 96 px、對齊旁白停頓）、Shorts 字幕規格、字幕安全區（圖卡與動畫自動縮到 y 880 以上）、`subs_oneline.py` 與一鍵檔串接 |
 | 2.9.1 | 2026-10-21 | AI Studio 產生與下載 WAV 一律由 AI 操作：五步流程、下載後確認檔案、改名歸檔；記錄 Run 被停用、下載位置等踩坑 |
 | 2.9.0 | 2026-10-21 | 觸動人心與留存的十條腳本規則、腳本自我檢查表、AI Watch 套用範例、續看率曲線復盤；階段 3 開場改為三拍開場 |
@@ -329,6 +340,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.11.0：核對 blackbear-science.md、topic-radar.md 與 SKILL.md 階段 0／1 的選題規則一致（不再以教學進度表排序、改看自然月曆與內容系列），以及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`git diff --check` 通過。此版為頻道定位與選題規則，沒有新增程式；月曆中的確切日期每年選題時重新查證。
 
 2.9.0：核對 style-guide.md、ai-watch.md、SKILL.md 階段 3／8 與 History.md 的規則一致，確認新開場規則與既有「不把高潮放最後當硬性規則」「頻道招呼方式」沒有衝突，以及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`git diff --check` 通過。此版為寫作規則與檢查表，沒有新增程式，尚未用於完整影片並以續看率資料驗證。
 
