@@ -111,9 +111,9 @@ video:
 
 依 [advanced-animation.md](advanced-animation.md) 選材質與模組。預設仍為核定4秒黑熊片頭；新增繪本、紙藝、木作、科技桌版本為設計提案，未選定前不替換。核定Logo、角色造型、Achird固定Style與原創音樂不因材質切換而改變。長片插段不內嵌片頭片尾，主持由主片疊一次。新配置與轉接器待實作，不等於既有build.py已支援。
 
-## 九、嵌入字幕與字幕安全區（2.10.0，2026-10-21 使用者定案）
+## 九、字幕軌與字幕安全區（2.10.0 定案；2.13.0 改為不燒錄）
 
-細節見 [subtitle-style.md](subtitle-style.md)。
+細節見 [subtitle-style.md](subtitle-style.md)。**2.13.0（2026-10-21）使用者改定：所有影片一律不燒錄字幕，只輸出獨立字幕軌（SRT）。**下表的樣式數值只在使用者特別要求燒錄版時使用。
 
 | 項目 | 固定值 |
 |---|---|
@@ -122,6 +122,6 @@ video:
 | 位置 | 水平置中，離下緣 96 px（Shorts 在畫面高度約 65%） |
 | 時間 | 換行點對齊旁白停頓（`scripts/build/subs_oneline.py`），每行至少 0.7 秒 |
 | 安全區 | 製作畫面時 y 880–1000 不放重要內容；`build.py` 預設 `subtitle_safe: true` 自動把圖卡與動畫縮到 y 880 以上 |
-| 交付 | 無字幕版＋嵌入字幕版兩支；YouTube 建議上無字幕版＋`字幕_zh-TW_單行.srt` |
+| 交付 | 成片（不含字幕）＋`字幕_zh-TW_單行.srt`；上傳 YouTube 時另外上傳 SRT |
 
-`build_video.bat` 最後一步會自動產生單行 SRT 與 `_單行字幕.mp4`。
+`build_video.bat` 最後一步只產生單行 SRT／ASS，不再燒錄；需要燒錄版時手動加 `subs_oneline.py --burn`。

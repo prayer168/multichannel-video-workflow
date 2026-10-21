@@ -208,7 +208,7 @@ scenes:
 | `video.subtitle_safe`（預設 `true`） | 每張圖卡與 `type: anim` 畫面等比縮到 80%、水平置中、上緣 16 px，內容全部落在 y 880 以上；深色卡補同間距格線、淺色卡延伸邊緣，無接縫。設 `false` 恢復滿版 |
 | `type: photo` | 預設滿版（課堂實景等背景照片）；**插圖、圖解、截圖、有標籤的圖加 `fit: safe`** 縮到字幕區以上；`side` 面板、`lines` 字卡、`plate` 名牌一律上移到 y 860 以上 |
 | `type: video` | 不縮放；錄屏時把重點留在畫面上方 |
-| `subs_oneline.py <專案>` | 讀 `2_製作中/字幕/字幕_zh-TW_<配音>.srt` 與 `build/narration_norm.wav`，切成一行一行並對齊旁白停頓，輸出 `字幕_zh-TW_單行.srt／.ass`，再把字幕燒進最新 `_完整版.mp4` → `_完整版_單行字幕.mp4`；`--format shorts`、`--no-burn` |
+| `subs_oneline.py <專案>` | 讀 `2_製作中/字幕/字幕_zh-TW_<配音>.srt` 與 `build/narration_norm.wav`，切成一行一行並對齊旁白停頓，輸出 `字幕_zh-TW_單行.srt／.ass`；2.13.0 起預設不燒錄，加 `--burn` 才燒進最新 `_完整版.mp4` → `_完整版_單行字幕.mp4`；`--format shorts` |
 
 - 字幕樣式、字數與位置見 `references/subtitle-style.md`；Windows 用微軟正黑體（`C:/Windows/Fonts`），雲端用 Noto Sans CJK TC。
 - 圖卡雜湊包含 `_safe`，切換設定後會自動重畫。

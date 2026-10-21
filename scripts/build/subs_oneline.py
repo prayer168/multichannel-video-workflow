@@ -1,9 +1,10 @@
-"""單行嵌入字幕（2.10.0 固定樣式）：依旁白停頓切成一行一行，產生 SRT／ASS，並燒錄進影片。
+"""單行字幕（2.10.0 樣式；2.13.0 起預設不燒錄）：依旁白停頓切成一行一行，產生 SRT／ASS；加 --burn 才燒錄進影片。
 
 用法：
   python subs_oneline.py <影片專案資料夾>                      # 橫式主片：自動找字幕、配音與最新完整版影片
   python subs_oneline.py <影片專案資料夾> --format shorts      # Shorts（直式 1080×1920）
-  python subs_oneline.py <專案> --no-burn                      # 只產生 SRT／ASS
+  python subs_oneline.py <專案> --burn                         # 另外燒錄 _單行字幕.mp4（僅使用者要求時）
+  （--no-burn 保留相容，現為預設行為）
   python subs_oneline.py <專案> --srt X.srt --narration X.wav --video X.mp4   # 指定檔案
 
 輸入（預設位置，舊工作區結構）：
@@ -152,7 +153,8 @@ def ff_path(p):   # ffmpeg 濾鏡參數裡的路徑：Windows 磁碟代號的冒
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("proj"); ap.add_argument("--format", default="landscape", choices=list(FORMATS))
-    ap.add_argument("--srt"); ap.add_argument("--narration"); ap.add_argument("--video"); ap.add_argument("--no-burn", action="store_true")
+    ap.add_argument("--srt"); ap.add_argument("--narration"); ap.add_argument("--video"); ap.add_argument("--no-burn", action="store_true", help="相容舊指令；2.13.0 起預設即不燒錄")
+    ap.add_argument("--burn", action="store_true", help="另外燒錄嵌入字幕版（僅使用者要求時）")
     a = ap.parse_args(); proj = os.path.abspath(a.proj); mid = os.path.join(proj, "2_製作中")
     srt = a.srt or (sorted(glob.glob(os.path.join(mid, "字幕", "字幕_zh-TW_gemini.srt"))) or
                     sorted(glob.glob(os.path.join(mid, "字幕", "字幕_zh-TW_*.srt")), key=os.path.getmtime))[-1]
@@ -164,7 +166,7 @@ def main():
     base = os.path.join(mid, "字幕", "字幕_zh-TW_單行" + ("_shorts" if a.format == "shorts" else ""))
     write(cues, a.format, base + ".ass", base + ".srt", font)
     print(f"單行字幕 {len(cues)} 行（對齊停頓 {aligned}、字數估計 {est}；最長 {max(wlen(t) for _, _, t in cues):.0f} 字）→ {base}.srt")
-    if a.no_burn: return
+    if a.no_burn or not a.burn: return
     video = a.video or max([p for p in glob.glob(os.path.join(proj, "3_製作後", "輸出成品", "*_完整版.mp4"))], key=os.path.getmtime)
     out = video[:-4] + "_單行字幕.mp4"; k = 2
     while os.path.exists(out): out = video[:-4] + f"_單行字幕_{k}.mp4"; k += 1

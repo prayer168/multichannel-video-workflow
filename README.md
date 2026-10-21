@@ -19,6 +19,17 @@
 
 細節見 [profiles/blackbear-science.md](profiles/blackbear-science.md)。
 
+## 2.13.0：動態圖文子技能與字幕改為不燒錄
+
+新增子技能 [motion-explainer-workflow/SKILL.md](motion-explainer-workflow/SKILL.md)：旁白定稿後負責「畫面怎麼做」（定調風格卡與鎖定清單、委派任務卡、實證比例、靜幀條審片），渲染工具 Remotion 與 HyperFrames 都安裝，依分鏡選用。本版完成第 1 步：骨架、分工、`scripts/setup_windows.bat`（Windows 一次安裝）與 `scripts/preflight.py`（環境檢查）；方法文件、審片工具、樣片庫、實測與模板依建置順序補上。
+
+| 項目 | 設定 |
+|---|---|
+| 分工 | 主技能：選題、腳本、配音、品牌、上架；本子技能：動態圖文畫面；`video-editing-workflow`：實拍剪輯 |
+| 工作資料夾 | `%USERPROFILE%\AI-Video-Tools\motion-explainer\`（remotion／hyperframes／fonts） |
+| 幀率 | 依風格在定調時鎖定：圖文與攝影機 60 fps、手作材質 30 fps、實拍為主跟隨素材 |
+| 字幕 | **所有影片不燒錄**，只交付單行 SRT；`subs_oneline.py --burn` 僅在使用者要求時使用 |
+
 ## 2.10.0：嵌入字幕固定樣式與字幕安全區
 
 字幕寫成固定設定，兩個頻道都照做，細節見 [references/subtitle-style.md](references/subtitle-style.md)：
@@ -131,7 +142,7 @@
 | 背景音樂 | 原創 lo-fi（`music/make_music.py` 產生），不用 Pixabay 曲當 BGM |
 | 講課角色 | 核定黑熊老師依配音對嘴；一般沿用右下，動畫講解可採左側放大講者／右側動畫，需明確合成 |
 | 片尾 | AI Watch 四種主題核定片尾／自然教室熊掌片尾（`scripts/build/append_outro.py`） |
-| 字幕 | 一行、白字黑框無底色、置中離下緣 96 px、對齊旁白停頓；y 880–1000 為字幕安全區（`scripts/build/subs_oneline.py`、`references/subtitle-style.md`） |
+| 字幕 | 2.13.0 起不燒錄：只交付單行字幕軌 SRT（對齊旁白停頓）；y 880–1000 為字幕安全區（`scripts/build/subs_oneline.py`、`references/subtitle-style.md`） |
 | 一鍵產生 | Windows：`scripts/build/build_video.bat` 複製到專案資料夾雙擊，進度寫入 `產生紀錄.log` |
 | 只產生旁白 | Windows：`scripts/build/make_narration.bat`＋`旁白資料.json`（2.4.0 起） |
 
@@ -162,6 +173,7 @@
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；依內容調整節奏 |
 | 4.5 動畫與角色預覽 | 生活例子、原創配角、逐鏡動畫提示詞與多格場景預覽；核定黑熊角色保持原設定 |
 | 4.6 進階動畫模組 | 六材質、九模組、片頭變體提案、配置與驗收；獨立影片和插段分開；新渲染器待實作 |
+| 4.6.5 動態圖文 | 腳本定稿後，動態圖文類影片轉讀 `motion-explainer-workflow/SKILL.md`（風格卡、鎖定清單、Remotion／HyperFrames、靜幀條審片、實證比例） |
 | 4.7 剪輯工作流 | 另用 `video-editing-workflow/SKILL.md` 處理大量素材、AI 輔助粗剪、動畫／錄屏混剪和成片驗收；本技能傳遞故事、旁白、分鏡、品牌和素材來源 |
 | 5. 上架文案（SEO 版） | 依搜尋意圖與頻道語氣提出標題、說明欄、章節、Hashtag、標籤、需要時的英文文案、置頂留言與縮圖文案 |
 | 6. 配音 | TTS 友善稿、固定 Achird 聲線與 Style；核定黑熊主持人依配音對嘴 |
@@ -191,6 +203,7 @@
 multichannel-video-workflow/
 ├── SKILL.md                 技能主檔（工作流程 + 核心規則）
 ├── video-editing-workflow/SKILL.md  獨立剪輯技能（與企劃技能共用交接契約）
+├── motion-explainer-workflow/       動態圖文子技能（2.13.0）：SKILL.md、scripts/preflight.py、scripts/setup_windows.bat；references／template 依建置順序補上
 ├── README.md                本檔
 ├── CHANGELOG.md             版本紀錄（Keep a Changelog 格式）
 ├── History.md               開發歷程：每版的背景、實作案例與學到的事
@@ -204,7 +217,7 @@ multichannel-video-workflow/
 │   ├── fb_cover.py          臉書分享圖 1200×630
 │   ├── fb_post.py           臉書文一鍵複製頁（中英雙語；上傳後可代入 YouTube 網址）
 │   └── build/               一鍵產生影片：build.py、cards_lib.py（41 種圖卡版型）、anims_lib.py（教學模擬動畫）、say_batch.ps1、
-│                            bear_presenter.py（黑熊老師講課）、append_outro.py（接片尾）、subs_oneline.py（單行字幕與燒錄）、build_video.bat、make_narration.bat／make_narration.py（Gemini 旁白）
+│                            bear_presenter.py（黑熊老師講課）、append_outro.py（接片尾）、subs_oneline.py（單行字幕軌；--burn 才燒錄）、build_video.bat、make_narration.bat／make_narration.py（Gemini 旁白）
 ├── profiles/              自然教室與 AI 觀測站頻道設定
 │   ├── blackbear-science.md
 │   └── ai-watch.md
@@ -216,7 +229,7 @@ multichannel-video-workflow/
     ├── seo.md               YouTube SEO 規範
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
     ├── fixed-settings.md    固定製作設定（片頭、Achird 配音、原創配樂、講課角色、片尾、一鍵檔、字幕）
-    ├── subtitle-style.md    嵌入字幕樣式、字幕安全區與 Shorts 字幕（2.10.0）
+    ├── subtitle-style.md    單行字幕、字幕安全區與 Shorts 字幕（2.10.0；2.13.0 起不燒錄）
     ├── real-test-workflow.md 實測錄屏影片流程（錄影為準、卡片框合成、片段表、旁白產生）
     ├── ai-animation.md      AI 影片生成工具操作（Google Flow 建立角色、英文提示詞、挑選命名）
     ├── guided-production.md 逐步引導選題、風格、形式、腳本、預覽與製作
@@ -312,6 +325,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.13.0 | 2026-10-21 | 新增子技能 motion-explainer-workflow（動態圖文；Remotion＋HyperFrames、Windows 安裝檔、preflight 環境檢查）；所有影片改為不燒錄字幕，只交付成片＋單行 SRT |
 | 2.12.0 | 2026-10-21 | 九套擴充材質（提案狀態）：皮影、黑板粉筆、藍晒、立體翻翻書、桌面實物定格、沙畫、復古天文圖鑑、夜光星空、毛線刺繡；風格選單同步 |
 | 2.11.0 | 2026-10-21 | 自然教室頻道定位：三句定位標語、八個內容系列、台灣自然月曆、每月節奏與固定趣味元素；選題改以時序與季節性為主 |
 | 2.10.0 | 2026-10-21 | 嵌入字幕固定樣式（一行、白字黑框、置中離下緣 96 px、對齊旁白停頓）、Shorts 字幕規格、字幕安全區（圖卡與動畫自動縮到 y 880 以上）、`subs_oneline.py` 與一鍵檔串接 |

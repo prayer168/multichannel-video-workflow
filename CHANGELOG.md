@@ -2,6 +2,16 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.13.0] - 2026-10-21
+### Added
+- 子技能 `motion-explainer-workflow/`（v0.1.0，建置第 1 步）：`SKILL.md`（分工、何時使用、固定原則、依風格決定幀率、流程總覽、Remotion／HyperFrames 暫定選用、建置進度、來源）。
+- `motion-explainer-workflow/scripts/preflight.py`：檢查 Node ≥22、FFmpeg／FFprobe、專案內 Noto Sans TC 與 OFL.txt、Remotion 4 專案、HyperFrames 固定版本與渲染用無頭 Chrome；`--json`、`--root`、`--skip-hyperframes-doctor`。
+- `motion-explainer-workflow/scripts/setup_windows.bat`：Windows 一次安裝（Remotion `npm install`、`remotion browser ensure`、`hyperframes@0.8.183 browser ensure`、選擇性安裝 HyperFrames Claude Code 外掛、跑 preflight），寫入 `安裝紀錄.log`。
+### Changed
+- **所有影片改為不燒錄字幕**（使用者決定）：`subs_oneline.py` 預設只產生 SRT／ASS，新增 `--burn`（`--no-burn` 保留相容）；`build_video.bat` 最後一步不再輸出 `_單行字幕.mp4`。
+- `references/subtitle-style.md`、`fixed-settings.md` 第九節、`build-pipeline.md` 第十二節、`SKILL.md`、README 同步為「成片＋單行 SRT」交付；字幕安全區 y 880–1000 保留。
+- `SKILL.md` 階段 3：動態圖文類影片轉讀 `motion-explainer-workflow/SKILL.md`。
+
 ## [2.12.0] - 2026-10-21
 ### Added
 - `references/advanced-animation.md` 4.1 節：九套擴充材質模板（shadow 光影皮影戲、chalk 黑板粉筆、cyanotype 藍晒日光圖、popup 立體翻翻書、tabletop 桌面實物定格、sand 燈箱沙畫、atlas 復古天文圖鑑、nightglow 夜光星空、stitch 毛線刺繡），沿用核心模板欄位並加「狀態」欄；全部標為提案，成本為初估，首次採用前須做一鏡測試。
