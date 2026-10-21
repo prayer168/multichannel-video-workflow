@@ -4,6 +4,8 @@ rem motion-explainer-workflow 第 1 步：在 Windows 安裝 Remotion／HyperFra
 rem 流程：檢查 Node(>=22)、FFmpeg → remotion\npm install → HyperFrames 無頭 Chrome → (選擇性) Claude Code 外掛 → preflight.py
 rem 全程寫入 %ROOT%\安裝紀錄.log；雲端的 Claude 可直接讀這份紀錄
 setlocal
+set "PYTHONUTF8=1"
+set "PYTHONIOENCODING=utf-8"
 if "%ROOT%"=="" set "ROOT=%USERPROFILE%\AI-Video-Tools\motion-explainer"
 set "HERE=%~dp0"
 set "LOG=%ROOT%\安裝紀錄.log"

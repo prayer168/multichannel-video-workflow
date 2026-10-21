@@ -93,7 +93,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 | 檔案 | 狀態 |
 |---|---|
-| `SKILL.md`、`scripts/preflight.py`、`scripts/setup_windows.bat` | 第 1 步完成 |
+| `SKILL.md`、`scripts/preflight.py`、`scripts/setup_windows.bat`、`scripts/install_windows.ps1`（PowerShell 版，`powershell -NoExit -ExecutionPolicy Bypass -File install_windows.ps1`） | 第 1 步完成 |
 | `references/style-card.md`、`task-card.md`、`evidence-ratio.md` | 第 2 步待建 |
 | `scripts/still_strip.py`、`contact_sheet.py`、`references/still-strip-review.md`、`sample-library.md`、`motion-vocabulary.md` | 第 3 步待建 |
 | `references/tool-choice.md`（Remotion 與 HyperFrames 同鏡比較） | 第 4 步待建 |
