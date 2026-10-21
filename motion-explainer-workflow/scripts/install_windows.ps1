@@ -74,6 +74,15 @@ if (Get-Command claude -ErrorAction SilentlyContinue) {
 } else {
     Log '[略過] 找不到 claude 指令'
 }
+# 4b. 補抓外掛市集的 Git LFS 檔案（Claude Code 新增市集時只會取得 LFS 佔位檔；失敗不中斷）
+$mp = Join-Path $env:USERPROFILE '.claude\plugins\marketplaces\hyperframes'
+if (Test-Path (Join-Path $mp '.git')) {
+    if ((cmd /c 'git lfs version 2>&1') -match 'git-lfs') {
+        if ((Run 'lfs pull' "git -C `"$mp`" lfs pull") -ne 0) { Log '[注意] LFS 補抓失敗，外掛仍可用；之後可手動執行：git -C C:/Users/<使用者>/.claude/plugins/marketplaces/hyperframes lfs pull' }
+    } else {
+        Log '[注意] 找不到 git-lfs（Git for Windows 通常內建）；外掛可用，但範例素材是佔位檔'
+    }
+}
 
 # 5. preflight
 Log "`n[5/5] preflight 檢查"

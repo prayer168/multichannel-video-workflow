@@ -39,6 +39,11 @@ where claude >nul 2>&1 && (
   call claude plugin marketplace add heygen-com/hyperframes >> "%LOG%" 2>&1
   call claude plugin install hyperframes@hyperframes >> "%LOG%" 2>&1
 ) || echo [略過] 沒有 claude 指令 >> "%LOG%"
+set "MP=%USERPROFILE%\.claude\plugins\marketplaces\hyperframes"
+if exist "%MP%\.git" (
+  echo [4b] 補抓 HyperFrames 外掛市集的 Git LFS 檔案...
+  git -C "%MP%" lfs pull >> "%LOG%" 2>&1 || echo [注意] LFS 補抓失敗，外掛仍可用 >> "%LOG%"
+)
 
 echo [5/5] preflight 檢查...
 python "%HERE%preflight.py" --root "%ROOT%" >> "%LOG%" 2>&1

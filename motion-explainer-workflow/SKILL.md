@@ -80,13 +80,20 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
   1. 檢查 node -v（需要 22 以上）、npm -v、ffmpeg -version。Node 低於 22 才用 winget install OpenJS.NodeJS.LTS；沒有 FFmpeg 才用 winget install Gyan.FFmpeg（裝完要開新視窗讓 PATH 生效）。
   2. 進入 motion-explainer\remotion，執行 npm install，再執行 npx remotion browser ensure。
   3. 進入 motion-explainer\hyperframes，執行 npx --yes hyperframes@0.8.183 browser ensure。
-  4. 若有 claude 指令，執行 claude plugin marketplace add heygen-com/hyperframes 和 claude plugin install hyperframes@hyperframes；沒有就略過並記錄。
+  4. 若有 claude 指令，執行 claude plugin marketplace add heygen-com/hyperframes 和 claude plugin install hyperframes@hyperframes；沒有就略過並記錄。接著執行 git -C "$env:USERPROFILE\.claude\plugins\marketplaces\hyperframes" lfs pull 補抓 LFS 檔案（失敗不中斷，記錄即可）。
   5. 回到 motion-explainer，執行 python preflight.py --root . ，再執行 python preflight.py --root . --json > preflight.json。
   6. 用一張表回報：每個檢查項目 ✅／❌、版本號、還缺什麼。最後確認 fonts\ 裡有 NotoSansTC 字體檔與 OFL.txt。
   ```
 
   不用 AI 時，也可以在 PowerShell 貼上：`& "$env:USERPROFILE\AI-Video-Tools\motion-explainer\setup_windows.bat"`。
   新電腦的 motion-explainer 資料夾還沒建立時，先從 repo 複製 `scripts/preflight.py`、`scripts/setup_windows.bat`，並準備 `remotion/`（Remotion 4 起步專案）、`hyperframes/`（`npx hyperframes@0.8.183 init`）與 `fonts/`（Noto Sans TC＋OFL.txt）。
+- **HyperFrames 外掛的 Git LFS 檔案**：`claude plugin marketplace add heygen-com/hyperframes` 只會取得 Git LFS 佔位檔（2026-10-22 實跑時有 84 個），Claude Code 不會自動下載內容。外掛本身照常可用；HyperFrames 範例素材、圖片或字型打不開時，執行：
+
+  ```powershell
+  git -C C:/Users/user/.claude/plugins/marketplaces/hyperframes lfs pull
+  ```
+
+  （換電腦時把 `user` 換成該電腦的使用者名稱，或用 `"$env:USERPROFILE\.claude\plugins\marketplaces\hyperframes"`。）`install_windows.ps1` 與 `setup_windows.bat` 已在安裝外掛後自動補抓；外掛市集更新（`claude plugin marketplace update`）後若又出現佔位檔，再跑一次。
 - 2026-10-22 已在使用者 Windows 實跑（`install_windows.ps1`）：Node 24.15.0、FFmpeg 8.1.2、Remotion 4.0.537、HyperFrames 0.8.183＋無頭 Chrome 152、HyperFrames Claude Code 外掛，preflight 全部通過。
 - 雲端容器或使用者電腦的 Linux 工作區不等於 Windows 本機：在那裡跑通的結果只代表程式可行，Windows 的安裝狀態以 Windows 上執行 preflight 的紀錄為準。
 

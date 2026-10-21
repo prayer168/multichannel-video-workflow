@@ -7,6 +7,7 @@
 - 子技能 `motion-explainer-workflow/`（v0.1.0，建置第 1 步）：`SKILL.md`（分工、何時使用、固定原則、依風格決定幀率、流程總覽、Remotion／HyperFrames 暫定選用、建置進度、來源）。
 - `motion-explainer-workflow/scripts/preflight.py`：檢查 Node ≥22、FFmpeg／FFprobe、專案內 Noto Sans TC 與 OFL.txt、Remotion 4 專案、HyperFrames 固定版本與渲染用無頭 Chrome；`--json`、`--root`、`--skip-hyperframes-doctor`。
 - `motion-explainer-workflow/scripts/install_windows.ps1`：PowerShell 版安裝（與 setup_windows.bat 同流程；已裝好就跳過、不刪檔、失敗即停並提示修法），UTF-8 BOM 以相容 Windows PowerShell 5.1。setup_windows.bat 加上 `PYTHONUTF8=1`，避免 preflight 輸出中文與符號時在 cp950 主控台出錯。
+- HyperFrames 外掛市集 Git LFS 補抓：`install_windows.ps1`、`setup_windows.bat` 安裝外掛後自動執行 `git -C <市集資料夾> lfs pull`（失敗不中斷）；SKILL.md 記錄手動指令與時機。
 - `motion-explainer-workflow/SKILL.md`「安裝與環境檢查」：一鍵複製安裝提示詞（貼進 Windows 上的 Claude Code／Codex 執行，與 setup_windows.bat 同流程）及 PowerShell 一行指令。
 - `motion-explainer-workflow/scripts/setup_windows.bat`：Windows 一次安裝（Remotion `npm install`、`remotion browser ensure`、`hyperframes@0.8.183 browser ensure`、選擇性安裝 HyperFrames Claude Code 外掛、跑 preflight），寫入 `安裝紀錄.log`。
 ### Changed
