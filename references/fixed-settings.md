@@ -22,6 +22,22 @@ Style 一字不改，只替換最後一行的「本片術語清單」：
 ```
 
 - AI Studio 網頁版：Speaker 1 選 Achird → Style 貼上全文 → 每次貼兩幕旁白（一行一句）→ Run → 下載 WAV，依幕號改名（`S01-S02.wav`）。下載是 24 kHz 單聲道，build.py 會自動清頭尾雜訊、切句。
+### AI Studio 產生與下載 WAV 一律由 AI 操作（2026-10-21 使用者固定要求）
+
+使用者已開好 Google AI Studio（或已連上 Claude in Chrome）時，**產生配音、按下載、取回 WAV、改名歸檔全部由 AI 操作**，不再請使用者自己點下載或改名。使用者這項授權涵蓋本流程所有 WAV 下載，不必每段再問一次。
+
+1. 在使用者 Chrome 開新分頁到 `aistudio.google.com/generate-speech` →「Create new dialog」→ Speaker 1 搜尋並選 **Achird** → Style 貼上本節固定 Style（只換最後一行術語清單）。
+2. 每次貼兩幕旁白（一行一句）→ Run → 等播放器出現總長度。
+3. 先暫停播放器，再按播放器上的「Download」（找不到座標時用 find 取得按鈕 ref 再點）。
+4. **每段下載後立即在使用者電腦確認檔案真的存在**（`device_bash` 列出下載資料夾最新的 `Generated Audio …wav`，比對大小／長度：24 kHz 16-bit 單聲道約 48,000 bytes／秒）。沒出現就重按一次，不要假設已下載。
+5. 依產生順序改名為 `S01-S02.wav`、`S03-S04.wav`…，複製到單支影片 `製作中/配音/Gemini/`（工具工作區為 `2_製作中/配音/Gemini/`），再傳回雲端給 build.py。原始下載檔不刪除。
+
+踩坑紀錄（2026-10-21《Nano Banana 2.1 做教材插圖》）：
+- 播放器停在中途（暫停或剛下載完）時，「Run」會變成 `aria-disabled=true`，按了沒反應；把進度條拖到最後、讓它播完，Run 才會恢復。
+- 連續操作時，Speaker 面板或 Style 選單偶爾沒打開，文字會被打進旁白框；每個開選單動作後先截圖確認再輸入。
+- Chrome 會沿用「上次存檔位置」：前兩段 WAV 存進了專案資料夾，不在「下載」。找不到檔案時兩處都查，誤放的檔案移到 `配音/Gemini/_未使用的舊版/`。
+- 網頁版重新整理或重開 Playground 後，Achird 與 Style 會重設，要重新選。
+
 - Gemini 語音是生成的：音色固定，但每次語氣、停頓略有差異；同一支影片同一天用同一組設定一次產生完。
 - 免費額度每天 10 次、每分鐘 3 次（API）；403／429 代表額度用完，隔天重跑會從缺的幕接續。`make_narration.py` 已內建 21 秒間隔與接續。
 

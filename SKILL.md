@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.9.0（2026-10-21）。本版新增「觸動人心與留存」腳本規則：三拍開場、觀眾當主角、懸念兌現、真實卡關、教學現場故事、節奏轉換、情緒弧線、結尾回扣、前 10 秒對上標題縮圖、具體留言問題，附腳本自我檢查表與續看率曲線復盤，詳見 `references/style-guide.md` 與 `profiles/ai-watch.md`。
+目前版本：2.9.1（2026-10-21）。本版規定 AI Studio 配音的產生、下載 WAV、確認檔案與改名歸檔一律由 AI 操作，並記錄播放器擋住 Run、下載位置等踩坑，詳見 `references/fixed-settings.md` 第一節。
+
+2.9.0（2026-10-21）：本版新增「觸動人心與留存」腳本規則：三拍開場、觀眾當主角、懸念兌現、真實卡關、教學現場故事、節奏轉換、情緒弧線、結尾回扣、前 10 秒對上標題縮圖、具體留言問題，附腳本自我檢查表與續看率曲線復盤，詳見 `references/style-guide.md` 與 `profiles/ai-watch.md`。
 
 2.8.0（2026-10-21）：擴充 AI 觀測站選題雷達：新增價格與方案、安全與爭議、教育與教師應用三類題材，加入台灣可用性、需求證據、Shorts 延伸潛力附加評分與時事／長青標示，並寫入量化來源備援流程，詳見 `references/topic-radar.md`。以下版本敘述保留歷史功能紀錄。
 
@@ -138,7 +140,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - **每支影片只交付一份 `製作後/上架文案.txt`**，按 `references/project-layout.md` 包含 YouTube 標題、說明欄、標記 Tags、置頂留言；逐字稿另存。舊工具自動產出的 MD／分項 TXT 留在內部工具工作區，合併核對後才正式交付。
 
 ### 6. 配音稿
-一律依 `references/fixed-settings.md`：正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/make_narration.py`、`make_narration.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
+一律依 `references/fixed-settings.md`：**AI Studio 產生與下載 WAV 一律由 AI 操作**（選 Achird、貼 Style、Run、下載、在使用者電腦確認檔案、改名 `Sxx-Syy.wav` 歸檔），不請使用者手動下載。正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/make_narration.py`、`make_narration.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
 
 ### 7. 剪輯指示與發布檢查
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。

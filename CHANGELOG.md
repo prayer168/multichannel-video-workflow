@@ -2,6 +2,13 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.9.1] - 2026-10-21
+### Changed
+- `references/fixed-settings.md`：AI Studio 配音的產生、下載 WAV、確認檔案已存到電腦、改名 `Sxx-Syy.wav` 與歸檔一律由 AI 操作（使用者固定要求），寫出五步流程。
+- `SKILL.md` 階段 6 同步加入此規則。
+### Added
+- 踩坑紀錄：播放器停在中途時 Run 會被停用、選單未開導致文字誤入旁白框、Chrome 沿用上次存檔位置、重開 Playground 需重選 Achird 與 Style。
+
 ## [2.9.0] - 2026-10-21
 ### Added
 - `references/style-guide.md`：新增「觸動人心與留存的腳本規則」十條：三拍開場、觀眾當主角、懸念並兌現、真實卡關與失敗、具體教學現場故事、`[節奏轉換]` 標註、情緒弧線、結尾回扣開場＋下一步、前 10 秒對上標題縮圖、具體留言問題。

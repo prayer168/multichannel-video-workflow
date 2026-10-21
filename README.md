@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.9.0（2026-10-21）
+**Version:** 2.9.1（2026-10-21）
+
+## 2.9.1：AI Studio 配音下載由 AI 操作
+
+在 Google AI Studio 產生配音後，下載 WAV、確認檔案已存到電腦、改名 `S01-S02.wav` 並放進 `配音/Gemini/`，全部由 AI 操作，不再請使用者手動下載。流程與踩坑紀錄見 [references/fixed-settings.md](references/fixed-settings.md) 第一節。
 
 ## 2.9.0：觸動人心與留存的腳本規則
 
@@ -277,6 +281,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.9.1 | 2026-10-21 | AI Studio 產生與下載 WAV 一律由 AI 操作：五步流程、下載後確認檔案、改名歸檔；記錄 Run 被停用、下載位置等踩坑 |
 | 2.9.0 | 2026-10-21 | 觸動人心與留存的十條腳本規則、腳本自我檢查表、AI Watch 套用範例、續看率曲線復盤；階段 3 開場改為三拍開場 |
 | 2.8.0 | 2026-10-21 | AI Watch 選題雷達擴充：新增價格方案、安全爭議、教育應用三類；需求端訊號；台灣可用性／需求證據／Shorts 潛力附加評分；時事／長青標示；量化來源備援 |
 | 2.7.0 | 2026-10-17 | 新增影片剪輯技能；整合素材盤點、AI粗剪、角色／場景連戲、Remotion與DaVinci分工及三份逐字稿時間碼分析 |
