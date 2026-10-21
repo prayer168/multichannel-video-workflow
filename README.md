@@ -3,7 +3,28 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.8.0（2026-10-21）
+**Version:** 2.9.0（2026-10-21）
+
+## 2.9.0：觸動人心與留存的腳本規則
+
+點閱率主要靠標題與縮圖，腳本負責讓觀眾看下去，留存再帶動推薦。新增 [references/style-guide.md](references/style-guide.md) 十條共用腳本規則與自我檢查表，並在 [profiles/ai-watch.md](profiles/ai-watch.md) 寫入 AI Watch 的套用方式：
+
+| 規則 | 重點 |
+|---|---|
+| 三拍開場 | 前 30 秒：結果或衝突畫面 → 觀眾痛點 → 承諾與路線圖，招呼放在後面 |
+| 觀眾當主角 | 功能是配角，「你終於可以＿＿」才是主角 |
+| 懸念並兌現 | 章節結尾留鉤子；每個懸念都要在片中回答 |
+| 真實卡關 | 「預期 → 實際 → 修正」段落，必須來自錄影或實驗紀錄 |
+| 教學現場故事 | 有時間、地點、動作、情緒的真實小故事 |
+| 節奏轉換 | 約每 45–60 秒換一次，腳本以 `[節奏轉換]` 標註 |
+| 情緒弧線 | 好奇 → 期待 → 挫折 → 解決 → 成就感 |
+| 結尾回扣 | 回到開場畫面、給今天能做的小行動、預告下一支 |
+| 前 10 秒對上縮圖 | 縮圖承諾的東西，第一個畫面就給證據 |
+| 具體留言問題 | 問得出答案的問題，回填選題雷達的需求證據 |
+
+發布後用「觀眾續看率」曲線找下滑點，對照當下的腳本句子，把有效與無效的寫法回寫技能。這些是製作假設，不保證流量，也不能凌駕真實與可查證的原則。
+
+---
 
 ## 2.8.0：AI 觀測站選題雷達擴充
 
@@ -256,6 +277,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.9.0 | 2026-10-21 | 觸動人心與留存的十條腳本規則、腳本自我檢查表、AI Watch 套用範例、續看率曲線復盤；階段 3 開場改為三拍開場 |
 | 2.8.0 | 2026-10-21 | AI Watch 選題雷達擴充：新增價格方案、安全爭議、教育應用三類；需求端訊號；台灣可用性／需求證據／Shorts 潛力附加評分；時事／長青標示；量化來源備援 |
 | 2.7.0 | 2026-10-17 | 新增影片剪輯技能；整合素材盤點、AI粗剪、角色／場景連戲、Remotion與DaVinci分工及三份逐字稿時間碼分析 |
 | 2.6.0 | 2026-10-15 | 元件狀態與旁白逐句對齊、持續角色與機關、木質UI模擬、左講者／右動畫、Flow回退與影格驗收 |
@@ -285,6 +307,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.9.0：核對 style-guide.md、ai-watch.md、SKILL.md 階段 3／8 與 History.md 的規則一致，確認新開場規則與既有「不把高潮放最後當硬性規則」「頻道招呼方式」沒有衝突，以及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`git diff --check` 通過。此版為寫作規則與檢查表，沒有新增程式，尚未用於完整影片並以續看率資料驗證。
 
 2.8.0：核對 topic-radar.md、ai-watch.md、SKILL.md、History.md 階段 0 的規則一致，以及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`topic_radar.py` 通過語法檢查，並在雲端（GitHub／HF／HN 皆 403）實跑確認輸出附加備援提示；既有單元測試通過；`git diff --check` 通過。新評分欄位已用於 2026-10-21 AI 觀測站選題雷達的規則設計，但尚未以新格式完整重跑一輪。
 
