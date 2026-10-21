@@ -3,7 +3,21 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.7.0（2026-10-17）
+**Version:** 2.8.0（2026-10-21）
+
+## 2.8.0：AI 觀測站選題雷達擴充
+
+依 2026-10-21 實際掃描的經驗，擴充 [references/topic-radar.md](references/topic-radar.md)：
+
+| 項目 | 內容 |
+|---|---|
+| 新增三類題材 | 價格、方案與免費開放變動；安全、隱私與爭議澄清；教育與教師應用（AI Watch 由五類變八類） |
+| 需求端訊號 | 本頻道留言、YouTube 搜尋建議、社群提問、Google Trends、研習問題；與 stars／新聞熱度分開記錄 |
+| 附加評分 | 台灣可用性、需求證據、Shorts 延伸潛力各 0–2 分；核心 6 項 /12 保留，AI Watch 合計 /18 |
+| 時效類型 | 每筆標示時事／長青，每輪保留 2–3 筆長青題 |
+| 量化來源備援 | 雲端抓不到 GitHub／HF／HN／YouTube 時，改在使用者電腦跑腳本或用彙整來源補足，報告註明並標【待補】；`topic_radar.py` 失敗時自動附提示 |
+
+---
 
 ## 2.7.0：AI 輔助剪輯與程式化動畫剪輯銜接
 
@@ -83,7 +97,7 @@
 
 | 階段 | 產出 |
 |------|------|
-| 0. 頻道路由與選題雷達 | 先選頻道設定檔，再依自然教育或 AI／軟體內容調整來源與評分；候選附來源、日期、重複檢查與推薦理由 |
+| 0. 頻道路由與選題雷達 | 先選頻道設定檔，再依自然教育或 AI／軟體內容調整來源與評分；AI Watch 掃描八類題材、加計台灣可用性／需求證據／Shorts 潛力；候選附來源、日期、時效類型、重複檢查與推薦理由 |
 | 0.5 建立專案 | 主影片與三支Shorts各自的製作前／製作中／製作後；舊工具結構只留在內部工作區 |
 | 0.8 SEO 關鍵字研究 | YouTube 搜尋建議（需求）＋搜尋結果競爭分析（供給）→ 機會判斷、主要與次要關鍵字 |
 | 1. 選題評估 | 依頻道設定檔評估受眾需求、可信度、成果、展示、差異化與可行性，並提出一句話承諾和敘事模式 |
@@ -143,7 +157,7 @@ multichannel-video-workflow/
     ├── build-pipeline.md    一鍵產生影片：指令、畫面規格格式、版型一覽、配音與額度、電影預告片風格、雜音／晃動／重疊的檢查方法
     ├── intro-spec.md        黑熊老師品牌片頭規格（含透明版、縮到角落版、浮水印）
     ├── production-notes.md  自動粗剪、浮水印規則、常見陷阱與品質檢查
-    ├── topic-radar.md       選題雷達：來源清單、步驟、報告格式
+    ├── topic-radar.md       選題雷達：來源清單、八類題材、需求訊號、附加評分、備援、報告格式
     ├── seo.md               YouTube SEO 規範
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
     ├── fixed-settings.md    固定製作設定（片頭、Achird 配音、原創配樂、講課角色、片尾、一鍵檔）
@@ -242,6 +256,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.8.0 | 2026-10-21 | AI Watch 選題雷達擴充：新增價格方案、安全爭議、教育應用三類；需求端訊號；台灣可用性／需求證據／Shorts 潛力附加評分；時事／長青標示；量化來源備援 |
 | 2.7.0 | 2026-10-17 | 新增影片剪輯技能；整合素材盤點、AI粗剪、角色／場景連戲、Remotion與DaVinci分工及三份逐字稿時間碼分析 |
 | 2.6.0 | 2026-10-15 | 元件狀態與旁白逐句對齊、持續角色與機關、木質UI模擬、左講者／右動畫、Flow回退與影格驗收 |
 | 2.5.1 | 2026-10-14 | 加入逐步引導：頻道、自訂或推薦主題、風格、形式與時長、腳本、代表預覽，確認後製作；保留已選設定 |
@@ -270,6 +285,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.8.0：核對 topic-radar.md、ai-watch.md、SKILL.md、History.md 階段 0 的規則一致，以及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`topic_radar.py` 通過語法檢查，並在雲端（GitHub／HF／HN 皆 403）實跑確認輸出附加備援提示；既有單元測試通過；`git diff --check` 通過。新評分欄位已用於 2026-10-21 AI 觀測站選題雷達的規則設計，但尚未以新格式完整重跑一輪。
 
 2.7.0：核對三份 SRT 摘要與時間碼、技能路由、參考連結及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`git diff --check` 通過。此版新增的是工作流程文件與技能說明，沒有新增程式或渲染功能，也未執行程式測試或完整影片剪輯驗收。
 

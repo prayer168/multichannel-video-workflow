@@ -81,6 +81,15 @@ def main():
             parts.append(f"## {title}\n\n{fn()}")
         except Exception as e:  # 單一來源失敗不影響其他來源
             parts.append(f"## {title}\n\n⚠️ 抓取失敗：{e}")
+    failed = sum("⚠️ 抓取失敗" in p for p in parts)
+    if failed:
+        parts.append(
+            "## 備援提示\n\n"
+            f"有 {failed} 個來源抓取失敗（常見原因：雲端網路代理回 403）。"
+            "請依 references/topic-radar.md「量化來源備援」：改在本機電腦執行本腳本，"
+            "或以每日 AI 新聞彙整、OSS Insight／Trendshift 與官方文件補足，"
+            "並在報告開頭註明失敗來源，熱度欄位標【待補】。"
+        )
     md = "\n\n".join(parts) + "\n"
     if a.out:
         open(a.out, "w", encoding="utf-8").write(md)

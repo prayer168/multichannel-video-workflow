@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.7.0（2026-10-17）。本版新增剪輯技能銜接與三份影片逐字稿分析，詳見 `video-editing-workflow/SKILL.md`、`references/three-video-editing-analysis.md`、`references/editing-workflow-methods.md`。以下版本敘述保留歷史功能紀錄。
+目前版本：2.8.0（2026-10-21）。本版擴充 AI 觀測站選題雷達：新增價格與方案、安全與爭議、教育與教師應用三類題材，加入台灣可用性、需求證據、Shorts 延伸潛力附加評分與時事／長青標示，並寫入量化來源備援流程，詳見 `references/topic-radar.md`。以下版本敘述保留歷史功能紀錄。
+
+2.7.0（2026-10-17）：新增剪輯技能銜接與三份影片逐字稿分析，詳見 `video-editing-workflow/SKILL.md`、`references/three-video-editing-analysis.md`、`references/editing-workflow-methods.md`。
 
 版本：2.6.0（2026-10-15）；新增元件動畫、旁白逐句對齊及左講者／右動畫版型（references/ui-narration-animation.md）。2.5.1（2026-10-14）：新增逐步引導製作（references/guided-production.md）：先選頻道與主題，再選風格、形式、腳本和代表預覽，確認後才製作。2.5.0（2026-10-13）：新增進階動畫模組規格（references/advanced-animation.md）：六種材質、九種模組、片頭變體提案、提示詞與驗收。規格已整合，新渲染器與新片頭尚未實作。2.4.1（2026-10-11）：新增主影片＋三支 Shorts 的四資料夾交付規則、台灣時間正式輸出檔名、整合上架文案 TXT 與獨立最終逐字稿（`references/project-layout.md`）。2.4.0：新增**實測錄屏影片流程**（`references/real-test-workflow.md`：結論只能來自錄影、卡片框合成、片段表、抽格核對）、**AI 影片生成工具補充**（`references/ai-animation.md`：Google Flow 建立角色與英文提示詞）、**Windows 旁白產生器**（`scripts/build/make_narration.bat`／`make_narration.py`）。2.3.0：加入 YouTube 成長追蹤與公平實測流程；新增生活化角色動畫、實測分支、分鏡預覽與可驗證的 ZIP 製作交接（`references/animation-handoff.md`、`scripts/pack_video_bundle.py`）。保留 2.1.0 的固定製作設定：黑熊老師片頭、Achird 固定 Style、原創配樂、右下角黑熊老師講課與 Windows 一鍵檔。repo、技能識別與安裝資料夾為 `multichannel-video-workflow`。
 
@@ -18,7 +20,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/channel-routing.md`：頻道判定、共用規則與優先順序
 - `profiles/blackbear-science.md`：黑熊老師的自然教室受眾、選題、查證與品牌規則
 - `profiles/ai-watch.md`：AI 觀測站（AI Watch）受眾、選題、查證與品牌規則
-- `references/topic-radar.md`：選題雷達的來源清單、步驟、報告格式
+- `references/topic-radar.md`：選題雷達的來源清單、AI Watch 八類題材、需求端訊號、附加評分、量化來源備援、步驟與報告格式
 - `scripts/topic_radar.py`：抓 GitHub、Hugging Face、Hacker News 的熱度原始資料
 - `references/seo.md`：YouTube SEO 規範（關鍵字研究、標題、說明欄、章節、Hashtag、標籤、導流、發布後優化）
 - `scripts/seo_keywords.py`：YouTube 搜尋建議（需求）＋搜尋結果競爭分析（供給）
@@ -56,12 +58,12 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 0. 選題雷達（使用者還沒有確定題目時，一定要先做）
 先依頻道設定檔調整來源、題材範圍與候選評分；自然教室增加科學教育與課堂需求查證，AI 觀測站聚焦 AI／軟體／開源專案及可重現實測。詳細規範見 `references/topic-radar.md` 與對應頻道設定檔。步驟：
-1. AI Watch 執行 `python scripts/topic_radar.py --days 14 --out <工作區>/09_選題雷達/YYYY-MM-DD_raw.md`，取得 GitHub、Hugging Face、Hacker News 的量化熱度；自然教室以科學教育、課堂需求與自然觀察來源為主，只有相關時才把此腳本當補充資料。
-2. 依 `references/topic-radar.md` 和所選頻道設定檔補齊網路搜尋；只搜尋與本頻道受眾和本集問題相關的來源類別，不必湊滿 AI／軟體五類。
+1. AI Watch 執行 `python scripts/topic_radar.py --days 14 --out <工作區>/09_選題雷達/YYYY-MM-DD_raw.md`，取得 GitHub、Hugging Face、Hacker News 的量化熱度；輸出「抓取失敗」時依 `references/topic-radar.md`「量化來源備援」改在使用者電腦執行或以彙整來源補足，並在報告註明；自然教室以科學教育、課堂需求與自然觀察來源為主，只有相關時才把此腳本當補充資料。
+2. 依 `references/topic-radar.md` 和所選頻道設定檔補齊網路搜尋；只搜尋與本頻道受眾和本集問題相關的來源類別，不必湊滿 AI Watch 八類，但廣泛掃描至少檢查價格與方案、安全與爭議、教育與教師應用三類；每筆另找需求端訊號。
 3. 去除雜訊，列出適量候選（廣泛趨勢掃描預設 15–25 筆；聚焦題目可更少），每一筆都附**來源連結與絕對日期**；不可以編造
 4. 重複檢查：對照本頻道影片和選題庫，再搜尋同類中文內容；只把 PAPAYA 電腦教室作為 AI／軟體教學的參考案例之一，不作為自然教室的競品或必查對象。
-5. 用階段 1 的 6 項指標評分，推薦至多 3 名（聚焦型可更少，依受眾需求說明理由），每一名附上一句話承諾、敘事模式、暫定標題、縮圖文案、風險
-5.5 對前 3 名執行 `python scripts/seo_keywords.py "主題或工具" --top 20`，當工具適用且有 YouTube 搜尋意圖時補上需求判斷（🟢 高／🟡 中／⚪ 需求低／🔴 競爭高）；不適用時以受眾需求與教學價值說明選題理由
+5. 用階段 1 的 6 項指標評分（核心分 /12）；AI Watch 另加台灣可用性、需求證據、Shorts 延伸潛力三項附加評分（合計 /18），每筆標示時事或長青。推薦至多 3 名（聚焦型可更少；使用者要求更多選擇或指定數量時依要求增加），每一名附上一句話承諾、敘事模式、時效類型、需求證據、暫定標題、縮圖文案、Shorts 三個切點與風險
+5.5 對前 3 名執行 `python scripts/seo_keywords.py "主題或工具" --top 20`，當工具適用且有 YouTube 搜尋意圖時補上需求判斷（🟢 高／🟡 中／⚪ 需求低／🔴 競爭高）；不適用時以受眾需求與教學價值說明選題理由。雲端無法連到 YouTube 時，附上指令請使用者在本機執行，欄位標【待補】
 6. 寫入 `09_選題雷達/YYYY-MM-DD_選題雷達.md`；沒選中的好題目加到 `09_選題雷達/選題庫.md`
 7. 讓使用者選定題目後，才進入階段 0.5
 

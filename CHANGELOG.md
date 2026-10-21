@@ -2,6 +2,19 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.8.0] - 2026-10-21
+### Added
+- `references/topic-radar.md`：AI Watch 題材由五類擴充為八類，新增「價格、方案與免費開放變動」「安全、隱私與爭議澄清」「教育與教師應用」，並列出各類指定來源。
+- 觀眾需求證據（需求端訊號）來源表：本頻道留言、YouTube 搜尋建議、社群提問、Google Trends、教師研習問題；與供給端熱度分開記錄。
+- AI Watch 附加評分：台灣可用性、需求證據、Shorts 延伸潛力（各 0–2 分），核心 6 項 /12 保留，合計 /18；新增可用性標示（✅💳🏢🌐❓）。
+- 時效類型標示（時事／長青），廣泛掃描至少保留 2–3 筆長青題。
+- 量化來源備援流程：雲端網路代理擋下 GitHub／Hugging Face／Hacker News／YouTube 時，改在使用者電腦執行腳本或以彙整來源補足，報告註明失敗來源並標【待補】。
+- `scripts/topic_radar.py`：有來源抓取失敗時，在輸出末尾附加備援提示。
+### Changed
+- 報告格式新增時效類型、需求證據、可用性與附加評分欄位，推薦項加入 Shorts 三個切點；使用者要求更多選擇時可推薦超過 3 名。
+- `SKILL.md` 階段 0、`profiles/ai-watch.md` 同步新規則。
+- `README.md`、`VERSION`、`CHANGELOG.md`、`SKILL.md` 版本同步至 2.8.0。
+
 ## [2.7.0] - 2026-10-17
 ### Added
 - `video-editing-workflow/SKILL.md`：獨立剪輯技能，涵蓋素材盤點、敘事剪輯、AI 輔助粗剪、動畫／錄屏混剪、DaVinci 後製分工與人工驗收。
