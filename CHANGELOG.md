@@ -2,6 +2,13 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.12.0] - 2026-10-21
+### Added
+- `references/advanced-animation.md` 4.1 節：九套擴充材質模板（shadow 光影皮影戲、chalk 黑板粉筆、cyanotype 藍晒日光圖、popup 立體翻翻書、tabletop 桌面實物定格、sand 燈箱沙畫、atlas 復古天文圖鑑、nightglow 夜光星空、stitch 毛線刺繡），沿用核心模板欄位並加「狀態」欄；全部標為提案，成本為初估，首次採用前須做一鏡測試。
+### Changed
+- `references/guided-production.md` 階段 3 風格選單擴充為核心六套＋擴充九套。
+- `SKILL.md`、`README.md`、`VERSION` 版本同步。
+
 ## [2.11.0] - 2026-10-21
 ### Added
 - `profiles/blackbear-science.md`：頻道定位三句標語（主標語、身分標語、選題標語）並存及各自用途。

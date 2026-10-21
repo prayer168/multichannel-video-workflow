@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.11.0（2026-10-21）
+**Version:** 2.12.0（2026-10-21）
+
+## 2.12.0：九套擴充材質
+
+`references/advanced-animation.md` 新增 4.1 節：光影皮影戲、黑板粉筆、藍晒日光圖、立體翻翻書、桌面實物定格、燈箱沙畫、復古天文圖鑑、夜光星空、毛線刺繡。九套皆為**提案狀態**，配色、動作與成本為初估，第一次採用前先做一鏡測試，通過後再改為「已測試」。逐步引導的風格選單同步擴充為核心六套＋擴充九套。
 
 ## 2.11.0：黑熊老師的自然教室頻道定位
 
@@ -89,7 +93,8 @@
 ## 2.5.0：進階動畫模組與溫馨材質模板
 
 新增 [references/advanced-animation.md](references/advanced-animation.md)，整合雙頻道共用的導演、剪輯、動畫與教學規格：
-- 六套材質：暖紙小劇場、晴日繪本、布布陪你學、木桌小世界、慢慢捏出來、暖光工作室。
+- 六套核心材質：暖紙小劇場、晴日繪本、布布陪你學、木桌小世界、慢慢捏出來、暖光工作室。
+- 九套擴充材質（2.12.0，提案狀態）：光影皮影戲、黑板粉筆、藍晒日光圖、立體翻翻書、桌面實物定格、燈箱沙畫、復古天文圖鑑、夜光星空、毛線刺繡。
 - 九種動畫模組契約、資料分層與參數範例、字幕與主持安全區、錄屏混合、分鏡和品質驗收。
 - 原版黑熊片頭繼續使用；繪本、紙藝、木作與科技桌片頭列為變體提案，保留核定Logo與角色。
 - 同一18秒內容的三材質文字分鏡、相對成本、MVP及擴充順序。
@@ -307,6 +312,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.12.0 | 2026-10-21 | 九套擴充材質（提案狀態）：皮影、黑板粉筆、藍晒、立體翻翻書、桌面實物定格、沙畫、復古天文圖鑑、夜光星空、毛線刺繡；風格選單同步 |
 | 2.11.0 | 2026-10-21 | 自然教室頻道定位：三句定位標語、八個內容系列、台灣自然月曆、每月節奏與固定趣味元素；選題改以時序與季節性為主 |
 | 2.10.0 | 2026-10-21 | 嵌入字幕固定樣式（一行、白字黑框、置中離下緣 96 px、對齊旁白停頓）、Shorts 字幕規格、字幕安全區（圖卡與動畫自動縮到 y 880 以上）、`subs_oneline.py` 與一鍵檔串接 |
 | 2.9.1 | 2026-10-21 | AI Studio 產生與下載 WAV 一律由 AI 操作：五步流程、下載後確認檔案、改名歸檔；記錄 Run 被停用、下載位置等踩坑 |
@@ -340,6 +346,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.12.0：核對 advanced-animation.md 4.1、guided-production.md 階段 3 與 README 的材質清單一致，以及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`git diff --check` 通過。九套擴充材質只有文字規格，尚未產生代表預覽或渲染測試。
 
 2.11.0：核對 blackbear-science.md、topic-radar.md 與 SKILL.md 階段 0／1 的選題規則一致（不再以教學進度表排序、改看自然月曆與內容系列），以及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`git diff --check` 通過。此版為頻道定位與選題規則，沒有新增程式；月曆中的確切日期每年選題時重新查證。
 
