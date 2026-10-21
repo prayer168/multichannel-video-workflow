@@ -6,7 +6,7 @@
 
 ## 2.13.0（2026-10-21）動態圖文子技能與字幕不燒錄
 
-使用者看了翔宇工作流以 Claude 寫 Remotion 剪口播長片的影片與文章，決定在同一個 repo 開一個獨立子技能，專管「旁白定稿後畫面怎麼做」，並把 Remotion 與 HyperFrames 都裝起來比較。參考影片的字幕是獨立字幕軌、不燒錄；開工前詢問主技能要不要跟進，使用者決定所有影片都改為不燒錄，2.10.0 的單行斷句與字幕安全區保留，只是不再輸出燒錄版。安裝時發現使用者電腦已有 Node 24、FFmpeg 與 2026-10-20 建好的 RemotionStarter，於是 motion-explainer 專案沿用其原始碼，只補 HyperFrames（固定 0.8.183）與專案內 Noto Sans TC。學到的事：AI 能直接操作的是使用者電腦上的 Linux 工作區，不是 Windows 本身——在那裡跑通只代表程式可行，Windows 的 node_modules 與無頭 Chrome 必須由 Windows 自己安裝，所以做成雙擊即可的 `setup_windows.bat`，並以 Windows 上 preflight 的紀錄為準。另外，那個工作區不允許刪檔，`hyperframes init` 的暫存資料夾刪不掉而失敗，改為在暫存區初始化後複製進來。
+使用者看了翔宇工作流以 Claude 寫 Remotion 剪口播長片的影片與文章，決定在同一個 repo 開一個獨立子技能，專管「旁白定稿後畫面怎麼做」，並把 Remotion 與 HyperFrames 都裝起來比較。參考影片的字幕是獨立字幕軌、不燒錄；開工前詢問主技能要不要跟進，使用者決定所有影片都改為不燒錄，2.10.0 的單行斷句與字幕安全區保留，只是不再輸出燒錄版。安裝時發現使用者電腦已有 Node 24、FFmpeg 與 2026-10-20 建好的 RemotionStarter，於是 motion-explainer 專案沿用其原始碼，只補 HyperFrames（固定 0.8.183）與專案內 Noto Sans TC。學到的事：AI 能直接操作的是使用者電腦上的 Linux 工作區，不是 Windows 本身——在那裡跑通只代表程式可行，Windows 的 node_modules 與無頭 Chrome 必須由 Windows 自己安裝，所以做成雙擊即可的 `setup_windows.bat`，並以 Windows 上 preflight 的紀錄為準。另外，那個工作區不允許刪檔，`hyperframes init` 的暫存資料夾刪不掉而失敗，改為在暫存區初始化後複製進來。2026-10-22 以 PowerShell 版 `install_windows.ps1` 在 Windows 實跑：終端機與檔案總管都只允許 AI 點按、不能打字，所以加一個雙擊即啟動的 `啟動安裝_PowerShell.bat`；全部步驟結束代碼 0，preflight 七項全過。
 
 ---
 

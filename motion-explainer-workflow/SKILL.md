@@ -87,13 +87,14 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
   不用 AI 時，也可以在 PowerShell 貼上：`& "$env:USERPROFILE\AI-Video-Tools\motion-explainer\setup_windows.bat"`。
   新電腦的 motion-explainer 資料夾還沒建立時，先從 repo 複製 `scripts/preflight.py`、`scripts/setup_windows.bat`，並準備 `remotion/`（Remotion 4 起步專案）、`hyperframes/`（`npx hyperframes@0.8.183 init`）與 `fonts/`（Noto Sans TC＋OFL.txt）。
+- 2026-10-22 已在使用者 Windows 實跑（`install_windows.ps1`）：Node 24.15.0、FFmpeg 8.1.2、Remotion 4.0.537、HyperFrames 0.8.183＋無頭 Chrome 152、HyperFrames Claude Code 外掛，preflight 全部通過。
 - 雲端容器或使用者電腦的 Linux 工作區不等於 Windows 本機：在那裡跑通的結果只代表程式可行，Windows 的安裝狀態以 Windows 上執行 preflight 的紀錄為準。
 
 ## 檔案（建置進度）
 
 | 檔案 | 狀態 |
 |---|---|
-| `SKILL.md`、`scripts/preflight.py`、`scripts/setup_windows.bat`、`scripts/install_windows.ps1`（PowerShell 版，`powershell -NoExit -ExecutionPolicy Bypass -File install_windows.ps1`） | 第 1 步完成 |
+| `SKILL.md`、`scripts/preflight.py`、`scripts/setup_windows.bat`、`scripts/install_windows.ps1`（PowerShell 版；雙擊 `scripts/啟動安裝_PowerShell.bat` 即可執行） | 第 1 步完成 |
 | `references/style-card.md`、`task-card.md`、`evidence-ratio.md` | 第 2 步待建 |
 | `scripts/still_strip.py`、`contact_sheet.py`、`references/still-strip-review.md`、`sample-library.md`、`motion-vocabulary.md` | 第 3 步待建 |
 | `references/tool-choice.md`（Remotion 與 HyperFrames 同鏡比較） | 第 4 步待建 |
