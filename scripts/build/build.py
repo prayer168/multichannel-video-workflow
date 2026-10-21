@@ -255,13 +255,16 @@ def expand_shots(spec, lines, total, intro, cards_dir, root, proj=None):
             fx = dict(cam=b.get("cam"), trans=b.get("trans"), lb=b.get("lb"))
             if b["type"] == "video":
                 shots.append(dict(kind="video", path=b["src"], t0=t0, wm=b.get("watermark", False), loop=not b.get("ss"), ss=b.get("ss", 0), **fx)); continue
+            safe = spec["video"].get("subtitle_safe", True)     # 字幕安全區（2.10.0）：預設開
             if b["type"] == "anim":
                 ap = {x: v for x, v in b.items() if x not in ("at", "steps", "cam", "trans", "lb", "type")}
+                ap["_safe"] = safe
                 if ap.get("images"):
                     ap["images"] = [x if os.path.isabs(x) else os.path.join(proj or root, x) for x in ap["images"]]
                 evl = [by[(sid, ln)]["start"] - 0.15 - t0 for ln in b.get("steps", [])]
                 shots.append(dict(kind="anim", t0=t0, p=ap, ev=evl, wm=True, **fx)); continue
             params = {x: v for x, v in b.items() if x not in ("at", "steps", "cam", "trans", "lb")}
+            params["_safe"] = safe
             if params.get("image") and not os.path.isabs(params["image"]):   # 先找影片專案資料夾，再找工作區根目錄
                 cand = os.path.join(proj, params["image"]) if proj else None
                 params["image"] = cand if cand and os.path.exists(cand) else os.path.join(root, params["image"])
@@ -384,7 +387,8 @@ def _card_frame(s, f, fg_alpha=1.0):
 
 
 def _anim_frame(s, f):
-    return anims_lib.frame(s["p"], f / FPS - s["t0"], s["t1"] - s["t0"], s["ev"])
+    im = anims_lib.frame(s["p"], f / FPS - s["t0"], s["t1"] - s["t0"], s["ev"])
+    return cards_lib.safe_fit(im) if s["p"].get("_safe", True) else im
 
 
 def _shot_frame(s, f, fg_alpha=1.0):

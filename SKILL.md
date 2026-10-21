@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.9.1（2026-10-21）。本版規定 AI Studio 配音的產生、下載 WAV、確認檔案與改名歸檔一律由 AI 操作，並記錄播放器擋住 Run、下載位置等踩坑，詳見 `references/fixed-settings.md` 第一節。
+目前版本：2.10.0（2026-10-21）。本版把嵌入字幕寫成固定設定：一次一行、白字黑框無底色、水平置中離下緣 96 px、換行點對齊旁白停頓，並新增字幕安全區（圖卡與動畫自動縮到 y 880 以上）、Shorts 字幕規格與 `scripts/build/subs_oneline.py`，詳見 `references/subtitle-style.md`。
+
+2.9.1（2026-10-21）：本版規定 AI Studio 配音的產生、下載 WAV、確認檔案與改名歸檔一律由 AI 操作，並記錄播放器擋住 Run、下載位置等踩坑，詳見 `references/fixed-settings.md` 第一節。
 
 2.9.0（2026-10-21）：本版新增「觸動人心與留存」腳本規則：三拍開場、觀眾當主角、懸念兌現、真實卡關、教學現場故事、節奏轉換、情緒弧線、結尾回扣、前 10 秒對上標題縮圖、具體留言問題，附腳本自我檢查表與續看率曲線復盤，詳見 `references/style-guide.md` 與 `profiles/ai-watch.md`。
 
@@ -29,6 +31,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/seo.md`：YouTube SEO 規範（關鍵字研究、標題、說明欄、章節、Hashtag、標籤、導流、發布後優化）
 - `scripts/seo_keywords.py`：YouTube 搜尋建議（需求）＋搜尋結果競爭分析（供給）
 - `references/intro-spec.md`：黑熊老師品牌片頭規格（分鏡、品牌音樂與音效、製作方式）
+- `references/subtitle-style.md`：**嵌入字幕與字幕安全區**（2.10.0 固定）——一行字幕、白字黑框、置中離下緣 96 px、對齊旁白停頓、Shorts 規格、y 880–1000 不放內容、兩版交付；製作任何畫面或輸出成片時必讀
 - `references/build-pipeline.md`：**一鍵產生影片**（`scripts/build/build.py`）：畫面規格格式、41 種圖卡版型（含全幅照片 photo）、教學模擬動畫（anims_lib）、電影預告片風格（運鏡、轉場、黑邊、配樂剪接；第九節）、配音模式（Gemini API／Zhiwei／timing 預覽）、額度、輸出與品質報告。AI Studio 網頁版 TTS 若回「The caller does not have permission」，改請使用者建立免費 API 金鑰並設環境變數 GEMINI_API_KEY
 - `references/production-notes.md`：自動粗剪流程（暫定配音、圖卡、組合）、浮水印規則、常見陷阱與品質檢查
 - `references/style-guide.md`：完整風格規範（結構、語氣詞庫、觸動人心與留存的十條腳本規則與自我檢查表、標題、縮圖、畫面、音樂）
@@ -146,7 +149,8 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。
 **音樂與音效**：只使用符合影片用途與授權條款的素材；記錄曲名、來源與授權，必要時標示作者。音樂情緒依頻道設定檔選擇。
 **浮水印**：依所選頻道設定檔使用品牌浮水印；剪輯疊加或 YouTube 浮水印擇一。自然教室熊掌素材段落依 `references/production-notes.md` 避免重複；有黑熊老師講課角色時右下角不再疊浮水印（用透明 PNG）。
-**一鍵產生（優先使用）**：Windows 上把 `scripts/build/build_video.bat` 複製到專案資料夾雙擊（build.py → bear_presenter.py → append_outro.py，進度寫入 `產生紀錄.log`）。片頭、配音、配樂依 fixed-settings.md。以下為 build.py 細節：腳本定稿後，AI 依腳本與所選頻道設定檔寫出 `製作中/畫面規格.yaml`。片頭、片尾、配音、浮水印與配樂只可引用該頻道核定資產；`video.intro`、`intro_audio`、`watermark`、`bgm` 都必須是存在的檔案，不能填文字佔位或省略。產生器沒有 `outro`／`outro_audio` 欄位；片尾影片可放最後一幕，但音訊與完整長度需後製接入（見 build-pipeline）。`thanks` 圖卡明確填本頻道 `name`，避免舊預設姓名。若 AI Watch 品牌影音尚未提供，在專案卡列待建立；要產生無品牌預覽，須先準備實際中性片頭、靜音 WAV、透明 1920×1080 PNG 和已授權 BGM 等必填檔案，否則只交付企劃與分鏡。（2026-10-06 起兩頻道都用黑熊老師片頭與講課角色，見 fixed-settings.md。）再執行 `python scripts/build/build.py <專案資料夾>`，一次產出影片、所需字幕、章節與品質檢查報告；沒有 Gemini 配音時自動用 Zhiwei 暫定配音，正式配音到齊後同一個指令重跑即可（見 references/build-pipeline.md）。
+**嵌入字幕（2.10.0 固定）**：依 `references/subtitle-style.md`，一次一行、白字黑框無底色、水平置中離下緣 96 px，換行點對齊旁白停頓；製作畫面時 y 880–1000 不放重要內容（`build.py` 預設 `subtitle_safe: true` 自動處理圖卡與動畫，錄屏與自寫動畫要人工守）。交付無字幕版＋嵌入字幕版，YouTube 建議上無字幕版＋單行 SRT。
+**一鍵產生（優先使用）**：Windows 上把 `scripts/build/build_video.bat` 複製到專案資料夾雙擊（build.py → bear_presenter.py → append_outro.py → subs_oneline.py，進度寫入 `產生紀錄.log`）。片頭、配音、配樂依 fixed-settings.md。以下為 build.py 細節：腳本定稿後，AI 依腳本與所選頻道設定檔寫出 `製作中/畫面規格.yaml`。片頭、片尾、配音、浮水印與配樂只可引用該頻道核定資產；`video.intro`、`intro_audio`、`watermark`、`bgm` 都必須是存在的檔案，不能填文字佔位或省略。產生器沒有 `outro`／`outro_audio` 欄位；片尾影片可放最後一幕，但音訊與完整長度需後製接入（見 build-pipeline）。`thanks` 圖卡明確填本頻道 `name`，避免舊預設姓名。若 AI Watch 品牌影音尚未提供，在專案卡列待建立；要產生無品牌預覽，須先準備實際中性片頭、靜音 WAV、透明 1920×1080 PNG 和已授權 BGM 等必填檔案，否則只交付企劃與分鏡。（2026-10-06 起兩頻道都用黑熊老師片頭與講課角色，見 fixed-settings.md。）再執行 `python scripts/build/build.py <專案資料夾>`，一次產出影片、所需字幕、章節與品質檢查報告；沒有 Gemini 配音時自動用 Zhiwei 暫定配音，正式配音到齊後同一個指令重跑即可（見 references/build-pipeline.md）。
 **沒有螢幕錄影時**：可以用「逐句暫定配音＋品牌圖卡＋自動組合」先做出粗剪，再替換正式配音（見 references/production-notes.md）。
 **導流設定**：加入主題播放清單（標題含關鍵字）、結束畫面推薦 1 支相關影片、在提到其他工具時插入資訊卡。
 

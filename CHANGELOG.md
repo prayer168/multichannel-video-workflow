@@ -2,6 +2,17 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.10.0] - 2026-10-21
+### Added
+- `references/subtitle-style.md`：嵌入字幕固定樣式（一次一行、橫式 ≤17 字、白字黑框無底色、微軟正黑體粗體 58 級、水平置中離下緣 96 px）、斷句規則、對齊旁白停頓、字幕安全區、Shorts 規格（72 級、≤12 字、畫面高度約 65%）、兩版交付與驗收。
+- `scripts/build/subs_oneline.py`：讀逐句字幕與旁白音軌，找句中停頓切成一行一行，輸出 `字幕_zh-TW_單行.srt／.ass` 並燒錄 `_完整版_單行字幕.mp4`；支援 `--format shorts`、`--no-burn`。
+- `references/fixed-settings.md` 第九節「嵌入字幕與字幕安全區」。
+### Changed
+- `cards_lib.py`：新增 `safe_fit`，`render` 預設把圖卡縮到 y 880 以上（深色卡補格線、淺色卡延伸邊緣）；`photo` 的 lines／plate 上移，新增 `fit: safe`。
+- `build.py`：`video.subtitle_safe`（預設 true）傳入圖卡與動畫；`type: anim` 畫面同樣縮到安全區。
+- `build_video.bat`：最後一步執行 `subs_oneline.py`。
+- `SKILL.md`、`build-pipeline.md`（第十二節）、README 同步。
+
 ## [2.9.1] - 2026-10-21
 ### Changed
 - `references/fixed-settings.md`：AI Studio 配音的產生、下載 WAV、確認檔案已存到電腦、改名 `Sxx-Syy.wav` 與歸檔一律由 AI 操作（使用者固定要求），寫出五步流程。

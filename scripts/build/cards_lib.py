@@ -849,6 +849,7 @@ def photo_layers(p):
     bg = src.crop((x, y, x + W, y + H))
     if p.get("vignette", True):
         bg.paste(Image.new("RGB", (W, H), (0, 0, 0)), (0, 0), _vignette())
+    if p.get("fit") == "safe": bg = safe_fit(bg)   # 照片重點在下方時：整張縮到字幕區以上（四周延伸邊緣）
     fg = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     side = p.get("side")
     if side:
@@ -878,13 +879,14 @@ def photo_layers(p):
         for i in range(n):
             d.ellipse([x0 + 4, y + 22, x0 + 34, y + 52], fill=GOLD)
             d.text((x0 + 60, y), items[i], font=fit(d, items[i], 56, mw - 60), fill=WHITE); y += 92
+    safe = p.get("_safe", True)            # 字幕安全區：下方字卡與名牌整體上移到 y 860 以上
     if p.get("lines"):
         ls = p["lines"]; n = shown(p, len(ls)); hl = set(p.get("hl", []))
-        y0 = H - 150 - 104 * len(ls)
+        y0 = (SAFE_BOTTOM - 100 if safe else H - 150) - 104 * len(ls)
         for i in range(n):
             ctext(d, W / 2, y0 + i * 104, ls[i], fit(d, ls[i], 72, W - 520), GOLD if i in hl else WHITE)
     if p.get("plate"):
-        pl = p["plate"]; y = H - 410
+        pl = p["plate"]; y = (SAFE_BOTTOM - 130 - 70 * (len(pl) - 1) - 20) if safe else H - 410
         d.rounded_rectangle([110, y + 8, 124, y + 96], radius=6, fill=GOLD)
         d.text((156, y), pl[0], font=font(84), fill=WHITE); y += 130
         for l in pl[1:]:
@@ -960,6 +962,31 @@ TYPES = {  # 名稱：(函式, 預設深色背景)
 }
 
 
+# ---- 字幕安全區（2.10.0）：y 880–1000 留給嵌入字幕，畫面內容縮放到 y 16–880 之間 ----
+SUB_TOP, SUB_BOTTOM = 880, 1000        # 字幕安全區（1080p）
+SAFE_SCALE, SAFE_TOP = 0.80, 16        # 內容縮放比例與上緣；16 + 1080×0.80 = 880，任何版型都不會進入字幕區
+SAFE_BOTTOM = 860                      # 照片文字面板等「自由排版」內容的下緣
+
+
+def safe_fit(im, dark=None):
+    """把整張 1920×1080 畫面等比縮到 80%，水平置中、上緣 16 px；四周補背景。
+    dark=True：補上與縮放後同間距的深色格線（無接縫）；其他：以邊緣像素延伸（純色、漸層、左右分色都適用）"""
+    import numpy as np
+    sw, sh = round(W * SAFE_SCALE), round(H * SAFE_SCALE)
+    x0, y0 = (W - sw) // 2, SAFE_TOP
+    small = im.convert("RGB").resize((sw, sh), Image.LANCZOS)
+    if dark:
+        bg = Image.new("RGB", (W, H), NAVY); d = ImageDraw.Draw(bg); g = 80 * SAFE_SCALE
+        k = -int(x0 // g) - 1
+        while x0 + k * g < W: d.line([(x0 + k * g, 0), (x0 + k * g, H)], fill=(16, 38, 70)); k += 1
+        k = -int(y0 // g) - 1
+        while y0 + k * g < H: d.line([(0, y0 + k * g), (W, y0 + k * g)], fill=(16, 38, 70)); k += 1
+        bg.paste(small, (x0, y0)); return bg
+    a = np.asarray(small)
+    a = np.pad(a, ((y0, H - sh - y0), (x0, W - sw - x0), (0, 0)), mode="edge")
+    return Image.fromarray(a)
+
+
 def render(p, out):
     fn, dark_default = TYPES[p["type"]]
     dark = p.get("dark", dark_default)
@@ -969,4 +996,5 @@ def render(p, out):
         for x in range(0, W, 80): d.line([(x, 0), (x, H)], fill=(16, 38, 70))
         for y in range(0, H, 80): d.line([(0, y), (W, y)], fill=(16, 38, 70))
     fn(im, d, p)
+    if p.get("_safe", True): im = safe_fit(im, dark)
     im.save(out)

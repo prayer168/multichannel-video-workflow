@@ -3,7 +3,21 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.9.1（2026-10-21）
+**Version:** 2.10.0（2026-10-21）
+
+## 2.10.0：嵌入字幕固定樣式與字幕安全區
+
+字幕寫成固定設定，兩個頻道都照做，細節見 [references/subtitle-style.md](references/subtitle-style.md)：
+
+| 項目 | 設定 |
+|---|---|
+| 行數 | 一次一行；橫式 ≤ 17 字、Shorts ≤ 12 字 |
+| 樣式 | 白字＋黑框、淡陰影，不加底色；微軟正黑體粗體 58 級（Shorts 72 級） |
+| 位置 | 水平置中、離下緣 96 px（Shorts 約在畫面高度 65%） |
+| 時間 | 換行點對齊旁白停頓，每行至少 0.7 秒 |
+| 字幕安全區 | y 880–1000 不放內容；`build.py` 預設 `subtitle_safe: true`，圖卡與動畫自動縮到 y 880 以上 |
+| 程式 | `scripts/build/subs_oneline.py`；`build_video.bat` 最後自動產生單行 SRT 與 `_單行字幕.mp4` |
+| 交付 | 無字幕版＋嵌入字幕版；YouTube 建議上無字幕版＋單行 SRT |
 
 ## 2.9.1：AI Studio 配音下載由 AI 操作
 
@@ -102,6 +116,7 @@
 | 背景音樂 | 原創 lo-fi（`music/make_music.py` 產生），不用 Pixabay 曲當 BGM |
 | 講課角色 | 核定黑熊老師依配音對嘴；一般沿用右下，動畫講解可採左側放大講者／右側動畫，需明確合成 |
 | 片尾 | AI Watch 四種主題核定片尾／自然教室熊掌片尾（`scripts/build/append_outro.py`） |
+| 字幕 | 一行、白字黑框無底色、置中離下緣 96 px、對齊旁白停頓；y 880–1000 為字幕安全區（`scripts/build/subs_oneline.py`、`references/subtitle-style.md`） |
 | 一鍵產生 | Windows：`scripts/build/build_video.bat` 複製到專案資料夾雙擊，進度寫入 `產生紀錄.log` |
 | 只產生旁白 | Windows：`scripts/build/make_narration.bat`＋`旁白資料.json`（2.4.0 起） |
 
@@ -174,7 +189,7 @@ multichannel-video-workflow/
 │   ├── fb_cover.py          臉書分享圖 1200×630
 │   ├── fb_post.py           臉書文一鍵複製頁（中英雙語；上傳後可代入 YouTube 網址）
 │   └── build/               一鍵產生影片：build.py、cards_lib.py（41 種圖卡版型）、anims_lib.py（教學模擬動畫）、say_batch.ps1、
-│                            bear_presenter.py（黑熊老師講課）、append_outro.py（接片尾）、build_video.bat、make_narration.bat／make_narration.py（Gemini 旁白）
+│                            bear_presenter.py（黑熊老師講課）、append_outro.py（接片尾）、subs_oneline.py（單行字幕與燒錄）、build_video.bat、make_narration.bat／make_narration.py（Gemini 旁白）
 ├── profiles/              自然教室與 AI 觀測站頻道設定
 │   ├── blackbear-science.md
 │   └── ai-watch.md
@@ -185,7 +200,8 @@ multichannel-video-workflow/
     ├── topic-radar.md       選題雷達：來源清單、八類題材、需求訊號、附加評分、備援、報告格式
     ├── seo.md               YouTube SEO 規範
     ├── style-guide.md       完整風格規範（定位、標題、縮圖、片頭、結構、語氣詞庫、畫面、音樂）
-    ├── fixed-settings.md    固定製作設定（片頭、Achird 配音、原創配樂、講課角色、片尾、一鍵檔）
+    ├── fixed-settings.md    固定製作設定（片頭、Achird 配音、原創配樂、講課角色、片尾、一鍵檔、字幕）
+    ├── subtitle-style.md    嵌入字幕樣式、字幕安全區與 Shorts 字幕（2.10.0）
     ├── real-test-workflow.md 實測錄屏影片流程（錄影為準、卡片框合成、片段表、旁白產生）
     ├── ai-animation.md      AI 影片生成工具操作（Google Flow 建立角色、英文提示詞、挑選命名）
     ├── guided-production.md 逐步引導選題、風格、形式、腳本、預覽與製作
@@ -281,6 +297,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.10.0 | 2026-10-21 | 嵌入字幕固定樣式（一行、白字黑框、置中離下緣 96 px、對齊旁白停頓）、Shorts 字幕規格、字幕安全區（圖卡與動畫自動縮到 y 880 以上）、`subs_oneline.py` 與一鍵檔串接 |
 | 2.9.1 | 2026-10-21 | AI Studio 產生與下載 WAV 一律由 AI 操作：五步流程、下載後確認檔案、改名歸檔；記錄 Run 被停用、下載位置等踩坑 |
 | 2.9.0 | 2026-10-21 | 觸動人心與留存的十條腳本規則、腳本自我檢查表、AI Watch 套用範例、續看率曲線復盤；階段 3 開場改為三拍開場 |
 | 2.8.0 | 2026-10-21 | AI Watch 選題雷達擴充：新增價格方案、安全爭議、教育應用三類；需求端訊號；台灣可用性／需求證據／Shorts 潛力附加評分；時事／長青標示；量化來源備援 |
