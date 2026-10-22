@@ -2,6 +2,14 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.15.0] - 2026-10-22
+### Added
+- `scripts/build/narration_noise_check.py`：去除摩擦聲／爆音檢核。找出旁白中前後安靜、短促（0.04–0.6 秒）卻很大聲的聲響，依高頻占比分為「摩擦／爆音」與「其他」；`--fix` 只把「摩擦／爆音」靜音（20 ms 淡入淡出）另存，`--json` 機器可讀。
+### Changed
+- `references/fixed-settings.md` 第一節、`SKILL.md` 階段 6、`motion-explainer-workflow/SKILL.md` 流程第 1、7 步：配音到齊後與成片前必跑去除摩擦聲檢核，拼接配音只取到最後一句後約 0.2 秒。
+### Fixed
+- 《地球離太陽最近，為什麼是冬天？》主片與兩支 Shorts：移除三段 Gemini 配音檔尾的爆音（1:03.8、1:59.1、3:39.6）及 1:30.6 的句間雜音，重新混音、對嘴與輸出。
+
 ## [2.14.0] - 2026-10-22
 ### Added
 - `motion-explainer-workflow/references/tool-choice.md`：Remotion 4.0.537 與 HyperFrames 0.8.183 同鏡實測（7 秒 60 fps；41 秒 vs 47 秒；畫面差異平均 1.0/255），選用原則與雲端容器指定 Chromium 的方法。
