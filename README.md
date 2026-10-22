@@ -325,6 +325,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.14.0 | 2026-10-22 | 動態圖文第一支實作（地球近日點）：Remotion／HyperFrames 同鏡實測與選用原則、實作經驗；TTS 產生後用語音辨識核對、使用者不在時改用 make_narration.bat |
 | 2.13.0 | 2026-10-21 | 新增子技能 motion-explainer-workflow（動態圖文；Remotion＋HyperFrames、Windows 安裝檔、preflight 環境檢查）；所有影片改為不燒錄字幕，只交付成片＋單行 SRT |
 | 2.12.0 | 2026-10-21 | 九套擴充材質（提案狀態）：皮影、黑板粉筆、藍晒、立體翻翻書、桌面實物定格、沙畫、復古天文圖鑑、夜光星空、毛線刺繡；風格選單同步 |
 | 2.11.0 | 2026-10-21 | 自然教室頻道定位：三句定位標語、八個內容系列、台灣自然月曆、每月節奏與固定趣味元素；選題改以時序與季節性為主 |

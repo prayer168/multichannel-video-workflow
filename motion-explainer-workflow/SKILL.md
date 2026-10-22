@@ -5,7 +5,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 # 動態圖文剪輯工作流（motion-explainer-workflow）
 
-版本 0.1.0（2026-10-21，隨主技能 2.13.0 建立）。本版完成骨架、分工、安裝與環境檢查；方法文件、審片工具、樣片庫、實測與起步模板依「建置進度」陸續補上，尚未完成的項目不要假裝已存在。
+版本 0.2.0（2026-10-22）。0.1.0 完成骨架、分工、安裝與環境檢查；0.2.0 以《地球離太陽最近，為什麼是冬天？》完成第一支實作（第 4 步），寫入工具選用實測與實作紀錄（見「第一支實作的經驗」）。第 2、3、5 步的方法文件與工具仍待建，尚未完成的項目不要假裝已存在。
 
 ## 分工
 
@@ -52,7 +52,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 ## 渲染工具
 
-兩個都已安裝在使用者的 Windows 電腦（`%USERPROFILE%\AI-Video-Tools\motion-explainer\`），依分鏡或風格選用；選用時機在第 4 步實測後寫進 `references/tool-choice.md`，實測前的暫定原則：
+兩個都已安裝在使用者的 Windows 電腦（`%USERPROFILE%\AI-Video-Tools\motion-explainer\`）。**2026-10-22 實測結論見 `references/tool-choice.md`**：畫面程式先寫成「給時間 t 就畫出畫面」的純函式，兩個工具包同一個函式畫面幾乎相同；預設用 HyperFrames（記得 `--fps 60`），需要 React 元件重用時用 Remotion。原暫定比較：
 
 | 工具 | 寫法 | 暫定適用 |
 |---|---|---|
@@ -97,6 +97,15 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 - 2026-10-22 已在使用者 Windows 實跑（`install_windows.ps1`）：Node 24.15.0、FFmpeg 8.1.2、Remotion 4.0.537、HyperFrames 0.8.183＋無頭 Chrome 152、HyperFrames Claude Code 外掛，preflight 全部通過。
 - 雲端容器或使用者電腦的 Linux 工作區不等於 Windows 本機：在那裡跑通的結果只代表程式可行，Windows 的安裝狀態以 Windows 上執行 preflight 的紀錄為準。
 
+## 第一支實作的經驗（2026-10-22）
+- **畫面**：整片寫成一個 `comp.html`（大畫布＋站點卡片＋攝影機關鍵影格，`setT(t)` 可尋幀），依 `timing.json` 的逐句時間排出每張卡片出現時間；雲端 Playwright 4 個並行逐幀擷取 60 fps。改哪一段就只刪那段幀重渲。
+- **卡片疊放**：後出現的元素要在上層（`z-index` 依出現時間），否則後加的卡片背景會蓋掉先排好的字。
+- **先出靜幀表再渲染**：每輪改版先輸出 12 張關鍵時刻靜幀拼成縮圖表檢查；第一輪就抓到文字沒定位、太陽太大擋字、長條圖文字被切等問題。
+- **第三方看片有用**：另一個模型看縮圖表＋逐字稿，指出開場空白卡、畫面比旁白慢、地軸圖缺陽光方向等，修正後再輸出。
+- **實證比例**：實拍改模擬後實證掉到約 26%；靠讓鏡頭在真實素材（NASA/SDO、CC 授權照片、中央氣象署官方表格）停留更久補到約 42%，但最長無實證空窗仍約 55 秒（示意＋兩段模擬連在一起）。實驗類題目要盡量真的拍，模擬只當補充。
+- **公開素材取得**：雲端容器連不到 Wikimedia／NASA／氣象署；用使用者 Chrome 讀 Commons API 找檔與授權。Chrome 連續下載會被擋、而且會跳另存新檔視窗（使用者不在時沒人能按），改用「在分頁把圖片放大分塊顯示＋截圖拼接」取得約 1570 px 的版本，足夠做照片卡；官方 PDF 表格直接在 Chrome 檢視器截圖。
+- **交付**：成品寫回使用者電腦時，平台會在 MP4 加入 C2PA 內容憑證（uuid 區塊，約 6 KB），檔案仍可正常播放；不要繞過或移除這個標記。單檔超過 30 MB 時分割傳送，到電腦上再接回並核對雜湊。
+
 ## 檔案（建置進度）
 
 | 檔案 | 狀態 |
@@ -104,7 +113,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 | `SKILL.md`、`scripts/preflight.py`、`scripts/setup_windows.bat`、`scripts/install_windows.ps1`（PowerShell 版；雙擊 `scripts/啟動安裝_PowerShell.bat` 即可執行） | 第 1 步完成 |
 | `references/style-card.md`、`task-card.md`、`evidence-ratio.md` | 第 2 步待建 |
 | `scripts/still_strip.py`、`contact_sheet.py`、`references/still-strip-review.md`、`sample-library.md`、`motion-vocabulary.md` | 第 3 步待建 |
-| `references/tool-choice.md`（Remotion 與 HyperFrames 同鏡比較） | 第 4 步待建 |
+| `references/tool-choice.md`（Remotion 與 HyperFrames 同鏡比較） | 第 4 步完成（2026-10-22） |
 | `template/remotion/`、`template/hyperframes/`、`scripts/evidence_check.py` | 第 5 步待建 |
 
 ## 參考來源

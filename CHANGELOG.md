@@ -2,6 +2,13 @@
 
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
+## [2.14.0] - 2026-10-22
+### Added
+- `motion-explainer-workflow/references/tool-choice.md`：Remotion 4.0.537 與 HyperFrames 0.8.183 同鏡實測（7 秒 60 fps；41 秒 vs 47 秒；畫面差異平均 1.0/255），選用原則與雲端容器指定 Chromium 的方法。
+- `motion-explainer-workflow/SKILL.md`「第一支實作的經驗」：可尋幀單檔畫面、卡片疊放順序、靜幀表、第三方看片、實證比例補法、公開素材取得、C2PA 交付注意事項；子技能升 0.2.0。
+### Changed
+- `references/fixed-settings.md` 第一節：Gemini TTS 產生後一定要用語音辨識核對內容（實例：S05-S06 開頭 74 秒離稿）；使用者不在電腦前時改用 `make_narration.bat`（Gemini API）從檔案總管雙擊產生。
+
 ## [2.13.0] - 2026-10-21
 ### Added
 - 子技能 `motion-explainer-workflow/`（v0.1.0，建置第 1 步）：`SKILL.md`（分工、何時使用、固定原則、依風格決定幀率、流程總覽、Remotion／HyperFrames 暫定選用、建置進度、來源）。

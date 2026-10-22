@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.13.0（2026-10-21）。本版新增子技能 `motion-explainer-workflow/`（動態圖文剪輯：旁白定稿後的畫面製作，Remotion 與 HyperFrames 雙工具、Windows 安裝檔與 `preflight.py` 環境檢查），並依使用者決定**所有影片改為不燒錄字幕**，只交付成片＋單行 SRT（`subs_oneline.py` 需 `--burn` 才燒錄），詳見 `references/subtitle-style.md`。
+目前版本：2.14.0（2026-10-22）。本版以《地球離太陽最近，為什麼是冬天？》完成動態圖文子技能第一支實作：Remotion／HyperFrames 同鏡實測（`motion-explainer-workflow/references/tool-choice.md`），並在 `references/fixed-settings.md` 加入「TTS 產生後用語音辨識核對」與「使用者不在時改用 make_narration.bat」。
+
+2.13.0（2026-10-21）：本版新增子技能 `motion-explainer-workflow/`（動態圖文剪輯：旁白定稿後的畫面製作，Remotion 與 HyperFrames 雙工具、Windows 安裝檔與 `preflight.py` 環境檢查），並依使用者決定**所有影片改為不燒錄字幕**，只交付成片＋單行 SRT（`subs_oneline.py` 需 `--burn` 才燒錄），詳見 `references/subtitle-style.md`。
 
 2.12.0（2026-10-21）：本版新增九套擴充材質（光影皮影戲、黑板粉筆、藍晒日光圖、立體翻翻書、桌面實物定格、燈箱沙畫、復古天文圖鑑、夜光星空、毛線刺繡），皆為提案狀態、首次採用前先做一鏡測試，詳見 `references/advanced-animation.md` 4.1。
 
