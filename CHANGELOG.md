@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.16.0] - 2026-10-23
+### Added
+- `references/narration-led-visuals.md`：旁白語意到畫面動作的設計規則、逐句映射表、可直接交接動畫／剪輯代理的提示詞，以及六支使用者提供影片的資料與觀察限制。
+- `SKILL.md` 將新參考文件接入主流程；`README.md` 更新目前版本與新功能摘要。
+
 格式參考 [Keep a Changelog](https://keepachangelog.com/)，版本號遵循 [SemVer](https://semver.org/)。
 
 ## [2.15.0] - 2026-10-22

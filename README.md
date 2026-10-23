@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.12.0（2026-10-21）
+**Version:** 2.16.0（2026-10-23）
+
+## 2.16.0：旁白驅動畫面設計
+
+新增 `references/narration-led-visuals.md`：將定稿旁白逐句映射成畫面目的、主視覺動作、關鍵詞落點、停留與轉場，並附可直接交接動畫／剪輯代理的提示詞。文件含六支使用者提供影片的來源資訊與證據限制；以取得字幕或實際播放觀察的片段做深入分析，其他影片只列已核實的頁面資訊。
 
 ## 2.12.0：九套擴充材質
 

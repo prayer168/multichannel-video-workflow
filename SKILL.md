@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.15.0（2026-10-22）。本版新增**去除摩擦聲／爆音檢核**：`scripts/build/narration_noise_check.py` 找出旁白中不在說話卻很大聲的短促雜音並可自動靜音；配音到齊與成片前各跑一次（`references/fixed-settings.md` 第一節）。
+目前版本：2.16.0（2026-10-23）。新增旁白驅動畫面設計參考：`references/narration-led-visuals.md`，說明如何從旁白語意選畫面、動作、鏡頭與節奏，附可直接交給動畫／剪輯代理的提示詞。
+
+2.15.0（2026-10-22）：新增**去除摩擦聲／爆音檢核**：`scripts/build/narration_noise_check.py` 找出旁白中不在說話卻很大聲的短促雜音並可自動靜音；配音到齊與成片前各跑一次（`references/fixed-settings.md` 第一節）。
 
 2.14.0（2026-10-22）：本版以《地球離太陽最近，為什麼是冬天？》完成動態圖文子技能第一支實作：Remotion／HyperFrames 同鏡實測（`motion-explainer-workflow/references/tool-choice.md`），並在 `references/fixed-settings.md` 加入「TTS 產生後用語音辨識核對」與「使用者不在時改用 make_narration.bat」。
 
@@ -48,6 +50,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。
 - `references/guided-production.md`：**逐步引導製作**——接受自訂或搜尋推薦題目，再選風格、形式與時長、確認故事腳本、代表預覽，最後製作。要求一起選擇或未提供完整製作需求時讀取；已明確授權自行完成時不增加逐關確認。
 - `references/ui-narration-animation.md`：**UI元件與旁白對齊**——狀態與動作逐句演出、持續角色與機構、木質程式模擬、左側放大講者、Flow回退及實際影格驗收；製作動畫講解時讀取。
+- `references/narration-led-visuals.md`：**旁白驅動畫面設計**——把旁白句意轉成可見的構圖、動作、轉場與節奏，含逐句映射表、來源影片觀察與可複製的交接提示詞；需要設計「旁白帶動畫」時讀取。
 - `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
 - `references/editing-workflow-methods.md`：**剪輯工作流銜接**——AI 輔助素材盤點與粗剪、分鏡與角色連續性、Remotion 動畫片段與 DaVinci 後製的分工及人工驗收；涉及大量素材、AI 時間軸剪輯或程式動畫時搭配 `video-editing-workflow/SKILL.md`。
 - `references/three-video-editing-analysis.md`：三份使用者提供逐字稿的證據摘要與時間碼；作為方法來源與限制紀錄，不當成工具能力或成效的獨立驗證。
