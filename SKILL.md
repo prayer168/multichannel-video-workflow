@@ -51,6 +51,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/guided-production.md`：**逐步引導製作**——接受自訂或搜尋推薦題目，再選風格、形式與時長、確認故事腳本、代表預覽，最後製作。要求一起選擇或未提供完整製作需求時讀取；已明確授權自行完成時不增加逐關確認。
 - `references/ui-narration-animation.md`：**UI元件與旁白對齊**——狀態與動作逐句演出、持續角色與機構、木質程式模擬、左側放大講者、Flow回退及實際影格驗收；製作動畫講解時讀取。
 - `references/narration-led-visuals.md`：**旁白驅動畫面設計**——把旁白句意轉成可見的構圖、動作、轉場與節奏，含逐句映射表、來源影片觀察與可複製的交接提示詞；需要設計「旁白帶動畫」時讀取。
+- `references/five-video-motion-analysis.md`：**五支參考影片的時間碼觀察**——對照實際抽看畫面與可用逐字稿，說明真實錄屏、概念圖與旁白落點如何配合，附擴充版製作提示詞；設計此類解說動畫時與上一份文件一併讀取。
 - `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
 - `references/editing-workflow-methods.md`：**剪輯工作流銜接**——AI 輔助素材盤點與粗剪、分鏡與角色連續性、Remotion 動畫片段與 DaVinci 後製的分工及人工驗收；涉及大量素材、AI 時間軸剪輯或程式動畫時搭配 `video-editing-workflow/SKILL.md`。
 - `references/three-video-editing-analysis.md`：三份使用者提供逐字稿的證據摘要與時間碼；作為方法來源與限制紀錄，不當成工具能力或成效的獨立驗證。
