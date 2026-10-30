@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.17.0] - 2026-10-30
+### Added
+- `scripts/build/voice_consistency_check.py`：聲線一致性檢核。逐句（`--timing` JSON 或 `--srt`）計算音高 F0（librosa.yin）、亮度（頻譜重心）、音色（MFCC 1–7）的穩健 z 分數，偏離分數 > 2.5 標記；`--joints` 把不同次產生的接縫前後句列入人工聆聽清單；`--offset` 換算成片時間；`--report` 輸出 Markdown、`--json` 機器可讀；有偏離句時回傳 1。
+### Changed
+- `references/fixed-settings.md` 第一節、`SKILL.md` 階段 6：配音到齊與成片前加做聲線一致性檢核；工具只負責篩選，聆聽清單交使用者確認，不一致就整幕重新產生，直到使用者確認一致。記錄限制：《免費 AI 大洗牌》使用者聽出的三處不一致，工具未標出。
+
 ## [2.16.0] - 2026-10-23
 ### Added
 - `references/narration-led-visuals.md`：旁白語意到畫面動作的設計規則、逐句映射表、可直接交接動畫／剪輯代理的提示詞，以及六支使用者提供影片的資料與觀察限制。

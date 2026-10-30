@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.16.0（2026-10-23）
+**Version:** 2.17.0（2026-10-30）
+
+## 2.17.0：聲線一致性檢核
+
+`scripts/build/voice_consistency_check.py` 逐句比對 Gemini 旁白的音高、亮度（頻譜重心）與音色（MFCC），標出偏離全片基準的句子，並把偏離句與不同次產生的接縫列成人工聆聽清單；是篩選工具，最後以使用者聆聽為準。
 
 ## 2.16.0：旁白驅動畫面設計
 
