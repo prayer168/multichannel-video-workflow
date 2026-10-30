@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.17.0（2026-10-30）。新增**聲線一致性檢核**：`scripts/build/voice_consistency_check.py` 逐句比對音高、亮度與音色，列出偏離句和不同次產生的接縫給使用者聆聽，不一致就整幕重做直到一致（`references/fixed-settings.md` 第一節）。
+目前版本：2.18.0（2026-10-31）。擴充**自然教室選題雷達**：除自然月曆外，每輪再檢查五類延伸題材——自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事；新增國際日／節慶月表、各類來源與查證規則（`profiles/blackbear-science.md`、`references/topic-radar.md`）。
+
+2.17.0（2026-10-30）：新增**聲線一致性檢核**：`scripts/build/voice_consistency_check.py` 逐句比對音高、亮度與音色，列出偏離句和不同次產生的接縫給使用者聆聽，不一致就整幕重做直到一致（`references/fixed-settings.md` 第一節）。
 
 2.16.0（2026-10-23）：新增旁白驅動畫面設計參考：`references/narration-led-visuals.md`，說明如何從旁白語意選畫面、動作、鏡頭與節奏，附可直接交給動畫／剪輯代理的提示詞。
 
@@ -40,7 +42,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/channel-routing.md`：頻道判定、共用規則與優先順序
 - `profiles/blackbear-science.md`：黑熊老師的自然教室受眾、選題、查證與品牌規則
 - `profiles/ai-watch.md`：AI 觀測站（AI Watch）受眾、選題、查證與品牌規則
-- `references/topic-radar.md`：選題雷達的來源清單、AI Watch 八類題材、需求端訊號、附加評分、量化來源備援、步驟與報告格式
+- `references/topic-radar.md`：選題雷達的來源清單、AI Watch 八類題材、自然教室五類延伸題材（節慶、天文大事、環境生態、最新研究、科學小故事）、需求端訊號、附加評分、量化來源備援、步驟與報告格式
 - `scripts/topic_radar.py`：抓 GitHub、Hugging Face、Hacker News 的熱度原始資料
 - `references/seo.md`：YouTube SEO 規範（關鍵字研究、標題、說明欄、章節、Hashtag、標籤、導流、發布後優化）
 - `scripts/seo_keywords.py`：YouTube 搜尋建議（需求）＋搜尋結果競爭分析（供給）
@@ -81,7 +83,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 0. 選題雷達（使用者還沒有確定題目時，一定要先做）
 先依頻道設定檔調整來源、題材範圍與候選評分；自然教室增加科學教育與課堂需求查證，AI 觀測站聚焦 AI／軟體／開源專案及可重現實測。詳細規範見 `references/topic-radar.md` 與對應頻道設定檔。步驟：
-1. AI Watch 執行 `python scripts/topic_radar.py --days 14 --out <工作區>/09_選題雷達/YYYY-MM-DD_raw.md`，取得 GitHub、Hugging Face、Hacker News 的量化熱度；輸出「抓取失敗」時依 `references/topic-radar.md`「量化來源備援」改在使用者電腦執行或以彙整來源補足，並在報告註明；自然教室以 `profiles/blackbear-science.md` 的自然月曆、時令與自然觀察、科學教育來源為主，不以各校教科書版本或教學進度表排序選題，只有相關時才把此腳本當補充資料。
+1. AI Watch 執行 `python scripts/topic_radar.py --days 14 --out <工作區>/09_選題雷達/YYYY-MM-DD_raw.md`，取得 GitHub、Hugging Face、Hacker News 的量化熱度；輸出「抓取失敗」時依 `references/topic-radar.md`「量化來源備援」改在使用者電腦執行或以彙整來源補足，並在報告註明；自然教室以 `profiles/blackbear-science.md` 的自然月曆、時令與自然觀察、科學教育來源為主，並檢查五類延伸題材（自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事），不以各校教科書版本或教學進度表排序選題，只有相關時才把此腳本當補充資料。
 2. 依 `references/topic-radar.md` 和所選頻道設定檔補齊網路搜尋；只搜尋與本頻道受眾和本集問題相關的來源類別，不必湊滿 AI Watch 八類，但廣泛掃描至少檢查價格與方案、安全與爭議、教育與教師應用三類；每筆另找需求端訊號。
 3. 去除雜訊，列出適量候選（廣泛趨勢掃描預設 15–25 筆；聚焦題目可更少），每一筆都附**來源連結與絕對日期**；不可以編造
 4. 重複檢查：對照本頻道影片和選題庫，再搜尋同類中文內容；只把 PAPAYA 電腦教室作為 AI／軟體教學的參考案例之一，不作為自然教室的競品或必查對象。

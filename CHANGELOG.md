@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.18.0] - 2026-10-31
+### Added
+- `profiles/blackbear-science.md`「自然教室五類延伸題材」：自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事；每類列出找什麼、常接系列、時效類型與查證重點。
+- `profiles/blackbear-science.md`「自然相關國際日與節慶」月表（日期每年選題當下重新核對）。
+- `references/topic-radar.md`：五類題材的時間窗、優先來源與「只當線索」來源表、執行步驟第 0 步，以及五類覆蓋、最新研究不誇大、小故事要可查三條品質規則。
+### Changed
+- 自然教室「每月節奏」：時令題可來自節慶或天文大事、長青題可為科學小故事；環境議題與最新研究可替換其中一支或做成 Shorts。
+- `SKILL.md` 階段 0 與參考文件說明同步加入五類題材。
+
 ## [2.17.0] - 2026-10-30
 ### Added
 - `scripts/build/voice_consistency_check.py`：聲線一致性檢核。逐句（`--timing` JSON 或 `--srt`）計算音高 F0（librosa.yin）、亮度（頻譜重心）、音色（MFCC 1–7）的穩健 z 分數，偏離分數 > 2.5 標記；`--joints` 把不同次產生的接縫前後句列入人工聆聽清單；`--offset` 換算成片時間；`--report` 輸出 Markdown、`--json` 機器可讀；有偏離句時回傳 1。

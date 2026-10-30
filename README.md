@@ -3,7 +3,21 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.17.0（2026-10-30）
+**Version:** 2.18.0（2026-10-31）
+
+## 2.18.0：自然教室選題雷達五類延伸題材
+
+「黑熊老師的自然教室」選題雷達除了自然月曆，每輪再檢查五類題材：
+
+| 類別 | 例子 |
+|---|---|
+| 🎐 自然科學相關節慶 | 中秋月亮、七夕織女星、世界濕地日、世界海洋日、黑琵保育季 |
+| 🔭 天文大事 | 日月食、流星雨、行星合月、彗星、太空任務 |
+| 🌏 環境生態最新議題 | 新種與新紀錄、外來種、珊瑚白化、保育成果 |
+| 🧪 自然科學相關最新研究 | 近 90 天能連到國小自然概念的新論文 |
+| 📚 有趣的自然科學小故事 | 科學史、生物奇聞、台灣自然史、迷思從哪裡來 |
+
+另加入自然相關國際日月表、各類優先來源與查證規則（研究回到原始論文、預印本標示、軼事至少一個可靠來源）。細節見 [profiles/blackbear-science.md](profiles/blackbear-science.md) 與 [references/topic-radar.md](references/topic-radar.md)。
 
 ## 2.17.0：聲線一致性檢核
 
@@ -333,6 +347,9 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.18.0 | 2026-10-31 | 自然教室選題雷達五類延伸題材：自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事；國際日月表、來源與查證規則 |
+| 2.17.0 | 2026-10-30 | 聲線一致性檢核：`voice_consistency_check.py` 逐句比對音高、亮度與音色，列出偏離句與接縫交使用者聆聽 |
+| 2.16.0 | 2026-10-23 | 旁白驅動畫面設計：`references/narration-led-visuals.md` 逐句映射畫面動作與交接提示詞 |
 | 2.15.0 | 2026-10-22 | 去除摩擦聲／爆音檢核：`narration_noise_check.py`，配音到齊與成片前必跑 |
 | 2.14.0 | 2026-10-22 | 動態圖文第一支實作（地球近日點）：Remotion／HyperFrames 同鏡實測與選用原則、實作經驗；TTS 產生後用語音辨識核對、使用者不在時改用 make_narration.bat |
 | 2.13.0 | 2026-10-21 | 新增子技能 motion-explainer-workflow（動態圖文；Remotion＋HyperFrames、Windows 安裝檔、preflight 環境檢查）；所有影片改為不燒錄字幕，只交付成片＋單行 SRT |
