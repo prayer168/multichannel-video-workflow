@@ -5,7 +5,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.20.0（2026-11-03）。新增 `motion-explainer-workflow/references/studio-style-production.md`，補足風格 brief、結構化分鏡、可重現時間軸、靜幀審查及成片驗收；只納入通用方法，不複製第三方程式或受限素材。
+目前版本：2.21.0（2026-11-03）。新增 `motion-explainer-workflow/references/motion-graphics-ecosystem.md`，收錄 25 個 Motion Graphics repo、用途、星數快照、授權檢核、安裝入口及選型路由；既有 Windows 安裝器仍只安裝已支援的 Remotion／HyperFrames，不自動安裝未選用的第三方專案。
 
 2.19.0（2026-11-03）：新增選用的音樂事件驅動 MV 流程：`references/music-video-workflow.md`，涵蓋音樂事件分析、歌詞語意分鏡、節拍卡點與成片驗收；不代表現有產生器已支援音樂分析。
 
@@ -60,6 +60,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/ui-narration-animation.md`：**UI元件與旁白對齊**——狀態與動作逐句演出、持續角色與機構、木質程式模擬、左側放大講者、Flow回退及實際影格驗收；製作動畫講解時讀取。
 - `references/narration-led-visuals.md`：**旁白驅動畫面設計**——把旁白句意轉成可見的構圖、動作、轉場與節奏，含逐句映射表、來源影片觀察與可複製的交接提示詞；需要設計「旁白帶動畫」時讀取。
 - `motion-explainer-workflow/references/studio-style-production.md`：**風格導向動態圖文製作**——簡短 brief、風格卡、結構化分鏡、可尋幀時間軸、依分鏡規模審靜幀及成片驗收；製作程式化動態圖文、動態標題卡、片頭或循環動畫時和動態圖文子技能一併讀取。
+- `motion-explainer-workflow/references/motion-graphics-ecosystem.md`：**25 個 Motion Graphics GitHub 專案目錄與整合選型**——星數快照、用途、安裝／參考方式、授權與維護注意事項；依畫面需求挑工具，不批次複製 repo 或混裝相依套件。
 - `references/music-video-workflow.md`：**音樂事件驅動的 MV 選用流程**——音樂／歌詞授權、節拍與人聲時間校準、歌詞語意分鏡、卡點表及成片驗收；製作音樂 MV、歌詞動畫或節拍同步視覺時讀取，並搭配 `video-editing-workflow/SKILL.md`。
 - `references/five-video-motion-analysis.md`：**五支參考影片的時間碼觀察**——對照實際抽看畫面與可用逐字稿，說明真實錄屏、概念圖與旁白落點如何配合，附擴充版製作提示詞；設計此類解說動畫時與上一份文件一併讀取。
 - `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
@@ -132,7 +133,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - 依 `references/style-guide.md`「觸動人心與留存的腳本規則」寫作：三拍開場、觀眾當主角、懸念並兌現、真實卡關、具體故事、`[節奏轉換]` 標註、情緒弧線、結尾回扣開場；寫完逐項核對自我檢查表。所有戲劇化設計都必須建立在真實成果與證據上。
 動畫解說採生活任務串聯，用角色反應說明概念，並標類比邊界；角色須有敘事功能，品牌黑熊沿用核定素材。尚未實測時，先寫成功／部分成功／失敗分支，配音前按證據只選一支；詳細流程見 `references/animation-handoff.md`。
 每一段標出 `[畫面：…]`、`[標註：…]`。寫完後附上依實際配音估計的時長與待查證清單。
-**動態圖文類影片**（畫面主要由程式產生的版面、卡片、圖表與攝影機運動構成）：腳本定稿後轉讀 `motion-explainer-workflow/SKILL.md`，以 `motion-explainer-workflow/references/studio-style-production.md` 建立 brief、風格卡、分鏡與靜幀覆蓋；配音、品牌與上架仍回本技能。
+**動態圖文類影片**（畫面主要由程式產生的版面、卡片、圖表與攝影機運動構成）：腳本定稿後轉讀 `motion-explainer-workflow/SKILL.md`，先依 `motion-explainer-workflow/references/motion-graphics-ecosystem.md` 選引擎，再以 `motion-explainer-workflow/references/studio-style-production.md` 建立 brief、風格卡、分鏡與靜幀覆蓋；配音、品牌與上架仍回本技能。
 
 ### 3.5 同步英文逐字稿（寫入 02_腳本_中英對照.md）
 是否需要英文逐字稿與字幕，依使用者要求及頻道設定檔決定；若需要，中文腳本定稿後產生：

@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.20.0（2026-11-03）
+**Version:** 2.21.0（2026-11-03）
+
+## 2.21.0：Motion Graphics 生態工具整合
+
+新增 `motion-explainer-workflow/references/motion-graphics-ecosystem.md`，把 25 個 GitHub 專案依星數列出，並整理各自用途、安裝入口、授權與維護注意事項，以及在動態圖文流程中的選型位置。它們包含桌面軟體、程式庫、框架與參考型工作流，不能當成 25 個共用套件一鍵安裝；既有 Windows 安裝器仍安裝 Remotion／HyperFrames，不會靜默下載其他第三方程式。
 
 ## 2.20.0：風格導向動態圖文製作方法
 
@@ -203,7 +207,7 @@
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；依內容調整節奏 |
 | 4.5 動畫與角色預覽 | 生活例子、原創配角、逐鏡動畫提示詞與多格場景預覽；核定黑熊角色保持原設定 |
 | 4.6 進階動畫模組 | 六材質、九模組、片頭變體提案、配置與驗收；獨立影片和插段分開；新渲染器待實作 |
-| 4.6.5 動態圖文 | 腳本定稿後，動態圖文類影片轉讀 `motion-explainer-workflow/SKILL.md` 與 `motion-explainer-workflow/references/studio-style-production.md`（brief、風格卡、分鏡、靜幀審查、Remotion／HyperFrames、實證比例） |
+| 4.6.5 動態圖文 | 腳本定稿後，動態圖文類影片轉讀 `motion-explainer-workflow/SKILL.md`、`references/motion-graphics-ecosystem.md` 與 `references/studio-style-production.md`（工具選型、brief、風格卡、分鏡、靜幀審查、實證比例） |
 | 4.7 剪輯工作流 | 另用 `video-editing-workflow/SKILL.md` 處理大量素材、AI 輔助粗剪、動畫／錄屏混剪和成片驗收；本技能傳遞故事、旁白、分鏡、品牌和素材來源 |
 | 5. 上架文案（SEO 版） | 依搜尋意圖與頻道語氣提出標題、說明欄、章節、Hashtag、標籤、需要時的英文文案、置頂留言與縮圖文案 |
 | 6. 配音 | TTS 友善稿、固定 Achird 聲線與 Style；核定黑熊主持人依配音對嘴 |
@@ -355,6 +359,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.21.0 | 2026-11-03 | 整合 25 個 Motion Graphics 開源／參考 repo：依星數列出用途、安裝入口、授權注意事項與動態圖文選型路由；不把不同類型專案混裝為共用相依套件 |
 | 2.20.0 | 2026-11-03 | 動態圖文加入風格 brief／風格卡／結構化分鏡／靜幀覆蓋與成片驗收方法；只採通用流程，不複製第三方程式或個人素材 |
 | 2.19.0 | 2026-11-03 | 新增選用音樂 MV 流程：音樂事件分析、歌詞語意分鏡、節拍卡點、同步驗收；明確標示工具查證與既有產生器界線 |
 | 2.18.0 | 2026-10-31 | 自然教室選題雷達五類延伸題材：自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事；國際日月表、來源與查證規則 |
@@ -397,6 +402,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.21.0：核對生態參考文件含 25 項且星數由高至低、主技能與動態圖文子技能均有路由、README 最近更新與摘要可見、README／SKILL.md／CHANGELOG.md／VERSION 版本一致；`git diff --check` 通過。只納入 repo 連結、用途與安裝／授權路由；未將 25 個第三方 repo 原始碼複製進技能，也未宣稱未安裝或未實測的工具已安裝／通過測試。
 
 2.20.0：核對動態圖文子技能與新增參考文件的路由、README 新版摘要與最近更新表，以及 README／SKILL.md／CHANGELOG.md／VERSION 版本一致；`git diff --check` 通過。此版僅新增製作方法文件，未複製第三方程式或素材，也未新增畫廊、轉接器或檢查程式。
 
