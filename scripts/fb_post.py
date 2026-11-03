@@ -1,11 +1,14 @@
-"""影片完成後的臉書宣傳套件：把 3_製作後/臉書宣傳/ 裡的中英文案做成「一鍵複製」頁
-用法：python fb_post.py <影片專案資料夾> [--channel blackbear-science|ai-watch] [--title 影片名稱] [--url YouTube網址]
+"""影片完成後的臉書宣傳套件：把 製作後/臉書宣傳/（舊配置：3_製作後/臉書宣傳/）裡的中英文案做成「一鍵複製」頁
+主影片與每支 Shorts 各跑一次（Shorts 的專案資料夾＝該支 02_Shorts_…/04_Shorts_… 資料夾）。
+用法：python fb_post.py <影片專案資料夾> [--channel blackbear-science|ai-watch] [--title 影片名稱] [--url YouTube網址] [--long-url 長片網址]
 輸入（AI 先寫好）：
   3_製作後/臉書宣傳/臉書文_中文.txt、臉書文_英文.txt（英文選用）
   3_製作後/臉書宣傳/臉書分享圖_1200x630.png（選用；貼文時當圖片上傳）
 輸出：
   3_製作後/臉書宣傳/facebook-post.html（中英雙語、「複製」「複製全部」按鈕；雙擊用瀏覽器開啟即可）
 --url：把文案裡的【YouTube 連結】／[YouTube link] 換成正式網址（.txt 另存新檔，不覆寫原稿）
+--long-url：Shorts 文案導回長片用，把【長片連結】／[Full video link] 換成長片網址（可與 --url 一起用）
+分享圖：橫式 臉書分享圖_1200x630.png 或直式 臉書分享圖_1080x1350.png（Shorts 用）擇一，有就顯示在複製頁
 """
 import argparse, html, os, sys
 sys.stdout.reconfigure(encoding="utf-8")
@@ -83,27 +86,33 @@ def free_path(p):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("project"); ap.add_argument("--title", default=None); ap.add_argument("--url", default=None)
+    ap.add_argument("--long-url", default=None, help="Shorts 文案中長片連結佔位字的替換網址")
     ap.add_argument("--channel", choices=["blackbear-science", "ai-watch"], default=None,
                     help="複製頁的頻道識別；未指定時使用中性頁尾")
     a = ap.parse_args()
-    d = os.path.join(os.path.abspath(a.project), "3_製作後", "臉書宣傳")
+    root = os.path.abspath(a.project)
+    d = os.path.join(root, "製作後", "臉書宣傳")
+    if not os.path.isdir(d) and os.path.isdir(os.path.join(root, "3_製作後", "臉書宣傳")):
+        d = os.path.join(root, "3_製作後", "臉書宣傳")
     zh = open(os.path.join(d, "臉書文_中文.txt"), encoding="utf-8-sig").read().strip()
     en_path = os.path.join(d, "臉書文_英文.txt")
     en = open(en_path, encoding="utf-8-sig").read().strip() if os.path.exists(en_path) else ""
-    if a.url:
-        zh, en = zh.replace("【YouTube 連結】", a.url), en.replace("[YouTube link]", a.url)
+    if a.url or a.long_url:
+        if a.url: zh, en = zh.replace("【YouTube 連結】", a.url), en.replace("[YouTube link]", a.url)
+        if a.long_url: zh, en = zh.replace("【長片連結】", a.long_url), en.replace("[Full video link]", a.long_url)
         for name, txt in (("臉書文_中文_含連結.txt", zh), ("臉書文_英文_含連結.txt", en)):
             if not txt: continue
             p = free_path(os.path.join(d, name)); open(p, "w", encoding="utf-8").write(txt + "\n"); print("另存：", p)
     title = a.title or os.path.basename(os.path.abspath(a.project))
-    cover = '<img class="cover" src="臉書分享圖_1200x630.png" alt="分享圖">' if os.path.exists(os.path.join(d, "臉書分享圖_1200x630.png")) else ""
+    img = next((n for n in ("臉書分享圖_1200x630.png", "臉書分享圖_1080x1350.png") if os.path.exists(os.path.join(d, n))), None)
+    cover = f'<img class="cover" src="{img}" alt="分享圖">' if img else ""
     out = os.path.join(d, "facebook-post.html")
-    if os.path.exists(out) and not a.url: out = free_path(out)
+    if os.path.exists(out) and not (a.url or a.long_url): out = free_path(out)
     channel = {"blackbear-science": "黑熊老師的自然教室", "ai-watch": "AI 觀測站（AI Watch）"}.get(a.channel, "影片宣傳")
     open(out, "w", encoding="utf-8").write(PAGE.format(title=html.escape(title), channel=html.escape(channel), cover=cover, zh=html.escape(zh), en=html.escape(en)))
     print("一鍵複製頁：", out)
-    left = [x for x in ("【YouTube 連結】", "[YouTube link]") if x in zh + en]
-    if left: print("提醒：文案裡還有連結佔位字", left, "→ 上傳 YouTube 後用 --url 重跑")
+    left = [x for x in ("【YouTube 連結】", "[YouTube link]", "【長片連結】", "[Full video link]") if x in zh + en]
+    if left: print("提醒：文案裡還有連結佔位字", left, "→ 上傳 YouTube 後用 --url（本片）／--long-url（長片）重跑")
 
 
 if __name__ == "__main__":

@@ -55,6 +55,24 @@ class FacebookPostTests(unittest.TestCase):
                 self.assertEqual(exported.read_text(encoding='utf-8').strip(), 'Watch https://youtu.be/example')
             self.assertNotIn('黑熊老師', (folder / 'facebook-post.html').read_text(encoding='utf-8'))
 
+    def test_shorts_new_layout_long_url_and_portrait_cover(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp) / '02_Shorts_測試'
+            folder = project / '製作後' / '臉書宣傳'
+            folder.mkdir(parents=True)
+            original = '短片【YouTube 連結】 完整版【長片連結】'
+            (folder / '臉書文_中文.txt').write_text(original, encoding='utf-8')
+            (folder / '臉書分享圖_1080x1350.png').write_bytes(b'png')
+            self.run_cli(project, '--channel', 'ai-watch')
+            page = (folder / 'facebook-post.html').read_text(encoding='utf-8')
+            self.assertIn('臉書分享圖_1080x1350.png', page)
+            self.run_cli(project, '--channel', 'ai-watch', '--url', 'https://youtu.be/short', '--long-url', 'https://youtu.be/long')
+            out = (folder / '臉書文_中文_含連結.txt').read_text(encoding='utf-8')
+            self.assertIn('https://youtu.be/short', out)
+            self.assertIn('https://youtu.be/long', out)
+            self.assertNotIn('【長片連結】', out)
+            self.assertEqual((folder / '臉書文_中文.txt').read_text(encoding='utf-8'), original)
+
 
 if __name__ == '__main__':
     unittest.main()

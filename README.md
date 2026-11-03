@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.23.0（2026-11-03）
+**Version:** 2.24.0（2026-11-03）
+
+## 2.24.0：Shorts 臉書宣傳文
+
+三支 Shorts 每支都產出自己的臉書宣傳套件（中文文案、直式 1080×1350 分享圖、一鍵複製頁），文案導回長片。`scripts/fb_post.py` 新增 `--long-url`、直式分享圖支援，並優先讀新配置 `製作後/臉書宣傳/`。（原 `feat/shorts-facebook-posts` 分支的 2.19.0，與主線合併後改編為 2.24.0。）
 
 ## 2.23.0：AI 程式動態圖形提示詞與迭代
 
@@ -367,6 +371,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.24.0 | 2026-11-03 | Shorts 臉書宣傳文：每支 Shorts 一套臉書文案、直式分享圖與複製頁；`fb_post.py` 支援 `--long-url`、直式分享圖與新資料夾配置 |
 | 2.23.0 | 2026-11-03 | AI 程式動態圖形與互動簡報：提示詞骨架、短片原型、具體迭代、配方轉移驗證、公平模型比較與正式 MP4 交接 |
 | 2.22.0 | 2026-11-03 | 安裝並整合兩個 Awesome AI Motion repo：作品／來源索引與動效卡／配方指南；加入本機 checkout 安裝腳本、工作流路由及素材授權界線 |
 | 2.21.0 | 2026-11-03 | 整合 25 個 Motion Graphics 開源／參考 repo：依星數列出用途、安裝入口、授權注意事項與動態圖文選型路由；不把不同類型專案混裝為共用相依套件 |

@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.24.0] - 2026-11-03
+### Added
+- Shorts 臉書宣傳文：三支 Shorts 每支各一套 `製作後/臉書宣傳/`（`臉書文_中文.txt`、直式 `臉書分享圖_1080x1350.png`、`facebook-post.html`），文案規格、分享圖裁切與發文建議寫入 `SKILL.md` 7.5。
+- `scripts/fb_post.py`：`--long-url` 替換【長片連結】／[Full video link]；複製頁支援直式分享圖 `臉書分享圖_1080x1350.png`。
+- `tests/test_fb_post.py`：Shorts 新配置、長片連結與直式分享圖的回歸測試。
+### Changed
+- `scripts/fb_post.py` 優先讀新配置 `製作後/臉書宣傳/`，找不到才用舊的 `3_製作後/臉書宣傳/`。
+- `references/project-layout.md`：每支 Shorts 的 `製作後/` 也列出 `臉書宣傳/`。
+- 版本號：此項原為 `feat/shorts-facebook-posts` 分支的 2.19.0，與主線 2.19.0–2.23.0 合併後改編為 2.24.0。
+
 ## [2.23.0] - 2026-11-03
 ### Added
 - `motion-explainer-workflow/references/code-motion-prompt-workflow.md`：整合影片示範的風格／技術／時間 prompt 結構、短片原型、可觀察問題迭代、專案配方跨題材驗證，以及模型公平比較方法。
