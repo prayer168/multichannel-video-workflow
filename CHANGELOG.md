@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.20.0] - 2026-11-03
+### Added
+- `motion-explainer-workflow/references/studio-style-production.md`：新增風格導向的動態圖文製作方法，涵蓋 brief、風格卡、結構化分鏡、同一時鐘／可尋幀時間軸、按分鏡規模審靜幀及成片驗收。
+- `motion-explainer-workflow/SKILL.md` 接入新參考，明確 3 張靜幀只適用短片代表審查，長片按分鏡覆蓋主要狀態。
+- 記錄來源 repo 的 MIT 程式／文件授權與 Harry 個人素材的保留權利；只吸收方法，不複製程式碼、畫廊、風格檔或個人素材。
+
 ## [2.19.0] - 2026-11-03
 ### Added
 - `references/music-video-workflow.md`：新增選用的音樂事件驅動 MV 流程，涵蓋音樂／歌詞授權、音軌與節拍資料、歌詞對齊、語意分鏡、卡點表、代表片段及成片驗收。
