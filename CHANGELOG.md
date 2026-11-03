@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.23.0] - 2026-11-03
+### Added
+- `motion-explainer-workflow/references/code-motion-prompt-workflow.md`：整合影片示範的風格／技術／時間 prompt 結構、短片原型、可觀察問題迭代、專案配方跨題材驗證，以及模型公平比較方法。
+- 主技能與動態圖文子技能加入 AI 程式動畫與互動簡報路由；明確 HTML 預覽不等同正式 MP4，成片仍回到 HyperFrames／Remotion、SRT、品牌與成片驗收流程。
+### Changed
+- 主版本升至 2.23.0，動態圖文子技能升至 0.6.0；不引入新套件、renderer 或未經重複驗證的模型效能結論。
+
 ## [2.22.0] - 2026-11-03
 ### Added
 - 安裝 `guanmo-ai/awesome-ai-motion` 與 `gongnyang/awesome-ai-motion` 至本機動態圖文工具資料夾；新增 `motion-explainer-workflow/scripts/install_motion_reference_repos.ps1`，存在非 Git 目標或不符 origin 時停止，不覆寫。

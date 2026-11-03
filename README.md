@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.22.0（2026-11-03）
+**Version:** 2.23.0（2026-11-03）
+
+## 2.23.0：AI 程式動態圖形提示詞與迭代
+
+新增 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`，把風格／技術／時間 prompt、5–10 秒隔離原型、可觀察問題迭代、專案配方跨題材驗證與模型公平比較接入製作流程。HTML 是互動預覽，不自動視為 MP4；正式影片仍由 HyperFrames／Remotion 匯出並走既有旁白、SRT、品牌和驗收。方法源自單一示範，模型差異未視為基準。
 
 ## 2.22.0：Awesome AI Motion 雙 repo 安裝與整合
 
@@ -211,7 +215,7 @@
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；依內容調整節奏 |
 | 4.5 動畫與角色預覽 | 生活例子、原創配角、逐鏡動畫提示詞與多格場景預覽；核定黑熊角色保持原設定 |
 | 4.6 進階動畫模組 | 六材質、九模組、片頭變體提案、配置與驗收；獨立影片和插段分開；新渲染器待實作 |
-| 4.6.5 動態圖文 | 腳本定稿後，動態圖文類影片轉讀 `motion-explainer-workflow/SKILL.md`、`references/awesome-ai-motion-integration.md`、`references/motion-graphics-ecosystem.md` 與 `references/studio-style-production.md`（作品參考、動效挑選、工具選型、brief、分鏡、靜幀審查與實證比例） |
+| 4.6.5 動態圖文 | 腳本定稿後，動態圖文類影片轉讀 `motion-explainer-workflow/SKILL.md`、`references/awesome-ai-motion-integration.md`、`references/motion-graphics-ecosystem.md`、`references/studio-style-production.md` 與 `references/code-motion-prompt-workflow.md`（作品參考、動效挑選、工具選型、prompt、原型迭代、分鏡、靜幀審查與實證比例） |
 | 4.7 剪輯工作流 | 另用 `video-editing-workflow/SKILL.md` 處理大量素材、AI 輔助粗剪、動畫／錄屏混剪和成片驗收；本技能傳遞故事、旁白、分鏡、品牌和素材來源 |
 | 5. 上架文案（SEO 版） | 依搜尋意圖與頻道語氣提出標題、說明欄、章節、Hashtag、標籤、需要時的英文文案、置頂留言與縮圖文案 |
 | 6. 配音 | TTS 友善稿、固定 Achird 聲線與 Style；核定黑熊主持人依配音對嘴 |
@@ -241,7 +245,7 @@
 multichannel-video-workflow/
 ├── SKILL.md                 技能主檔（工作流程 + 核心規則）
 ├── video-editing-workflow/SKILL.md  獨立剪輯技能（與企劃技能共用交接契約）
-├── motion-explainer-workflow/       動態圖文子技能（2.13.0）：SKILL.md、scripts/preflight.py、scripts/setup_windows.bat；references／template 依建置順序補上
+├── motion-explainer-workflow/       動態圖文子技能（目前 0.6.0）：SKILL.md、scripts/preflight.py、scripts/setup_windows.bat；references／template 依建置順序補上
 ├── README.md                本檔
 ├── CHANGELOG.md             版本紀錄（Keep a Changelog 格式）
 ├── History.md               開發歷程：每版的背景、實作案例與學到的事
@@ -363,6 +367,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.23.0 | 2026-11-03 | AI 程式動態圖形與互動簡報：提示詞骨架、短片原型、具體迭代、配方轉移驗證、公平模型比較與正式 MP4 交接 |
 | 2.22.0 | 2026-11-03 | 安裝並整合兩個 Awesome AI Motion repo：作品／來源索引與動效卡／配方指南；加入本機 checkout 安裝腳本、工作流路由及素材授權界線 |
 | 2.21.0 | 2026-11-03 | 整合 25 個 Motion Graphics 開源／參考 repo：依星數列出用途、安裝入口、授權注意事項與動態圖文選型路由；不把不同類型專案混裝為共用相依套件 |
 | 2.20.0 | 2026-11-03 | 動態圖文加入風格 brief／風格卡／結構化分鏡／靜幀覆蓋與成片驗收方法；只採通用流程，不複製第三方程式或個人素材 |
@@ -407,6 +412,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.23.0：核對 AI 動態圖形參考文件的來源、章節分析、雙技能路由、HTML／MP4 交付界線及模型比較限制；確認新文件與 README／SKILL.md／CHANGELOG.md／VERSION 的版本一致；檢查 `git diff --check`。未新增套件或 renderer；逐字稿包含平台自動轉錄，模型／功能描述按影片當時陳述記錄，不當作現行規格。
 
 2.22.0：核對雙 repo 路由、安裝路徑、LICENSE／第三方素材界線與 README／SKILL.md／CHANGELOG.md／VERSION 版本一致；`git diff --check` 通過；本機淺層 checkout 需完成後確認兩 repo 的 README、LICENSE 與提交識別。沒有複製第三方 repo 進主技能 repo，也沒有把範例宣稱為已在正式片中驗證。
 
