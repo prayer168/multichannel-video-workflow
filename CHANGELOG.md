@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.19.0] - 2026-11-03
+### Added
+- Shorts 臉書宣傳文：三支 Shorts 每支各一套 `製作後/臉書宣傳/`（`臉書文_中文.txt`、直式 `臉書分享圖_1080x1350.png`、`facebook-post.html`），文案規格、分享圖裁切與發文建議寫入 `SKILL.md` 7.5。
+- `scripts/fb_post.py`：`--long-url` 替換【長片連結】／[Full video link]；複製頁支援直式分享圖 `臉書分享圖_1080x1350.png`。
+- `tests/test_fb_post.py`：Shorts 新配置、長片連結與直式分享圖的回歸測試。
+### Changed
+- `scripts/fb_post.py` 優先讀新配置 `製作後/臉書宣傳/`，找不到才用舊的 `3_製作後/臉書宣傳/`。
+- `references/project-layout.md`：每支 Shorts 的 `製作後/` 也列出 `臉書宣傳/`。
+
 ## [2.18.0] - 2026-10-31
 ### Added
 - `profiles/blackbear-science.md`「自然教室五類延伸題材」：自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事；每類列出找什麼、常接系列、時效類型與查證重點。

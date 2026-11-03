@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.18.0（2026-10-31）
+**Version:** 2.19.0（2026-11-03）
+
+## 2.19.0：Shorts 臉書宣傳文
+
+三支 Shorts 每支都產出自己的臉書宣傳套件（中文文案、直式 1080×1350 分享圖、一鍵複製頁），文案導回長片。`scripts/fb_post.py` 新增 `--long-url`、直式分享圖支援，並優先讀新配置 `製作後/臉書宣傳/`。
 
 ## 2.18.0：自然教室選題雷達五類延伸題材
 
@@ -347,6 +351,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.19.0 | 2026-11-03 | Shorts 臉書宣傳文：每支 Shorts 一套臉書文案、直式分享圖與複製頁；`fb_post.py` 支援 `--long-url`、直式分享圖與新資料夾配置 |
 | 2.18.0 | 2026-10-31 | 自然教室選題雷達五類延伸題材：自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事；國際日月表、來源與查證規則 |
 | 2.17.0 | 2026-10-30 | 聲線一致性檢核：`voice_consistency_check.py` 逐句比對音高、亮度與音色，列出偏離句與接縫交使用者聆聽 |
 | 2.16.0 | 2026-10-23 | 旁白驅動畫面設計：`references/narration-led-visuals.md` 逐句映射畫面動作與交接提示詞 |
