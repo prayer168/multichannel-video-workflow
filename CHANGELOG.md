@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.22.0] - 2026-11-03
+### Added
+- 安裝 `guanmo-ai/awesome-ai-motion` 與 `gongnyang/awesome-ai-motion` 至本機動態圖文工具資料夾；新增 `motion-explainer-workflow/scripts/install_motion_reference_repos.ps1`，存在非 Git 目標或不符 origin 時停止，不覆寫。
+- `motion-explainer-workflow/references/awesome-ai-motion-integration.md`：定義作品索引、動效卡／配方、短片試作、正式 renderer 交接及素材授權流程。
+### Changed
+- 主技能與動態圖文子技能把雙 repo 接入動態分鏡的參考／選型步驟；主技能 repo 不 vendoring 上游作品、提示詞、影片或 source checkout。
+
 ## [2.21.0] - 2026-11-03
 ### Added
 - `motion-explainer-workflow/references/motion-graphics-ecosystem.md`：整理 25 個 Motion Graphics GitHub repo（依 2026-11-03 API 星數快照排序），含用途、工作流入口、安裝方式及授權／維護注意事項。

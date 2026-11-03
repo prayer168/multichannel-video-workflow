@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.21.0（2026-11-03）
+**Version:** 2.22.0（2026-11-03）
+
+## 2.22.0：Awesome AI Motion 雙 repo 安裝與整合
+
+安裝 `guanmo-ai/awesome-ai-motion` 作品索引與 `gongnyang/awesome-ai-motion` 動效卡／配方指南到 `%USERPROFILE%\AI-Video-Tools\motion-explainer\ecosystem\awesome-ai-motion\`。新增 `motion-explainer-workflow/scripts/install_motion_reference_repos.ps1` 與 `references/awesome-ai-motion-integration.md`：主影片流程可先查作品靈感，再查效果卡／配方並做獨立短片試作；第三方作品依原授權，不納入正式素材；上游 checkout 不複製進本 repo。
 
 ## 2.21.0：Motion Graphics 生態工具整合
 
@@ -207,7 +211,7 @@
 | 4. 分鏡 | 畫面類型、鏡頭推拉、網址標籤、TIP 角標、音效；依內容調整節奏 |
 | 4.5 動畫與角色預覽 | 生活例子、原創配角、逐鏡動畫提示詞與多格場景預覽；核定黑熊角色保持原設定 |
 | 4.6 進階動畫模組 | 六材質、九模組、片頭變體提案、配置與驗收；獨立影片和插段分開；新渲染器待實作 |
-| 4.6.5 動態圖文 | 腳本定稿後，動態圖文類影片轉讀 `motion-explainer-workflow/SKILL.md`、`references/motion-graphics-ecosystem.md` 與 `references/studio-style-production.md`（工具選型、brief、風格卡、分鏡、靜幀審查、實證比例） |
+| 4.6.5 動態圖文 | 腳本定稿後，動態圖文類影片轉讀 `motion-explainer-workflow/SKILL.md`、`references/awesome-ai-motion-integration.md`、`references/motion-graphics-ecosystem.md` 與 `references/studio-style-production.md`（作品參考、動效挑選、工具選型、brief、分鏡、靜幀審查與實證比例） |
 | 4.7 剪輯工作流 | 另用 `video-editing-workflow/SKILL.md` 處理大量素材、AI 輔助粗剪、動畫／錄屏混剪和成片驗收；本技能傳遞故事、旁白、分鏡、品牌和素材來源 |
 | 5. 上架文案（SEO 版） | 依搜尋意圖與頻道語氣提出標題、說明欄、章節、Hashtag、標籤、需要時的英文文案、置頂留言與縮圖文案 |
 | 6. 配音 | TTS 友善稿、固定 Achird 聲線與 Style；核定黑熊主持人依配音對嘴 |
@@ -359,6 +363,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.22.0 | 2026-11-03 | 安裝並整合兩個 Awesome AI Motion repo：作品／來源索引與動效卡／配方指南；加入本機 checkout 安裝腳本、工作流路由及素材授權界線 |
 | 2.21.0 | 2026-11-03 | 整合 25 個 Motion Graphics 開源／參考 repo：依星數列出用途、安裝入口、授權注意事項與動態圖文選型路由；不把不同類型專案混裝為共用相依套件 |
 | 2.20.0 | 2026-11-03 | 動態圖文加入風格 brief／風格卡／結構化分鏡／靜幀覆蓋與成片驗收方法；只採通用流程，不複製第三方程式或個人素材 |
 | 2.19.0 | 2026-11-03 | 新增選用音樂 MV 流程：音樂事件分析、歌詞語意分鏡、節拍卡點、同步驗收；明確標示工具查證與既有產生器界線 |
@@ -402,6 +407,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.22.0：核對雙 repo 路由、安裝路徑、LICENSE／第三方素材界線與 README／SKILL.md／CHANGELOG.md／VERSION 版本一致；`git diff --check` 通過；本機淺層 checkout 需完成後確認兩 repo 的 README、LICENSE 與提交識別。沒有複製第三方 repo 進主技能 repo，也沒有把範例宣稱為已在正式片中驗證。
 
 2.21.0：核對生態參考文件含 25 項且星數由高至低、主技能與動態圖文子技能均有路由、README 最近更新與摘要可見、README／SKILL.md／CHANGELOG.md／VERSION 版本一致；`git diff --check` 通過。只納入 repo 連結、用途與安裝／授權路由；未將 25 個第三方 repo 原始碼複製進技能，也未宣稱未安裝或未實測的工具已安裝／通過測試。
 

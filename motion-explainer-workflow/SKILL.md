@@ -5,7 +5,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 # 動態圖文剪輯工作流（motion-explainer-workflow）
 
-版本 0.4.0（2026-11-03）。新增 `references/motion-graphics-ecosystem.md`，把 25 個 GitHub 專案接入動態分鏡選型、安裝路由與授權檢查；不把桌面應用、框架、程式庫和參考型技能混為單一安裝包。Windows 安裝器仍只安裝本流程支援的 Remotion／HyperFrames；選用其他工具後才依官方方式安裝並試作。另保留 `references/studio-style-production.md` 的 brief、STYLE_CARD、結構化分鏡、可重現時間軸、靜幀審查與成片驗收規則。相關畫廊、分鏡轉接器或檢查程式尚未建立，不得假裝已存在。
+版本 0.5.0（2026-11-03）。安裝並整合 `guanmo-ai/awesome-ai-motion`（作品與來源索引）及 `gongnyang/awesome-ai-motion`（動效卡、配方、Codex skill、短片 renderer），新增 `references/awesome-ai-motion-integration.md` 與安全的 Windows clone 腳本。兩份上游 checkout 存放於本機工具資料夾而非技能 repo；第三方作品及 bundled assets 仍依原授權處理。保留 `references/motion-graphics-ecosystem.md` 的 25 repo 選型，以及 `references/studio-style-production.md` 的 brief、STYLE_CARD、分鏡、時間軸、靜幀審查與成片驗收規則。未實測的效果不標為正式渲染器或已驗證。
 
 ## 分工
 
@@ -21,10 +21,12 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 - `../profiles/blackbear-science.md`、`../profiles/ai-watch.md`：頻道受眾、語氣、查證與品牌
 - `../references/subtitle-style.md`：字幕軌斷句與字幕安全區
 - `references/motion-graphics-ecosystem.md`：25 個 Motion Graphics repo 的用途、排序星數快照、選型／安裝方式及授權注意事項
+- `references/awesome-ai-motion-integration.md`：雙 repo 的本機安裝位置、作品檢索、動效卡／配方查找、短片試作與授權邊界
+- `scripts/install_motion_reference_repos.ps1`：Windows 淺層 clone 安裝腳本；預設放在 `AI-Video-Tools\motion-explainer\ecosystem\awesome-ai-motion\`，保留既有 checkout，不覆寫非 Git 資料夾
 
 ## 什麼時候用
 
-主技能階段 3 腳本定稿、且影片形式是動態圖文（畫面主要由程式產生的版面、卡片、圖表與攝影機運動構成）時轉來本技能。先讀 `references/motion-graphics-ecosystem.md`，按分鏡需求從現有 HyperFrames／Remotion 與可選 2D／3D／科學動畫工具中選擇，不要為了使用工具而增加不必要的渲染引擎。以下情況不用：整支是實拍或錄屏（用 `video-editing-workflow`）、只需要 `build.py` 現有圖卡就能完成（留在主技能）。
+主技能階段 3 腳本定稿、且影片形式是動態圖文（畫面主要由程式產生的版面、卡片、圖表與攝影機運動構成）時轉來本技能。先依 `references/awesome-ai-motion-integration.md` 用 guanmo-ai 找參考、用 gongnyang 查動效與配方，再讀 `references/motion-graphics-ecosystem.md` 按需求從 HyperFrames／Remotion 與可選 2D／3D／科學動畫工具中選渲染器；不可為了使用工具增加不必要的渲染引擎。以下情況不用：整支是實拍或錄屏（用 `video-editing-workflow`）、只需要 `build.py` 現有圖卡就能完成（留在主技能）。
 
 ## 固定原則
 
@@ -67,7 +69,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 ## 安裝與環境檢查
 
-目前確認可由本技能 Windows 安裝流程安裝的是 Remotion 與 HyperFrames。其他 23 個專案依 `references/motion-graphics-ecosystem.md` 的「安裝與引入規則」逐項評估，不會由安裝器靜默下載或加入共用相依套件。選用新的影片引擎後，先建立隔離試作目錄，跑 5–10 秒中文樣片並檢查字型、幀率、音訊、透明背景與可重現性；通過後才寫入該專案的 `tool-choice.md` 實測紀錄。
+本機參考庫由 `scripts/install_motion_reference_repos.ps1` 安裝，分別是 guanmo-ai 作品索引與 gongnyang 動效指南／Codex skill；安裝位置、用法與授權界線見 `references/awesome-ai-motion-integration.md`。兩 repo 不複製進本技能 Git repo。可由本技能 Windows 安裝流程安裝的影片渲染器仍是 Remotion 與 HyperFrames。其餘工具依 `references/motion-graphics-ecosystem.md` 評估，不會靜默加入共用相依套件。選用新的 renderer 後，先建立隔離試作目錄，跑 5–10 秒中文樣片並檢查字型、幀率、音訊、透明背景與可重現性；通過後才寫入 `tool-choice.md` 實測紀錄。
 
 - Windows 一次安裝：把 `scripts/setup_windows.bat` 雙擊執行（或在 repo 內直接執行）。它會檢查 Node（需 22 以上）與 FFmpeg、在 `AI-Video-Tools\motion-explainer\remotion` 執行 `npm install`、為 HyperFrames 安裝無頭 Chrome（`npx hyperframes browser ensure`）、選擇性安裝 HyperFrames 的 Claude Code 外掛，最後跑 preflight 並寫入 `安裝紀錄.log`。
 - 檢查：`python scripts/preflight.py [--root <motion-explainer 資料夾>] [--json]`。檢查 Node、FFmpeg、中文字體、Remotion 專案與 HyperFrames；缺必要項目時回傳非 0。
@@ -121,6 +123,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 | `scripts/still_strip.py`、`contact_sheet.py`、`references/still-strip-review.md`、`sample-library.md`、`motion-vocabulary.md` | 第 3 步待建 |
 | `references/tool-choice.md`（Remotion 與 HyperFrames 同鏡比較） | 第 4 步完成（2026-10-22） |
 | `references/motion-graphics-ecosystem.md`（25 個 Motion Graphics 專案目錄與整合路由） | 第 6 步完成（2026-11-03；repo 清單研究，未代表其餘工具已安裝或實測） |
+| `references/awesome-ai-motion-integration.md`、`scripts/install_motion_reference_repos.ps1`（雙 repo 安裝與使用路由） | 第 7 步完成（2026-11-03；本機 checkout 安裝，效果未逐項實測） |
 | `template/remotion/`、`template/hyperframes/`、`scripts/evidence_check.py` | 第 5 步待建 |
 
 ## 參考來源
