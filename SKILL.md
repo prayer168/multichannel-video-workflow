@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.24.0（2026-11-03）。新增 **Shorts 臉書宣傳文**：三支 Shorts 每支都要有自己的臉書宣傳套件（`製作後/臉書宣傳/`：中文文案、直式分享圖 1080×1350、一鍵複製頁），文案導回長片；`fb_post.py` 支援新資料夾配置、`--long-url` 與直式分享圖，詳見階段 7.5。
+目前版本：2.25.0（2026-11-03）。**黑熊老師聲線定案**：Achird＋Style 語速改為 270～290 字／分，由模型直接講快、禁止事後拉速；新增核定參考樣本與量測範圍（`references/fixed-settings.md` 第一節「聲線定案與參考樣本」、`assets/brand-approved/v1/blackbear-science/voice/`）。
+
+2.24.0（2026-11-03）：新增 **Shorts 臉書宣傳文**：三支 Shorts 每支都要有自己的臉書宣傳套件（`製作後/臉書宣傳/`：中文文案、直式分享圖 1080×1350、一鍵複製頁），文案導回長片；`fb_post.py` 支援新資料夾配置、`--long-url` 與直式分享圖，詳見階段 7.5。
 
 2.23.0（2026-11-03）：新增 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`，把 AI 程式動態圖形提示詞、短片原型、具體迭代、專案配方轉用測試及正式渲染交接接入動態圖文製作；模型比較視為需重複驗證的實驗，不把單次展示當成效能基準。
 
@@ -177,7 +179,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 6. 配音稿
 一律依 `references/fixed-settings.md`：**AI Studio 產生與下載 WAV 一律由 AI 操作**（選 Achird、貼 Style、Run、下載、在使用者電腦確認檔案、改名 `Sxx-Syy.wav` 歸檔），不請使用者手動下載。正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/make_narration.py`、`make_narration.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
-**配音到齊後必做兩項檢核**（`references/fixed-settings.md` 第一節）：① `scripts/build/narration_noise_check.py` 去除摩擦聲／爆音（Gemini WAV 檔尾常有比人聲還大的短爆音），修到「摩擦／爆音」0 處；② 長度異常時用語音辨識核對是否離稿；③ `scripts/build/voice_consistency_check.py` 聲線一致性檢核（2.17.0），偏離句與接縫列成聆聽清單交給使用者確認，不一致就整幕重做直到一致。成片輸出前再對最終旁白軌跑一次 ① 和 ③。
+**配音到齊後先跟核定聲線比聽**（`assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3`；語速不足時改 Style 重新產生，不可事後拉速）。**配音到齊後必做兩項檢核**（`references/fixed-settings.md` 第一節）：① `scripts/build/narration_noise_check.py` 去除摩擦聲／爆音（Gemini WAV 檔尾常有比人聲還大的短爆音），修到「摩擦／爆音」0 處；② 長度異常時用語音辨識核對是否離稿；③ `scripts/build/voice_consistency_check.py` 聲線一致性檢核（2.17.0），偏離句與接縫列成聆聽清單交給使用者確認，不一致就整幕重做直到一致。成片輸出前再對最終旁白軌跑一次 ① 和 ③。
 
 ### 7. 剪輯指示與發布檢查
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。

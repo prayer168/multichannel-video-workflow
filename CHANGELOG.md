@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.25.0] - 2026-11-03
+### Added
+- `assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3`（＋README）：使用者核定的黑熊老師聲線參考樣本（《黑面琵鷺為什麼選台南過冬》S01，33 秒，未後製）。
+- `references/fixed-settings.md` 第一節「聲線定案與參考樣本」：定案組合、量測範圍（語速 265～305、音高約 120～145 Hz、亮度約 1200～1560）、禁止事後拉速的踩坑紀錄、AI Studio 貼稿罕用字檢查、多個 Chrome 時的下載確認。
+### Changed
+- `references/fixed-settings.md`：語速由每分鐘 240～260 字改為 270～290 字；固定 Style 的語速句改為「語速稍快、輕快有精神（每分鐘約 270 到 290 字）」。
+- `SKILL.md` 階段 6：配音到齊後先與核定聲線比聽；語速不足時改 Style 重新產生，不可事後拉速。
+
 ## [2.24.0] - 2026-11-03
 ### Added
 - Shorts 臉書宣傳文：三支 Shorts 每支各一套 `製作後/臉書宣傳/`（`臉書文_中文.txt`、直式 `臉書分享圖_1080x1350.png`、`facebook-post.html`），文案規格、分享圖裁切與發文建議寫入 `SKILL.md` 7.5。

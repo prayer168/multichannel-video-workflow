@@ -3,7 +3,15 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.24.0（2026-11-03）
+**Version:** 2.25.0（2026-11-03）
+
+## 2.25.0：黑熊老師聲線定案
+
+- 固定組合：`gemini-3.8-flash-tts`＋Achird＋固定 Style，Style 的語速改為**每分鐘約 270～290 字**（比舊的 240～260 快約 10–15%）。
+- **禁止事後拉速**：用 rubberband 拉快 12～15% 雖然音高不變，亮度卻升高 8～13%，使用者聽出「不是黑熊老師的聲線」；改在 Style 寫語速讓模型直接講快。
+- 新增核定參考樣本 `assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3` 與量測範圍（音高約 120～145 Hz、亮度約 1200～1560），新片配音先比聽再檢核。
+
+細節見 [references/fixed-settings.md](references/fixed-settings.md) 第一節。
 
 ## 2.24.0：Shorts 臉書宣傳文
 
@@ -371,6 +379,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.25.0 | 2026-11-03 | 黑熊老師聲線定案：Achird＋Style 語速 270～290 字／分、禁止事後拉速、核定參考樣本與量測範圍 |
 | 2.24.0 | 2026-11-03 | Shorts 臉書宣傳文：每支 Shorts 一套臉書文案、直式分享圖與複製頁；`fb_post.py` 支援 `--long-url`、直式分享圖與新資料夾配置 |
 | 2.23.0 | 2026-11-03 | AI 程式動態圖形與互動簡報：提示詞骨架、短片原型、具體迭代、配方轉移驗證、公平模型比較與正式 MP4 交接 |
 | 2.22.0 | 2026-11-03 | 安裝並整合兩個 Awesome AI Motion repo：作品／來源索引與動效卡／配方指南；加入本機 checkout 安裝腳本、工作流路由及素材授權界線 |
