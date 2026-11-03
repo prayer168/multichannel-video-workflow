@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.18.0（2026-10-31）
+**Version:** 2.19.0（2026-11-03）
+
+## 2.19.0：音樂事件驅動的 MV 選用流程
+
+新增 `references/music-video-workflow.md`，將音樂 MV 的音樂事件分析、歌詞語意分鏡、節拍卡點、代表片段與成片驗收接入技能。這是只在音樂 MV／歌詞動畫等需求下啟用的分支；一般教學片仍使用既有旁白、配樂與剪輯流程。文件明確標示第三方工具細節需重新查證，且現有 `build.py` 尚未實作音樂分析。
 
 ## 2.18.0：自然教室選題雷達五類延伸題材
 
@@ -347,6 +351,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.19.0 | 2026-11-03 | 新增選用音樂 MV 流程：音樂事件分析、歌詞語意分鏡、節拍卡點、同步驗收；明確標示工具查證與既有產生器界線 |
 | 2.18.0 | 2026-10-31 | 自然教室選題雷達五類延伸題材：自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事；國際日月表、來源與查證規則 |
 | 2.17.0 | 2026-10-30 | 聲線一致性檢核：`voice_consistency_check.py` 逐句比對音高、亮度與音色，列出偏離句與接縫交使用者聆聽 |
 | 2.16.0 | 2026-10-23 | 旁白驅動畫面設計：`references/narration-led-visuals.md` 逐句映射畫面動作與交接提示詞 |
@@ -387,6 +392,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.19.0：核對 `music-video-workflow.md`、SKILL.md 路由、README 新版摘要與更新表，以及 README／SKILL.md／CHANGELOG.md／VERSION 版本一致；`git diff --check` 通過。此版只新增規劃與驗收文件，未新增音訊分析程式、第三方依賴或渲染器，尚未製作完整 MV 實測。
 
 2.12.0：核對 advanced-animation.md 4.1、guided-production.md 階段 3 與 README 的材質清單一致，以及 README／SKILL.md／CHANGELOG.md／VERSION 版本；`git diff --check` 通過。九套擴充材質只有文字規格，尚未產生代表預覽或渲染測試。
 
