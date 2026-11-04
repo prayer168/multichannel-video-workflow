@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.26.0] - 2026-11-04
+### Added
+- `references/image-led-motion-graphics.md`：定義所有影片的旁白逐句視覺覆蓋、避免長段純文字／數字動畫、照片／地圖運鏡、遷徙路線、部位標註不遮主體，以及素材授權與示意合成標示。
+- 將黑面琵鷺畫面作為通用範例，加入區域遷徙圖、照片部位引線、地點推近和河口示意合成的分鏡映射與交接提示詞；不把範例中的事實當作已查證結論。
+### Changed
+- 主技能與動態圖文子技能預設讀取新視覺規格，涵蓋全片旁白至結尾，支持 Remotion、HyperFrames、Python 或其他可重現程式工具。
+
 ## [2.25.0] - 2026-11-03
 ### Added
 - `assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3`（＋README）：使用者核定的黑熊老師聲線參考樣本（《黑面琵鷺為什麼選台南過冬》S01，33 秒，未後製）。

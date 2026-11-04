@@ -1,11 +1,13 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.25.0（2026-11-03）。**黑熊老師聲線定案**：Achird＋Style 語速改為 270～290 字／分，由模型直接講快、禁止事後拉速；新增核定參考樣本與量測範圍（`references/fixed-settings.md` 第一節「聲線定案與參考樣本」、`assets/brand-approved/v1/blackbear-science/voice/`）。
+目前版本：2.26.0（2026-11-04）。**旁白完整視覺覆蓋定案**：全片依旁白逐句安排具體畫面，圖片、地圖、實物、UI、程式圖解與有目的的推拉平移共同承載內容，不以長段純文字／數字動畫代替；部位標示不遮主體，示意合成清楚標示。詳見 `references/image-led-motion-graphics.md`。
+
+2.25.0（2026-11-03）：**黑熊老師聲線定案**：Achird＋Style 語速改為 270～290 字／分，由模型直接講快、禁止事後拉速；新增核定參考樣本與量測範圍（`references/fixed-settings.md` 第一節「聲線定案與參考樣本」、`assets/brand-approved/v1/blackbear-science/voice/`）。
 
 2.24.0（2026-11-03）：新增 **Shorts 臉書宣傳文**：三支 Shorts 每支都要有自己的臉書宣傳套件（`製作後/臉書宣傳/`：中文文案、直式分享圖 1080×1350、一鍵複製頁），文案導回長片；`fb_post.py` 支援新資料夾配置、`--long-url` 與直式分享圖，詳見階段 7.5。
 
@@ -62,6 +64,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。
 - `references/guided-production.md`：**逐步引導製作**——接受自訂或搜尋推薦題目，再選風格、形式與時長、確認故事腳本、代表預覽，最後製作。要求一起選擇或未提供完整製作需求時讀取；已明確授權自行完成時不增加逐關確認。
 - `references/ui-narration-animation.md`：**UI元件與旁白對齊**——狀態與動作逐句演出、持續角色與機構、木質程式模擬、左側放大講者、Flow回退及實際影格驗收；製作動畫講解時讀取。
+- `references/image-led-motion-graphics.md`：**旁白完整視覺覆蓋與圖片／地圖動態圖文**——逐句畫面承載、照片／地圖推拉平移、遷徙路線、部位引線、授權記錄與示意合成標示；所有影片製作均適用。
 - `references/narration-led-visuals.md`：**旁白驅動畫面設計**——把旁白句意轉成可見的構圖、動作、轉場與節奏，含逐句映射表、來源影片觀察與可複製的交接提示詞；需要設計「旁白帶動畫」時讀取。
 - `motion-explainer-workflow/references/studio-style-production.md`：**風格導向動態圖文製作**——簡短 brief、風格卡、結構化分鏡、可尋幀時間軸、依分鏡規模審靜幀及成片驗收；製作程式化動態圖文、動態標題卡、片頭或循環動畫時和動態圖文子技能一併讀取。
 - `motion-explainer-workflow/references/motion-graphics-ecosystem.md`：**25 個 Motion Graphics GitHub 專案目錄與整合選型**——星數快照、用途、安裝／參考方式、授權與維護注意事項；依畫面需求挑工具，不批次複製 repo 或混裝相依套件。
@@ -151,7 +154,8 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 字幕階段：由 `字幕/字幕_zh-TW.srt` 產生 `字幕/字幕_en.srt`（序號與時間碼完全不變）；另外輸出純文字 `製作後/英文逐字稿.txt`。英文標題與說明欄（選用）見 references/prompts.md。
 
 ### 4. 分鏡與素材清單（寫入 03_分鏡表.md）
-欄位：# | 時間 | 旁白 | 畫面類型 | 內容 | 鏡頭 | 標註 | 音效
+所有影片分鏡都必須讀 `references/image-led-motion-graphics.md`，將完整旁白逐句映射至主體／地點、實際畫面、視覺動作、素材來源、標註和驗收點；從開場到旁白結尾均要有具體視覺承載物，不能用長段純文字卡或數字動畫代替內容。可用實拍、授權照片、地圖、真實 UI、程式圖解、角色／插畫和有目的的推拉／平移／切換，依旁白選擇媒材；運鏡與標註不能遮住主體或字幕，示意合成要明確標示。
+欄位：# | 時間 | 旁白句 ID／內容 | 畫面類型與素材來源 | 畫面目的／主體 | 主視覺動作 | 鏡頭 | 標註與字幕安全 | 實證／示意 | 音效 | 驗收
 以理解為目的檢查節奏；40 秒是可選檢視提示，不應干擾持續觀察或必要實驗步驟。最後列出要錄的畫面、要生成的插畫（附英文提示詞）、要找的 B-roll。
 
 ### 4.5 動畫提示詞與角色預覽

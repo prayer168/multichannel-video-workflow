@@ -5,7 +5,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 # 動態圖文剪輯工作流（motion-explainer-workflow）
 
-版本 0.6.0（2026-11-03）。安裝並整合 `guanmo-ai/awesome-ai-motion`（作品與來源索引）及 `gongnyang/awesome-ai-motion`（動效卡、配方、Codex skill、短片 renderer），新增 `references/awesome-ai-motion-integration.md` 與安全的 Windows clone 腳本。兩份上游 checkout 存放於本機工具資料夾而非技能 repo；第三方作品及 bundled assets 仍依原授權處理。新增 `references/code-motion-prompt-workflow.md`：提示詞三元素、隔離短片原型、可觀察問題迭代、專案配方的跨題材驗證、模型公平比較，以及 HTML 預覽與 MP4 正式交付的界線。保留 `references/motion-graphics-ecosystem.md` 的 25 repo 選型，以及 `references/studio-style-production.md` 的 brief、STYLE_CARD、分鏡、時間軸、靜幀審查與成片驗收規則。未實測的效果不標為正式渲染器或已驗證。
+版本 0.7.0（2026-11-04）。安裝並整合 `guanmo-ai/awesome-ai-motion`（作品與來源索引）及 `gongnyang/awesome-ai-motion`（動效卡、配方、Codex skill、短片 renderer），新增 `references/awesome-ai-motion-integration.md` 與安全的 Windows clone 腳本。兩份上游 checkout 存放於本機工具資料夾而非技能 repo；第三方作品及 bundled assets 仍依原授權處理。新增 `references/code-motion-prompt-workflow.md`：提示詞三元素、隔離短片原型、可觀察問題迭代、專案配方的跨題材驗證、模型公平比較，以及 HTML 預覽與 MP4 正式交付的界線。全片畫面依核定旁白逐句覆蓋，圖片／地圖運鏡、地理路徑、部位引線、授權與示意標示另依主技能 `../references/image-led-motion-graphics.md`。保留 `references/motion-graphics-ecosystem.md` 的 25 repo 選型，以及 `references/studio-style-production.md` 的 brief、STYLE_CARD、分鏡、時間軸、靜幀審查與成片驗收規則。未實測的效果不標為正式渲染器或已驗證。
 
 ## 分工
 
@@ -27,7 +27,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 ## 什麼時候用
 
-主技能階段 3 腳本定稿、且影片形式是動態圖文（畫面主要由程式產生的版面、卡片、圖表與攝影機運動構成）時轉來本技能。先依 `references/awesome-ai-motion-integration.md` 用 guanmo-ai 找參考、用 gongnyang 查動效與配方，遇到 AI 程式動畫或互動簡報時依 `references/code-motion-prompt-workflow.md` 建 brief、做隔離原型並驗證配方；再讀 `references/motion-graphics-ecosystem.md` 按需求從 HyperFrames／Remotion 與可選 2D／3D／科學動畫工具中選渲染器；不可為了使用工具增加不必要的渲染引擎。以下情況不用：整支是實拍或錄屏（用 `video-editing-workflow`）、只需要 `build.py` 現有圖卡就能完成（留在主技能）。
+主技能階段 3 腳本定稿後，依主技能 `../references/image-led-motion-graphics.md` 先確保每句旁白都有具體畫面；且影片形式是動態圖文（畫面主要由程式產生的版面、卡片、圖表與攝影機運動構成）時轉來本技能。先依 `references/awesome-ai-motion-integration.md` 用 guanmo-ai 找參考、用 gongnyang 查動效與配方，遇到 AI 程式動畫或互動簡報時依 `references/code-motion-prompt-workflow.md` 建 brief、做隔離原型並驗證配方；再讀 `references/motion-graphics-ecosystem.md` 按需求從 HyperFrames／Remotion 與可選 2D／3D／科學動畫工具中選渲染器；不可為了使用工具增加不必要的渲染引擎。以下情況不用：整支是實拍或錄屏（用 `video-editing-workflow`）、只需要 `build.py` 現有圖卡就能完成（留在主技能）。
 
 ## 固定原則
 
@@ -55,7 +55,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 7. **成片前聲音檢核**：對最終旁白總軌再跑一次去除摩擦聲檢核，並抽聽每段配音的接縫（段落結尾＋下一段開頭）。
 8. **交回主技能**：成片（不含字幕）＋單行 SRT＋分鏡表＋實證比例紀錄，由主技能接片頭片尾、講課角色、上架。
 
-AI 程式動畫的提示詞與迭代流程見 `references/code-motion-prompt-workflow.md`；細化 brief、風格卡、分鏡欄位、靜幀覆蓋和驗收方式時，讀 `references/studio-style-production.md`。這份參考把固定「三張靜幀」調整為按影片長度與分鏡覆蓋：短片可用三張代表幀，較長內容需檢查每段主要狀態。
+AI 程式動畫的提示詞與迭代流程見 `references/code-motion-prompt-workflow.md`；所有動態圖文需逐句對齊旁白並讓照片／地圖參與敘事；標註和示意規則見主技能 `../references/image-led-motion-graphics.md`。細化 brief、風格卡、分鏡欄位、靜幀覆蓋和驗收方式時，讀 `references/studio-style-production.md`。這份參考把固定「三張靜幀」調整為按影片長度與分鏡覆蓋：短片可用三張代表幀，較長內容需檢查每段主要狀態。
 
 ## 渲染工具
 
