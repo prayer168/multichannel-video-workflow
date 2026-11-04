@@ -1,0 +1,11 @@
+{
+  "batch_id": "主題名稱",
+  "channel": {"name": "黑熊老師的自然教室", "youtube_channel_id": null},
+  "visibility": "public",
+  "items": [
+    {"id": "long", "kind": "long", "video": "01_主影片/製作後/正式版.mp4", "copy": "01_主影片/製作後/上架文案.txt", "thumbnail": "01_主影片/製作後/縮圖.jpg", "subtitles": [{"language": "zh-TW", "path": "01_主影片/製作後/字幕/字幕_zh-TW_單行.srt"}], "made_for_kids": null, "altered_content": null},
+    {"id": "short-1", "kind": "short", "video": "02_Shorts_名稱/製作後/正式版.mp4", "copy": "02_Shorts_名稱/製作後/上架文案.txt", "subtitles": [], "made_for_kids": null, "altered_content": null, "related_to": "long"},
+    {"id": "short-2", "kind": "short", "video": "03_Shorts_名稱/製作後/正式版.mp4", "copy": "03_Shorts_名稱/製作後/上架文案.txt", "subtitles": [], "made_for_kids": null, "altered_content": null, "related_to": "long"},
+    {"id": "short-3", "kind": "short", "video": "04_Shorts_名稱/製作後/正式版.mp4", "copy": "04_Shorts_名稱/製作後/上架文案.txt", "subtitles": [], "made_for_kids": null, "altered_content": null, "related_to": "long"}
+  ]
+}

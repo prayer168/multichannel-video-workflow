@@ -5,6 +5,12 @@
 
 **Version:** 2.28.0（2026-11-04）
 
+## YouTube 上架技能
+
+新增獨立技能 [youtube-publish](youtube-publish/SKILL.md)，承接各支 `製作後/` 的正式影片、上架文案、縮圖與字幕，預設直接公開 1 支長片與 3 支 Shorts。透過已登入的 YouTube Studio 執行，包含頻道核對、Shorts 相關影片連結、發布記錄與中斷續作。
+
+將 `youtube-publish/` 複製到個人技能目錄後，可使用：`使用 $youtube-publish，將指定專案的長片和三支 Shorts 上架到指定頻道。` 首次需要登入並核實頻道；技能只在呼叫後執行，不在背景監看檔案。附離線預檢程式與 manifest 範例，尚未實測 YouTube 上傳。
+
 ## 2.28.0：整合 Motion Showreel，動態圖文改用三停點
 
 - **本機安裝、叫用腳本**：把 [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills) 的 Motion Showreel（MIT，釘選 `2b9a893`）裝到 `%USERPROFILE%\AI-Video-Tools\motion-explainer\ecosystem\garden-skills\`（`motion-explainer-workflow/scripts/install_motion_showreel.ps1`），叫用它的渲染、確定性檢查、文字框景、逐鏡動作報告、成片硬指標、工作區預覽與旁白混音；不複製上游原文。上游 lockfile 指向非公開鏡像，安裝腳本改走公開 npm registry。
