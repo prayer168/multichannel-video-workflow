@@ -1,11 +1,13 @@
 ---
 name: motion-explainer-workflow
-description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀測站」影片做成動態圖文（紙張畫布加虛擬攝影機、卡片與標註動效、資訊圖表、逐格揭示）的技能：定調風格卡與鎖定清單、委派任務卡、真實素材比例、靜幀條審片與第三方看片，並以 Remotion 或 HyperFrames 渲染。使用者要求動態圖文、程式動畫解說片、Remotion／HyperFrames 畫面、風格卡、靜幀條或實證比例檢查時使用。選題、腳本、配音、品牌與上架仍由 multichannel-video-workflow 負責；實拍素材剪輯由 video-editing-workflow 負責。
+description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀測站」影片做成動態圖文（紙張畫布加虛擬攝影機、卡片與標註動效、資訊圖表、逐格揭示）的技能：定調風格卡與鎖定清單、委派任務卡、真實素材比例、靜幀條審片與第三方看片，並以 Remotion 或 HyperFrames 渲染。使用者要求動態圖文、程式動畫解說片、Remotion／HyperFrames／Motion Showreel 畫面、風格卡、靜幀條、三停點（需求確認→風格幀→匯出前）、工作區預覽、成片硬指標驗收或實證比例檢查時使用。選題、腳本、配音、品牌與上架仍由 multichannel-video-workflow 負責；實拍素材剪輯由 video-editing-workflow 負責。
 ---
 
 # 動態圖文剪輯工作流（motion-explainer-workflow）
 
-版本 0.7.0（2026-11-04）。安裝並整合 `guanmo-ai/awesome-ai-motion`（作品與來源索引）及 `gongnyang/awesome-ai-motion`（動效卡、配方、Codex skill、短片 renderer），新增 `references/awesome-ai-motion-integration.md` 與安全的 Windows clone 腳本。兩份上游 checkout 存放於本機工具資料夾而非技能 repo；第三方作品及 bundled assets 仍依原授權處理。新增 `references/code-motion-prompt-workflow.md`：提示詞三元素、隔離短片原型、可觀察問題迭代、專案配方的跨題材驗證、模型公平比較，以及 HTML 預覽與 MP4 正式交付的界線。全片畫面依核定旁白逐句覆蓋，圖片／地圖運鏡、地理路徑、部位引線、授權與示意標示另依主技能 `../references/image-led-motion-graphics.md`。保留 `references/motion-graphics-ecosystem.md` 的 25 repo 選型，以及 `references/studio-style-production.md` 的 brief、STYLE_CARD、分鏡、時間軸、靜幀審查與成片驗收規則。未實測的效果不標為正式渲染器或已驗證。
+版本 0.8.0（2026-11-04）。**整合 Motion Showreel（ConardLi/garden-skills，MIT，釘選 `2b9a893`）**：本機安裝、叫用它的渲染／確定性／文字框景／成片硬指標／工作區預覽／混音腳本，不複製上游原文；**動態圖文類影片改用三停點（需求確認 → 風格幀 → 匯出前）**；brief 增加對標、三種講法、鉤子與記憶點、禁止清單；新增渲染層對照表、音效提示表、`scripts/install_motion_showreel.ps1`、`scripts/showreel_to_bear.py`，以及白板＋黑熊試跑範本。詳見 `references/motion-showreel-integration.md`。
+
+0.7.0（2026-11-04）：安裝並整合 `guanmo-ai/awesome-ai-motion`（作品與來源索引）及 `gongnyang/awesome-ai-motion`（動效卡、配方、Codex skill、短片 renderer），新增 `references/awesome-ai-motion-integration.md` 與安全的 Windows clone 腳本。兩份上游 checkout 存放於本機工具資料夾而非技能 repo；第三方作品及 bundled assets 仍依原授權處理。新增 `references/code-motion-prompt-workflow.md`：提示詞三元素、隔離短片原型、可觀察問題迭代、專案配方的跨題材驗證、模型公平比較，以及 HTML 預覽與 MP4 正式交付的界線。全片畫面依核定旁白逐句覆蓋，圖片／地圖運鏡、地理路徑、部位引線、授權與示意標示另依主技能 `../references/image-led-motion-graphics.md`。保留 `references/motion-graphics-ecosystem.md` 的 25 repo 選型，以及 `references/studio-style-production.md` 的 brief、STYLE_CARD、分鏡、時間軸、靜幀審查與成片驗收規則。未實測的效果不標為正式渲染器或已驗證。
 
 ## 分工
 
@@ -46,12 +48,14 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 ## 流程總覽
 
+**三停點（2026-11-04 使用者決定，動態圖文類影片預設）**：只在 ① 需求確認（含腳本定稿版本、片長、畫幅、幀率、旁白／BGM／音效來源、實證目標、是否邊做邊看）、② 風格幀（已定風格 3 張；未定則 3 個方向拼成 `qa/directions.png`）、③ 匯出前（工作區預覽，雲端改傳 720p 預覽＋抽幀表）停下來等使用者；其餘步驟自己做完並自查。下列 1–8 步都照做，但只有這三處要等回覆。指令、衝突處理與驗收細節見 `references/motion-showreel-integration.md`。
+
 1. **接收**：從主技能取得定稿腳本、旁白句 ID、正式配音（或暫定 Zhiwei）、頻道、品牌資產路徑。正式配音到齊前只做靜幀，時間軸以實際音檔為準，不以字數猜秒數。**接收配音時先跑主技能的去除摩擦聲檢核**（`../scripts/build/narration_noise_check.py`，修到「摩擦／爆音」0 處）；拼接多段配音時只取到每段最後一句結束後約 0.2 秒，不要保留到檔尾。
 2. **定調**：依旁白提 4–6 個候選風格，每個用同一句旁白出樣幀，使用者對著樣幀挑；選定後寫風格卡（背景、色板、字體、進出場約定、不要清單）與鎖定清單（畫幅、解析度、幀率、字幕軌、品牌固定項）。主技能 `references/advanced-animation.md` 的材質模板可當候選來源。
 3. **首段做到成片**：先把第一段（約 30–60 秒）做到可交付品質，確認風格卡可行再鋪開其餘段落。
 4. **分鏡與委派**：每個分鏡（約 3 分鐘以內）寫任務卡：目的、風格卡、觀眾、可用素材與工具、樣片、紅線；只給框架，不規定每一格怎麼演。
 5. **先靜幀後動態**：每個分鏡先輸出可重複定位的靜幀條審查，修正最影響理解、可讀性或品牌一致性的問題，再渲染；短片可用三張代表幀，長片按分鏡覆蓋主要狀態，不固定要求每段只能渲一次。
-6. **看片**：成片交給沒參與製作的另一個模型或人，像觀眾一樣看並回饋；不用程式替影片打分。
+6. **看片與硬指標**：先跑 `inspect.mjs qa`，尺寸、幀率、時長、幀數、音軌、黑格、響度、真峰值這幾項是程式判定，任何 FAIL 不交付。疊黑熊、接片尾後的最終檔再跑一次。接著做反 PPT 檢查（關字幕看畫面）。成片再交給沒參與製作的另一個模型或人，像觀眾一樣看並回饋；觀感不用程式打分。
 7. **成片前聲音檢核**：對最終旁白總軌再跑一次去除摩擦聲檢核，並抽聽每段配音的接縫（段落結尾＋下一段開頭）。
 8. **交回主技能**：成片（不含字幕）＋單行 SRT＋分鏡表＋實證比例紀錄，由主技能接片頭片尾、講課角色、上架。
 
@@ -59,14 +63,18 @@ AI 程式動畫的提示詞與迭代流程見 `references/code-motion-prompt-wor
 
 ## 渲染工具
 
-兩個都已安裝在使用者的 Windows 電腦（`%USERPROFILE%\AI-Video-Tools\motion-explainer\`）。**2026-10-22 實測結論見 `references/tool-choice.md`**：畫面程式先寫成「給時間 t 就畫出畫面」的純函式，兩個工具包同一個函式畫面幾乎相同；預設用 HyperFrames（記得 `--fps 60`），需要 React 元件重用時用 Remotion。原暫定比較：
+Remotion 與 HyperFrames 已安裝在使用者的 Windows 電腦（`%USERPROFILE%\AI-Video-Tools\motion-explainer\`）；Motion Showreel 用 `scripts/install_motion_showreel.ps1` 安裝。**2026-10-22 實測結論見 `references/tool-choice.md`**：畫面程式先寫成「給時間 t 就畫出畫面」的純函式，兩個工具包同一個函式畫面幾乎相同；預設用 HyperFrames（記得 `--fps 60`），需要 React 元件重用時用 Remotion。原暫定比較：
 
 | 工具 | 寫法 | 暫定適用 |
 |---|---|---|
 | Remotion 4 | React 元件，逐幀計算（`useCurrentFrame`） | 資料驅動、需要精確數值或大量重複元件的分鏡；授權：個人（含商業）、3 人以下團隊、非營利免費，若日後以學校名義製作先再確認一次 |
 | HyperFrames | HTML／CSS＋可尋幀動畫（GSAP、CSS、Lottie），無建置步驟，Apache 2.0 | 版面設計導向、要快速迭代樣幀的分鏡 |
+| Motion Showreel（2026-11-04 加入） | `window.render(t)`＋`READY` 的單頁（與 `setT(t)` 同契約），Canvas／SVG／DOM／WebGL／Three.js 混用；附確定性、文字框景、逐鏡動作報告、`inspect.mjs qa` 硬指標、`editor.mjs` 工作區、`narration.mjs` 旁白匯入與混音 | 三停點流程的動態圖文、要工作區預覽或程式判定驗收時；MIT，裝在 `AI-Video-Tools\motion-explainer\ecosystem\garden-skills\`（`scripts/install_motion_showreel.ps1`） |
 
-兩者都要把中文字體放進專案資料夾一起打包（Noto Sans TC，OFL），否則渲染機器沒有字體時中文會變方框。
+
+依效果選哪一層畫（DOM、SVG、Canvas、WebGL、Three.js、p5.brush）見 `references/motion-graphics-ecosystem.md` 末節「渲染層對照表」。
+
+三者都要把中文字體放進專案資料夾一起打包（Noto Sans TC，OFL），否則渲染機器沒有字體時中文會變方框。
 
 ## 安裝與環境檢查
 
@@ -126,9 +134,11 @@ AI 程式動畫的提示詞與迭代流程見 `references/code-motion-prompt-wor
 | `references/motion-graphics-ecosystem.md`（25 個 Motion Graphics 專案目錄與整合路由） | 第 6 步完成（2026-11-03；repo 清單研究，未代表其餘工具已安裝或實測） |
 | `references/awesome-ai-motion-integration.md`、`scripts/install_motion_reference_repos.ps1`（雙 repo 安裝與使用路由） | 第 7 步完成（2026-11-03；本機 checkout 安裝，效果未逐項實測） |
 | `template/remotion/`、`template/hyperframes/`、`scripts/evidence_check.py` | 第 5 步待建 |
+| `references/motion-showreel-integration.md`、`scripts/install_motion_showreel.ps1`、`scripts/showreel_to_bear.py`、`template/showreel-whiteboard-pilot/`、preflight 的 Motion Showreel 檢查 | 第 8 步完成（2026-11-04；雲端試跑通過，Windows 本機待實測）。上游 `render.mjs --sheet`／`inspect.mjs sheet / strip / phone` 可取代第 3 步待建的 `still_strip.py`、`contact_sheet.py` |
 
 ## 參考來源
 
 - 翔宇工作流〈AI 視頻剪輯實戰：用 Claude Opus 5.5 剪口播長視頻〉（2026-10-21）https://www.youtube.com/watch?v=cRsNCh_HvsA ；配套免費文章 https://xiangyugongzuoliu.com/42-ai-video-editing-skill/ 。本技能的委派任務卡、風格卡／鎖定清單、靜幀條審片與實證比例概念參考此來源，全部以自己的話改寫，數值依本頻道另訂。
+- Code 秘密花園〈【經驗開源】AI 做動畫影片完全指南：原理、技巧、Skill 一次給全〉（使用者提供逐字稿，2026-11-04）與 Motion Showreel：https://github.com/ConardLi/garden-skills/tree/main/skills/motion-showreel （MIT）。只摘要方法並叫用其腳本，不複製其 SKILL 或風格檔原文。
 - Remotion 授權 FAQ：https://www.remotion.dev/docs/license/faq
 - HyperFrames（HeyGen，Apache 2.0）：https://github.com/heygen-com/hyperframes

@@ -153,6 +153,24 @@ def check_hyperframes(root, doctor=True):
     return out
 
 
+SHOWREEL_PINNED = "2b9a893"
+
+
+def check_showreel(root):
+    """Motion Showreel（garden-skills）：選用；動態圖文的三停點流程與成片硬指標會用到"""
+    repo = os.path.join(root, "ecosystem", "garden-skills")
+    scripts = os.path.join(repo, "skills", "motion-showreel", "scripts")
+    hint = "執行 motion-explainer-workflow/scripts/install_motion_showreel.ps1"
+    if not os.path.isfile(os.path.join(scripts, "render.mjs")):
+        return item("Motion Showreel", False, f"找不到 {scripts}", required=False, hint=hint)
+    rc, out = run(["git", "-C", repo, "rev-parse", "--short=7", "HEAD"])
+    head = out.strip() if rc == 0 else "未知"
+    has_pw = os.path.isdir(os.path.join(scripts, "node_modules", "playwright"))
+    ok = has_pw and head == SHOWREEL_PINNED
+    detail = f"{head}（釘選 {SHOWREEL_PINNED}）；playwright {'已安裝' if has_pw else '未安裝'}"
+    return item("Motion Showreel", ok, detail, required=False, hint="" if ok else hint)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     default_root = os.path.join(os.path.expanduser("~"), "AI-Video-Tools", "motion-explainer")
@@ -164,6 +182,7 @@ def main():
 
     checks = [check_node(), check_tool("ffmpeg"), check_tool("ffprobe"), check_fonts(root), check_remotion(root)]
     checks += check_hyperframes(root, doctor=not a.skip_hyperframes_doctor)
+    checks.append(check_showreel(root))
     failed = [c for c in checks if c["required"] and not c["ok"]]
     result = {"root": root, "platform": sys.platform, "ok": not failed, "checks": checks}
 

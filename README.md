@@ -3,7 +3,17 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.27.0（2026-11-04）
+**Version:** 2.28.0（2026-11-04）
+
+## 2.28.0：整合 Motion Showreel，動態圖文改用三停點
+
+- **本機安裝、叫用腳本**：把 [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills) 的 Motion Showreel（MIT，釘選 `2b9a893`）裝到 `%USERPROFILE%\AI-Video-Tools\motion-explainer\ecosystem\garden-skills\`（`motion-explainer-workflow/scripts/install_motion_showreel.ps1`），叫用它的渲染、確定性檢查、文字框景、逐鏡動作報告、成片硬指標、工作區預覽與旁白混音；不複製上游原文。上游 lockfile 指向非公開鏡像，安裝腳本改走公開 npm registry。
+- **三停點**：動態圖文類影片只在 ① 需求確認、② 風格幀、③ 匯出前停下來等使用者，其餘自己做完並自查。
+- **成片硬指標**：最終檔交付前跑 `inspect.mjs qa`（尺寸、幀率、時長、幀數、音軌、黑格、−14 LUFS、真峰值），任一項 FAIL 不交付。
+- **方法補強**：brief 增加對標（學什麼／不學什麼）、三種講法擇一、鉤子與記憶點、禁止清單；新增反 PPT 檢查（關字幕也看得懂）、轉場從上一鏡長出來、渲染層對照表（DOM／SVG／Canvas／WebGL／Three.js／p5.brush）、音效提示表、AI 觀測站開源專案片做法。
+- **試跑**：白板手繪＋右下黑熊，14.6 秒 60 fps，用核定 Achird 樣本；確定性與 9 項硬指標全過（雲端）。新增 `motion-explainer-workflow/scripts/showreel_to_bear.py` 與 `template/showreel-whiteboard-pilot/`。Windows 本機安裝待實測。
+
+細節見 [motion-explainer-workflow/references/motion-showreel-integration.md](motion-explainer-workflow/references/motion-showreel-integration.md)。
 
 ## 2.27.0：旁白同步動態圖文的程式實作要點
 
@@ -387,6 +397,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.28.0 | 2026-11-04 | 整合 Motion Showreel（本機安裝、叫用腳本）；動態圖文三停點；成片硬指標關卡；brief 對標／三講法／記憶點／禁止清單；反 PPT 檢查、渲染層對照表、音效提示表；白板＋黑熊試跑 |
 | 2.27.0 | 2026-11-04 | 旁白同步動態圖文程式實作要點：關鍵詞抵達運鏡、引線換算、版位避讓、真實向量地圖、去背合成、逐句靜幀審查 |
 | 2.26.0 | 2026-11-04 | 所有影片旁白逐句視覺覆蓋；圖片／地圖運鏡、遷徙路徑、部位引線不遮主體、授權與示意合成規則 |
 | 2.25.0 | 2026-11-03 | 黑熊老師聲線定案：Achird＋Style 語速 270～290 字／分、禁止事後拉速、核定參考樣本與量測範圍 |
@@ -436,6 +447,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 請見 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 本版檢查
+
+2.28.0：在雲端實際安裝釘選版 Motion Showreel 並跑上游測試（105 項：101 通過、3 略過、1 項唯讀資料夾測試因 root 權限失敗）；白板＋黑熊試跑確定性與 `inspect.mjs qa` 9 項硬指標全過，疊黑熊後再驗一次全過；`showreel_to_bear.py` 與 preflight 新檢查實跑通過；核對 README／SKILL.md／CHANGELOG.md／VERSION 版本一致與 `git diff --check`。Windows 本機安裝與 `editor.mjs` 工作區尚未實測；未複製上游 SKILL、風格檔或程式碼進本 repo。
 
 2.26.0：核對新視覺規格含全片旁白覆蓋、圖片／地圖動作、精準不遮擋標註、來源授權與示意／實證辨別；主技能和動態圖文子技能路由、新版本摘要、更新表及四處版本字串一致；`git diff --check`。沒有把案例地點或遷徙細節寫成已查證事實。
 

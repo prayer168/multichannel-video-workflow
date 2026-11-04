@@ -52,6 +52,12 @@
 - 復盤觀眾留存、搜尋詞、留言中的卡點、實測可重現性與觀眾實際完成率。
 - 依資料改善標題、縮圖和教學順序；不以保證流量或固定 CTR 門檻作為內容品質判定。
 
+## 開源專案／產品介紹片（2.28.0 補充）
+
+- 有 repo 的題目，在該 repo 目錄裡讓 AI 先讀程式碼與 README，自己整理功能，再提煉賣點、排分鏡；不從新聞稿或想像寫功能。
+- 一定使用真實 logo、介面截圖或錄屏、網址與品牌色；AI 憑想像畫的介面一看就假，也不能冒充真實介面。功能、數字、客戶名稱沒有來源就不寫，需要取證的讓 AI 去官方文件查，附來源。
+- 示範功能時加游標移動、點擊與介面回饋，讓觀眾看懂怎麼用；動態圖文做法依 `../motion-explainer-workflow/references/motion-showreel-integration.md`（候選風格 minimal-ui、terminal-ascii、data-motion、dark-keynote）。
+
 ## 實測集（2026-10-10 補充）
 
 AI 工具實測集依 `references/real-test-workflow.md`（結論只能來自錄影、卡片框合成、片段表與抽格核對）；角色動畫依 `references/ai-animation.md`。

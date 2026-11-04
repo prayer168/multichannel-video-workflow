@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>whiteboard-spoonbill pilot</title>
+<style>
+  html, body { margin: 0; background: #fbfaf6; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script type="module" src="./preview.js"></script>
+<script type="module">
+// 試跑：白板手繪解說（whiteboard-explainer 的辨識信號：分筆畫圖、因果箭頭、一張關係地圖）。
+// 所有狀態只由 t 決定；手繪抖動用「每 4 格換一次」的固定種子，線條會微微活著但可重現。
+import { DUR, SEG } from './timeline.js';
+import { seg, lerp, ease, glide, stageSize, setupCanvas, camera, loadFonts } from './motion.js';
+
+const { W, H } = stageSize();
+const ctx = setupCanvas(document.getElementById('c'), W, H);
+const S = W / 1920;                       // 以 1920×1080 設計
+const FPS = 60;
+const C = { paper: '#fbfaf6', ink: '#1d1d1f', red: '#d9452b', blue: '#2b6fd6', gray: '#8a8a8a', face: '#26262a' };
+const FONT = (px, w = 700) => `${w} ${px}px "Noto Sans CJK TC", "Noto Sans TC", sans-serif`;
+
+// 固定種子雜訊
+const hash = (a, b) => { let h = Math.imul(a ^ 0x9e3779b9, 0x85ebca6b) ^ Math.imul(b + 0x632be5ab, 0xc2b2ae35); h ^= h >>> 15; return ((h >>> 0) % 10000) / 10000; };
+const boil = t => Math.floor(t * FPS / 4);  // 每 4 格換一次種子
+
+// 取樣工具
+const ellipsePts = (cx, cy, rx, ry, a0 = 0, a1 = Math.PI * 2, n = 64, rot = 0) => Array.from({ length: n + 1 }, (_, i) => {
+  const a = lerp(a0, a1, i / n), x = Math.cos(a) * rx, y = Math.sin(a) * ry;
+  return [cx + x * Math.cos(rot) - y * Math.sin(rot), cy + x * Math.sin(rot) + y * Math.cos(rot)];
+});
+const bez = (p0, p1, p2, p3, n = 40) => Array.from({ length: n + 1 }, (_, i) => {
+  const u = i / n, v = 1 - u;
+  return [0, 1].map(k => v * v * v * p0[k] + 3 * v * v * u * p1[k] + 3 * v * u * u * p2[k] + u * u * u * p3[k]);
+});
+const line = (a, b, n = 12) => Array.from({ length: n + 1 }, (_, i) => [lerp(a[0], b[0], i / n), lerp(a[1], b[1], i / n)]);
+
+// 一筆：在 [t0,t1] 間由筆尖畫出；回傳筆尖位置（畫完後為 null）
+function stroke(t, pts, t0, t1, { color = C.ink, width = 6, dash = null, id = 0, amp = 1.3 } = {}) {
+  const k = ease.inOutSine ? ease.inOutSine(seg(t, t0, t1)) : seg(t, t0, t1);
+  if (k <= 0) return null;
+  const seed = boil(t);
+  const P = pts.map(([x, y], i) => [x + (hash(seed * 131 + id, i * 2) - 0.5) * 2 * amp, y + (hash(seed * 131 + id, i * 2 + 1) - 0.5) * 2 * amp]);
+  const L = [0]; for (let i = 1; i < P.length; i++) L.push(L[i - 1] + Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]));
+  const target = L[L.length - 1] * k;
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  if (dash) ctx.setLineDash(dash);
+  ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]);
+  let tip = P[0];
+  for (let i = 1; i < P.length; i++) {
+    if (L[i] <= target) { ctx.lineTo(P[i][0], P[i][1]); tip = P[i]; }
+    else { const f = (target - L[i - 1]) / (L[i] - L[i - 1]); tip = [lerp(P[i - 1][0], P[i][0], f), lerp(P[i - 1][1], P[i][1], f)]; ctx.lineTo(tip[0], tip[1]); break; }
+  }
+  ctx.stroke(); ctx.restore();
+  return k < 1 ? tip : null;
+}
+
+// 手寫字：逐字落下（不用整排橫掃遮罩，避開白板風最俗的版本）
+function write(t, text, x, y, t0, t1, { px = 44, color = C.ink, align = 'left', w = 700 } = {}) {
+  ctx.save(); ctx.font = FONT(px, w); ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+  const chars = [...text], widths = chars.map(c => ctx.measureText(c).width), total = widths.reduce((a, v) => a + v, 0);
+  let cx = align === 'center' ? x - total / 2 : align === 'right' ? x - total : x;
+  chars.forEach((ch, i) => {
+    const k = seg(t, lerp(t0, t1, i / chars.length), lerp(t0, t1, (i + 1) / chars.length));
+    if (k > 0) { ctx.globalAlpha = Math.min(1, k * 1.6); ctx.fillText(ch, cx, y + (1 - ease.outCubic(k)) * 6); }
+    cx += widths[i];
+  });
+  ctx.restore();
+}
+
+function penTip(p) {
+  if (!p) return;
+  ctx.save(); ctx.translate(p[0], p[1]); ctx.rotate(-0.6);
+  ctx.fillStyle = '#3a3a3c'; ctx.fillRect(4, -9, 120, 18);
+  ctx.fillStyle = '#d9d9d9'; ctx.fillRect(4, -9, 26, 18);
+  ctx.beginPath(); ctx.moveTo(4, -6); ctx.lineTo(-6, 0); ctx.lineTo(4, 6); ctx.fillStyle = '#1d1d1f'; ctx.fill();
+  ctx.restore();
+}
+
+// ── 畫面元件（世界座標，1920×1080 為一個畫面寬）
+const BIRD = {
+  body: ellipsePts(760, 520, 170, 92, Math.PI * 0.95, Math.PI * 2.95, 72, -0.12),
+  neck: bez([880, 470], [930, 430], [930, 360], [960, 335]),
+  head: ellipsePts(990, 318, 40, 34, Math.PI, Math.PI * 3, 40),
+  billTop: bez([1022, 306], [1070, 300], [1120, 310], [1160, 322]),
+  spoon: ellipsePts(1182, 332, 28, 19, Math.PI * 1.15, Math.PI * 3.1, 36),
+  billLow: bez([1158, 342], [1110, 334], [1060, 332], [1024, 330]),
+  tail: bez([596, 505], [560, 520], [540, 540], [520, 560]),
+  legL: line([720, 606], [700, 760]), legR: line([792, 604], [806, 760]),
+  eye: ellipsePts(1000, 310, 5, 5, 0, Math.PI * 2, 12),
+};
+const BILL_RING = ellipsePts(1110, 322, 118, 62, -Math.PI * 0.6, Math.PI * 1.55, 64, -0.05);
+const NORTH = [2600, 205], TAINAN = [2150, 700];
+const ROUTE = bez([2585, 250], [2560, 430], [2300, 470], [2178, 668], 60);
+const HEAD = [line([2178, 668], [2162, 630]), line([2178, 668], [2212, 646])];
+const TAINAN_RING = ellipsePts(TAINAN[0], TAINAN[1], 56, 46, 0, Math.PI * 2.15, 50);
+const LINK = bez([1190, 380], [1500, 600], [1800, 760], [2090, 712], 50);
+
+window.DUR = DUR;
+window.render = t => {
+  ctx.save();
+  ctx.fillStyle = C.paper; ctx.fillRect(0, 0, W, H);
+  ctx.scale(S, S);
+
+  // 鏡頭：白鳥 → 右移到路線 → 推近台南 → 拉遠成整張關係圖
+  const pan = glide(seg(t, 3.8, 4.9)), push = glide(seg(t, 9.9, 10.8)), out = glide(seg(t, 12.6, 13.7));
+  let cx = lerp(900, 2350, pan), cy = 470, zoom = 1;
+  cx = lerp(cx, 2230, push); cy = lerp(cy, 560, push); zoom = lerp(zoom, 1.2, push);
+  cx = lerp(cx, 1660, out); cy = lerp(cy, 480, out); zoom = lerp(zoom, 0.7, out);
+  ctx.save(); camera(ctx, 1920, 1080, { x: cx, y: cy, zoom });
+
+  const tips = [];
+  // a：分筆畫出黑面琵鷺
+  write(t, '黑面琵鷺', 760, 190, 0.15, 1.0, { px: 72, align: 'center' });
+  tips.push(stroke(t, BIRD.body, 0.05, 0.75, { id: 1 }));
+  tips.push(stroke(t, BIRD.tail, 0.75, 0.9, { id: 2 }));
+  tips.push(stroke(t, BIRD.neck, 0.9, 1.15, { id: 3 }));
+  tips.push(stroke(t, BIRD.head, 1.15, 1.4, { id: 4 }));
+  { // 黑色臉部：頭的前半填色
+    const k = seg(t, 1.4, 1.75);
+    if (k > 0) { ctx.save(); ctx.globalAlpha = k; ctx.fillStyle = C.face; ctx.beginPath(); ctx.ellipse(1006, 318, 24, 30, 0, -Math.PI / 2, Math.PI / 2); ctx.lineTo(1022, 330); ctx.closePath(); ctx.fill(); ctx.restore(); }
+  }
+  tips.push(stroke(t, BIRD.billTop, 1.4, 1.62, { id: 5, width: 5 }));
+  tips.push(stroke(t, BIRD.spoon, 1.62, 1.8, { id: 6, width: 5 }));
+  tips.push(stroke(t, BIRD.billLow, 1.8, 1.95, { id: 7, width: 5 }));
+  if (t > 1.75) { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(1000, 310, 4, 0, Math.PI * 2); ctx.fill(); }
+  tips.push(stroke(t, BIRD.legL, 1.95, 2.1, { id: 8, width: 5 }));
+  tips.push(stroke(t, BIRD.legR, 2.05, 2.2, { id: 9, width: 5 }));
+
+  // b：紅筆圈出湯匙嘴，句段結束時圈合
+  tips.push(stroke(t, BILL_RING, 2.45, 3.25, { color: C.red, width: 6, id: 10 }));
+  write(t, '湯匙狀的嘴', 1120, 432, 2.75, 3.25, { px: 40, color: C.red, align: 'center' });
+
+  // c：鏡頭右移；先標兩端，再畫出示意路線，箭頭最後確定方向
+  ctx.save(); ctx.fillStyle = C.ink;
+  if (t > 4.15) { ctx.globalAlpha = seg(t, 4.15, 4.35); ctx.beginPath(); ctx.arc(NORTH[0], NORTH[1], 12, 0, Math.PI * 2); ctx.fill(); }
+  if (t > 5.9) { ctx.globalAlpha = seg(t, 5.9, 6.1); ctx.beginPath(); ctx.arc(TAINAN[0], TAINAN[1], 12, 0, Math.PI * 2); ctx.fill(); }
+  ctx.restore();
+  write(t, '北方繁殖地', NORTH[0] + 30, NORTH[1] - 14, 4.3, 4.9, { px: 46 });
+  write(t, '朝鮮半島西岸等', NORTH[0] + 30, NORTH[1] + 34, 4.8, 5.4, { px: 30, color: C.gray, w: 500 });
+  write(t, '台南 曾文溪口', TAINAN[0] - 72, TAINAN[1] + 14, 6.0, 6.6, { px: 46, align: 'right' });
+  tips.push(stroke(t, ROUTE, 6.5, 8.95, { color: C.blue, width: 7, dash: [22, 16], id: 11, amp: 0.8 }));
+  tips.push(stroke(t, HEAD[0], 8.95, 9.2, { color: C.blue, width: 7, id: 12 }));
+  tips.push(stroke(t, HEAD[1], 9.2, 9.45, { color: C.blue, width: 7, id: 13 }));
+  write(t, '示意路線，非實際航跡', 2470, 520, 7.2, 7.9, { px: 28, color: C.gray, w: 500 });
+
+  // d：推近台南，圈注；「冬天來這裡」在句段尾段寫完
+  tips.push(stroke(t, TAINAN_RING, 10.1, 10.75, { color: C.red, width: 6, id: 14 }));
+  write(t, '冬天來這裡', TAINAN[0] - 80, TAINAN[1] - 70, 10.8, 11.6, { px: 44, color: C.red, align: 'right' });
+  tips.push(stroke(t, line([1855, 644], [2070, 644]), 11.9, 12.5, { color: C.red, width: 5, id: 15 }));
+
+  // e：拉遠，用一條虛線把「這種鳥」接到「這個地方」，成為一張關係圖
+  tips.push(stroke(t, LINK, 12.85, 13.6, { color: C.gray, width: 4, dash: [10, 12], id: 16, amp: 0.6 }));
+
+  penTip(tips.find(p => p));
+  ctx.restore();
+
+  // 示意標示（螢幕座標，左上，不進字幕帶與右下黑熊區）
+  ctx.font = FONT(24, 500); ctx.fillStyle = C.gray; ctx.fillText('示意圖', 56, 96);
+  ctx.restore();
+};
+
+await loadFonts([FONT(72), FONT(30, 500)]);
+window.render(0);
+window.READY = true;
+</script>
+</body>
+</html>

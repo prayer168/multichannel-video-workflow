@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.28.0] - 2026-11-04
+### Added
+- `motion-explainer-workflow/references/motion-showreel-integration.md`：Motion Showreel 影片逐字稿分析與採納判斷、安裝與路徑、與固定設定衝突時的優先規則、三停點流程、頻道風格候選、音效提示表、成片硬指標與審片材料、試跑紀錄、來源與授權。
+- `motion-explainer-workflow/scripts/install_motion_showreel.ps1`：釘選 `2b9a893` 安裝 ConardLi/garden-skills；不覆寫既有 checkout；修正上游 lockfile 指向 `bnpm.byted.org` 的問題，改走公開 registry。
+- `motion-explainer-workflow/scripts/showreel_to_bear.py`：把 Showreel 成片疊上核定黑熊老師講課角色（建立 bear_presenter 需要的最小配置）。
+- `motion-explainer-workflow/template/showreel-whiteboard-pilot/`：白板手繪＋右下黑熊試跑範本（index.html、timeline.js、score.mjs、抽幀表、README）。
+- `motion-explainer-workflow/references/motion-graphics-ecosystem.md`「渲染層對照表」；`tool-choice.md`「第三條路線：Motion Showreel」試跑紀錄。
+- `profiles/ai-watch.md`「開源專案／產品介紹片」：在 repo 內讀程式碼、真實素材、游標點擊回饋。
+### Changed
+- 動態圖文類影片改用三停點：需求確認 → 風格幀 → 匯出前（使用者 2026-11-04 決定）；主技能階段 3 與子技能流程總覽同步。
+- 主技能階段 7 新增成片硬指標關卡（`inspect.mjs qa`，任一項 FAIL 或 NOT CHECKED 不交付）。
+- `studio-style-production.md` brief 增加對標、三種講法、鉤子與記憶點、禁止清單、聲音來源五欄。
+- `references/image-led-motion-graphics.md` 新增反 PPT 檢查與「轉場從上一鏡長出來、同時只有一個焦點」。
+- `motion-explainer-workflow/scripts/preflight.py` 新增 Motion Showreel 選用檢查；子技能升 0.8.0。
+
 ## [2.27.0] - 2026-11-04
 ### Added
 - `references/image-led-motion-graphics.md`「程式實作要點」八條：關鍵詞落點＝鏡頭抵達點（只在抵達前 1～2 秒移動）、快速列舉時保持全景依序標註、引線錨點隨運鏡換算並在出框時隱藏、版位避開角色與字幕安全區、Natural Earth 10m 向量地圖與推近限度、rembg 去背合成並標示示意、合成圖的 CSS 隔離、全片渲染前審逐句靜幀條並先交代表段。

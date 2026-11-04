@@ -1,11 +1,13 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.27.0（2026-11-04）。**旁白同步動態圖文實作要點**：鏡頭在旁白關鍵詞抵達、快速列舉時保持全景依序標註、引線隨運鏡換算且不遮主體／角色／字幕、Natural Earth 真實地圖、授權照片去背合成並標示示意、全片渲染前先審逐句靜幀條（`references/image-led-motion-graphics.md`「程式實作要點」）。
+目前版本：2.28.0（2026-11-04）。**整合 Motion Showreel 與動態圖文三停點**：本機安裝 ConardLi/garden-skills 的 Motion Showreel（MIT，釘選 `2b9a893`）並叫用其渲染、確定性、文字框景、成片硬指標、工作區預覽與混音腳本；動態圖文類影片只在需求確認、風格幀、匯出前三處停下；brief 增加對標／三種講法／鉤子與記憶點／禁止清單；新增反 PPT 檢查、渲染層對照表、音效提示表、AI 觀測站開源專案片做法；白板＋黑熊雲端試跑通過（`motion-explainer-workflow/references/motion-showreel-integration.md`）。
+
+2.27.0（2026-11-04）：**旁白同步動態圖文實作要點**：鏡頭在旁白關鍵詞抵達、快速列舉時保持全景依序標註、引線隨運鏡換算且不遮主體／角色／字幕、Natural Earth 真實地圖、授權照片去背合成並標示示意、全片渲染前先審逐句靜幀條（`references/image-led-motion-graphics.md`「程式實作要點」）。
 
 2.26.0（2026-11-04）：**旁白完整視覺覆蓋定案**：全片依旁白逐句安排具體畫面，圖片、地圖、實物、UI、程式圖解與有目的的推拉平移共同承載內容，不以長段純文字／數字動畫代替；部位標示不遮主體，示意合成清楚標示。詳見 `references/image-led-motion-graphics.md`。
 
@@ -71,6 +73,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `motion-explainer-workflow/references/studio-style-production.md`：**風格導向動態圖文製作**——簡短 brief、風格卡、結構化分鏡、可尋幀時間軸、依分鏡規模審靜幀及成片驗收；製作程式化動態圖文、動態標題卡、片頭或循環動畫時和動態圖文子技能一併讀取。
 - `motion-explainer-workflow/references/motion-graphics-ecosystem.md`：**25 個 Motion Graphics GitHub 專案目錄與整合選型**——星數快照、用途、安裝／參考方式、授權與維護注意事項；依畫面需求挑工具，不批次複製 repo 或混裝相依套件。
 - `motion-explainer-workflow/references/code-motion-prompt-workflow.md`：**AI 程式動態圖形與動態簡報**——風格／技術／時間 brief、隔離試作、檢查迭代、配方泛化測試、模型比較和正式影片 renderer 交接。
+- `motion-explainer-workflow/references/motion-showreel-integration.md`：**Motion Showreel 整合與三停點**——逐字稿分析與採納判斷、安裝（含上游 lockfile 踩坑）、與固定設定衝突時以誰為準、三停點流程、頻道風格候選、音效提示表、程式判定的成片硬指標、白板＋黑熊試跑紀錄；動態圖文類影片必讀。
 - `motion-explainer-workflow/references/awesome-ai-motion-integration.md`：**Awesome AI Motion 雙 repo 整合**——guanmo-ai 用於作品／來源檢索，gongnyang 用於動效卡／配方／短片試作；安裝路徑、Windows 重複安裝腳本、素材授權與正式渲染交接規則。
 - `references/music-video-workflow.md`：**音樂事件驅動的 MV 選用流程**——音樂／歌詞授權、節拍與人聲時間校準、歌詞語意分鏡、卡點表及成片驗收；製作音樂 MV、歌詞動畫或節拍同步視覺時讀取，並搭配 `video-editing-workflow/SKILL.md`。
 - `references/five-video-motion-analysis.md`：**五支參考影片的時間碼觀察**——對照實際抽看畫面與可用逐字稿，說明真實錄屏、概念圖與旁白落點如何配合，附擴充版製作提示詞；設計此類解說動畫時與上一份文件一併讀取。
@@ -144,7 +147,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - 依 `references/style-guide.md`「觸動人心與留存的腳本規則」寫作：三拍開場、觀眾當主角、懸念並兌現、真實卡關、具體故事、`[節奏轉換]` 標註、情緒弧線、結尾回扣開場；寫完逐項核對自我檢查表。所有戲劇化設計都必須建立在真實成果與證據上。
 動畫解說採生活任務串聯，用角色反應說明概念，並標類比邊界；角色須有敘事功能，品牌黑熊沿用核定素材。尚未實測時，先寫成功／部分成功／失敗分支，配音前按證據只選一支；詳細流程見 `references/animation-handoff.md`。
 每一段標出 `[畫面：…]`、`[標註：…]`。寫完後附上依實際配音估計的時長與待查證清單。
-**動態圖文類影片**（畫面主要由程式產生的版面、卡片、圖表與攝影機運動構成）：腳本定稿後轉讀 `motion-explainer-workflow/SKILL.md`，以 `motion-explainer-workflow/references/awesome-ai-motion-integration.md` 找靈感與選動效，再依 `motion-explainer-workflow/references/motion-graphics-ecosystem.md` 選引擎，最後以 `motion-explainer-workflow/references/studio-style-production.md` 建立 brief、風格卡、分鏡與靜幀覆蓋；AI 程式動態圖形另依 `motion-explainer-workflow/references/code-motion-prompt-workflow.md` 做短片原型、迭代與配方轉移驗證；配音、品牌與上架仍回本技能。
+**動態圖文類影片**（畫面主要由程式產生的版面、卡片、圖表與攝影機運動構成）：腳本定稿後轉讀 `motion-explainer-workflow/SKILL.md`，以 `motion-explainer-workflow/references/awesome-ai-motion-integration.md` 找靈感與選動效，再依 `motion-explainer-workflow/references/motion-graphics-ecosystem.md` 選引擎，最後以 `motion-explainer-workflow/references/studio-style-production.md` 建立 brief、風格卡、分鏡與靜幀覆蓋；AI 程式動態圖形另依 `motion-explainer-workflow/references/code-motion-prompt-workflow.md` 做短片原型、迭代與配方轉移驗證；配音、品牌與上架仍回本技能。**動態圖文類影片採三停點**（2026-11-04 使用者決定）：① 需求確認（含腳本定稿版本）→ ② 風格幀 → ③ 匯出前工作區預覽，其餘自行完成並自查，依 `motion-explainer-workflow/references/motion-showreel-integration.md`。
 
 ### 3.5 同步英文逐字稿（寫入 02_腳本_中英對照.md）
 是否需要英文逐字稿與字幕，依使用者要求及頻道設定檔決定；若需要，中文腳本定稿後產生：
@@ -193,6 +196,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 **浮水印**：依所選頻道設定檔使用品牌浮水印；剪輯疊加或 YouTube 浮水印擇一。自然教室熊掌素材段落依 `references/production-notes.md` 避免重複；有黑熊老師講課角色時右下角不再疊浮水印（用透明 PNG）。
 **字幕（2.13.0 起不燒錄）**：依 `references/subtitle-style.md`，字幕只輸出獨立字幕軌 `字幕_zh-TW_單行.srt`（一次一行、換行點對齊旁白停頓），成片不燒錄字幕，上傳時另上 SRT；使用者明確要求燒錄版時才用 `subs_oneline.py --burn`。製作畫面時 y 880–1000 仍不放重要內容（YouTube 字幕顯示在這一區；`build.py` 預設 `subtitle_safe: true` 自動處理圖卡與動畫，錄屏與自寫動畫要人工守）。
 **一鍵產生（優先使用）**：Windows 上把 `scripts/build/build_video.bat` 複製到專案資料夾雙擊（build.py → bear_presenter.py → append_outro.py → subs_oneline.py 產生 SRT，進度寫入 `產生紀錄.log`）。片頭、配音、配樂依 fixed-settings.md。以下為 build.py 細節：腳本定稿後，AI 依腳本與所選頻道設定檔寫出 `製作中/畫面規格.yaml`。片頭、片尾、配音、浮水印與配樂只可引用該頻道核定資產；`video.intro`、`intro_audio`、`watermark`、`bgm` 都必須是存在的檔案，不能填文字佔位或省略。產生器沒有 `outro`／`outro_audio` 欄位；片尾影片可放最後一幕，但音訊與完整長度需後製接入（見 build-pipeline）。`thanks` 圖卡明確填本頻道 `name`，避免舊預設姓名。若 AI Watch 品牌影音尚未提供，在專案卡列待建立；要產生無品牌預覽，須先準備實際中性片頭、靜音 WAV、透明 1920×1080 PNG 和已授權 BGM 等必填檔案，否則只交付企劃與分鏡。（2026-10-06 起兩頻道都用黑熊老師片頭與講課角色，見 fixed-settings.md。）再執行 `python scripts/build/build.py <專案資料夾>`，一次產出影片、所需字幕、章節與品質檢查報告；沒有 Gemini 配音時自動用 Zhiwei 暫定配音，正式配音到齊後同一個指令重跑即可（見 references/build-pipeline.md）。
+**成片硬指標（2.28.0，所有影片）**：最終檔（已接片頭、黑熊、片尾）交付前執行 Motion Showreel 的 `node <S>/inspect.mjs qa <成片.mp4> --out <qa資料夾> --expect-size 1920x1080 --expect-fps <幀率> --expect-duration <秒> --audio required`（Shorts 用 1080x1920），尺寸、幀率、時長、幀數、音軌、黑格、−14±1.5 LUFS、真峰值 ≤ −1 dBTP 任一項 FAIL 或 NOT CHECKED 都不交付；`<S>` 與安裝見 `motion-explainer-workflow/references/motion-showreel-integration.md`。尚未安裝時沿用 build.py 品質檢查報告並註明。
 **沒有螢幕錄影時**：可以用「逐句暫定配音＋品牌圖卡＋自動組合」先做出粗剪，再替換正式配音（見 references/production-notes.md）。
 **導流設定**：加入主題播放清單（標題含關鍵字）、結束畫面推薦 1 支相關影片、在提到其他工具時插入資訊卡。
 

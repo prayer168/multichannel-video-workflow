@@ -21,3 +21,14 @@
 3. **改用 Remotion 的時機**：需要 React 元件重用（大量同型卡片、資料驅動的表格），或要用 Remotion 生態（字幕元件、Lambda 雲端渲染）時。授權：個人與 3 人以下團隊免費。
 4. 在雲端容器渲染時，三種做法都要指定容器內的 Chromium；在使用者 Windows 上則用 `setup_windows.bat` 裝好的瀏覽器。
 5. 不論哪個工具，品牌層（黑熊片頭、講課角色、片尾、配樂）仍由主技能的 `bear_presenter.py` 與 ffmpeg 接合，不在畫面程式裡重做。
+
+## 第三條路線：Motion Showreel（2026-11-04 雲端試跑）
+
+- 上游 `render.mjs` 的頁面契約和本技能的 `setT(t)` 相同（`window.render(t)`＋`READY`），所以既有畫面函式可直接搬過去；它多了確定性檢查、文字框景、逐鏡動作報告、成片硬指標、工作區預覽與音訊混音。
+- 試跑：白板手繪 14.6 秒、1920×1080、60 fps、Canvas 2D。雲端 2 核心渲染＋全部檢查約 1 分 17 秒；疊黑熊（`showreel_to_bear.py`，角色 15 fps）約 20 秒。硬指標 9 項全過。細節見 `motion-showreel-integration.md` 第 8 節。
+- 選用原則更新：
+  - 需要三停點流程、工作區預覽或程式判定的成片驗收時，用 Motion Showreel。
+  - 已有 HyperFrames 專案或 GSAP 時間軸時，仍用 HyperFrames。
+  - 要 React 元件重用時，用 Remotion。
+  - 三者的成片都可以用 `inspect.mjs qa` 驗收。
+- 尚未在 Windows 本機實測，實測後補上安裝紀錄與渲染時間。
