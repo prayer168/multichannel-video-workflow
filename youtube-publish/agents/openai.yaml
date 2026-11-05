@@ -1,6 +1,6 @@
 interface:
   display_name: "YouTube 長片與 Shorts 自動上架"
-  short_description: "將正式成片與文案直接公開至指定頻道，一次處理長片及三支 Shorts，附字幕與發布結果"
+  short_description: "將正式成片與文案直接公開至指定頻道，支援單支或批次，附字幕、置頂留言與指定 Facebook 宣傳"
   default_prompt: "使用 $youtube-publish 將這個專案的正式長片與三支 Shorts，連同各自文案、縮圖和字幕直接公開上架到指定 YouTube 頻道。"
 policy:
   allow_implicit_invocation: true

@@ -25,8 +25,26 @@ def inspect(manifest_path):
     items = data.get("items")
     if not isinstance(items, list) or any(not isinstance(i, dict) for i in items):
         raise ValueError("items must be an array of objects")
-    if len(items) != 4 or sum(i.get("kind") == "long" for i in items) != 1 or sum(i.get("kind") == "short" for i in items) != 3:
-        errors.append("Standard batch requires one long video and three Shorts")
+    scope = data.get("upload_scope")
+    if scope is not None:
+        if (not isinstance(scope, list) or not scope
+                or any(not isinstance(key, str) or not key for key in scope)
+                or len(scope) != len(set(scope))):
+            raise ValueError("upload_scope must be a non-empty array of unique item IDs")
+        unknown = set(scope) - {i.get("id") for i in items if isinstance(i.get("id"), str)}
+        if unknown:
+            raise ValueError("upload_scope contains unknown item IDs")
+        items = [item for item in items if item.get("id") in scope]
+    if not items:
+        errors.append("At least one video must be selected")
+    existing_long = data.get("existing_long_video")
+    existing_long_id = None
+    if existing_long is not None:
+        if not isinstance(existing_long, dict) or not re.fullmatch(
+                r"[A-Za-z0-9_-]{11}", str(existing_long.get("video_id", ""))):
+            errors.append("existing_long_video.video_id must be a YouTube video ID")
+        else:
+            existing_long_id = existing_long["video_id"]
     ids, fingerprints = set(), {}
     long_ids = {i.get("id") for i in items if i.get("kind") == "long" and isinstance(i.get("id"), str)}
 
@@ -51,8 +69,12 @@ def inspect(manifest_path):
         for field in ("made_for_kids", "altered_content"):
             if type(item.get(field)) is not bool:
                 errors.append(f"{label}: {field} needs a supported true/false decision")
-        if item.get("kind") == "short" and item.get("related_to") not in long_ids:
-            errors.append(f"{label}: related_to must identify this batch's long video")
+        if item.get("kind") not in ("long", "short"):
+            errors.append(f"{label}: kind must be long or short")
+        if item.get("kind") == "short":
+            related_to = item.get("related_to")
+            if related_to not in long_ids and not (related_to == "long" and existing_long_id):
+                errors.append(f"{label}: related_to must identify a selected long video or existing_long_video")
         report = {"id": label, "kind": item.get("kind")}
         video = file_path(item.get("video"), f"{label}.video")
         if video:
