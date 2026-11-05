@@ -62,4 +62,4 @@ python <技能目錄>/scripts/preflight.py <專案>/youtube-publish.json
 
 使用者要求置頂留言時，取交付文案的「置頂留言」，以目標頻道身分發表。先查是否已有同文，發布後從該留言的動作選單置頂，核實頁面顯示已由該頻道置頂，再更新 state 的 pinned_comment。留言失敗可獨立續做。
 
-使用者另要求 Facebook 發布時，讀 [references/facebook-workflow.md](references/facebook-workflow.md)。YouTube 上架指示本身只涵蓋 YouTube。發布結果與成片追蹤記錄存於各自影片專案，技能儲存庫保留可重用流程。
+使用者另要求 Facebook 發布時，讀 [references/facebook-workflow.md](references/facebook-workflow.md)。臉書文沿用對應影片的公開時程，主影片宣傳文在 D 當天發布，三支 Shorts 宣傳文同次準備並排程在 D+1、D+2、D+3 的台灣時間 20:00 依序發布。YouTube 上架指示本身只涵蓋 YouTube。發布結果與成片追蹤記錄存於各自影片專案，技能儲存庫保留可重用流程。
