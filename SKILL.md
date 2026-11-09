@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.28.0（2026-11-04）。**整合 Motion Showreel 與動態圖文三停點**：本機安裝 ConardLi/garden-skills 的 Motion Showreel（MIT，釘選 `2b9a893`）並叫用其渲染、確定性、文字框景、成片硬指標、工作區預覽與混音腳本；動態圖文類影片只在需求確認、風格幀、匯出前三處停下；brief 增加對標／三種講法／鉤子與記憶點／禁止清單；新增反 PPT 檢查、渲染層對照表、音效提示表、AI 觀測站開源專案片做法；白板＋黑熊雲端試跑通過（`motion-explainer-workflow/references/motion-showreel-integration.md`）。
+目前版本：2.29.0（2026-11-10）。**整合音樂 MV 與藝術動畫工具**：核對並在 Windows 本機安裝〈AI 寫程式做音樂 MV〉影片推薦的三個 repo（皆 MIT，釘選版本）——mv-director 負責音樂 MV 的分軌、測拍、逐字對齊、卡點表與 `check.py` 成片量測；huashu-art-motion 提供 9 種解說語法片段與 `film_gate.py` 反 PPT 成片門禁；lemo-opuscar 只當 66 種風格的參考。都不裝成 skill，只叫用腳本；繁體字型、音樂授權、品牌接合與試跑紀錄見 `motion-explainer-workflow/references/music-mv-tools-integration.md`；`references/music-video-workflow.md` 新增 mv-director 指令對照與驗收門檻。完整 MV 試跑待使用者提供有授權的歌曲。
+
+2.28.0（2026-11-04）：**整合 Motion Showreel 與動態圖文三停點**：本機安裝 ConardLi/garden-skills 的 Motion Showreel（MIT，釘選 `2b9a893`）並叫用其渲染、確定性、文字框景、成片硬指標、工作區預覽與混音腳本；動態圖文類影片只在需求確認、風格幀、匯出前三處停下；brief 增加對標／三種講法／鉤子與記憶點／禁止清單；新增反 PPT 檢查、渲染層對照表、音效提示表、AI 觀測站開源專案片做法；白板＋黑熊雲端試跑通過（`motion-explainer-workflow/references/motion-showreel-integration.md`）。
 
 2.27.0（2026-11-04）：**旁白同步動態圖文實作要點**：鏡頭在旁白關鍵詞抵達、快速列舉時保持全景依序標註、引線隨運鏡換算且不遮主體／角色／字幕、Natural Earth 真實地圖、授權照片去背合成並標示示意、全片渲染前先審逐句靜幀條（`references/image-led-motion-graphics.md`「程式實作要點」）。
 
@@ -75,7 +77,8 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `motion-explainer-workflow/references/code-motion-prompt-workflow.md`：**AI 程式動態圖形與動態簡報**——風格／技術／時間 brief、隔離試作、檢查迭代、配方泛化測試、模型比較和正式影片 renderer 交接。
 - `motion-explainer-workflow/references/motion-showreel-integration.md`：**Motion Showreel 整合與三停點**——逐字稿分析與採納判斷、安裝（含上游 lockfile 踩坑）、與固定設定衝突時以誰為準、三停點流程、頻道風格候選、音效提示表、程式判定的成片硬指標、白板＋黑熊試跑紀錄；動態圖文類影片必讀。
 - `motion-explainer-workflow/references/awesome-ai-motion-integration.md`：**Awesome AI Motion 雙 repo 整合**——guanmo-ai 用於作品／來源檢索，gongnyang 用於動效卡／配方／短片試作；安裝路徑、Windows 重複安裝腳本、素材授權與正式渲染交接規則。
-- `references/music-video-workflow.md`：**音樂事件驅動的 MV 選用流程**——音樂／歌詞授權、節拍與人聲時間校準、歌詞語意分鏡、卡點表及成片驗收；製作音樂 MV、歌詞動畫或節拍同步視覺時讀取，並搭配 `video-editing-workflow/SKILL.md`。
+- `references/music-video-workflow.md`：**音樂事件驅動的 MV 選用流程**——音樂／歌詞授權、節拍與人聲時間校準、歌詞語意分鏡、卡點表及成片驗收；製作音樂 MV、歌詞動畫或節拍同步視覺時讀取，並搭配 `video-editing-workflow/SKILL.md`；2.29.0 起附 mv-director 指令對照與 `check.py` 門檻。
+- `motion-explainer-workflow/references/music-mv-tools-integration.md`：**mv-director、huashu-art-motion、lemo-opuscar 整合**——各自角色、安裝與釘選版、繁體字型補字、音樂授權、品牌接合、`film_gate.py` 反 PPT 門禁與 Windows 試跑紀錄；做 MV、借解說語法片段或跑成片門禁時讀取。
 - `references/five-video-motion-analysis.md`：**五支參考影片的時間碼觀察**——對照實際抽看畫面與可用逐字稿，說明真實錄屏、概念圖與旁白落點如何配合，附擴充版製作提示詞；設計此類解說動畫時與上一份文件一併讀取。
 - `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
 - `references/editing-workflow-methods.md`：**剪輯工作流銜接**——AI 輔助素材盤點與粗剪、分鏡與角色連續性、Remotion 動畫片段與 DaVinci 後製的分工及人工驗收；涉及大量素材、AI 時間軸剪輯或程式動畫時搭配 `video-editing-workflow/SKILL.md`。

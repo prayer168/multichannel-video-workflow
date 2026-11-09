@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.29.0] - 2026-11-10
+### Added
+- `motion-explainer-workflow/references/music-mv-tools-integration.md`：〈AI 寫程式做音樂 MV〉影片推薦三個 repo 的核對結果與整合方式——mv-director（`79af43a`，叫用腳本做音樂 MV）、huashu-art-motion（`8a0d7d7`，解說語法片段與 `film_gate.py`）、lemo-opuscar（`143f387`，只讀選中的 `STYLE.md`）；安裝路徑、踩坑、衝突時以誰為準、繁體字型、音樂授權、品牌接合、驗收、Windows 試跑紀錄與授權排除項。
+- `motion-explainer-workflow/scripts/install_mv_tools.ps1`：釘選安裝三個 repo、建立共用 Python 3.12 venv（uv）、Playwright Chromium；`-WithStems`／`-WithAligner` 選裝 demucs、torch、transformers 5；不自動下載 1.8 GB 對齊模型。
+- `references/music-video-workflow.md`「用 mv-director 執行」：步驟與指令對照表、`check.py` 驗收門檻。
+- `motion-graphics-ecosystem.md` 補充第 26–28 列。
+### Changed
+- `motion-explainer-workflow/scripts/preflight.py` 新增 MV 工具選用檢查（釘選版、venv 套件、逐字對齊、分軌）。
+- `motion-showreel-integration.md` 反 PPT 檢查加入 `film_gate.py` 程式門禁；子技能升 0.9.0。
+### Known issues
+- huashu 與 mv-director 內建中文字型都是簡體子集，繁體字會退回系統字型（huashu 已實測），需先補字或改用 Noto Sans TC。
+- 上游指令的 `-I` 會讓 `PYTHONUTF8` 失效，繁中 Windows 要加 `-X utf8`。
+- uv 0.13.7 在本機 `uv python install` 報次版本連結錯誤，直譯器仍可用；安裝腳本已繞過。
+
 ## [2.28.0] - 2026-11-04
 ### Added
 - `motion-explainer-workflow/references/motion-showreel-integration.md`：Motion Showreel 影片逐字稿分析與採納判斷、安裝與路徑、與固定設定衝突時的優先規則、三停點流程、頻道風格候選、音效提示表、成片硬指標與審片材料、試跑紀錄、來源與授權。

@@ -5,7 +5,9 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 # 動態圖文剪輯工作流（motion-explainer-workflow）
 
-版本 0.8.0（2026-11-04）。**整合 Motion Showreel（ConardLi/garden-skills，MIT，釘選 `2b9a893`）**：本機安裝、叫用它的渲染／確定性／文字框景／成片硬指標／工作區預覽／混音腳本，不複製上游原文；**動態圖文類影片改用三停點（需求確認 → 風格幀 → 匯出前）**；brief 增加對標、三種講法、鉤子與記憶點、禁止清單；新增渲染層對照表、音效提示表、`scripts/install_motion_showreel.ps1`、`scripts/showreel_to_bear.py`，以及白板＋黑熊試跑範本。詳見 `references/motion-showreel-integration.md`。
+版本 0.9.0（2026-11-10）。**整合音樂 MV 與藝術動畫工具**：本機安裝並釘選 mv-director（`79af43a`，音樂 MV：分軌、測拍、逐字對齊、卡點表、`check.py` 成片量測）、huashu-art-motion（`8a0d7d7`，9 種解說語法片段與 `film_gate.py` 反 PPT 門禁）、lemo-opuscar（`143f387`，66 種風格只讀選中的 `STYLE.md`）；都不裝成 skill／plugin，只叫用腳本。新增 `scripts/install_mv_tools.ps1`（共用 Python 3.12 venv；torch／demucs／對齊模型選用）、preflight 選用檢查。兩個 repo 的中文字型都是簡體子集，繁體要先補字。Windows 本機試跑：安裝、doctor、白板片段渲染與 film_gate 通過；完整 MV 待有授權歌曲。詳見 `references/music-mv-tools-integration.md`。
+
+0.8.0（2026-11-04）：**整合 Motion Showreel（ConardLi/garden-skills，MIT，釘選 `2b9a893`）**：本機安裝、叫用它的渲染／確定性／文字框景／成片硬指標／工作區預覽／混音腳本，不複製上游原文；**動態圖文類影片改用三停點（需求確認 → 風格幀 → 匯出前）**；brief 增加對標、三種講法、鉤子與記憶點、禁止清單；新增渲染層對照表、音效提示表、`scripts/install_motion_showreel.ps1`、`scripts/showreel_to_bear.py`，以及白板＋黑熊試跑範本。詳見 `references/motion-showreel-integration.md`。
 
 0.7.0（2026-11-04）：安裝並整合 `guanmo-ai/awesome-ai-motion`（作品與來源索引）及 `gongnyang/awesome-ai-motion`（動效卡、配方、Codex skill、短片 renderer），新增 `references/awesome-ai-motion-integration.md` 與安全的 Windows clone 腳本。兩份上游 checkout 存放於本機工具資料夾而非技能 repo；第三方作品及 bundled assets 仍依原授權處理。新增 `references/code-motion-prompt-workflow.md`：提示詞三元素、隔離短片原型、可觀察問題迭代、專案配方的跨題材驗證、模型公平比較，以及 HTML 預覽與 MP4 正式交付的界線。全片畫面依核定旁白逐句覆蓋，圖片／地圖運鏡、地理路徑、部位引線、授權與示意標示另依主技能 `../references/image-led-motion-graphics.md`。保留 `references/motion-graphics-ecosystem.md` 的 25 repo 選型，以及 `references/studio-style-production.md` 的 brief、STYLE_CARD、分鏡、時間軸、靜幀審查與成片驗收規則。未實測的效果不標為正式渲染器或已驗證。
 
@@ -25,6 +27,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 - `references/motion-graphics-ecosystem.md`：25 個 Motion Graphics repo 的用途、排序星數快照、選型／安裝方式及授權注意事項
 - `references/awesome-ai-motion-integration.md`：雙 repo 的本機安裝位置、作品檢索、動效卡／配方查找、短片試作與授權邊界
 - `references/code-motion-prompt-workflow.md`：AI 程式動態圖形與 HTML 動態簡報的提示詞、原型、迭代、配方驗證及 renderer 交接
+- `references/music-mv-tools-integration.md`、`scripts/install_mv_tools.ps1`：mv-director／huashu-art-motion／lemo-opuscar 的角色、安裝、繁體字型、音樂授權、品牌接合、`film_gate.py` 門禁與試跑紀錄
 - `scripts/install_motion_reference_repos.ps1`：Windows 淺層 clone 安裝腳本；預設放在 `AI-Video-Tools\motion-explainer\ecosystem\awesome-ai-motion\`，保留既有 checkout，不覆寫非 Git 資料夾
 
 ## 什麼時候用
@@ -135,6 +138,7 @@ Remotion 與 HyperFrames 已安裝在使用者的 Windows 電腦（`%USERPROFILE
 | `references/awesome-ai-motion-integration.md`、`scripts/install_motion_reference_repos.ps1`（雙 repo 安裝與使用路由） | 第 7 步完成（2026-11-03；本機 checkout 安裝，效果未逐項實測） |
 | `template/remotion/`、`template/hyperframes/`、`scripts/evidence_check.py` | 第 5 步待建 |
 | `references/motion-showreel-integration.md`、`scripts/install_motion_showreel.ps1`、`scripts/showreel_to_bear.py`、`template/showreel-whiteboard-pilot/`、preflight 的 Motion Showreel 檢查 | 第 8 步完成（2026-11-04；雲端試跑通過，Windows 本機待實測）。上游 `render.mjs --sheet`／`inspect.mjs sheet / strip / phone` 可取代第 3 步待建的 `still_strip.py`、`contact_sheet.py` |
+| `references/music-mv-tools-integration.md`、`scripts/install_mv_tools.ps1`、preflight 的 MV 工具檢查 | 第 9 步完成（2026-11-10；Windows 本機安裝、doctor、huashu 白板片段＋film_gate 通過；完整 MV、對齊模型、繁體補字待實測） |
 
 ## 參考來源
 

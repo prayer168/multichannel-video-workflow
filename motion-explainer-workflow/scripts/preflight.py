@@ -171,6 +171,51 @@ def check_showreel(root):
     return item("Motion Showreel", ok, detail, required=False, hint="" if ok else hint)
 
 
+MV_PINNED = {"mv-director": "79af43a", "huashu-art-motion": "8a0d7d7", "lemo-opuscar": "143f387"}
+MV_PROBE = """import importlib.util as u, importlib.metadata as md, sys
+print(sys.version.split()[0])
+for n in ('numpy', 'playwright', 'cv2', 'torch', 'transformers', 'demucs'):
+    print(n, bool(u.find_spec(n)))
+try: print('tfver', md.version('transformers'))
+except md.PackageNotFoundError: print('tfver', '')
+"""
+
+
+def check_mv_tools(root):
+    """音樂 MV／藝術動畫工具（install_mv_tools.ps1）：選用；做 MV 或借 huashu 解說語法時才需要"""
+    eco = os.path.join(root, "ecosystem")
+    hint = "執行 motion-explainer-workflow/scripts/install_mv_tools.ps1"
+    out = []
+    for name, pinned in MV_PINNED.items():
+        repo = os.path.join(eco, name)
+        if not os.path.isdir(os.path.join(repo, ".git")):
+            out.append(item(name, False, f"找不到 {repo}", required=False, hint=hint))
+            continue
+        rc, txt = run(["git", "-C", repo, "rev-parse", "--short=7", "HEAD"])
+        head = txt.strip() if rc == 0 else "未知"
+        out.append(item(name, head == pinned, f"{head}（釘選 {pinned}）", required=False,
+                        hint="" if head == pinned else "不是釘選版；換版前先審閱"))
+    py = os.path.join(eco, "mv-venv", *(("Scripts", "python.exe") if WIN else ("bin", "python")))
+    if not os.path.isfile(py):
+        out.append(item("MV venv", False, f"找不到 {py}", required=False, hint=hint))
+        return out
+    rc, txt = run([py, "-I", "-c", MV_PROBE])
+    lines = txt.strip().splitlines()
+    got = dict(l.split(" ", 1) if " " in l else (l, "") for l in lines[1:])
+    base = all(got.get(n) == "True" for n in ("numpy", "playwright", "cv2"))
+    out.append(item("MV venv 基本套件", base, f"Python {lines[0] if lines else '?'}；numpy／playwright／opencv "
+                    + ("已安裝" if base else "不齊"), required=False, hint="" if base else hint))
+    tf = got.get("tfver", "")
+    align = got.get("torch") == "True" and tf.split(".")[0].isdigit() and int(tf.split(".")[0]) >= 5
+    out.append(item("MV 逐字對齊（torch＋transformers 5）", align,
+                    f"torch {'已安裝' if got.get('torch') == 'True' else '未安裝'}；transformers {tf or '未安裝'}",
+                    required=False, hint="" if align else "install_mv_tools.ps1 -WithAligner"))
+    stems = got.get("demucs") == "True"
+    out.append(item("MV 分軌（demucs）", stems, "已安裝" if stems else "未安裝", required=False,
+                    hint="" if stems else "install_mv_tools.ps1 -WithStems"))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     default_root = os.path.join(os.path.expanduser("~"), "AI-Video-Tools", "motion-explainer")
@@ -183,6 +228,7 @@ def main():
     checks = [check_node(), check_tool("ffmpeg"), check_tool("ffprobe"), check_fonts(root), check_remotion(root)]
     checks += check_hyperframes(root, doctor=not a.skip_hyperframes_doctor)
     checks.append(check_showreel(root))
+    checks += check_mv_tools(root)
     failed = [c for c in checks if c["required"] and not c["ok"]]
     result = {"root": root, "platform": sys.platform, "ok": not failed, "checks": checks}
 

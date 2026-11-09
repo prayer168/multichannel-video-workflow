@@ -43,6 +43,16 @@
 | 24 | [remotion-bits](https://github.com/av/remotion-bits) | 505 | Remotion 圖表、轉場與文字元件 | API 未回報 SPDX；使用前讀 repo LICENSE，抽查元件品質 |
 | 25 | [Movis](https://github.com/rezoo/movis) | 487 | Python 影片與動態圖形程式庫 | MIT；repo 更新較少，先驗證相依版本與輸出 |
 
+### 2.29.0 補充（2026-11-10 核對並安裝，星數為當日 GitHub 頁面快照；不併入上表排序）
+
+| # | Repo | 星數 | 定位／工作流入口 | 授權／注意事項 |
+|---:|---|---:|---|---|
+| 26 | [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | 14.1k | 66 種程式做片風格的 `STYLE.md`＋示範片；本技能只讀選中的 1–2 份當風格卡來源 | 程式 MIT、樣片 CC BY 4.0；不跑 plugin 安裝；作者註明為 Opus 5.5 調整 |
+| 27 | [huashu-art-motion](https://github.com/alchaincyf/huashu-art-motion) | 6.6k | 53 張藝術風格配方、9 種解說語法（`render.py --spec` 出精準長度片段）、`film_gate.py` 反 PPT 成片門禁 | MIT；角色形象與 Clawd 片段除外；內建中文字型為 GB2312 子集，繁體要補字 |
+| 28 | [mv-director](https://github.com/Yari-tuber/mv-director) | 66 | 音樂 MV：分軌、測拍、逐字強制對齊、歌詞語意分鏡、卡點表、Canvas 逐格渲染與 `check.py` 成片量測 | MIT；對齊模型 Apache-2.0 另行下載（約 1.8 GB）；單一作者、新專案，釘選後才用 |
+
+這三個由 `scripts/install_mv_tools.ps1` 安裝到 `ecosystem\`，用法見 `music-mv-tools-integration.md`。
+
 ## 安裝與引入規則
 
 - 既有 `setup_windows.bat`／`install_windows.ps1` 只安裝本流程實際支援的 Remotion、HyperFrames、Chromium、Node／FFmpeg 與必要字型；本版**不會在背景自動下載或安裝其他 23 個專案**。

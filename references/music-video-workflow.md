@@ -1,6 +1,6 @@
 # 音樂事件驅動的 MV 製作（選用）
 
-本流程用於以歌曲、歌詞和音樂節拍為主軸的 MV／音樂動畫專案。它是一般旁白驅動畫面的專用分支，不取代腳本、品牌、配音、字幕、授權與剪輯規則，也不表示現有 `build.py` 已具備音訊分析或音樂同步功能。需要大量素材、程式動畫、時間軸整理或完整成片驗收時，同時讀取 `video-editing-workflow/SKILL.md`；畫面主要由程式版面和動畫構成時，再評估 `motion-explainer-workflow/SKILL.md`。
+本流程用於以歌曲、歌詞和音樂節拍為主軸的 MV／音樂動畫專案。它是一般旁白驅動畫面的專用分支，不取代腳本、品牌、配音、字幕、授權與剪輯規則，也不表示現有 `build.py` 已具備音訊分析或音樂同步功能；可執行的工具是 2.29.0 起本機安裝的 mv-director（見「用 mv-director 執行」）。需要大量素材、程式動畫、時間軸整理或完整成片驗收時，同時讀取 `video-editing-workflow/SKILL.md`；畫面主要由程式版面和動畫構成時，再評估 `motion-explainer-workflow/SKILL.md`。
 
 ## 啟用條件與界線
 
@@ -53,6 +53,28 @@
 
 修正應具體到鏡號、歌詞句、關鍵詞、音樂事件或畫面動作，例如「副歌第一拍沒有展開主視覺，請修 M08 的動作落點」，避免只說「更有節奏」或「再炸一點」。
 
+## 用 mv-director 執行（2.29.0 起）
+
+上面四步可用本機安裝的 mv-director（釘選 `79af43a`）執行；安裝、字型、授權與驗收細節見 `../motion-explainer-workflow/references/music-mv-tools-integration.md`。`PY` 代表 `%USERPROFILE%\AI-Video-Tools\motion-explainer\ecosystem\mv-venv\Scripts\python.exe`，`S` 代表同層 `mv-director\scripts`；指令一律加 `-I -X utf8`（`-I` 會忽略 `PYTHONUTF8`）。
+
+| 本文件步驟 | mv-director 指令／檔案 | 產出與門檻 |
+|---|---|---|
+| 1 盤點音樂與歌詞 | 準備 `歌.wav`／`.mp3`＋歌詞（帶時間的 `.lrc` 最好；純文字整首不得超過 5 分鐘） | 歌詞與演唱逐字一致，重複句照寫 |
+| 2 音樂事件資料 | `PY -I -X utf8 S\new_project.py <專案> --song 歌 --lyrics 歌詞 --start 秒 --end 秒 --demucs` | `song.json`／`song.md`／`songmap.png`：拍點、小節、段落、大時刻候選；逐字時間來源寫在 `song.md`。沒裝對齊模型時只有整句時間，歌詞不得逐字卡 |
+| 3 語意分鏡與卡點表 | 填 `plan.md`、`cues.json`（`story`、逐句 `board`：says／see／keys），再跑 `PY -I -X utf8 S\cue_lint.py <專案>` | 0 個 ✗。卡點表寫 `bar9`、`line3@詞`，不手寫秒數。只看 `see` 欄就能猜出歌詞意思 |
+| 4 代表片段與渲染 | `S\render.py <專案> lines`／`bars --debug`／`moments` 出靜幀；`render.py <專案> video --draft` 出草稿（960×540、30fps） | 遮住字幕只看靜幀，看得出每句在說什麼 |
+| 4 驗收 | `S\check.py <專案> --draft`，最多三輪；過了再 `render.py <專案> video` 出 1080p60 成片並 `check.py <專案>` | 見下方門檻；成片另過 `film_gate.py` 與 `inspect.mjs qa` |
+
+`check.py` 門檻（上游預設，本技能沿用）：
+
+- 每句歌詞上屏時間在開唱前 0.35 秒到開唱後 0.15 秒之間；唱的期間至少 75% 時間在屏上；歌詞字至少 108 px。
+- 小節頭命中率 ≥ 70%（畫面變化至少是前面的 2 倍算命中），大時刻全部要有畫面大變化。
+- 沒有連續超過 1 秒幾乎不動的畫面。
+- 硬切至少 80% 落在拍上或字上。
+- 畫面運動量和 `cues.json` 計畫的起伏（arc）相關 ≥ 0.4。
+
+這些數字是程式量的下限，不取代人工回放聽檢。
+
 ## 與既有管線的交接
 
 - 本參考文件負責音樂分析、歌詞語意映射與音樂事件時間表。
@@ -63,4 +85,6 @@
 
 ## 來源與限制
 
-方法參考使用者提供的 YouTube 影片《14 个开源项目、将近 160 种画风：AI 写代码做音乐 MV 教程》（https://www.youtube.com/watch?v=jrkfL0V9-oM，檢視日期 2026-11-03）。可用逐字稿與抽看畫面顯示其工作順序包含音軌／節拍分析、歌詞對齊、語意分鏡、風格選擇、事件卡點和成片檢查。這些觀察只作流程設計參考；片中第三方倉庫清單、量化結果及工具細節並未在本文件獨立驗證，也不構成效果保證。
+方法參考使用者提供的 YouTube 影片《14 个开源项目、将近 160 种画风：AI 写代码做音乐 MV 教程》（https://www.youtube.com/watch?v=jrkfL0V9-oM，檢視日期 2026-11-03）。可用逐字稿與抽看畫面顯示其工作順序包含音軌／節拍分析、歌詞對齊、語意分鏡、風格選擇、事件卡點和成片檢查。這些觀察只作流程設計參考，不構成效果保證。
+
+2026-11-10 已核對片中推薦的三個 repo（mv-director、huashu-art-motion、lemo-opuscar）的 README、程式與授權，並在使用者 Windows 本機安裝試跑（不含完整 MV：本次依使用者指示不創作歌曲）；核對結果、釘選版本與未實測項目見 `../motion-explainer-workflow/references/music-mv-tools-integration.md`。片中的星數、畫風數與成效說法仍只代表當時的個案。
