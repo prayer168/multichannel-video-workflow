@@ -1,11 +1,13 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、成片後 YouTube 縮圖與 Shorts 封面、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.29.0（2026-11-10）。**整合音樂 MV 與藝術動畫工具**：核對並在 Windows 本機安裝〈AI 寫程式做音樂 MV〉影片推薦的三個 repo（皆 MIT，釘選版本）——mv-director 負責音樂 MV 的分軌、測拍、逐字對齊、卡點表與 `check.py` 成片量測；huashu-art-motion 提供 9 種解說語法片段與 `film_gate.py` 反 PPT 成片門禁；lemo-opuscar 只當 66 種風格的參考。都不裝成 skill，只叫用腳本；繁體字型、音樂授權、品牌接合與試跑紀錄見 `motion-explainer-workflow/references/music-mv-tools-integration.md`；`references/music-video-workflow.md` 新增 mv-director 指令對照與驗收門檻。完整 MV 試跑待使用者提供有授權的歌曲。
+目前版本：2.30.0（2026-11-14）。兩個頻道的成片後縮圖由 `youtube-thumbnail-strategist/SKILL.md` 處理，含長片三款候選、Shorts 封面影格與上架檔交接。
+
+2.29.0（2026-11-10）：**整合音樂 MV 與藝術動畫工具**：核對並在 Windows 本機安裝〈AI 寫程式做音樂 MV〉影片推薦的三個 repo（皆 MIT，釘選版本）——mv-director 負責音樂 MV 的分軌、測拍、逐字對齊、卡點表與 `check.py` 成片量測；huashu-art-motion 提供 9 種解說語法片段與 `film_gate.py` 反 PPT 成片門禁；lemo-opuscar 只當 66 種風格的參考。都不裝成 skill，只叫用腳本；繁體字型、音樂授權、品牌接合與試跑紀錄見 `motion-explainer-workflow/references/music-mv-tools-integration.md`；`references/music-video-workflow.md` 新增 mv-director 指令對照與驗收門檻。完整 MV 試跑待使用者提供有授權的歌曲。
 
 2.28.0（2026-11-04）：**整合 Motion Showreel 與動態圖文三停點**：本機安裝 ConardLi/garden-skills 的 Motion Showreel（MIT，釘選 `2b9a893`）並叫用其渲染、確定性、文字框景、成片硬指標、工作區預覽與混音腳本；動態圖文類影片只在需求確認、風格幀、匯出前三處停下；brief 增加對標／三種講法／鉤子與記憶點／禁止清單；新增反 PPT 檢查、渲染層對照表、音效提示表、AI 觀測站開源專案片做法；白板＋黑熊雲端試跑通過（`motion-explainer-workflow/references/motion-showreel-integration.md`）。
 
@@ -55,6 +57,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 每個專案必須先選定一個頻道設定檔，並**一定先讀 `references/fixed-settings.md`**（使用者定案的固定設定，兩頻道通用，優先於頻道設定檔的品牌影音條文）。詳細規則在 `references/` 與 `profiles/`，需要時再讀取：
 - `references/fixed-settings.md`：**固定製作設定**——配音（Gemini Achird＋固定 Style；暫定只能用 Zhiwei）、黑熊老師片頭、原創 lo-fi 配樂、黑熊老師講課角色、片尾、Windows 一鍵檔與踩坑紀錄
+- [youtube-thumbnail-strategist/SKILL.md](youtube-thumbnail-strategist/SKILL.md) 負責兩頻道成片後的 YouTube 縮圖，或依需求改版既有縮圖。
 - `references/channel-routing.md`：頻道判定、共用規則與優先順序
 - `profiles/blackbear-science.md`：黑熊老師的自然教室受眾、選題、查證與品牌規則
 - `profiles/ai-watch.md`：AI 觀測站（AI Watch）受眾、選題、查證與品牌規則
@@ -182,7 +185,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 5. 標題、縮圖、說明欄（SEO 版；寫入 04_標題與縮圖.md、製作後/上架文案.txt）
 - 標題候選 × 5，優先清楚、準確、符合該頻道語氣；主要關鍵字自然放入標題，不為了 SEO 堆疊或硬拉長。原有鉤子句型只在符合當前頻道設定檔與使用者要求時使用；不採用聳動、恐嚇、誇大或未經量測的數字承諾。
-- 縮圖文案 × 3（主標 ≤6 字、副標 ≤12 字），依本頻道核定視覺選擇版型；未核定時交付無品牌草稿，並附無文字的主視覺生圖提示詞
+- 先擬三組縮圖文案（主標 ≤6 字、副標 ≤12 字），依本頻道核定視覺選擇版型。成片驗收後依階段 7.1 回看實際畫面，調整文案與標題搭配，再做正式圖。
 - 說明欄：**開頭 1–2 句含關鍵字的摘要（簡短且準確反映本集內容）** → 🔹 內容綱要（章節名稱用觀眾的搜尋詞）/ 🔹 提示詞連結 / 🔹 網站連結 / 🔹 支持 / 🔹 會員目錄 / Hashtag 3–5 個（依重要性排序）
 - 標籤：主要與次要關鍵字、工具名的中英文、簡體寫法、常見錯字，總長 500 字元以內
 - 英文標題與英文說明欄摘要依需求提供；置頂留言（重點＋提示詞連結＋一個問題）
@@ -202,6 +205,10 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 **成片硬指標（2.28.0，所有影片）**：最終檔（已接片頭、黑熊、片尾）交付前執行 Motion Showreel 的 `node <S>/inspect.mjs qa <成片.mp4> --out <qa資料夾> --expect-size 1920x1080 --expect-fps <幀率> --expect-duration <秒> --audio required`（Shorts 用 1080x1920），尺寸、幀率、時長、幀數、音軌、黑格、−14±1.5 LUFS、真峰值 ≤ −1 dBTP 任一項 FAIL 或 NOT CHECKED 都不交付；`<S>` 與安裝見 `motion-explainer-workflow/references/motion-showreel-integration.md`。尚未安裝時沿用 build.py 品質檢查報告並註明。
 **沒有螢幕錄影時**：可以用「逐句暫定配音＋品牌圖卡＋自動組合」先做出粗剪，再替換正式配音（見 references/production-notes.md）。
 **導流設定**：加入主題播放清單（標題含關鍵字）、結束畫面推薦 1 支相關影片、在提到其他工具時插入資訊卡。
+
+### 7.1 成片後製作 YouTube 縮圖
+
+黑熊老師的自然教室與 AI 觀測站的完整影片交付，於正式成片驗收後、上架前，讀取 [縮圖子技能](youtube-thumbnail-strategist/SKILL.md)。以該支成片、最終逐字稿和上架標題做三款長片候選，並為本次製作的每支 Shorts 選封面影格。候選與檢核放在該支影片的 `製作後/縮圖候選/`，核定圖以 `製作後/縮圖.jpg` 交接。只要求企劃或剪輯時，依使用者指定範圍交付。
 
 ### 7.2 製作素材 ZIP 與代理交接
 使用者要求壓縮、素材包或交給 Claude Code／Codex 時，完成腳本、分鏡、動畫提示詞、角色表、實測提示詞與驗收表（適用時），把已有圖片、前集結尾和錄屏一併收錄。按 `references/animation-handoff.md` 與 `references/templates.md` 產生 README、START_HERE、白名單素材清單，執行 `scripts/pack_video_bundle.py` 驗證並打包，提供 ZIP 下載。缺素材列待補，未選旁白分支不能送進 TTS；交接沿用 fixed-settings 與 build-pipeline，不自動發布或換聲線。專案及最終 ZIP 依當前環境的檔案保存規則處理，不把單集素材混入技能。

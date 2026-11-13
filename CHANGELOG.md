@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.30.0] - 2026-11-14
+- 整合 YouTube Thumbnail Strategist V1.1，兩個頻道在成片驗收後製作三款長片縮圖、手機預覽和各支 Shorts 的封面影格。
+- 保留本機 FFmpeg／Pillow 渲染和可選示意圖功能，加入依概念選用指定時間碼、候選資料夾及核定 JPEG 交接。
+
 ## [2.29.0] - 2026-11-10
 ### Added
 - `motion-explainer-workflow/references/music-mv-tools-integration.md`：〈AI 寫程式做音樂 MV〉影片推薦三個 repo 的核對結果與整合方式——mv-director（`79af43a`，叫用腳本做音樂 MV）、huashu-art-motion（`8a0d7d7`，解說語法片段與 `film_gate.py`）、lemo-opuscar（`143f387`，只讀選中的 `STYLE.md`）；安裝路徑、踩坑、衝突時以誰為準、繁體字型、音樂授權、品牌接合、驗收、Windows 試跑紀錄與授權排除項。

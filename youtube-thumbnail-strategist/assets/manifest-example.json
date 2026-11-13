@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "channel_name": "黑熊老師的自然教室",
+  "video_title": "消渴草果莢遇水會如何反應？",
+  "source_evidence": ["示例：影片腳本描述水滴接觸果莢；真實拍攝結果仍待核對"],
+  "status": "planned",
+  "selected_candidate": "A",
+  "candidates": [
+    {"id":"A","type":"wow","hook":"水滴接觸果莢後會發生什麼？","thumbnail_text":"一滴就爆？","paired_title":"水滴碰到果莢會發生什麼事？用實驗找答案","main_subject":"乾燥果莢與水滴","layout":"右側果莢，左側留白","source_type":"illustration","source_reference":"conceptual pending footage check","prompt":"Macro science illustration, pod and approaching water droplet, realistic, no text, no invented result, blank left side, 16:9","score":86,"image_file":null,"qa_status":"not_tested"},
+    {"id":"B","type":"why","hook":"果莢具有怎樣的結構？","thumbnail_text":"植物機關？","paired_title":"植物果莢的奇妙構造：遇水反應實測","main_subject":"果莢近照","layout":"中央放大果莢，少量指向結構的空間","source_type":"illustration","source_reference":"conceptual pending footage check","prompt":"Clean botanical macro illustration of intact pod and surface detail, no text, 16:9","score":82,"image_file":null,"qa_status":"not_tested"},
+    {"id":"C","type":"experiment","hook":"用滴管能驗證水感反應嗎？","thumbnail_text":"真的會開？","paired_title":"用滴管驗證果莢遇水反應：科學探究全紀錄","main_subject":"滴管對準果莢","layout":"左上滴管右下果莢，聚焦滴點","source_type":"illustration","source_reference":"conceptual pending footage check","prompt":"Macro educational illustration of pipette droplet poised above intact seed pod, no text, no fake burst, 16:9","score":80,"image_file":null,"qa_status":"not_tested"}
+  ],
+  "publishing": {"authorized":false,"youtube_video_id":null,"ab_test_notes":"Requires eligible video and YouTube Studio A/B testing; use watch-time-based result."}
+}
