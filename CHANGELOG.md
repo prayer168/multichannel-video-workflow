@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.31.0] - 2026-11-15
+### Changed
+- 主影片與三支 Shorts 剪輯完成後，主影片 YouTube 縮圖（A/B/C 三款）、三支 Shorts 封面、主片 Facebook 分享圖、三支 Shorts Facebook 分享圖共 8 張，全部交由 Codex 調用 Images 2.6 生成（使用者 2026-11-15 定案）。
+- 繁體中文標題由 Images 2.6 直接畫在圖上，逐字核對，不符就重生成，最多 3 次。
+- `youtube-thumbnail-strategist` 升為 v2.0：新增 `references/codex-images-handoff.md`（8 張圖規格、brief 與提示詞範本、`codex exec` 交接指令、重生成規則）；manifest 改為 schema 2.0（`video_kind`、`generator`、`attempts`、`facebook_image`），Shorts 也有自己的 manifest 與 `製作後/縮圖.jpg`。
+- `inspect_images.py` 同時檢查 16:9 縮圖、9:16 Shorts 封面與兩種 Facebook 分享圖尺寸。
+### Removed
+- `youtube-thumbnail-strategist/scripts/render_thumbnails.py`、`references/v1_1-rendering.md`、`assets/v1_1-concepts-example.json` 與 `scripts/fb_cover.py`。不再以截幀或本機疊字當成品，也沒有本機備援；Codex 或 Images 2.6 不能用時只交付 brief（`planned`）。
+
 ## [2.30.0] - 2026-11-14
 - 整合 YouTube Thumbnail Strategist V1.1，兩個頻道在成片驗收後製作三款長片縮圖、手機預覽和各支 Shorts 的封面影格。
 - 保留本機 FFmpeg／Pillow 渲染和可選示意圖功能，加入依概念選用指定時間碼、候選資料夾及核定 JPEG 交接。

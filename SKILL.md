@@ -1,11 +1,13 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、成片後 YouTube 縮圖與 Shorts 封面、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、成片後 YouTube 縮圖、Shorts 封面與 Facebook 分享圖（交由 Codex 調用 Images 2.6）、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.30.0（2026-11-14）。兩個頻道的成片後縮圖由 `youtube-thumbnail-strategist/SKILL.md` 處理，含長片三款候選、Shorts 封面影格與上架檔交接。
+目前版本：2.31.0（2026-11-15）。**縮圖全面改由 Codex 調用 Images 2.6**：主影片與三支 Shorts 剪輯完成後，主影片 YouTube 縮圖（A/B/C 三款）、三支 Shorts 封面、主片與三支 Shorts 的 Facebook 分享圖共 8 張，一律由 Codex 調用 Images 2.6 生成，繁體中文標題直接畫在圖上並逐字核對；不再用截幀或 `fb_cover.py` 當成品，也沒有本機備援。流程見 `youtube-thumbnail-strategist/SKILL.md` 與 `youtube-thumbnail-strategist/references/codex-images-handoff.md`。
+
+2.30.0（2026-11-14）：兩個頻道的成片後縮圖由 `youtube-thumbnail-strategist/SKILL.md` 處理，含長片三款候選、Shorts 封面影格與上架檔交接。
 
 2.29.0（2026-11-10）：**整合音樂 MV 與藝術動畫工具**：核對並在 Windows 本機安裝〈AI 寫程式做音樂 MV〉影片推薦的三個 repo（皆 MIT，釘選版本）——mv-director 負責音樂 MV 的分軌、測拍、逐字對齊、卡點表與 `check.py` 成片量測；huashu-art-motion 提供 9 種解說語法片段與 `film_gate.py` 反 PPT 成片門禁；lemo-opuscar 只當 66 種風格的參考。都不裝成 skill，只叫用腳本；繁體字型、音樂授權、品牌接合與試跑紀錄見 `motion-explainer-workflow/references/music-mv-tools-integration.md`；`references/music-video-workflow.md` 新增 mv-director 指令對照與驗收門檻。完整 MV 試跑待使用者提供有授權的歌曲。
 
@@ -57,7 +59,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 每個專案必須先選定一個頻道設定檔，並**一定先讀 `references/fixed-settings.md`**（使用者定案的固定設定，兩頻道通用，優先於頻道設定檔的品牌影音條文）。詳細規則在 `references/` 與 `profiles/`，需要時再讀取：
 - `references/fixed-settings.md`：**固定製作設定**——配音（Gemini Achird＋固定 Style；暫定只能用 Zhiwei）、黑熊老師片頭、原創 lo-fi 配樂、黑熊老師講課角色、片尾、Windows 一鍵檔與踩坑紀錄
-- [youtube-thumbnail-strategist/SKILL.md](youtube-thumbnail-strategist/SKILL.md) 負責兩頻道成片後的 YouTube 縮圖，或依需求改版既有縮圖。
+- [youtube-thumbnail-strategist/SKILL.md](youtube-thumbnail-strategist/SKILL.md) 負責兩頻道成片後的主影片縮圖、Shorts 封面與 Facebook 分享圖（Codex × Images 2.6），或依需求改版既有縮圖。
 - `references/channel-routing.md`：頻道判定、共用規則與優先順序
 - `profiles/blackbear-science.md`：黑熊老師的自然教室受眾、選題、查證與品牌規則
 - `profiles/ai-watch.md`：AI 觀測站（AI Watch）受眾、選題、查證與品牌規則
@@ -206,9 +208,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 **沒有螢幕錄影時**：可以用「逐句暫定配音＋品牌圖卡＋自動組合」先做出粗剪，再替換正式配音（見 references/production-notes.md）。
 **導流設定**：加入主題播放清單（標題含關鍵字）、結束畫面推薦 1 支相關影片、在提到其他工具時插入資訊卡。
 
-### 7.1 成片後製作 YouTube 縮圖
+### 7.1 成片後製作縮圖與分享圖（Codex × Images 2.6）
 
-黑熊老師的自然教室與 AI 觀測站的完整影片交付，於正式成片驗收後、上架前，讀取 [縮圖子技能](youtube-thumbnail-strategist/SKILL.md)。以該支成片、最終逐字稿和上架標題做三款長片候選，並為本次製作的每支 Shorts 選封面影格。候選與檢核放在該支影片的 `製作後/縮圖候選/`，核定圖以 `製作後/縮圖.jpg` 交接。只要求企劃或剪輯時，依使用者指定範圍交付。
+黑熊老師的自然教室與 AI 觀測站的完整影片交付，於主影片與三支 Shorts 正式成片驗收後、上架前，讀取 [縮圖子技能](youtube-thumbnail-strategist/SKILL.md)。依各支成片、最終逐字稿和上架標題寫 `codex_images_brief.md`，交由 Codex 調用 Images 2.6 生成 8 張圖：主影片 YouTube 縮圖 A/B/C 三款（1280×720）、三支 Shorts 封面（1080×1920）、主片 Facebook 分享圖（1200×630）、三支 Shorts Facebook 分享圖（1080×1350）。繁體中文標題由 Images 2.6 直接畫上並逐字核對。候選與檢核放在該支影片的 `製作後/縮圖候選/`，核定圖以 `製作後/縮圖.jpg` 交接，分享圖放 `製作後/臉書宣傳/`。Codex 或 Images 2.6 無法使用時只交付 brief（`planned`），不改用截幀或本機疊字成品。只要求企劃或剪輯時，依使用者指定範圍交付。
 
 ### 7.2 製作素材 ZIP 與代理交接
 使用者要求壓縮、素材包或交給 Claude Code／Codex 時，完成腳本、分鏡、動畫提示詞、角色表、實測提示詞與驗收表（適用時），把已有圖片、前集結尾和錄屏一併收錄。按 `references/animation-handoff.md` 與 `references/templates.md` 產生 README、START_HERE、白名單素材清單，執行 `scripts/pack_video_bundle.py` 驗證並打包，提供 ZIP 下載。缺素材列待補，未選旁白分支不能送進 TTS；交接沿用 fixed-settings 與 build-pipeline，不自動發布或換聲線。專案及最終 ZIP 依當前環境的檔案保存規則處理，不把單集素材混入技能。
@@ -217,7 +219,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 涉及工具比較、成長計畫或上架優化時必讀 `references/youtube-growth-experiment.md`。先記錄推薦／搜尋／外部流量來源，任何工具勝負或節省時間宣稱均需實測證據。長影片規劃 3 支可獨立觀看的 Shorts；發布後記錄 24h、72h、7d、28d，按數據調整。
 
 ### 7.5 臉書宣傳文（主影片與每支 Shorts 完成時都要製作；放在該支 製作後/臉書宣傳/）
-依使用者先前的固定要求，每支影片完成時一併產出臉書宣傳素材，不需再次詢問；**三支 Shorts 也各自要有一套**（2026-11-03 使用者要求，規格見本節末「Shorts 臉書文」）。文案、圖卡、Hashtag 和 CTA 依所選頻道設定檔；AI Watch 不自動加自然教室品牌標籤。若目前的 `fb_cover.py` 會加上熊掌識別，只能用於自然教室；AI Watch 的圖卡需使用核定品牌素材或無品牌暫代版。產出中文文案、分享圖與複製頁；英文文案按需求：
+依使用者先前的固定要求，每支影片完成時一併產出臉書宣傳素材，不需再次詢問；**三支 Shorts 也各自要有一套**（2026-11-03 使用者要求，規格見本節末「Shorts 臉書文」）。文案、圖卡、Hashtag 和 CTA 依所選頻道設定檔；AI Watch 不自動加自然教室品牌標籤。分享圖由 7.1 的 Codex × Images 2.6 流程生成；熊掌等自然教室識別只用於自然教室，AI Watch 使用核定品牌素材或無品牌設計。產出中文文案、分享圖與複製頁；英文文案按需求：
 1. `臉書文_中文.txt`：活潑風格
    - 開頭一句「反差鉤子」＋ emoji（例：「一堂自然課用滿四套軟體，學生就會比較懂嗎？」）
    - 「影片裡你會看到」列 4–6 點，每行開頭放主題 emoji，寫「畫面」不寫功能規格
@@ -226,14 +228,14 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
    - 結尾 CTA「👉 看影片：【YouTube 連結】」＋一句呼籲分享的玩笑話
    - Hashtag：依頻道與題目；#黑熊老師 僅自然教室使用
 2. `臉書文_英文.txt`（按需求）：用英語圈語感重寫（不逐句翻譯），連結佔位字 `[YouTube link]`，Hashtag 依本頻道與題目，不固定 #EdTech；**機構、地名的英文名稱不確定時不要猜**，改寫成城市名
-3. `臉書分享圖_1200x630.png`：下列熊掌版指令僅自然教室使用，AI Watch 另製核定或無品牌圖卡，不呼叫此腳本（`--badge` 未指定仍可能自動尋找熊掌，沒有關閉品牌選項）。`python scripts/fb_cover.py <專案> --image <最溫暖、有人物的畫面> --kicker 小標 --title 第一行 --title2 第二行 --chips 工具A 工具B --footer 日期或一句話`；產生後用 Read 看一次，確認沒有跑版
+3. `臉書分享圖_1200x630.png`：交由 Codex 調用 Images 2.6 生成（規格見 `youtube-thumbnail-strategist/references/codex-images-handoff.md`）。以主片核定縮圖的概念重新構圖成 1200×630，參考影格選最溫暖、有人物的畫面；小標、主標照本支臉書文案逐字寫進 brief。產生後用 Read 看一次，確認文字逐字正確、沒有跑版
 4. `facebook-post.html`：`python scripts/fb_post.py <專案> --channel <blackbear-science或ai-watch> --title 影片名稱`（中英雙語、「複製」「複製全部」按鈕，雙擊用瀏覽器開啟即可）
 - 影片上傳 YouTube 後：`python scripts/fb_post.py <專案> --channel <blackbear-science或ai-watch> --url <YouTube網址>`，會另存含連結的 .txt 並更新複製頁（原稿不覆寫）
 - 回覆使用者時直接貼出中文文案全文，並附上實際產出檔案的位置
 - **提醒使用者貼文方式（2026-10-01 踩坑：貼出後沒有縮圖）**：臉書的連結預覽卡只在「發文前」產生，發出後編輯也補不回來。做法：①影片上傳後等幾分鐘，先到分享偵錯工具 https://developers.facebook.com/tools/debug/ 貼上 YouTube 網址按「再次抓取」，確認看得到縮圖；②發文時**先只貼網址**，等預覽卡出現，再貼上文案（不要按預覽卡上的 ✕）；③已經發出、沒有縮圖的貼文：刪掉重發，或編輯貼文加上 `臉書分享圖_1200x630.png`（只是圖片，點了不會連到影片）
 - **Shorts 臉書文**（每支 Shorts 一套，放在 `02_/03_/04_Shorts_…/製作後/臉書宣傳/`；不需再次詢問）：
   1. `臉書文_中文.txt`：比主影片短（約 80–150 字）。第一行用該支 Shorts 的鉤子問句＋emoji；2–3 行重點（每行一個 emoji、一個事實，數字與日期照逐字稿，不新增查證外的說法）；`👉 30 秒看懂：【YouTube 連結】`；`完整比較看長片：【長片連結】`；一句留言提問；Hashtag 3–6 個，依頻道規則（AI Watch 不加 #黑熊老師）。三支的開頭和重點不可重複，各自對應該支主題
-  2. `臉書分享圖_1080x1350.png`（直式 4:5）：從**未疊黑熊的動畫畫面**取資訊量最多的一格（標題＋重點卡片都已出現，例如該支重點那一句的句尾；不用開場只有標題的空畫面），裁上方 1080×1350（`ffmpeg -ss <秒> -i <動畫.mp4> -frames:v 1 -vf crop=1080:1350:0:0`）；AI Watch 不加熊掌品牌；產生後用 Read 看一次，確認沒有半截角色或卡片被切
+  2. `臉書分享圖_1080x1350.png`（直式 4:5）：交由 Codex 調用 Images 2.6 生成，以該支 Shorts 封面的概念重新構圖成 1080×1350；參考影格取資訊量最多的一格（標題＋重點卡片都已出現）。AI Watch 不加熊掌品牌；產生後用 Read 看一次，確認文字逐字正確、沒有半截角色或卡片被切
   3. `facebook-post.html`：`python scripts/fb_post.py <該支 Shorts 資料夾> --channel <頻道> --title <Shorts 標題>`；兩支影片都上傳後 `--url <Shorts網址> --long-url <長片網址>` 重跑，另存含連結的 .txt
   4. 發文建議：Shorts 網址的臉書預覽卡常是直式裁切或沒有縮圖，建議用「上傳分享圖＋文案（連結放文內）」的方式發；不同支間隔 1–2 天發，接在長片貼文之後
   5. 回覆使用者時貼出三支的中文文案全文，並附各支臉書宣傳資料夾的位置

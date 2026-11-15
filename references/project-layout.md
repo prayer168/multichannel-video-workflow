@@ -44,7 +44,7 @@
 
 ## YouTube 縮圖交接
 
-依 [縮圖子技能](../youtube-thumbnail-strategist/SKILL.md) 把候選、報告與手機預覽集中在單支影片的 `製作後/縮圖候選/`。已核定的長片圖匯出為真正的 JPEG `製作後/縮圖.jpg`。Shorts 在各自的候選資料夾記錄直式影片的封面時間碼，並可把核定影格存成同名 JPEG 供核對。上架依 YouTube 當時介面選取對應影格。
+依 [縮圖子技能](../youtube-thumbnail-strategist/SKILL.md)，主影片縮圖、三支 Shorts 封面和四張 Facebook 分享圖都由 Codex 調用 Images 2.6 生成。參考影格、`codex_images_brief.md`、Codex 報告、候選、manifest 與手機預覽集中在單支影片的 `製作後/縮圖候選/`。核定的主片縮圖（1280×720）和各支 Shorts 封面（1080×1920）都匯出為真正的 JPEG `製作後/縮圖.jpg`；分享圖存為 `製作後/臉書宣傳/臉書分享圖_1200x630.png`（主片）或 `臉書分享圖_1080x1350.png`（Shorts）。
 
 ## 正式成片與時間戳
 
