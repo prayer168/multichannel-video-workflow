@@ -1,5 +1,6 @@
 {
   "channel_name": "黑熊老師的自然教室",
+  "video_kind": "long",
   "video_path": null,
   "transcript_path": null,
   "script_path": null,
@@ -7,9 +8,10 @@
   "description": "",
   "target_audience": ["科普觀眾", "國小高年級學生", "教師"],
   "verified_key_moments": [],
-  "available_source_assets": [],
+  "reference_frames": [],
   "brand_asset_paths": [],
-  "output_directory": "./output/youtube-thumbnail",
-  "image_generation_available": false,
+  "output_directory": "製作後/縮圖候選",
+  "codex_available": false,
+  "image_model": "Images 2.6",
   "publication_authorized": false
 }

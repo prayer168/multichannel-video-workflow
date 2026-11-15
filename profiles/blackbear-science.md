@@ -108,7 +108,7 @@
 - 正式片尾使用上述核定路徑；替換或新版本須另記核定狀態。
 - 使用黑熊老師品牌色、熊掌／黑熊老師識別與自然科相關畫面；不得使用 PAPAYA 的 Logo、音樂、片頭或其他專屬素材。
 
-片頭音訊、延伸版與浮水印路徑見 `../references/intro-spec.md`；素材不隨 repo 發送，檔案存在與授權狀態須另確認。片尾已核定，旁白結語與片尾影音仍分別檢查。`build.py` 沒有獨立片尾影音欄位，接入方式見 `../references/build-pipeline.md`。社群使用自然教室文案、熊掌版 `fb_cover.py` 與 `fb_post.py --channel blackbear-science`；英文按需求。
+片頭音訊、延伸版與浮水印路徑見 `../references/intro-spec.md`；素材不隨 repo 發送，檔案存在與授權狀態須另確認。片尾已核定，旁白結語與片尾影音仍分別檢查。`build.py` 沒有獨立片尾影音欄位，接入方式見 `../references/build-pipeline.md`。社群使用自然教室文案、Codex × Images 2.6 生成的熊掌版分享圖 與 `fb_post.py --channel blackbear-science`；英文按需求。
 
 ## 成效與隱私檢查
 - 檢查概念是否正確、年級是否合適、步驟是否可重現、學生資訊是否安全、字幕是否清楚。

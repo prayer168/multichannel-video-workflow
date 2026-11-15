@@ -3,11 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.30.0（2026-11-14）
+**Version:** 2.31.0（2026-11-15）
 
 ## 成片後的 YouTube 縮圖
 
-[YouTube 縮圖子技能](youtube-thumbnail-strategist/SKILL.md) 源自 YouTube Thumbnail Strategist V1.1，供黑熊老師的自然教室和 AI 觀測站使用。正式成片驗收後，長片用實際畫面做三款縮圖與手機預覽，Shorts 各自從直式成片選封面影格。候選和檢核放入 `製作後/縮圖候選/`，核定 JPEG 以 `製作後/縮圖.jpg` 交接。預設以 FFmpeg 和 Pillow 在本機處理。
+[YouTube 縮圖子技能](youtube-thumbnail-strategist/SKILL.md) v2.0 供黑熊老師的自然教室和 AI 觀測站使用。主影片與三支 Shorts 剪輯完成後，主影片縮圖 A/B/C 三款、三支 Shorts 封面、主片與三支 Shorts 的 Facebook 分享圖共 8 張，**一律交由 Codex 調用 Images 2.6 生成**，繁體中文標題直接畫在圖上並逐字核對。規劃端從成片取參考影格、寫 `codex_images_brief.md`，在 Claude Code 中以 `codex exec` 交給 Codex；候選和檢核放入 `製作後/縮圖候選/`，核定 JPEG 以 `製作後/縮圖.jpg` 交接，分享圖放 `製作後/臉書宣傳/`。不再用截幀或 `fb_cover.py` 當成品，Codex 不能用時只交付 brief。規格與指令見 [Codex 生圖交接](youtube-thumbnail-strategist/references/codex-images-handoff.md)。
 
 ## YouTube 上架技能
 
@@ -262,8 +262,8 @@
 | 6.5 一鍵產生影片 | `scripts/build/build.py`：依腳本＋畫面規格一次輸出影片（Gemini TTS 配音並自動清除頭尾雜訊、41 種圖卡含全幅照片、9 種教學模擬動畫、運鏡、7 種電影轉場、電影黑邊、配樂依相似度剪接、中英字幕、章節、品質報告）；`--voice timing` 可在沒有配音時先看畫面預覽 |
 | 7. 發布 | 依頻道品牌與授權條款檢查配樂、字幕、播放清單、結束畫面導流與發布設定 |
 | 7.2 製作素材包 | README、START_HERE、白名單素材清單、實測驗收資料與已有圖片；ZIP 附缺件清單、CRC 和 SHA-256 驗證 |
-| 7.5 臉書宣傳文 | 影片完成時一併製作符合所選頻道品牌的宣傳文與分享圖；熊掌版 `fb_cover.py` 僅用於自然教室，AI Watch 使用核定素材或無品牌暫代版 |
-| 7.1 成片後縮圖 | 長片三款候選與手機預覽，Shorts 各自選取封面影格，核定圖交接上架 |
+| 7.5 臉書宣傳文 | 影片完成時一併製作符合所選頻道品牌的宣傳文；分享圖由 Codex 調用 Images 2.6 生成，熊掌識別僅用於自然教室 |
+| 7.1 成片後縮圖 | Codex 調用 Images 2.6 生成主片三款候選、三支 Shorts 封面與四張 Facebook 分享圖，逐字核對後交接上架 |
 | 8. 發布後 SEO 優化 | 點閱率、流量來源、搜尋字詞報表 → 調整標題、說明欄、縮圖 |
 
 ## 共用教學方法與頻道識別
@@ -286,19 +286,19 @@
 multichannel-video-workflow/
 ├── SKILL.md                 技能主檔（工作流程 + 核心規則）
 ├── video-editing-workflow/SKILL.md  獨立剪輯技能（與企劃技能共用交接契約）
-├── youtube-thumbnail-strategist/   成片後 YouTube 縮圖與 Shorts 封面子技能
+├── youtube-thumbnail-strategist/   成片後縮圖、Shorts 封面與 Facebook 分享圖子技能（Codex × Images 2.6）
 ├── motion-explainer-workflow/       動態圖文子技能（目前 0.6.0）：SKILL.md、scripts/preflight.py、scripts/setup_windows.bat；references／template 依建置順序補上
 ├── README.md                本檔
 ├── CHANGELOG.md             版本紀錄（Keep a Changelog 格式）
 ├── History.md               開發歷程：每版的背景、實作案例與學到的事
 ├── VERSION                  目前版本號
 ├── tests/test_fb_post.py     Facebook 頻道隔離、選用英文與保留原稿的 CLI 回歸測試
+├── tests/test_thumbnail_tools.py  縮圖 manifest（Codex × Images 2.6）與 8 種圖片尺寸檢查
 ├── scripts/
 │   ├── topic_radar.py       抓 GitHub、Hugging Face、Hacker News 熱度原始資料
 │   ├── seo_keywords.py      YouTube 搜尋建議＋競爭分析（SEO 關鍵字研究）
 │   ├── pack_video_bundle.py 白名單素材 ZIP、缺件清單與完整性驗證
 │   ├── md2txt.py            上架文案 .txt＋YouTube標記.txt＋置頂留言.txt
-│   ├── fb_cover.py          臉書分享圖 1200×630
 │   ├── fb_post.py           臉書文一鍵複製頁（中英雙語；上傳後可代入 YouTube 網址）
 │   └── build/               一鍵產生影片：build.py、cards_lib.py（41 種圖卡版型）、anims_lib.py（教學模擬動畫）、say_batch.ps1、
 │                            bear_presenter.py（黑熊老師講課）、append_outro.py（接片尾）、subs_oneline.py（單行字幕軌；--burn 才燒錄）、narration_noise_check.py（去除摩擦聲／爆音檢核）、build_video.bat、make_narration.bat／make_narration.py（Gemini 旁白）
@@ -345,7 +345,7 @@ multichannel-video-workflow/
 
 `build.py` 實際要求 `intro`、`intro_audio`、`watermark`、`bgm` 檔案，不支援 `outro`／`outro_audio` 或自動讀取 profiles。片尾可作最後一幕的畫面，但完整影音／長度需後製接入。無品牌預覽也須建立真實中性或靜音／透明檔案；不能拿待建立文字當路徑。詳見 `references/build-pipeline.md`。
 
-`fb_cover.py` 有熊掌自動尋找邏輯，沒有無品牌開關，只用於自然教室。AI Watch 另製核定或無品牌分享圖。`fb_post.py --channel ai-watch`／`--channel blackbear-science` 指定頁尾；不指定為中性頁尾，英文文案可省略。之後用 `--url` 更新時仍帶相同 channel。所有宣傳文案、標籤與 CTA 依本頻道。
+臉書分享圖改由 Codex 調用 Images 2.6 生成（`fb_cover.py` 已於 2.31.0 移除）；熊掌識別只用於自然教室。`fb_post.py --channel ai-watch`／`--channel blackbear-science` 指定頁尾；不指定為中性頁尾，英文文案可省略。之後用 `--url` 更新時仍帶相同 channel。所有宣傳文案、標籤與 CTA 依本頻道。
 
 ## 安裝
 
@@ -409,6 +409,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.31.0 | 2026-11-15 | 主影片縮圖、三支 Shorts 封面與四張 Facebook 分享圖全部交由 Codex 調用 Images 2.6 生成；移除本機截幀渲染與 `fb_cover.py` |
 | 2.30.0 | 2026-11-14 | 整合 YouTube Thumbnail Strategist V1.1，兩頻道的成片縮圖、Shorts 封面與核定稿交接 |
 | 2.29.0 | 2026-11-10 | 整合 mv-director、huashu-art-motion 與 lemo-opuscar |
 | 2.28.0 | 2026-11-04 | 整合 Motion Showreel（本機安裝、叫用腳本）；動態圖文三停點；成片硬指標關卡；brief 對標／三講法／記憶點／禁止清單；反 PPT 檢查、渲染層對照表、音效提示表；白板＋黑熊試跑 |
