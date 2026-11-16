@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.31.0（2026-11-15）。**縮圖全面改由 Codex 調用 Images 2.6**：主影片與三支 Shorts 剪輯完成後，主影片 YouTube 縮圖（A/B/C 三款）、三支 Shorts 封面、主片與三支 Shorts 的 Facebook 分享圖共 8 張，一律由 Codex 調用 Images 2.6 生成，繁體中文標題直接畫在圖上並逐字核對；不再用截幀或 `fb_cover.py` 當成品，也沒有本機備援。流程見 `youtube-thumbnail-strategist/SKILL.md` 與 `youtube-thumbnail-strategist/references/codex-images-handoff.md`。
+目前版本：2.32.0（2026-11-16）。**旁白逐字時間與同步元件正式收錄**：`scripts/build/narration_word_timing.py` 用本機 whisper.cpp 把定稿旁白逐字對回配音，輸出 `words.json`（每句、每字開口秒數），讓動作落在關鍵詞開口那一刻；同一支工具兼作配音內容核對（整段辨識出現簡體、跳句或重複時先切段重聽，不直接判定配音離稿）。`motion-explainer-workflow/template/narration-sync-components/` 是「給時間 t 回傳 SVG」的同步元件庫與試片。說明見 `motion-explainer-workflow/references/narration-sync-components.md`。
+
+2.31.0（2026-11-15）：**縮圖全面改由 Codex 調用 Images 2.6**：主影片與三支 Shorts 剪輯完成後，主影片 YouTube 縮圖（A/B/C 三款）、三支 Shorts 封面、主片與三支 Shorts 的 Facebook 分享圖共 8 張，一律由 Codex 調用 Images 2.6 生成，繁體中文標題直接畫在圖上並逐字核對；不再用截幀或 `fb_cover.py` 當成品，也沒有本機備援。流程見 `youtube-thumbnail-strategist/SKILL.md` 與 `youtube-thumbnail-strategist/references/codex-images-handoff.md`。
 
 2.30.0（2026-11-14）：兩個頻道的成片後縮圖由 `youtube-thumbnail-strategist/SKILL.md` 處理，含長片三款候選、Shorts 封面影格與上架檔交接。
 
@@ -80,6 +82,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `motion-explainer-workflow/references/studio-style-production.md`：**風格導向動態圖文製作**——簡短 brief、風格卡、結構化分鏡、可尋幀時間軸、依分鏡規模審靜幀及成片驗收；製作程式化動態圖文、動態標題卡、片頭或循環動畫時和動態圖文子技能一併讀取。
 - `motion-explainer-workflow/references/motion-graphics-ecosystem.md`：**25 個 Motion Graphics GitHub 專案目錄與整合選型**——星數快照、用途、安裝／參考方式、授權與維護注意事項；依畫面需求挑工具，不批次複製 repo 或混裝相依套件。
 - `motion-explainer-workflow/references/code-motion-prompt-workflow.md`：**AI 程式動態圖形與動態簡報**——風格／技術／時間 brief、隔離試作、檢查迭代、配方泛化測試、模型比較和正式影片 renderer 交接。
+- `motion-explainer-workflow/references/narration-sync-components.md`、`scripts/build/narration_word_timing.py`：**旁白逐字時間與同步元件**——whisper.cpp 逐字對齊產生 `words.json`、落點寫法（`S03@詞#2`）、兼作配音內容核對、同步元件庫與試片；配音到齊後與動畫對時都讀取。
 - `motion-explainer-workflow/references/motion-showreel-integration.md`：**Motion Showreel 整合與三停點**——逐字稿分析與採納判斷、安裝（含上游 lockfile 踩坑）、與固定設定衝突時以誰為準、三停點流程、頻道風格候選、音效提示表、程式判定的成片硬指標、白板＋黑熊試跑紀錄；動態圖文類影片必讀。
 - `motion-explainer-workflow/references/awesome-ai-motion-integration.md`：**Awesome AI Motion 雙 repo 整合**——guanmo-ai 用於作品／來源檢索，gongnyang 用於動效卡／配方／短片試作；安裝路徑、Windows 重複安裝腳本、素材授權與正式渲染交接規則。
 - `references/music-video-workflow.md`：**音樂事件驅動的 MV 選用流程**——音樂／歌詞授權、節拍與人聲時間校準、歌詞語意分鏡、卡點表及成片驗收；製作音樂 MV、歌詞動畫或節拍同步視覺時讀取，並搭配 `video-editing-workflow/SKILL.md`；2.29.0 起附 mv-director 指令對照與 `check.py` 門檻。
@@ -196,7 +199,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 6. 配音稿
 一律依 `references/fixed-settings.md`：**AI Studio 產生與下載 WAV 一律由 AI 操作**（選 Achird、貼 Style、Run、下載、在使用者電腦確認檔案、改名 `Sxx-Syy.wav` 歸檔），不請使用者手動下載。正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/make_narration.py`、`make_narration.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
-**配音到齊後先跟核定聲線比聽**（`assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3`；語速不足時改 Style 重新產生，不可事後拉速）。**配音到齊後必做兩項檢核**（`references/fixed-settings.md` 第一節）：① `scripts/build/narration_noise_check.py` 去除摩擦聲／爆音（Gemini WAV 檔尾常有比人聲還大的短爆音），修到「摩擦／爆音」0 處；② 長度異常時用語音辨識核對是否離稿；③ `scripts/build/voice_consistency_check.py` 聲線一致性檢核（2.17.0），偏離句與接縫列成聆聽清單交給使用者確認，不一致就整幕重做直到一致。成片輸出前再對最終旁白軌跑一次 ① 和 ③。
+**配音到齊後先跟核定聲線比聽**（`assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3`；語速不足時改 Style 重新產生，不可事後拉速）。**配音到齊後必做兩項檢核**（`references/fixed-settings.md` 第一節）：① `scripts/build/narration_noise_check.py` 去除摩擦聲／爆音（Gemini WAV 檔尾常有比人聲還大的短爆音），修到「摩擦／爆音」0 處；② 用 `scripts/build/narration_word_timing.py` 語音辨識核對是否離稿（同時產生動畫對時用的 `words.json`）；③ `scripts/build/voice_consistency_check.py` 聲線一致性檢核（2.17.0），偏離句與接縫列成聆聽清單交給使用者確認，不一致就整幕重做直到一致。成片輸出前再對最終旁白軌跑一次 ① 和 ③。
 
 ### 7. 剪輯指示與發布檢查
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。

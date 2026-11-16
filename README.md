@@ -3,7 +3,14 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.31.0（2026-11-15）
+**Version:** 2.32.0（2026-11-16）
+
+## 2.32.0：旁白逐字時間與同步元件
+
+- **`scripts/build/narration_word_timing.py`**：已知定稿旁白，用本機 whisper.cpp（medium）聽一次配音，把每個字對回旁白文字，輸出 `words.json`（每句、每字的開口秒數，精度約 0.1–0.2 秒）。畫面程式只寫落點（`S03@沉積物`、`S03@一層#2`），換配音後重跑就自動對齊。
+- **兼作配音內容核對**：每句依序對上、結尾時間接近音檔長度就代表沒有離稿；「辨識差異」多半是同音字。整段辨識出現簡體、跳句或重複時，先切段帶時間碼重聽，不直接判定配音有問題（2026-11-16《臺灣天空的守望者》實例）。
+- **`motion-explainer-workflow/template/narration-sync-components/`**：給時間 t 回傳 SVG 的同步元件庫（章節導覽、翻牌空位、標籤、印章、標註）與 21 秒試片；字型與逐幀渲染腳本不隨 repo 提供。
+- 說明：[motion-explainer-workflow/references/narration-sync-components.md](motion-explainer-workflow/references/narration-sync-components.md)。動態圖文子技能升為 0.10.0。
 
 ## 成片後的 YouTube 縮圖
 
@@ -409,6 +416,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.32.0 | 2026-11-16 | 收錄旁白逐字時間 `narration_word_timing.py`（兼作配音內容核對）與旁白同步元件庫；新增說明文件 |
 | 2.31.0 | 2026-11-15 | 主影片縮圖、三支 Shorts 封面與四張 Facebook 分享圖全部交由 Codex 調用 Images 2.6 生成；移除本機截幀渲染與 `fb_cover.py` |
 | 2.30.0 | 2026-11-14 | 整合 YouTube Thumbnail Strategist V1.1，兩頻道的成片縮圖、Shorts 封面與核定稿交接 |
 | 2.29.0 | 2026-11-10 | 整合 mv-director、huashu-art-motion 與 lemo-opuscar |
