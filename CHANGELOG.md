@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.33.0] - 2026-11-16
+### Added
+- `youtube-publish`：完整批次在主片 Facebook 宣傳貼文公開後，另將三支 Shorts 的直式影片發布為三支 Facebook Reels（「陳無敵」個人檔案），F+1、F+2、F+3 台灣時間 20:00 排程，與 YouTube Shorts 同步（2026-11-13 使用者指定）。`references/facebook-workflow.md` 新增「Facebook Reels 影片」一節：素材對應、文案來源、時程、查重、核實與待處理規則。
+### Changed
+- `youtube-publish/SKILL.md` 描述與預設範圍加入 Facebook Reels。
+- `youtube-publish/assets/publish-manifest.example.json`：三支 Shorts 加入 `thumbnail`（`製作後/縮圖.jpg`）。
+### Notes
+- 上述修改先前只存在使用者電腦的 Codex 技能副本（`~/.agents/skills/multichannel-video-workflow`、`~/.codex/skills/youtube-publish`），未提交；本版收進 repo 後各處同步。
+
 ## [2.32.0] - 2026-11-16
 ### Added
 - `scripts/build/narration_word_timing.py`：whisper.cpp 逐字對齊定稿旁白，輸出 `words.json`；`--cue` 查落點秒數（`S03@詞#2`）。原本只存在本機、未提交。
