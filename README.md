@@ -3,7 +3,15 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.32.0（2026-11-16）
+**Version:** 2.33.0（2026-11-16）
+
+## 2.33.0：上架流程加入 Facebook Reels
+
+- [youtube-publish](youtube-publish/SKILL.md) 的完整批次（1 主片＋3 Shorts）在主片臉書宣傳貼文公開後，另把三支 Shorts 的直式影片發成三支 **Facebook Reels**，目的地為「陳無敵」個人檔案（2026-11-13 使用者指定）。
+- 時程：以主片臉書貼文實際公開的台灣日期為 F，Reels 01、02、03 排在 F+1、F+2、F+3 的 20:00（Asia/Taipei），與 YouTube Shorts 同步。
+- Reels 是影片，不以一般貼文、附圖或 YouTube 連結代替；操作前查重，儲存後逐支核實影片、目的地與排程時間，結果記入 `Facebook發布結果.md`。平台不支援排程或時間已過時標記待處理並回報，不擅自立即發布。細節見 [facebook-workflow.md](youtube-publish/references/facebook-workflow.md)。
+- 上架 manifest 範例的三支 Shorts 加入 `thumbnail`（各支 `製作後/縮圖.jpg`），配合 2.31.0 的 Shorts 封面流程。
+- 這些修改原本只存在使用者電腦的 Codex 技能副本，本版正式收進 repo，所有電腦同步。
 
 ## 2.32.0：旁白逐字時間與同步元件
 
@@ -416,6 +424,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.33.0 | 2026-11-16 | 上架流程加入三支 Facebook Reels（陳無敵個人檔案，與 Shorts 同步排程）；manifest 範例 Shorts 加縮圖 |
 | 2.32.0 | 2026-11-16 | 收錄旁白逐字時間 `narration_word_timing.py`（兼作配音內容核對）與旁白同步元件庫；新增說明文件 |
 | 2.31.0 | 2026-11-15 | 主影片縮圖、三支 Shorts 封面與四張 Facebook 分享圖全部交由 Codex 調用 Images 2.6 生成；移除本機截幀渲染與 `fb_cover.py` |
 | 2.30.0 | 2026-11-14 | 整合 YouTube Thumbnail Strategist V1.1，兩頻道的成片縮圖、Shorts 封面與核定稿交接 |

@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.32.0（2026-11-16）。**旁白逐字時間與同步元件正式收錄**：`scripts/build/narration_word_timing.py` 用本機 whisper.cpp 把定稿旁白逐字對回配音，輸出 `words.json`（每句、每字開口秒數），讓動作落在關鍵詞開口那一刻；同一支工具兼作配音內容核對（整段辨識出現簡體、跳句或重複時先切段重聽，不直接判定配音離稿）。`motion-explainer-workflow/template/narration-sync-components/` 是「給時間 t 回傳 SVG」的同步元件庫與試片。說明見 `motion-explainer-workflow/references/narration-sync-components.md`。
+目前版本：2.33.0（2026-11-16）。**上架流程加入 Facebook Reels**：`youtube-publish` 完整批次在主片臉書宣傳貼文公開後，另把三支 Shorts 的直式影片發成三支 Facebook Reels（「陳無敵」個人檔案），以主片臉書貼文公開日 F 為準，F+1、F+2、F+3 台灣時間 20:00 排程，與 Shorts 同步；Reels 是影片，不以一般貼文或附圖代替，逐支查重並核實排程（2026-11-13 使用者指定，見 `youtube-publish/references/facebook-workflow.md`）。上架 manifest 範例的 Shorts 加入 `thumbnail`（各支 `製作後/縮圖.jpg`）。
+
+2.32.0（2026-11-16）：**旁白逐字時間與同步元件正式收錄**：`scripts/build/narration_word_timing.py` 用本機 whisper.cpp 把定稿旁白逐字對回配音，輸出 `words.json`（每句、每字開口秒數），讓動作落在關鍵詞開口那一刻；同一支工具兼作配音內容核對（整段辨識出現簡體、跳句或重複時先切段重聽，不直接判定配音離稿）。`motion-explainer-workflow/template/narration-sync-components/` 是「給時間 t 回傳 SVG」的同步元件庫與試片。說明見 `motion-explainer-workflow/references/narration-sync-components.md`。
 
 2.31.0（2026-11-15）：**縮圖全面改由 Codex 調用 Images 2.6**：主影片與三支 Shorts 剪輯完成後，主影片 YouTube 縮圖（A/B/C 三款）、三支 Shorts 封面、主片與三支 Shorts 的 Facebook 分享圖共 8 張，一律由 Codex 調用 Images 2.6 生成，繁體中文標題直接畫在圖上並逐字核對；不再用截幀或 `fb_cover.py` 當成品，也沒有本機備援。流程見 `youtube-thumbnail-strategist/SKILL.md` 與 `youtube-thumbnail-strategist/references/codex-images-handoff.md`。
 
