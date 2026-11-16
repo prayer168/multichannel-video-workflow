@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.32.0] - 2026-11-16
+### Added
+- `scripts/build/narration_word_timing.py`：whisper.cpp 逐字對齊定稿旁白，輸出 `words.json`；`--cue` 查落點秒數（`S03@詞#2`）。原本只存在本機、未提交。
+- `motion-explainer-workflow/template/narration-sync-components/`：旁白同步元件庫 `components.js`（tabs、slots、tag、stamp、label）與試片 `index.html`。原本只存在本機、未提交。
+- `motion-explainer-workflow/references/narration-sync-components.md`：上述兩者的用法、落點語法、時間規則、配音內容核對（含 whisper 辨識假象的切段重聽做法），以及未隨 repo 提供的字型與逐幀渲染腳本說明。兩個檔案原本就引用這份文件，但文件不存在。
+### Changed
+- `SKILL.md` 階段 6 的語音辨識核對改為指定使用 `narration_word_timing.py`，並同時產生動畫對時用的 `words.json`；參考清單加入新文件。
+- 動態圖文子技能升為 0.10.0。
+
 ## [2.31.0] - 2026-11-15
 ### Changed
 - 主影片與三支 Shorts 剪輯完成後，主影片 YouTube 縮圖（A/B/C 三款）、三支 Shorts 封面、主片 Facebook 分享圖、三支 Shorts Facebook 分享圖共 8 張，全部交由 Codex 調用 Images 2.6 生成（使用者 2026-11-15 定案）。

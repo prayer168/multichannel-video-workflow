@@ -5,7 +5,9 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 
 # 動態圖文剪輯工作流（motion-explainer-workflow）
 
-版本 0.9.0（2026-11-10）。**整合音樂 MV 與藝術動畫工具**：本機安裝並釘選 mv-director（`79af43a`，音樂 MV：分軌、測拍、逐字對齊、卡點表、`check.py` 成片量測）、huashu-art-motion（`8a0d7d7`，9 種解說語法片段與 `film_gate.py` 反 PPT 門禁）、lemo-opuscar（`143f387`，66 種風格只讀選中的 `STYLE.md`）；都不裝成 skill／plugin，只叫用腳本。新增 `scripts/install_mv_tools.ps1`（共用 Python 3.12 venv；torch／demucs／對齊模型選用）、preflight 選用檢查。兩個 repo 的中文字型都是簡體子集，繁體要先補字。Windows 本機試跑：安裝、doctor、白板片段渲染與 film_gate 通過；完整 MV 待有授權歌曲。詳見 `references/music-mv-tools-integration.md`。
+版本 0.10.0（2026-11-16）。**旁白逐字時間與同步元件**：主技能 `scripts/build/narration_word_timing.py` 產生 `words.json`，`template/narration-sync-components/` 提供以關鍵詞落點驅動的 SVG 元件與試片；畫面程式只寫句 ID＋旁白原詞（`S03@詞`），不寫秒數。詳見 `references/narration-sync-components.md`。
+
+0.9.0（2026-11-10）：**整合音樂 MV 與藝術動畫工具**：本機安裝並釘選 mv-director（`79af43a`，音樂 MV：分軌、測拍、逐字對齊、卡點表、`check.py` 成片量測）、huashu-art-motion（`8a0d7d7`，9 種解說語法片段與 `film_gate.py` 反 PPT 門禁）、lemo-opuscar（`143f387`，66 種風格只讀選中的 `STYLE.md`）；都不裝成 skill／plugin，只叫用腳本。新增 `scripts/install_mv_tools.ps1`（共用 Python 3.12 venv；torch／demucs／對齊模型選用）、preflight 選用檢查。兩個 repo 的中文字型都是簡體子集，繁體要先補字。Windows 本機試跑：安裝、doctor、白板片段渲染與 film_gate 通過；完整 MV 待有授權歌曲。詳見 `references/music-mv-tools-integration.md`。
 
 0.8.0（2026-11-04）：**整合 Motion Showreel（ConardLi/garden-skills，MIT，釘選 `2b9a893`）**：本機安裝、叫用它的渲染／確定性／文字框景／成片硬指標／工作區預覽／混音腳本，不複製上游原文；**動態圖文類影片改用三停點（需求確認 → 風格幀 → 匯出前）**；brief 增加對標、三種講法、鉤子與記憶點、禁止清單；新增渲染層對照表、音效提示表、`scripts/install_motion_showreel.ps1`、`scripts/showreel_to_bear.py`，以及白板＋黑熊試跑範本。詳見 `references/motion-showreel-integration.md`。
 
@@ -27,6 +29,7 @@ description: 旁白定稿後，把「黑熊老師的自然教室」或「AI 觀�
 - `references/motion-graphics-ecosystem.md`：25 個 Motion Graphics repo 的用途、排序星數快照、選型／安裝方式及授權注意事項
 - `references/awesome-ai-motion-integration.md`：雙 repo 的本機安裝位置、作品檢索、動效卡／配方查找、短片試作與授權邊界
 - `references/code-motion-prompt-workflow.md`：AI 程式動態圖形與 HTML 動態簡報的提示詞、原型、迭代、配方驗證及 renderer 交接
+- `references/narration-sync-components.md`：旁白逐字時間（`words.json`）、落點寫法、同步元件庫與配音內容核對
 - `references/music-mv-tools-integration.md`、`scripts/install_mv_tools.ps1`：mv-director／huashu-art-motion／lemo-opuscar 的角色、安裝、繁體字型、音樂授權、品牌接合、`film_gate.py` 門禁與試跑紀錄
 - `scripts/install_motion_reference_repos.ps1`：Windows 淺層 clone 安裝腳本；預設放在 `AI-Video-Tools\motion-explainer\ecosystem\awesome-ai-motion\`，保留既有 checkout，不覆寫非 Git 資料夾
 

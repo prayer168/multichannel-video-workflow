@@ -1,0 +1,109 @@
+<!doctype html>
+<!-- 試片：自然教室 Shorts〈海邊的沙子是岩石嗎〉N01–N04（約 21 秒）。旁白是既有核定配音，時間全部來自 words.json 的落點。
+     頁面規則：window.render(t)＋window.READY（和 Motion Showreel、mv-director 相同），window.CUE_TIMES 給 render_frames.py 做同步檢查。 -->
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<style>
+  @font-face { font-family: NSTC; src: url("fonts/NotoSansTC-VF.ttf"); font-weight: 100 900; }
+  html, body { margin: 0; background: #F3ECDF; }
+  svg { display: block; font-family: NSTC, sans-serif; }
+</style>
+<script src="components.js"></script>
+</head><body>
+<svg id="stage" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script>
+const { clamp, ease, lerp, prog, esc, resolver, tabs, slots, tag, stamp, label, LEAD } = NSC;
+const T = { paper: '#F3ECDF', card: '#FFFDF8', ink: '#2D2924', mute: '#8A8275', line: '#C9BFAE', accent: '#C2612B', sand: '#D9B77E', rock: '#8C8173', deep: '#6E6253' };
+
+// 這支片所有動作的落點（只寫句 ID＋旁白原詞，不寫秒數）
+const CUE = {
+  q: 'N01@岩石', no: 'N01@還不是', n02: 'N02', weather: 'N02@風化', crumbs: 'N02@碎屑', carry: 'N02@搬到遠方',
+  slow: 'N03@變慢', l1: 'N03@一層', l2: 'N03@一層#2', pile: 'N03@堆下來', dep: 'N03@沉積物',
+  bury: 'N04@埋起來', press: 'N04@壓密', cement: 'N04@膠結', rock: 'N04@沉積岩',
+};
+let C = {};
+
+function icon(kind, cx, cy, T) {
+  if (kind === 'crack') return `<path d="M${cx - 80} ${cy + 50} L${cx - 60} ${cy - 40} L${cx + 10} ${cy - 70} L${cx + 80} ${cy - 20} L${cx + 70} ${cy + 50} Z" fill="${T.rock}"/>
+    <path d="M${cx - 10} ${cy - 66} L${cx + 6} ${cy - 10} L${cx - 20} ${cy + 20} L${cx + 4} ${cy + 50}" stroke="${T.paper}" stroke-width="7" fill="none"/>`;
+  if (kind === 'river') return `<path d="M${cx - 90} ${cy + 10} q30 -30 60 0 t60 0 t60 0" stroke="${T.line}" stroke-width="14" fill="none" stroke-linecap="round"/>
+    ${[0, 1, 2].map(i => `<circle cx="${cx - 60 + i * 55}" cy="${cy - 30 + (i % 2) * 8}" r="${12 - i * 2}" fill="${T.sand}"/>`).join('')}
+    <path d="M${cx + 60} ${cy + 50} l30 0 l-12 -12 M${cx + 90} ${cy + 50} l-12 12" stroke="${T.accent}" stroke-width="7" fill="none" stroke-linecap="round"/>`;
+  if (kind === 'layers') return [0, 1, 2].map(i => `<rect x="${cx - 90}" y="${cy + 30 - i * 40}" width="180" height="34" rx="8" fill="${[T.deep, T.rock, T.sand][i]}"/>`).join('');
+  return `<rect x="${cx - 90}" y="${cy - 60}" width="180" height="120" rx="14" fill="${T.deep}"/>
+    ${[0, 1, 2].map(i => `<line x1="${cx - 90}" x2="${cx + 90}" y1="${cy - 20 + i * 30}" y2="${cy - 20 + i * 30}" stroke="${T.sand}" stroke-width="5"/>`).join('')}`;
+}
+
+// 開場：沙堆＋「是岩石？」＋「還不是」印章，N02 開口時淡出
+function sandScene(t) {
+  const out = ease(prog(t, C.n02, 0.4)); if (out >= 1) return '';
+  const grains = Array.from({ length: 70 }, (_, i) => {
+    const a = (i * 137.5) % 360 * Math.PI / 180, r = 40 + (i * 53 % 260);
+    const x = 900 + Math.cos(a) * r * 1.3, y = 560 - Math.abs(Math.sin(a)) * (300 - r) * 0.7;
+    return y < 560 ? `<circle cx="${x}" cy="${y}" r="${3 + i % 4}" fill="${T.deep}" opacity=".35"/>` : '';
+  }).join('');
+  return `<g opacity="${1 - out}" transform="translate(0 ${-40 * out})">
+    <path d="M520 560 Q900 220 1280 560 Z" fill="${T.sand}"/>${grains}
+    ${tag({ t, at: C.q, x: 900, y: 300, text: '是岩石？', T })}
+    ${stamp({ t, at: C.no, x: 1180, y: 470, text: '還不是', T })}</g>`;
+}
+
+// 下方過程條：岩石→碎屑→順水搬走→一層一層堆積→埋起來、壓密、膠結→沉積岩（示意）
+function processStrip(t) {
+  const show = ease(prog(t, C.n02, 0.4)); if (show <= 0) return '';
+  let s = `<g opacity="${show}">
+    <path d="M200 800 C 420 770, 640 830, 860 795 S 1120 790, 1180 800" stroke="${T.line}" stroke-width="16" fill="none" stroke-linecap="round" opacity="${ease(prog(t, C.carry))}"/>
+    <text x="150" y="850" font-size="24" fill="${T.mute}">示意圖</text>`;
+  // 岩塊：講到「風化」出現裂紋，講到「碎屑」裂開
+  const crack = ease(prog(t, C.weather)), split = ease(prog(t, C.crumbs));
+  const pieces = [[-50, -30], [10, -45], [55, -10], [-40, 25], [20, 20]];
+  // 碎屑沿河道往右：從「搬到遠方」開始，到「變慢」時減速停下
+  const go = ease(clamp((t - (C.carry - LEAD)) / Math.max(0.5, C.slow + 0.4 - C.carry)));
+  pieces.forEach(([dx, dy], i) => {
+    const sx = 300 + dx * lerp(1, 1.8, split), sy = 720 + dy * lerp(1, 1.6, split);
+    const ex = 980 + i * 26, ey = 780 - (i % 2) * 10;
+    const x = lerp(sx, ex, go), y = lerp(sy, ey, go) - Math.sin(go * Math.PI) * 30;
+    const r = lerp(34, 12, split);
+    const gone = ease(prog(t, C.l1, 0.3));                    // 碎屑落定後變成第一層
+    s += `<circle cx="${x}" cy="${y}" r="${r}" fill="${split > 0 ? T.sand : T.rock}" opacity="${1 - gone}"/>`;
+  });
+  if (split < 1) s += `<path d="M280 680 L305 720 L285 750 L310 780" stroke="${T.paper}" stroke-width="6" fill="none" opacity="${crack * (1 - split)}"/>`;
+  // 地層：兩次「一層」各落一層，「埋起來」再蓋一層；「壓密」整疊壓扁；「膠結」顏色變深、層線收緊
+  const press = ease(prog(t, C.press, 0.5)), cement = ease(prog(t, C.cement, 0.5));
+  const H = lerp(40, 26, press), base = 812;
+  const layers = [[C.l1, T.sand], [C.l2, '#CDAA70'], [C.bury, '#B99863']];
+  layers.forEach(([at, col], i) => {
+    const k = ease(prog(t, at)); if (k <= 0) return;
+    const y = base - (i + 1) * H - lerp(120, 0, k);
+    s += `<rect x="1060" y="${y}" width="360" height="${H - 3}" rx="6" fill="${col}" opacity="${k}"/>`;
+    if (cement > 0) s += `<rect x="1060" y="${y}" width="360" height="${H - 3}" rx="6" fill="${T.deep}" opacity="${0.75 * cement}"/>`;
+  });
+  if (press > 0 && press < 1 || (t > C.press && t < C.cement + 0.4)) s += `<g opacity="${Math.min(press * 2, 1)}">
+    ${[1110, 1240, 1370].map(x => `<path d="M${x} ${base - 3 * H - 90} l0 50 l-14 -14 M${x} ${base - 3 * H - 40} l14 -14" stroke="${T.accent}" stroke-width="7" fill="none" stroke-linecap="round"/>`).join('')}</g>`;
+  const depOff = ease(prog(t, C.rock, 0.3));
+  s += `<g opacity="${1 - depOff}">${label({ t, at: C.dep, x: 1240, y: 650, text: '沉積物', T })}</g>`;
+  s += label({ t, at: C.rock, x: 1240, y: 650, text: '沉積岩', T, size: 52, color: T.accent });
+  return s + '</g>';
+}
+
+window.render = t => {
+  document.getElementById('stage').innerHTML = `
+    <rect width="1920" height="1080" fill="${T.paper}"/>
+    <text x="96" y="84" font-size="30" font-weight="700" fill="${T.mute}">自然教室｜沉積岩怎麼來</text>
+    ${tabs({ t, x: 640, y: 40, w: 260, items: [{ label: '沙子是岩石嗎', at: 0.2 }, { label: '岩石怎麼來', at: C.n02 }, { label: '去找一找', at: 1e9 }], T })}
+    ${sandScene(t)}
+    ${slots({ t, x: 140, y: 200, w: 300, h: 330, gap: 40, appear: C.n02, icon, T, items: [
+      { label: '風化侵蝕', icon: 'crack', at: C.weather }, { label: '搬運', icon: 'river', at: C.carry },
+      { label: '沉積', icon: 'layers', at: C.pile }, { label: '成岩', icon: 'rock', at: C.press }] })}
+    ${processStrip(t)}`;
+};
+
+(async () => {
+  const words = await (await fetch('words.json')).json();
+  const at = resolver(words);
+  for (const [k, a] of Object.entries(CUE)) C[k] = at(a);
+  window.CUE_TIMES = Object.entries(CUE).map(([k, a]) => ({ name: a, t: C[k] }));
+  window.DURATION = at('N04$') + 0.6;
+  await document.fonts.load('700 40px NSTC'); await document.fonts.ready;
+  window.render(0); window.READY = true;
+})().catch(e => { window.MV_ERROR = String(e && e.stack || e); });
+</script></body></html>
