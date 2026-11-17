@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.33.0（2026-11-16）
+**Version:** 2.34.0（2026-11-17）
+
+## 2.34.0：逐句 Gemini 配音工具
+
+- `scripts/build/gemini_tts.py`：黑熊老師聲線（Achird＋固定 Style）整組產生後切成一句一檔，去換氣／擦聲、偵測跳句。用法見 `references/fixed-settings.md` 第一節「逐句配音」。
 
 ## 2.33.0：上架流程加入 Facebook Reels
 
@@ -424,6 +428,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.34.0 | 2026-11-17 | 收錄逐句 Gemini 配音工具 `scripts/build/gemini_tts.py`（一句一檔、去擦聲、跳句偵測） |
 | 2.33.0 | 2026-11-16 | 上架流程加入三支 Facebook Reels（陳無敵個人檔案，與 Shorts 同步排程）；manifest 範例 Shorts 加縮圖 |
 | 2.32.0 | 2026-11-16 | 收錄旁白逐字時間 `narration_word_timing.py`（兼作配音內容核對）與旁白同步元件庫；新增說明文件 |
 | 2.31.0 | 2026-11-15 | 主影片縮圖、三支 Shorts 封面與四張 Facebook 分享圖全部交由 Codex 調用 Images 2.6 生成；移除本機截幀渲染與 `fb_cover.py` |

@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.33.0（2026-11-16）。**上架流程加入 Facebook Reels**：`youtube-publish` 完整批次在主片臉書宣傳貼文公開後，另把三支 Shorts 的直式影片發成三支 Facebook Reels（「陳無敵」個人檔案），以主片臉書貼文公開日 F 為準，F+1、F+2、F+3 台灣時間 20:00 排程，與 Shorts 同步；Reels 是影片，不以一般貼文或附圖代替，逐支查重並核實排程（2026-11-13 使用者指定，見 `youtube-publish/references/facebook-workflow.md`）。上架 manifest 範例的 Shorts 加入 `thumbnail`（各支 `製作後/縮圖.jpg`）。
+目前版本：2.34.0（2026-11-17）。**逐句 Gemini 配音工具收錄**：`scripts/build/gemini_tts.py` 以黑熊老師核定聲線（`gemini-3.8-flash-tts`／Achird＋固定 Style）整組產生旁白，用 whisper.cpp 對齊後切成「一句一檔」，自動去除換氣與擦聲、偵測沒念到的句子；給需要把每句放在指定秒數的剪輯使用（見 `references/fixed-settings.md` 第一節「逐句配音」）。
+
+2.33.0（2026-11-16）：**上架流程加入 Facebook Reels**：`youtube-publish` 完整批次在主片臉書宣傳貼文公開後，另把三支 Shorts 的直式影片發成三支 Facebook Reels（「陳無敵」個人檔案），以主片臉書貼文公開日 F 為準，F+1、F+2、F+3 台灣時間 20:00 排程，與 Shorts 同步；Reels 是影片，不以一般貼文或附圖代替，逐支查重並核實排程（2026-11-13 使用者指定，見 `youtube-publish/references/facebook-workflow.md`）。上架 manifest 範例的 Shorts 加入 `thumbnail`（各支 `製作後/縮圖.jpg`）。
 
 2.32.0（2026-11-16）：**旁白逐字時間與同步元件正式收錄**：`scripts/build/narration_word_timing.py` 用本機 whisper.cpp 把定稿旁白逐字對回配音，輸出 `words.json`（每句、每字開口秒數），讓動作落在關鍵詞開口那一刻；同一支工具兼作配音內容核對（整段辨識出現簡體、跳句或重複時先切段重聽，不直接判定配音離稿）。`motion-explainer-workflow/template/narration-sync-components/` 是「給時間 t 回傳 SVG」的同步元件庫與試片。說明見 `motion-explainer-workflow/references/narration-sync-components.md`。
 
@@ -200,7 +202,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - **每支影片只交付一份 `製作後/上架文案.txt`**，按 `references/project-layout.md` 包含 YouTube 標題、說明欄、標記 Tags、置頂留言；逐字稿另存。舊工具自動產出的 MD／分項 TXT 留在內部工具工作區，合併核對後才正式交付。
 
 ### 6. 配音稿
-一律依 `references/fixed-settings.md`：**AI Studio 產生與下載 WAV 一律由 AI 操作**（選 Achird、貼 Style、Run、下載、在使用者電腦確認檔案、改名 `Sxx-Syy.wav` 歸檔），不請使用者手動下載。正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/make_narration.py`、`make_narration.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。
+一律依 `references/fixed-settings.md`：**AI Studio 產生與下載 WAV 一律由 AI 操作**（選 Achird、貼 Style、Run、下載、在使用者電腦確認檔案、改名 `Sxx-Syy.wav` 歸檔），不請使用者手動下載。正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/make_narration.py`、`make_narration.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。需要一句一檔（逐句排時間）時，在使用者 Windows 電腦用 `scripts/build/gemini_tts.py --lines 旁白逐句.json --out 配音/逐句`。
 **配音到齊後先跟核定聲線比聽**（`assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3`；語速不足時改 Style 重新產生，不可事後拉速）。**配音到齊後必做兩項檢核**（`references/fixed-settings.md` 第一節）：① `scripts/build/narration_noise_check.py` 去除摩擦聲／爆音（Gemini WAV 檔尾常有比人聲還大的短爆音），修到「摩擦／爆音」0 處；② 用 `scripts/build/narration_word_timing.py` 語音辨識核對是否離稿（同時產生動畫對時用的 `words.json`）；③ `scripts/build/voice_consistency_check.py` 聲線一致性檢核（2.17.0），偏離句與接縫列成聆聽清單交給使用者確認，不一致就整幕重做直到一致。成片輸出前再對最終旁白軌跑一次 ① 和 ③。
 
 ### 7. 剪輯指示與發布檢查

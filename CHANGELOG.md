@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.34.0] - 2026-11-17
+### Added
+- `scripts/build/gemini_tts.py`：逐句 Gemini 配音（`gemini-3.8-flash-tts`／Achird＋固定 Style）。整組請求後以 whisper.cpp（`narration_word_timing.py`）對齊，在句間音量最低處切成一句一檔；`tidy()` 去除換氣與唇齒擦聲；`report.json` 記錄語速、對齊率、離稿字與沒念到的句子。新增命令列 `--lines／--out／--terms`，Style 由 `style(terms)` 產生，只換術語行。原本只存在《水裡的橋》幕後教學專案（2026-11-17 使用者要求收進技能）。
+### Changed
+- `references/fixed-settings.md` 第一節新增「逐句配音」用法；`SKILL.md` 配音段落指向新工具。
+
 ## [2.33.0] - 2026-11-16
 ### Added
 - `youtube-publish`：完整批次在主片 Facebook 宣傳貼文公開後，另將三支 Shorts 的直式影片發布為三支 Facebook Reels（「陳無敵」個人檔案），F+1、F+2、F+3 台灣時間 20:00 排程，與 YouTube Shorts 同步（2026-11-13 使用者指定）。`references/facebook-workflow.md` 新增「Facebook Reels 影片」一節：素材對應、文案來源、時程、查重、核實與待處理規則。
