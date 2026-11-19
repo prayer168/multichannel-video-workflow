@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.35.1（2026-11-19）。**與 Codex 副本對齊**：安全規範移到 `youtube-publish/references/facebook-post-safety.md`（單獨安裝的 youtube-publish 也讀得到）；`youtube-publish` 收錄 AI Watch 的 LINE 群組清單，以及兩頻道 Shorts 一律設為「非兒童專屬」的規則。
+目前版本：2.36.0（2026-11-19）。**多社團發布**：安全規範新增 D2 節，同一支影片發到多個臉書社團時，依社團讀者改寫（不是換字躲偵測）、依建議間隔分散發布；社團規則統一記在 `youtube-publish/references/facebook-groups.md`。
+
+2.35.1（2026-11-19）：**與 Codex 副本對齊**：安全規範移到 `youtube-publish/references/facebook-post-safety.md`（單獨安裝的 youtube-publish 也讀得到）；`youtube-publish` 收錄 AI Watch 的 LINE 群組清單，以及兩頻道 Shorts 一律設為「非兒童專屬」的規則。
 
 2.35.0（2026-11-19）：**Facebook 科普貼文發布安全規範 V1.0**：所有臉書貼文（主片、Shorts、Reels、社團）先依 `youtube-publish/references/facebook-post-safety.md` 撰寫並判定 READY／REVIEW／BLOCK；社團每次查核規則，無法查核即暫停；內容以知識價值優先，Hashtag 2～4 個、少量 emoji、不用強迫式分享請求；附八項發布檢核（2026-11-19 使用者提供）。
 
