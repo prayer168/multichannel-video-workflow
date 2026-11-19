@@ -1,6 +1,6 @@
 # Facebook 科普貼文發布安全規範 V1.0
 
-2026-11-19 使用者提供。凡是為兩個頻道撰寫、排程或發布 Facebook 貼文（主影片宣傳文、Shorts 宣傳文、Reels 文案、社團貼文），都先依本規範產出與判定；與 `SKILL.md` 7.5 或 `youtube-publish/references/facebook-workflow.md` 的寫法衝突時，以本規範為準。
+2026-11-19 使用者提供。凡是為兩個頻道撰寫、排程或發布 Facebook 貼文（主影片宣傳文、Shorts 宣傳文、Reels 文案、社團貼文），都先依本規範產出與判定；與主技能 `SKILL.md` 7.5 或同資料夾的 `facebook-workflow.md` 的寫法衝突時，以本規範為準。
 
 ## 適用品牌
 

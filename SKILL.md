@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.35.0（2026-11-19）。**Facebook 科普貼文發布安全規範 V1.0**：所有臉書貼文（主片、Shorts、Reels、社團）先依 `references/facebook-post-safety.md` 撰寫並判定 READY／REVIEW／BLOCK；社團每次查核規則，無法查核即暫停；內容以知識價值優先，Hashtag 2～4 個、少量 emoji、不用強迫式分享請求；附八項發布檢核（2026-11-19 使用者提供）。
+目前版本：2.35.1（2026-11-19）。**與 Codex 副本對齊**：安全規範移到 `youtube-publish/references/facebook-post-safety.md`（單獨安裝的 youtube-publish 也讀得到）；`youtube-publish` 收錄 AI Watch 的 LINE 群組清單，以及兩頻道 Shorts 一律設為「非兒童專屬」的規則。
+
+2.35.0（2026-11-19）：**Facebook 科普貼文發布安全規範 V1.0**：所有臉書貼文（主片、Shorts、Reels、社團）先依 `youtube-publish/references/facebook-post-safety.md` 撰寫並判定 READY／REVIEW／BLOCK；社團每次查核規則，無法查核即暫停；內容以知識價值優先，Hashtag 2～4 個、少量 emoji、不用強迫式分享請求；附八項發布檢核（2026-11-19 使用者提供）。
 
 2.34.0（2026-11-17）：**逐句 Gemini 配音工具收錄**：`scripts/build/gemini_tts.py` 以黑熊老師核定聲線（`gemini-3.8-flash-tts`／Achird＋固定 Style）整組產生旁白，用 whisper.cpp 對齊後切成「一句一檔」，自動去除換氣與擦聲、偵測沒念到的句子；給需要把每句放在指定秒數的剪輯使用（見 `references/fixed-settings.md` 第一節「逐句配音」）。
 
@@ -228,7 +230,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 涉及工具比較、成長計畫或上架優化時必讀 `references/youtube-growth-experiment.md`。先記錄推薦／搜尋／外部流量來源，任何工具勝負或節省時間宣稱均需實測證據。長影片規劃 3 支可獨立觀看的 Shorts；發布後記錄 24h、72h、7d、28d，按數據調整。
 
 ### 7.5 臉書宣傳文（主影片與每支 Shorts 完成時都要製作；放在該支 製作後/臉書宣傳/）
-**先讀 `references/facebook-post-safety.md`（發布安全規範 V1.0）**：以下寫法與該規範衝突時以規範為準；每支都要附 G 節八項檢核並判定 READY／REVIEW／BLOCK（寫入 `製作後/臉書宣傳/發布檢核.md`）。依使用者先前的固定要求，每支影片完成時一併產出臉書宣傳素材，不需再次詢問；**三支 Shorts 也各自要有一套**（2026-11-03 使用者要求，規格見本節末「Shorts 臉書文」）。文案、圖卡、Hashtag 和 CTA 依所選頻道設定檔；AI Watch 不自動加自然教室品牌標籤。分享圖由 7.1 的 Codex × Images 2.6 流程生成；熊掌等自然教室識別只用於自然教室，AI Watch 使用核定品牌素材或無品牌設計。產出中文文案、分享圖與複製頁；英文文案按需求：
+**先讀 `youtube-publish/references/facebook-post-safety.md`（發布安全規範 V1.0）**：以下寫法與該規範衝突時以規範為準；每支都要附 G 節八項檢核並判定 READY／REVIEW／BLOCK（寫入 `製作後/臉書宣傳/發布檢核.md`）。依使用者先前的固定要求，每支影片完成時一併產出臉書宣傳素材，不需再次詢問；**三支 Shorts 也各自要有一套**（2026-11-03 使用者要求，規格見本節末「Shorts 臉書文」）。文案、圖卡、Hashtag 和 CTA 依所選頻道設定檔；AI Watch 不自動加自然教室品牌標籤。分享圖由 7.1 的 Codex × Images 2.6 流程生成；熊掌等自然教室識別只用於自然教室，AI Watch 使用核定品牌素材或無品牌設計。產出中文文案、分享圖與複製頁；英文文案按需求：
 1. `臉書文_中文.txt`：活潑風格
    - 開頭一句「反差鉤子」（例：「一堂自然課用滿四套軟體，學生就會比較懂嗎？」），前兩句就給出科學問題、發現或讀者能得到的知識；不虛構事實
    - 「影片裡你會看到」列 4–6 點，寫「畫面」與知識點，不寫功能規格；emoji 少量點綴，不必每行都放
