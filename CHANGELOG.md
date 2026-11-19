@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.35.0] - 2026-11-19
+### Added
+- `references/facebook-post-safety.md`：Facebook 科普貼文發布安全規範 V1.0（2026-11-19 使用者提供）：內容、AI 揭露、商業連結、社團審查、Hashtag、READY／REVIEW／BLOCK 閘門、八項輸出檢核與遭移除處理。
+### Changed
+- `SKILL.md` 7.5：臉書文先讀新規範；前兩句給知識、CTA 說明連結用途、移除「呼籲分享的玩笑話」、Hashtag 改 2～4 個、emoji 少量點綴、加 AI 揭露；每支附 `發布檢核.md`。
+- `youtube-publish/references/facebook-workflow.md`：發布前逐處判定，既有上架授權只適用 READY；社團每次查核規則；新增遭移除處理。
+
 ## [2.34.0] - 2026-11-17
 ### Added
 - `scripts/build/gemini_tts.py`：逐句 Gemini 配音（`gemini-3.8-flash-tts`／Achird＋固定 Style）。整組請求後以 whisper.cpp（`narration_word_timing.py`）對齊，在句間音量最低處切成一句一檔；`tidy()` 去除換氣與唇齒擦聲；`report.json` 記錄語速、對齊率、離稿字與沒念到的句子。新增命令列 `--lines／--out／--terms`，Style 由 `style(terms)` 產生，只換術語行。原本只存在《水裡的橋》幕後教學專案（2026-11-17 使用者要求收進技能）。
