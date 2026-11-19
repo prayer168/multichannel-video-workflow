@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.36.0] - 2026-11-19
+### Added
+- `youtube-publish/references/facebook-post-safety.md` 新增 D2 節「多社團發布」：改寫目的、發布前檢查、建議發布間隔（內部建議：同片一天最多 2 個新社團、間隔 3 小時、3～7 天內發完、同社團每 7 天最多一篇自己的影片）、發布紀錄與被限制時的處理。
+- `youtube-publish/references/facebook-groups.md`：社團規則紀錄表（欄位說明＋紀錄），先列入「AI 實作與創作社群」，狀態 REVIEW。
+### Changed
+- `facebook-workflow.md`：預設兩處以外的社團依 D2 節處理；規範 G 節第 6 項對照紀錄表。
+
 ## [2.35.1] - 2026-11-19
 ### Added
 - `youtube-publish/SKILL.md`：AI Watch 的 LINE 群組清單（分享前讓使用者勾選，不自動傳送）；兩頻道每支 Shorts 選「否，這不是兒童專屬的影片」並儲存後核對，主影片仍依內容判定；Facebook 段落改為先過安全閘門。三項原本只在 Codex 副本，未提交。
