@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.36.1] - 2026-11-19
+### Changed
+- 不使用 TinyURL 短網址（2026-11-19 使用者指定）：`SKILL.md` 版本說明與第 5 節、`youtube-publish/SKILL.md` 置頂留言與 Facebook 宣傳段、安全規範 C.4 加入規則；所有文案放原始完整網址，其他第三方短網址也不用，既有 tinyurl.com 連結改回原網址。
+
 ## [2.36.0] - 2026-11-19
 ### Added
 - `youtube-publish/references/facebook-post-safety.md` 新增 D2 節「多社團發布」：改寫目的、發布前檢查、建議發布間隔（內部建議：同片一天最多 2 個新社團、間隔 3 小時、3～7 天內發完、同社團每 7 天最多一篇自己的影片）、發布紀錄與被限制時的處理。
