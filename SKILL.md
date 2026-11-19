@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.36.0（2026-11-19）。**多社團發布**：安全規範新增 D2 節，同一支影片發到多個臉書社團時，依社團讀者改寫（不是換字躲偵測）、依建議間隔分散發布；社團規則統一記在 `youtube-publish/references/facebook-groups.md`。
+目前版本：2.36.1（2026-11-19）。**不使用 TinyURL 短網址**（2026-11-19 使用者指定）：YouTube 說明欄、置頂留言、臉書文、Reels、LINE 分享等所有文案一律放原始完整網址（例如 `https://www.youtube.com/watch?v=…`），其他第三方短網址也不用；既有文案出現 tinyurl.com 時改回原網址。
+
+2.36.0（2026-11-19）：**多社團發布**：安全規範新增 D2 節，同一支影片發到多個臉書社團時，依社團讀者改寫（不是換字躲偵測）、依建議間隔分散發布；社團規則統一記在 `youtube-publish/references/facebook-groups.md`。
 
 2.35.1（2026-11-19）：**與 Codex 副本對齊**：安全規範移到 `youtube-publish/references/facebook-post-safety.md`（單獨安裝的 youtube-publish 也讀得到）；`youtube-publish` 收錄 AI Watch 的 LINE 群組清單，以及兩頻道 Shorts 一律設為「非兒童專屬」的規則。
 
@@ -205,6 +207,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - 標籤：主要與次要關鍵字、工具名的中英文、簡體寫法、常見錯字，總長 500 字元以內
 - 英文標題與英文說明欄摘要依需求提供；置頂留言（重點＋提示詞連結＋一個問題）
 - 禁止關鍵字堆疊與誤導性標題
+- **不使用 TinyURL 短網址**（2026-11-19 使用者指定）：YouTube 說明欄、置頂留言、臉書文、Reels、LINE 分享等所有文案一律放原始完整網址（例如 `https://www.youtube.com/watch?v=…`），其他第三方短網址也不用；既有文案出現 tinyurl.com 時改回原網址。
 - **每支影片只交付一份 `製作後/上架文案.txt`**，按 `references/project-layout.md` 包含 YouTube 標題、說明欄、標記 Tags、置頂留言；逐字稿另存。舊工具自動產出的 MD／分項 TXT 留在內部工具工作區，合併核對後才正式交付。
 
 ### 6. 配音稿

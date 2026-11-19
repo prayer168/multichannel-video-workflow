@@ -76,6 +76,8 @@ python <技能目錄>/scripts/preflight.py <專案>/youtube-publish.json
 
 ## 置頂留言與 Facebook 宣傳
 
+**不使用 TinyURL 短網址**（2026-11-19 使用者指定）：YouTube 說明欄、置頂留言、臉書文、Reels、LINE 分享等所有文案一律放原始完整網址（例如 `https://www.youtube.com/watch?v=…`），其他第三方短網址也不用；既有文案出現 tinyurl.com 時改回原網址。
+
 處理 Facebook 貼文與 Reels 前，必讀 [Facebook 科普貼文發布安全規範 V1.0](references/facebook-post-safety.md)，逐篇、逐目的地完成事實、授權、AI 揭露與社團規則檢查及 BLOCK／REVIEW／READY 判定，提供規範所列八項輸出。REVIEW 或 BLOCK 的受影響項目暫停，無明確發布授權時只提供草稿；既有明確授權（2026-11-13 的上架授權即屬之）的正式發布仍須通過閘門。
 
 主影片公開後，預設取其交付文案的「置頂留言」，以目標頻道身分發表並置頂；先查同片既有留言避免重複，核實顯示已置頂後記錄連結與狀態。對本次上架且已有留言文案的 Shorts，若平台允許在排程期間留言與置頂，同次完成；若不允許，保留文案與影片 ID，標記待影片公開後處理並明確回報，不聲稱已置頂，也不為留言把影片提前公開。未附文案或留言功能不可用時記錄原因；不因留言失敗重傳影片。
