@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.35.1] - 2026-11-19
+### Added
+- `youtube-publish/SKILL.md`：AI Watch 的 LINE 群組清單（分享前讓使用者勾選，不自動傳送）；兩頻道每支 Shorts 選「否，這不是兒童專屬的影片」並儲存後核對，主影片仍依內容判定；Facebook 段落改為先過安全閘門。三項原本只在 Codex 副本，未提交。
+### Changed
+- 安全規範由 `references/facebook-post-safety.md` 移到 `youtube-publish/references/facebook-post-safety.md`，單獨安裝的 youtube-publish 也能讀到；主技能與 `facebook-workflow.md` 的連結同步更新。Codex 副本另寫的 `facebook-safety-v1.md` 由此檔取代。
+
 ## [2.35.0] - 2026-11-19
 ### Added
 - `references/facebook-post-safety.md`：Facebook 科普貼文發布安全規範 V1.0（2026-11-19 使用者提供）：內容、AI 揭露、商業連結、社團審查、Hashtag、READY／REVIEW／BLOCK 閘門、八項輸出檢核與遭移除處理。
