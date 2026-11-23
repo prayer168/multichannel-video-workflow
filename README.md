@@ -3,7 +3,14 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.34.0（2026-11-17）
+**Version:** 2.37.0（2026-11-24）
+
+## 2.37.0：收錄科普紀錄片前製子技能 BlackBear Science Video V1.3
+
+- 新增子資料夾 [blackbear-science-video](blackbear-science-video/SKILL.md)：A 研究→B 腳本→C1 風格→C2 毫秒分鏡→C2.5 科學／權利審查→C3 交接 ZIP，每階段需有證據檔才能完成，不能跳關。
+- `scripts/workflow_v13.py`（init／complete／status／checkpoint／restore／pack）、`audit_v13.py`（handoff／production／release 關卡）、`verify_zip_v13.py`（交接包校驗）、`render_smoke_v13.py`（720p 原創向量技術煙霧片，不可發布）。
+- production／release 關卡維持 BLOCKED，直到逐鏡科學審查與素材權利有具名簽核；Claude Code／Codex 端到端與 Remotion 渲染仍標「未測試」，見 `blackbear-science-video/V13_TEST_REPORT.md`。
+- 已知限制：A 階段目前會接受只寫「待撰寫」的佔位 brief；`point_nemo_claude_code_handoff_v1` 格式的交接包無法被 `audit_v13.py` 讀取。
 
 ## 2.34.0：逐句 Gemini 配音工具
 
@@ -306,6 +313,7 @@ multichannel-video-workflow/
 ├── SKILL.md                 技能主檔（工作流程 + 核心規則）
 ├── video-editing-workflow/SKILL.md  獨立剪輯技能（與企劃技能共用交接契約）
 ├── youtube-thumbnail-strategist/   成片後縮圖、Shorts 封面與 Facebook 分享圖子技能（Codex × Images 2.6）
+├── blackbear-science-video/         科普紀錄片前製子技能 V1.3：A→C3 證據關卡、檢查點還原、交接 ZIP 校驗、技術煙霧片
 ├── motion-explainer-workflow/       動態圖文子技能（目前 0.6.0）：SKILL.md、scripts/preflight.py、scripts/setup_windows.bat；references／template 依建置順序補上
 ├── README.md                本檔
 ├── CHANGELOG.md             版本紀錄（Keep a Changelog 格式）
@@ -428,6 +436,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.37.0 | 2026-11-24 | 收錄科普紀錄片前製子技能 BlackBear Science Video V1.3（A→C3 證據關卡、handoff／production／release 稽核、檢查點還原、技術煙霧片） |
 | 2.34.0 | 2026-11-17 | 收錄逐句 Gemini 配音工具 `scripts/build/gemini_tts.py`（一句一檔、去擦聲、跳句偵測） |
 | 2.33.0 | 2026-11-16 | 上架流程加入三支 Facebook Reels（陳無敵個人檔案，與 Shorts 同步排程）；manifest 範例 Shorts 加縮圖 |
 | 2.32.0 | 2026-11-16 | 收錄旁白逐字時間 `narration_word_timing.py`（兼作配音內容核對）與旁白同步元件庫；新增說明文件 |
