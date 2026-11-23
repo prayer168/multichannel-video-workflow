@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.39.0] - 2026-11-24
+### Changed
+- `references/fixed-settings.md` 第四節：黑熊老師的自然教室影片右下角只放核定小熊掌 `paw_approved.png`（約 104 px、右邊距 28 px、下邊距 24 px、不透明度約 0.92；片頭片尾不疊），不再疊黑熊老師講課角色；附 ffmpeg 疊加指令。AI 觀測站沿用講課角色。第六節註明 bat 尚未分流。
+- `profiles/blackbear-science.md`、`SKILL.md`（版本說明與浮水印段）、`README.md`（版本、摘要、固定設定表、最近更新）同步。
+### Known issues
+- `scripts/build/build_video.bat` 仍固定執行 `bear_presenter.py`，尚未依頻道改疊熊掌。
+
 ## [2.38.0] - 2026-11-24
 ### Added
 - `references/local-motion-pilot.md`：本機試片、視覺細修、語音對時、分段重渲染驗收與可重現的代理交接。

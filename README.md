@@ -3,7 +3,12 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.38.0（2026-11-24）
+**Version:** 2.39.0（2026-11-24）
+
+## 2.39.0：自然教室右下角改放小熊掌
+
+- 黑熊老師的自然教室影片右下角只放核定熊掌 `assets/brand-approved/v1/blackbear-science/paw_approved.png`（約 104 px、右邊距 28 px、下邊距 24 px），不再疊黑熊老師講課角色；AI 觀測站不變。
+- 規格與 ffmpeg 疊加指令見 `references/fixed-settings.md` 第四節；`scripts/build/build_video.bat` 尚未依頻道分流，自然教室改用時要先跳過講課角色步驟。
 
 ## 2.38.0：本機動態試片、畫面細修與交接
 
@@ -252,7 +257,7 @@
 | 片頭 | 黑熊老師片頭 4 秒＋定案片頭音訊（`assets/brand-approved/v1/blackbear-science/intro/`） |
 | 配音 | Gemini `gemini-3.8-flash-tts`／**Achird**＋固定 Style（只換術語清單）；暫定只用 Windows Zhiwei，不用其他 TTS |
 | 背景音樂 | 原創 lo-fi（`music/make_music.py` 產生），不用 Pixabay 曲當 BGM |
-| 講課角色 | 核定黑熊老師依配音對嘴；一般沿用右下，動畫講解可採左側放大講者／右側動畫，需明確合成 |
+| 右下角識別 | **自然教室：只放核定小熊掌**（2026-11-24 起，不疊講課角色）；AI 觀測站：核定黑熊老師依配音對嘴，一般沿用右下，動畫講解可採左側放大講者／右側動畫 |
 | 片尾 | AI Watch 四種主題核定片尾／自然教室熊掌片尾（`scripts/build/append_outro.py`） |
 | 字幕 | 2.13.0 起不燒錄：只交付單行字幕軌 SRT（對齊旁白停頓）；y 880–1000 為字幕安全區（`scripts/build/subs_oneline.py`、`references/subtitle-style.md`） |
 | 一鍵產生 | Windows：`scripts/build/build_video.bat` 複製到專案資料夾雙擊，進度寫入 `產生紀錄.log` |
@@ -441,6 +446,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.39.0 | 2026-11-24 | 自然教室右下角改放核定小熊掌，不疊黑熊老師講課角色（fixed-settings.md 第四節） |
 | 2.38.0 | 2026-11-24 | 本機動態試片、畫面細修、局部重渲染與 Claude Code／Codex 交接 |
 | 2.37.0 | 2026-11-24 | 收錄科普紀錄片前製子技能 BlackBear Science Video V1.3（A→C3 證據關卡、handoff／production／release 稽核、檢查點還原、技術煙霧片） |
 | 2.34.0 | 2026-11-17 | 收錄逐句 Gemini 配音工具 `scripts/build/gemini_tts.py`（一句一檔、去擦聲、跳句偵測） |

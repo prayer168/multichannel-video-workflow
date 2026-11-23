@@ -115,4 +115,4 @@
 - 復盤可查看觀眾留存、留言中的疑問、教材下載或使用回饋；不把觀看數當作教學成效的唯一指標。
 
 ## 固定製作設定（2026-10-06）
-片頭、Achird 固定配音 Style、原創 lo-fi 配樂與右下角黑熊老師講課角色一律依 `../references/fixed-settings.md`，優先於本檔較早的品牌影音條文。
+片頭、Achird 固定配音 Style、原創 lo-fi 配樂與右下角頻道識別一律依 `../references/fixed-settings.md`，優先於本檔較早的品牌影音條文。**2026-11-24 起本頻道右下角只放核定小熊掌（`paw_approved.png`），不疊黑熊老師講課角色**（fixed-settings.md 第四節）。
