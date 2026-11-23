@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.37.0（2026-11-24）
+**Version:** 2.38.0（2026-11-24）
+
+## 2.38.0：本機動態試片、畫面細修與交接
+
+新增 [本機動態試片](references/local-motion-pilot.md)，可用現有旁白與分鏡製作可重渲染的短試片。流程涵蓋視覺修訂、關鍵詞對時、局部重渲染比對，以及把可播放版本和原始檔交接給 Claude Code／Codex。
 
 ## 2.37.0：收錄科普紀錄片前製子技能 BlackBear Science Video V1.3
 
@@ -346,6 +350,7 @@ multichannel-video-workflow/
     ├── guided-production.md 逐步引導選題、風格、形式、腳本、預覽與製作
     ├── advanced-animation.md 進階動畫模組：六材質、九模組、片頭選項、配置、分鏡、驗收與MVP
     ├── project-layout.md    正式主片與Shorts目錄、時間戳與整合上架文案
+    ├── local-motion-pilot.md 本機動態試片、局部重渲染與成片交接
     ├── animation-handoff.md 生活化角色動畫、實測旁白分支、素材包與代理交接
     ├── templates.md         專案卡、選題、腳本、分鏡、剪輯、上架、發布、復盤範本
     └── prompts.md           縮圖與插畫生圖、TTS 聲線、英文逐字稿、選題雷達、SEO 提示詞
@@ -436,6 +441,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.38.0 | 2026-11-24 | 本機動態試片、畫面細修、局部重渲染與 Claude Code／Codex 交接 |
 | 2.37.0 | 2026-11-24 | 收錄科普紀錄片前製子技能 BlackBear Science Video V1.3（A→C3 證據關卡、handoff／production／release 稽核、檢查點還原、技術煙霧片） |
 | 2.34.0 | 2026-11-17 | 收錄逐句 Gemini 配音工具 `scripts/build/gemini_tts.py`（一句一檔、去擦聲、跳句偵測） |
 | 2.33.0 | 2026-11-16 | 上架流程加入三支 Facebook Reels（陳無敵個人檔案，與 Shorts 同步排程）；manifest 範例 Shorts 加縮圖 |

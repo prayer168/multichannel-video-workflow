@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.37.0（2026-11-24）。**收錄科普紀錄片前製子技能 BlackBear Science Video V1.3**：`blackbear-science-video/` 提供 A→C3 階段關卡（不能跳關）、來源／主張／鏡頭／素材 ID 對應、逐鏡科學審查與權利決定、`original/` 雜湊鎖、檢查點與還原、交接 ZIP 校驗及 720p 原創向量技術煙霧測試；production／release 關卡一律維持 BLOCKED 直到具名審查者簽核。入口見 `blackbear-science-video/SKILL.md`。
+目前版本：2.38.0（2026-11-24）。新增本機動態試片的畫面驗收、局部重渲染及成片後代理交接。見 [本機動態試片](references/local-motion-pilot.md)。
+
+2.37.0（2026-11-24）：**收錄科普紀錄片前製子技能 BlackBear Science Video V1.3**：`blackbear-science-video/` 提供 A→C3 階段關卡（不能跳關）、來源／主張／鏡頭／素材 ID 對應、逐鏡科學審查與權利決定、`original/` 雜湊鎖、檢查點與還原、交接 ZIP 校驗及 720p 原創向量技術煙霧測試；production／release 關卡一律維持 BLOCKED 直到具名審查者簽核。入口見 `blackbear-science-video/SKILL.md`。
 
 2.36.1（2026-11-19）：**不使用 TinyURL 短網址**（2026-11-19 使用者指定）：YouTube 說明欄、置頂留言、臉書文、Reels、LINE 分享等所有文案一律放原始完整網址（例如 `https://www.youtube.com/watch?v=…`），其他第三方短網址也不用；既有文案出現 tinyurl.com 時改回原網址。
 
@@ -106,6 +108,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/advanced-animation.md`：**進階動畫模組**——溫馨材質、模板選擇、黑熊片頭變體、模組配置、代表片段、提示詞、分鏡與驗收。要求可重用動畫系統、材質模板、混合錄屏或片頭變體時讀取；新配置尚非 build.py 可執行輸入。
 - `references/editing-workflow-methods.md`：**剪輯工作流銜接**——AI 輔助素材盤點與粗剪、分鏡與角色連續性、Remotion 動畫片段與 DaVinci 後製的分工及人工驗收；涉及大量素材、AI 時間軸剪輯或程式動畫時搭配 `video-editing-workflow/SKILL.md`。
 - `references/three-video-editing-analysis.md`：三份使用者提供逐字稿的證據摘要與時間碼；作為方法來源與限制紀錄，不當成工具能力或成效的獨立驗證。
+- `references/local-motion-pilot.md`：既有旁白或分鏡的本機短試片、視覺細修、對時與局部重渲染。
 - `references/animation-handoff.md`：生活故事與可愛角色、動畫素材提示詞、未實測旁白分支、角色與場景預覽、素材清單、ZIP 與 Claude Code／Codex 交接。要求生動動畫、實測影片、分鏡圖或製作包時讀取。
 - `references/real-test-workflow.md`：**實測錄屏影片**（AI 工具實測類）——判定前回看錄影、方案權限、實測當天準備、卡片框合成與片段表、Gemini 旁白在使用者電腦產生、交付節奏
 - `references/ai-animation.md`：**AI 影片生成工具操作補充**（Google Flow／Veo 等）——建立角色、英文提示詞結構、挑選與命名；角色表與素材 ID 依 animation-handoff.md
@@ -234,6 +237,8 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 7.2 製作素材 ZIP 與代理交接
 使用者要求壓縮、素材包或交給 Claude Code／Codex 時，完成腳本、分鏡、動畫提示詞、角色表、實測提示詞與驗收表（適用時），把已有圖片、前集結尾和錄屏一併收錄。按 `references/animation-handoff.md` 與 `references/templates.md` 產生 README、START_HERE、白名單素材清單，執行 `scripts/pack_video_bundle.py` 驗證並打包，提供 ZIP 下載。缺素材列待補，未選旁白分支不能送進 TTS；交接沿用 fixed-settings 與 build-pipeline，不自動發布或換聲線。專案及最終 ZIP 依當前環境的檔案保存規則處理，不把單集素材混入技能。
+
+已有可播放試片、且要求接續製作或交接時，依 [本機動態試片](references/local-motion-pilot.md) 保留目前成片、可編輯畫面、旁白、字幕與驗收證據，沿用本節的白名單打包流程。
 
 ### 7.4 YouTube 成長驗證與實測門檻
 涉及工具比較、成長計畫或上架優化時必讀 `references/youtube-growth-experiment.md`。先記錄推薦／搜尋／外部流量來源，任何工具勝負或節省時間宣稱均需實測證據。長影片規劃 3 支可獨立觀看的 Shorts；發布後記錄 24h、72h、7d、28d，按數據調整。

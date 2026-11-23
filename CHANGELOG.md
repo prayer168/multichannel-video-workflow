@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.38.0] - 2026-11-24
+### Added
+- `references/local-motion-pilot.md`：本機試片、視覺細修、語音對時、分段重渲染驗收與可重現的代理交接。
+### Changed
+- 主技能、交接指南與 README 接入新增流程。
+
 ## [2.37.0] - 2026-11-24
 ### Added
 - `blackbear-science-video/`：收錄 BlackBear Science Video Skill V1.3.0（原為獨立技能 `~/.claude/skills/blackbear-science-video`），含 `SKILL.md`、`scripts/`（workflow_v13、audit_v11–v13、verify_zip_v13、render_smoke_v13、validate_handoff、complete_missing_prompts）、`references/`、`templates/`、`tests/`、`examples/` 與 V1.3 測試報告；內容未改寫。
