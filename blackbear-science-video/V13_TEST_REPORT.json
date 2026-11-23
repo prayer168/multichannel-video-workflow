@@ -1,0 +1,82 @@
+{
+  "skill_version": "1.3.0",
+  "date": "2026-11-23",
+  "seal_scope": "A-C3 preproduction workflow and standalone local engineering smoke test",
+  "seal_status": "SEALED_PREPRODUCTION_ONLY",
+  "external_claude_code_codex_execution": "NOT_TESTED_COMMANDS_UNAVAILABLE",
+  "remotion_pipeline": "BLOCKED_NPM_REGISTRY_DNS_EAI_AGAIN",
+  "nemo_original_files_identical": {
+    "shot_list_108.csv": true,
+    "point_nemo_script_v1.md": true,
+    "shot_list_108.json": true,
+    "chapter_timeline_v1.csv": true,
+    "storyboard_preview.html": true
+  },
+  "nemo_handoff": "PASS_WITH_WARNINGS",
+  "nemo_science_editor_signoff": "PENDING_108_SHOTS",
+  "nemo_asset_rights": "PENDING_108_SHOTS",
+  "nemo_legacy_prompts_retained": 16,
+  "nemo_v12_added_prompts": 92,
+  "new_topic": "天空為什麼是藍色？",
+  "new_topic_stages_completed": [
+    "A",
+    "B",
+    "C1",
+    "C2",
+    "C2_5",
+    "C3"
+  ],
+  "new_topic_sources": [
+    "https://spaceplace.nasa.gov/blue-sky/en/",
+    "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue"
+  ],
+  "new_topic_handoff": "PASS_WITH_WARNINGS",
+  "new_topic_science_rights": "PENDING_NO_PRODUCTION_APPROVAL",
+  "test_v13_count_pass": 13,
+  "test_v12_compat_count_pass": 6,
+  "Nemo_ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "30/1",
+        "duration": "27.000000",
+        "nb_read_frames": "810"
+      }
+    ],
+    "format": {
+      "duration": "27.000000"
+    }
+  },
+  "sky_blue_ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "30/1",
+        "duration": "20.000000",
+        "nb_read_frames": "600"
+      }
+    ],
+    "format": {
+      "duration": "20.000000"
+    }
+  },
+  "tool_availability": {
+    "python": "/opt/pyvenv/bin/python",
+    "ffmpeg": "/usr/bin/ffmpeg",
+    "ffprobe": "/usr/bin/ffprobe",
+    "node": "/opt/nvm/versions/node/v22.16.0/bin/node",
+    "npm": "/opt/nvm/versions/node/v22.16.0/bin/npm",
+    "claude": null,
+    "codex": null,
+    "remotion": null,
+    "chromium": "/usr/bin/chromium"
+  },
+  "remotion_install_failure_extract": "npm error code EAI_AGAIN\nnpm error syscall getaddrinfo\nnpm error errno EAI_AGAIN\nnpm error request to https://registry.npmjs.org/@remotion%2fcli failed, reason: getaddrinfo EAI_AGAIN registry.npmjs.org\nnpm error A complete log of this run can be found in: /home/oai/.npm/_logs/2026-11-23T09_30_41_405Z-debug-0.log\n",
+  "note": "SHA256 protects against accidental drift relative to the stored baseline, not forgery of baseline + hash manifest. Offline render is not a full film."
+}

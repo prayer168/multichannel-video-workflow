@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.37.0] - 2026-11-24
+### Added
+- `blackbear-science-video/`：收錄 BlackBear Science Video Skill V1.3.0（原為獨立技能 `~/.claude/skills/blackbear-science-video`），含 `SKILL.md`、`scripts/`（workflow_v13、audit_v11–v13、verify_zip_v13、render_smoke_v13、validate_handoff、complete_missing_prompts）、`references/`、`templates/`、`tests/`、`examples/` 與 V1.3 測試報告；內容未改寫。
+### Changed
+- `SKILL.md`：description、版本說明、參考文件清單與第 2 節加入長篇科普紀錄片轉讀子技能的路由；配音、品牌與上架仍由本技能處理。
+- `README.md`：版本、2.37.0 摘要、檔案結構與最近更新表。
+### Known issues
+- 子技能 A 階段會接受佔位 brief；`test_v13.py`／`test_v12.py` 需外部 demo 與《尼莫點》V1.2／V1.3 專案路徑，未提供時整組跳過。
+
 ## [2.36.1] - 2026-11-19
 ### Changed
 - 不使用 TinyURL 短網址（2026-11-19 使用者指定）：`SKILL.md` 版本說明與第 5 節、`youtube-publish/SKILL.md` 置頂留言與 Facebook 宣傳段、安全規範 C.4 加入規則；所有文案放原始完整網址，其他第三方短網址也不用，既有 tinyurl.com 連結改回原網址。

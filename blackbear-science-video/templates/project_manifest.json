@@ -1,0 +1,16 @@
+{
+  "project_slug": "replace_with_ascii_slug",
+  "title_zh": "待填寫影片標題",
+  "created_on": "YYYY-MM-DD",
+  "version": "0.1.0",
+  "stage": "A",
+  "status": "規劃中",
+  "target_duration_ms": 1080000,
+  "video": {"width": 3840, "height": 2160, "fps": 30, "color": "Rec.709 SDR", "aspect_ratio": "16:9"},
+  "language": "zh-TW",
+  "audience": ["國小高年級", "國中", "一般大眾"],
+  "science_humor_ratio": "70:30",
+  "approved_stages": [],
+  "unresolved_questions": [],
+  "blocking_issues": []
+}

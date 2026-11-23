@@ -1,11 +1,13 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、成片後 YouTube 縮圖、Shorts 封面與 Facebook 分享圖（交由 Codex 調用 Images 2.6）、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、成片後 YouTube 縮圖、Shorts 封面與 Facebook 分享圖（交由 Codex 調用 Images 2.6）、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`；長篇科普紀錄片（例如 18 分鐘《尼莫點》、仿生科技）需要 A 研究→B 腳本→C1 風格→C2 毫秒分鏡→C2.5 科學／權利審查→C3 交接 ZIP 的證據關卡、檢查點還原或 FFmpeg 技術煙霧測試時，轉讀 `blackbear-science-video/SKILL.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.36.1（2026-11-19）。**不使用 TinyURL 短網址**（2026-11-19 使用者指定）：YouTube 說明欄、置頂留言、臉書文、Reels、LINE 分享等所有文案一律放原始完整網址（例如 `https://www.youtube.com/watch?v=…`），其他第三方短網址也不用；既有文案出現 tinyurl.com 時改回原網址。
+目前版本：2.37.0（2026-11-24）。**收錄科普紀錄片前製子技能 BlackBear Science Video V1.3**：`blackbear-science-video/` 提供 A→C3 階段關卡（不能跳關）、來源／主張／鏡頭／素材 ID 對應、逐鏡科學審查與權利決定、`original/` 雜湊鎖、檢查點與還原、交接 ZIP 校驗及 720p 原創向量技術煙霧測試；production／release 關卡一律維持 BLOCKED 直到具名審查者簽核。入口見 `blackbear-science-video/SKILL.md`。
+
+2.36.1（2026-11-19）：**不使用 TinyURL 短網址**（2026-11-19 使用者指定）：YouTube 說明欄、置頂留言、臉書文、Reels、LINE 分享等所有文案一律放原始完整網址（例如 `https://www.youtube.com/watch?v=…`），其他第三方短網址也不用；既有文案出現 tinyurl.com 時改回原網址。
 
 2.36.0（2026-11-19）：**多社團發布**：安全規範新增 D2 節，同一支影片發到多個臉書社團時，依社團讀者改寫（不是換字躲偵測）、依建議間隔分散發布；社團規則統一記在 `youtube-publish/references/facebook-groups.md`。
 
@@ -89,6 +91,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/youtube-growth-experiment.md`：YouTube 流量分析、可重現三關實測、長短影片導流、四階段數據複盤及成長假設驗證；AI Watch 發布型影片必讀。
 - `references/guided-production.md`：**逐步引導製作**——接受自訂或搜尋推薦題目，再選風格、形式與時長、確認故事腳本、代表預覽，最後製作。要求一起選擇或未提供完整製作需求時讀取；已明確授權自行完成時不增加逐關確認。
 - `references/ui-narration-animation.md`：**UI元件與旁白對齊**——狀態與動作逐句演出、持續角色與機構、木質程式模擬、左側放大講者、Flow回退及實際影格驗收；製作動畫講解時讀取。
+- `blackbear-science-video/SKILL.md`：**科普紀錄片前製證據關卡（V1.3）**——`scripts/workflow_v13.py` 的 init／complete／status／checkpoint／restore／pack、`audit_v13.py` 的 handoff／production／release 三道關卡、`verify_zip_v13.py` 交接包校驗、`render_smoke_v13.py` 不可發布的技術煙霧片；自然教室長篇科普片在選題後、分鏡前後需要可稽核的研究與權利紀錄時讀取。技術煙霧片不等於科學或授權核可，Claude Code／Codex 端到端與 Remotion 渲染須另有實際紀錄。
 - `references/image-led-motion-graphics.md`：**旁白完整視覺覆蓋與圖片／地圖動態圖文**——逐句畫面承載、照片／地圖推拉平移、遷徙路線、部位引線、授權記錄與示意合成標示；所有影片製作均適用。
 - `references/narration-led-visuals.md`：**旁白驅動畫面設計**——把旁白句意轉成可見的構圖、動作、轉場與節奏，含逐句映射表、來源影片觀察與可複製的交接提示詞；需要設計「旁白帶動畫」時讀取。
 - `motion-explainer-workflow/references/studio-style-production.md`：**風格導向動態圖文製作**——簡短 brief、風格卡、結構化分鏡、可尋幀時間軸、依分鏡規模審靜幀及成片驗收；製作程式化動態圖文、動態標題卡、片頭或循環動畫時和動態圖文子技能一併讀取。
@@ -154,6 +157,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - 敘事模式：A 圖層巡禮（宏觀到微觀，最後切回台灣）/ B 技巧清單（TIP N）/ C 故事主角（虛構角色＋AI 插畫）/ D 從零建置（資料夾 → 金鑰 → 功能 → 打包成 App）
 
 ### 2. 收集可驗證的內容與操作步驟
+**長篇科普紀錄片**（自然教室 10 分鐘以上、需逐句查證與素材授權紀錄者）：改用 `blackbear-science-video/SKILL.md` 的 A→C3 流程建立 `research/sources.csv`、`claims.csv`、`shots.csv`、`fact_review.csv` 與 `assets/rights_decisions.csv`，佔位內容不推進階段；C3 交接包通過 `audit_v13.py --gate handoff` 後，配音、品牌片頭片尾、縮圖與上架仍回本技能各節處理。
 優先使用使用者提供的材料；也可依公開官方文件、可存取的軟體或原始專案自行查證與實測。需要登入、私有資料或特定設備時，才請使用者提供操作結果。**不可以編造 UI 位置、功能、價格、科學證據或測試結果**，不確定的標示【待確認】。
 實測類影片依 `references/real-test-workflow.md`：先確認使用者方案能用到該功能；判定 AI 的行為（守住限制、成功、失敗）之前**一定先回看完整錄影**，不能只看 git 紀錄或最後狀態；誤判一經發現立即告知使用者並更正所有文件。
 

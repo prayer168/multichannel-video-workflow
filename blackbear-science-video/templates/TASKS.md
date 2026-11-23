@@ -1,0 +1,11 @@
+# Engineering tasks
+- [ ] Inspect source records and scientific/rights blockers
+- [ ] Verify local toolchain and available API keys (do not print secrets)
+- [ ] Scaffold video project and parse manifest + shots
+- [ ] Create 20–30 second proof of concept with placeholders clearly marked
+- [ ] Implement style bible and title/subtitle templates
+- [ ] Implement shot composition / 3D science diagrams as scoped
+- [ ] Integrate cleared audio/music/assets, narration and subtitles
+- [ ] Render low-res preview then 4K deliverable as supported
+- [ ] Run automated timeline/schema/content checks and human science/rights review
+- [ ] Produce final QA report, artifacts and reproducible commands
