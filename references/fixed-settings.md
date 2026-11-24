@@ -79,7 +79,18 @@ Style 一字不改，只替換最後一行的「本片術語清單」：
 - YAML：`bgm: 04_品牌資產/黑熊老師_共用/原創_章節鋪底_lofi.wav`、`bgm_lufs: -33`、`sfx: false`。
 - 授權紀錄：`assets/brand-approved/v1/blackbear-science/music/license-record.md`。片頭音訊內含 M1（Pixabay，查證時未登記 Content ID），只在片頭 4 秒使用。
 
-## 四、黑熊老師講課角色（固定）
+## 四、右下角頻道識別（自然教室＝小熊掌；AI 觀測站＝講課角色）
+
+**黑熊老師的自然教室（2026-11-24 使用者指定，優先於本節以下舊規則）**：影片右下角**只放小熊掌**，不再疊黑熊老師講課角色、也不另疊浮水印。
+
+- 素材：核定熊掌 `assets/brand-approved/v1/blackbear-science/paw_approved.png`（深藍圓底白色五趾熊掌，1254×1254 透明 PNG）。不得重畫或換色。
+- 版位（以 1920×1080 計）：寬高約 104 px、右邊距 28 px、下邊距 24 px、不透明度約 0.92；正片全程顯示，片頭與片尾不疊。其他字卡、對話框、標註避開右下角 x≥1760、y≥940。
+- 程式合成（Remotion／HyperFrames 直接在畫面元件裡放同一張圖亦可）：
+  `ffmpeg -i 正片.mp4 -i paw_approved.png -filter_complex "[1]scale=104:104,format=rgba,colorchannelmixer=aa=0.92[p];[0][p]overlay=W-w-28:H-h-24" -c:a copy 正片_熊掌.mp4`
+- 首例：《尼莫點》Stage D 先導片（2026-11-24）。
+- 待辦：`scripts/build/build_video.bat` 尚未依頻道分流，仍會執行 `bear_presenter.py`；自然教室影片改用 bat 時，先跳過講課角色步驟，再用上面的指令疊熊掌。
+
+**AI 觀測站（沿用）**：
 
 - 每支影片疊加核定黑熊老師講課角色；一般影片沿用**右下角**，進階動畫講解可改用2026-10-15確認的**左側放大講者／右側動畫**配置（見 [ui-narration-animation.md](ui-narration-animation.md)），依配音音量對嘴、眨眼、呼吸；舊管線每幕開頭2.5秒做手勢；進階動畫依實際旁白事件與目標安排指向、解說及回應，不用固定開場手勢取代語意同步。片頭、片尾不出現。
 - 角色來源：`assets/brand-approved/v1/blackbear-science/character/`（分層 SVG＋`character.js` 手動時鐘 API；造型依使用者的《黑熊老師角色表情與姿勢圖鑑》）。不得自行重畫或換造型。
@@ -98,7 +109,7 @@ Style 一字不改，只替換最後一行的「本片術語清單」：
 
 1. 自動找技能資料夾（`%USERPROFILE%\multichannel-video-workflow` → `%USERPROFILE%\.claude\skills\multichannel-video-workflow`，或先 `set REPO=…`）
 2. 自動安裝 numpy、soundfile、pyyaml、pillow、playwright；檢查 ffmpeg
-3. build.py（有 `GEMINI_API_KEY` 用 Gemini，沒有用 Zhiwei）→ bear_presenter.py → append_outro.py
+3. build.py（有 `GEMINI_API_KEY` 用 Gemini，沒有用 Zhiwei）→ bear_presenter.py → append_outro.py（自然教室依第四節改疊小熊掌，bat 尚未分流）
 4. 全程寫入專案資料夾的 `產生紀錄.log`（雲端的 Claude 可以直接讀進度）；出錯時視窗印出紀錄並暫停
 
 踩坑紀錄（2026-10-06）：

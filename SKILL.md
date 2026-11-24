@@ -5,7 +5,9 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.38.0（2026-11-24）。新增本機動態試片的畫面驗收、局部重渲染及成片後代理交接。見 [本機動態試片](references/local-motion-pilot.md)。
+目前版本：2.39.0（2026-11-24）。**自然教室右下角改放小熊掌**：黑熊老師的自然教室影片右下角只放核定熊掌 `paw_approved.png`（約 104 px、右下各留 28／24 px），不再疊黑熊老師講課角色；AI 觀測站不變。規格與 ffmpeg 疊加指令見 `references/fixed-settings.md` 第四節；`build_video.bat` 尚未依頻道分流。
+
+2.38.0（2026-11-24）：新增本機動態試片的畫面驗收、局部重渲染及成片後代理交接。見 [本機動態試片](references/local-motion-pilot.md)。
 
 2.37.0（2026-11-24）：**收錄科普紀錄片前製子技能 BlackBear Science Video V1.3**：`blackbear-science-video/` 提供 A→C3 階段關卡（不能跳關）、來源／主張／鏡頭／素材 ID 對應、逐鏡科學審查與權利決定、`original/` 雜湊鎖、檢查點與還原、交接 ZIP 校驗及 720p 原創向量技術煙霧測試；production／release 關卡一律維持 BLOCKED 直到具名審查者簽核。入口見 `blackbear-science-video/SKILL.md`。
 
@@ -224,7 +226,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 ### 7. 剪輯指示與發布檢查
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。
 **音樂與音效**：只使用符合影片用途與授權條款的素材；記錄曲名、來源與授權，必要時標示作者。音樂情緒依頻道設定檔選擇。
-**浮水印**：依所選頻道設定檔使用品牌浮水印；剪輯疊加或 YouTube 浮水印擇一。自然教室熊掌素材段落依 `references/production-notes.md` 避免重複；有黑熊老師講課角色時右下角不再疊浮水印（用透明 PNG）。
+**浮水印**：依所選頻道設定檔使用品牌浮水印；剪輯疊加或 YouTube 浮水印擇一。**自然教室右下角只放核定小熊掌、不疊黑熊老師講課角色**（2026-11-24 使用者指定，見 `references/fixed-settings.md` 第四節）；AI 觀測站沿用講課角色，有講課角色時右下角不再疊浮水印（用透明 PNG）。
 **字幕（2.13.0 起不燒錄）**：依 `references/subtitle-style.md`，字幕只輸出獨立字幕軌 `字幕_zh-TW_單行.srt`（一次一行、換行點對齊旁白停頓），成片不燒錄字幕，上傳時另上 SRT；使用者明確要求燒錄版時才用 `subs_oneline.py --burn`。製作畫面時 y 880–1000 仍不放重要內容（YouTube 字幕顯示在這一區；`build.py` 預設 `subtitle_safe: true` 自動處理圖卡與動畫，錄屏與自寫動畫要人工守）。
 **一鍵產生（優先使用）**：Windows 上把 `scripts/build/build_video.bat` 複製到專案資料夾雙擊（build.py → bear_presenter.py → append_outro.py → subs_oneline.py 產生 SRT，進度寫入 `產生紀錄.log`）。片頭、配音、配樂依 fixed-settings.md。以下為 build.py 細節：腳本定稿後，AI 依腳本與所選頻道設定檔寫出 `製作中/畫面規格.yaml`。片頭、片尾、配音、浮水印與配樂只可引用該頻道核定資產；`video.intro`、`intro_audio`、`watermark`、`bgm` 都必須是存在的檔案，不能填文字佔位或省略。產生器沒有 `outro`／`outro_audio` 欄位；片尾影片可放最後一幕，但音訊與完整長度需後製接入（見 build-pipeline）。`thanks` 圖卡明確填本頻道 `name`，避免舊預設姓名。若 AI Watch 品牌影音尚未提供，在專案卡列待建立；要產生無品牌預覽，須先準備實際中性片頭、靜音 WAV、透明 1920×1080 PNG 和已授權 BGM 等必填檔案，否則只交付企劃與分鏡。（2026-10-06 起兩頻道都用黑熊老師片頭與講課角色，見 fixed-settings.md。）再執行 `python scripts/build/build.py <專案資料夾>`，一次產出影片、所需字幕、章節與品質檢查報告；沒有 Gemini 配音時自動用 Zhiwei 暫定配音，正式配音到齊後同一個指令重跑即可（見 references/build-pipeline.md）。
 **成片硬指標（2.28.0，所有影片）**：最終檔（已接片頭、黑熊、片尾）交付前執行 Motion Showreel 的 `node <S>/inspect.mjs qa <成片.mp4> --out <qa資料夾> --expect-size 1920x1080 --expect-fps <幀率> --expect-duration <秒> --audio required`（Shorts 用 1080x1920），尺寸、幀率、時長、幀數、音軌、黑格、−14±1.5 LUFS、真峰值 ≤ −1 dBTP 任一項 FAIL 或 NOT CHECKED 都不交付；`<S>` 與安裝見 `motion-explainer-workflow/references/motion-showreel-integration.md`。尚未安裝時沿用 build.py 品質檢查報告並註明。
