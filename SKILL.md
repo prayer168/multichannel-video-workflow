@@ -1,11 +1,13 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、成片後 YouTube 縮圖、Shorts 封面與 Facebook 分享圖（交由 Codex 調用 Images 2.6）、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`；長篇科普紀錄片（例如 18 分鐘《尼莫點》、仿生科技）需要 A 研究→B 腳本→C1 風格→C2 毫秒分鏡→C2.5 科學／權利審查→C3 交接 ZIP 的證據關卡、檢查點還原或 FFmpeg 技術煙霧測試時，轉讀 `blackbear-science-video/SKILL.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、成片後 YouTube 縮圖、Shorts 封面與 Facebook 分享圖（交由 Codex 調用 Images 2.6）、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`；底圖一律用真實地圖或可商用圖片、Claude Code 只畫動態元件的分工與授權記錄，讀 `references/real-base-motion-layers.md`；長篇科普紀錄片（例如 18 分鐘《尼莫點》、仿生科技）需要 A 研究→B 腳本→C1 風格→C2 毫秒分鏡→C2.5 科學／權利審查→C3 交接 ZIP 的證據關卡、檢查點還原或 FFmpeg 技術煙霧測試時，轉讀 `blackbear-science-video/SKILL.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
 ---
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.39.0（2026-11-24）。**自然教室右下角改放小熊掌**：黑熊老師的自然教室影片右下角只放核定熊掌 `paw_approved.png`（約 104 px、右下各留 28／24 px），不再疊黑熊老師講課角色；AI 觀測站不變。規格與 ffmpeg 疊加指令見 `references/fixed-settings.md` 第四節；`build_video.bat` 尚未依頻道分流。
+目前版本：2.40.0（2026-11-25）。**真實底圖＋程式動態層分工**：地圖、地景、天體、生物與實物一律用真實地圖或可商用圖片當底圖（Copernicus Sentinel、NASA、Natural Earth、GEBCO、OpenStreetMap、國土測繪中心開放圖層、CC0／CC BY 照片），找不到時才用標「示意」的 AI 生成圖；Claude Code 只畫隨旁白變化的動態元件（箭頭、定位點、路徑、高亮、長條、引線、淡出圖層、運鏡、字幕、角標），不從零畫地圖或地景。下載前列清單取得同意，`assets/licensed/sources.json`＋`CREDITS.md` 記錄授權，畫面標來源。見 `references/real-base-motion-layers.md`。
+
+2.39.0（2026-11-24）：**自然教室右下角改放小熊掌**：黑熊老師的自然教室影片右下角只放核定熊掌 `paw_approved.png`（約 104 px、右下各留 28／24 px），不再疊黑熊老師講課角色；AI 觀測站不變。規格與 ffmpeg 疊加指令見 `references/fixed-settings.md` 第四節；`build_video.bat` 尚未依頻道分流。
 
 2.38.0（2026-11-24）：新增本機動態試片的畫面驗收、局部重渲染及成片後代理交接。見 [本機動態試片](references/local-motion-pilot.md)。
 
@@ -96,6 +98,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - `references/guided-production.md`：**逐步引導製作**——接受自訂或搜尋推薦題目，再選風格、形式與時長、確認故事腳本、代表預覽，最後製作。要求一起選擇或未提供完整製作需求時讀取；已明確授權自行完成時不增加逐關確認。
 - `references/ui-narration-animation.md`：**UI元件與旁白對齊**——狀態與動作逐句演出、持續角色與機構、木質程式模擬、左側放大講者、Flow回退及實際影格驗收；製作動畫講解時讀取。
 - `blackbear-science-video/SKILL.md`：**科普紀錄片前製證據關卡（V1.3）**——`scripts/workflow_v13.py` 的 init／complete／status／checkpoint／restore／pack、`audit_v13.py` 的 handoff／production／release 三道關卡、`verify_zip_v13.py` 交接包校驗、`render_smoke_v13.py` 不可發布的技術煙霧片；自然教室長篇科普片在選題後、分鏡前後需要可稽核的研究與權利紀錄時讀取。技術煙霧片不等於科學或授權核可，Claude Code／Codex 端到端與 Remotion 渲染須另有實際紀錄。
+- `references/real-base-motion-layers.md`：**真實底圖＋程式動態層分工**——地圖、地景、天體、生物用真實或可商用素材，Claude Code 只畫動態元件；可商用來源清單、禁用來源、下載同意、`sources.json`／`CREDITS.md` 與畫面署名、驗收清單、場景規格格式。所有影片製作均適用。
 - `references/image-led-motion-graphics.md`：**旁白完整視覺覆蓋與圖片／地圖動態圖文**——逐句畫面承載、照片／地圖推拉平移、遷徙路線、部位引線、授權記錄與示意合成標示；所有影片製作均適用。
 - `references/narration-led-visuals.md`：**旁白驅動畫面設計**——把旁白句意轉成可見的構圖、動作、轉場與節奏，含逐句映射表、來源影片觀察與可複製的交接提示詞；需要設計「旁白帶動畫」時讀取。
 - `motion-explainer-workflow/references/studio-style-production.md`：**風格導向動態圖文製作**——簡短 brief、風格卡、結構化分鏡、可尋幀時間軸、依分鏡規模審靜幀及成片驗收；製作程式化動態圖文、動態標題卡、片頭或循環動畫時和動態圖文子技能一併讀取。
@@ -191,7 +194,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 字幕階段：由 `字幕/字幕_zh-TW.srt` 產生 `字幕/字幕_en.srt`（序號與時間碼完全不變）；另外輸出純文字 `製作後/英文逐字稿.txt`。英文標題與說明欄（選用）見 references/prompts.md。
 
 ### 4. 分鏡與素材清單（寫入 03_分鏡表.md）
-所有影片分鏡都必須讀 `references/image-led-motion-graphics.md`，將完整旁白逐句映射至主體／地點、實際畫面、視覺動作、素材來源、標註和驗收點；從開場到旁白結尾均要有具體視覺承載物，不能用長段純文字卡或數字動畫代替內容。可用實拍、授權照片、地圖、真實 UI、程式圖解、角色／插畫和有目的的推拉／平移／切換，依旁白選擇媒材；運鏡與標註不能遮住主體或字幕，示意合成要明確標示。
+所有影片分鏡都必須讀 `references/image-led-motion-graphics.md` 與 `references/real-base-motion-layers.md`（底圖用真實地圖或可商用圖片，Claude Code 只畫動態元件），將完整旁白逐句映射至主體／地點、實際畫面、視覺動作、素材來源、標註和驗收點；從開場到旁白結尾均要有具體視覺承載物，不能用長段純文字卡或數字動畫代替內容。可用實拍、授權照片、地圖、真實 UI、程式圖解、角色／插畫和有目的的推拉／平移／切換，依旁白選擇媒材；運鏡與標註不能遮住主體或字幕，示意合成要明確標示。
 欄位：# | 時間 | 旁白句 ID／內容 | 畫面類型與素材來源 | 畫面目的／主體 | 主視覺動作 | 鏡頭 | 標註與字幕安全 | 實證／示意 | 音效 | 驗收
 以理解為目的檢查節奏；40 秒是可選檢視提示，不應干擾持續觀察或必要實驗步驟。最後列出要錄的畫面、要生成的插畫（附英文提示詞）、要找的 B-roll。
 

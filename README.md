@@ -3,7 +3,13 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.39.0（2026-11-24）
+**Version:** 2.40.0（2026-11-25）
+
+## 2.40.0：真實底圖＋程式動態層分工
+
+- 地圖、地景、天體、生物與實物一律用真實地圖或可商用圖片當底圖；找不到時才用標「示意」的 AI 生成圖。
+- Claude Code 只畫隨旁白變化的動態元件（箭頭、定位點、路徑、高亮、長條、引線、淡出圖層、運鏡、字幕、角標）。
+- 可商用來源清單、禁用來源、授權記錄與驗收見 `references/real-base-motion-layers.md`。
 
 ## 2.39.0：自然教室右下角改放小熊掌
 
@@ -446,6 +452,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 
 | 版本 | 日期 | 重點 |
 |------|------|------|
+| 2.40.0 | 2026-11-25 | 真實底圖＋程式動態層分工：底圖用真實地圖或可商用圖片，Claude Code 只畫動態元件（real-base-motion-layers.md） |
 | 2.39.0 | 2026-11-24 | 自然教室右下角改放核定小熊掌，不疊黑熊老師講課角色（fixed-settings.md 第四節） |
 | 2.38.0 | 2026-11-24 | 本機動態試片、畫面細修、局部重渲染與 Claude Code／Codex 交接 |
 | 2.37.0 | 2026-11-24 | 收錄科普紀錄片前製子技能 BlackBear Science Video V1.3（A→C3 證據關卡、handoff／production／release 稽核、檢查點還原、技術煙霧片） |
