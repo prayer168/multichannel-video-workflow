@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.40.0] - 2026-11-25
+### Added
+- `references/real-base-motion-layers.md`：地圖、地景、天體、生物與實物一律以真實地圖或可商用圖片當底圖，Claude Code 只畫動態元件。收錄可商用來源清單與署名格式、不使用的來源、下載前同意、`assets/licensed/sources.json`＋`CREDITS.md` 授權記錄、畫面署名、驗收清單與底圖／動態層分開的場景規格。
+### Changed
+- 素材由 Claude 自行挑選下載，不必逐張徵求同意（使用者 2026-11-25 授權）；Wikimedia 限流時改用 NASA 原站與 iNaturalist；非現場照片標拍攝地。
+- `SKILL.md`（description、版本說明、參考檔清單、第 4 步分鏡）、`references/image-led-motion-graphics.md`、`README.md` 指向新規範。
+
 ## [2.39.0] - 2026-11-24
 ### Changed
 - `references/fixed-settings.md` 第四節：黑熊老師的自然教室影片右下角只放核定小熊掌 `paw_approved.png`（約 104 px、右邊距 28 px、下邊距 24 px、不透明度約 0.92；片頭片尾不疊），不再疊黑熊老師講課角色；附 ffmpeg 疊加指令。AI 觀測站沿用講課角色。第六節註明 bat 尚未分流。
