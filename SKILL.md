@@ -5,7 +5,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.40.0（2026-11-25）。**真實底圖＋程式動態層分工**：地圖、地景、天體、生物與實物一律用真實地圖或可商用圖片當底圖（Copernicus Sentinel、NASA、Natural Earth、GEBCO、OpenStreetMap、國土測繪中心開放圖層、CC0／CC BY 照片），找不到時才用標「示意」的 AI 生成圖；Claude Code 只畫隨旁白變化的動態元件（箭頭、定位點、路徑、高亮、長條、引線、淡出圖層、運鏡、字幕、角標），不從零畫地圖或地景。素材由 Claude 自行挑選下載（使用者授權），`assets/licensed/sources.json`＋`CREDITS.md` 記錄授權，畫面標來源。見 `references/real-base-motion-layers.md`。
+目前版本：2.40.1（2026-11-25）。照片與影片素材一律先找可商用的真實檔案（由 Claude 自行決定），真的找不到才回報「沒有」，再調用 Codex API 生成標「示意」的圖。2.40.0：**真實底圖＋程式動態層分工**：地圖、地景、天體、生物與實物一律用真實地圖或可商用圖片當底圖（Copernicus Sentinel、NASA、Natural Earth、GEBCO、OpenStreetMap、國土測繪中心開放圖層、CC0／CC BY 照片），找不到時才用標「示意」的 AI 生成圖；Claude Code 只畫隨旁白變化的動態元件（箭頭、定位點、路徑、高亮、長條、引線、淡出圖層、運鏡、字幕、角標），不從零畫地圖或地景。素材由 Claude 自行挑選下載（使用者授權），`assets/licensed/sources.json`＋`CREDITS.md` 記錄授權，畫面標來源。見 `references/real-base-motion-layers.md`。
 
 2.39.0（2026-11-24）：**自然教室右下角改放小熊掌**：黑熊老師的自然教室影片右下角只放核定熊掌 `paw_approved.png`（約 104 px、右下各留 28／24 px），不再疊黑熊老師講課角色；AI 觀測站不變。規格與 ffmpeg 疊加指令見 `references/fixed-settings.md` 第四節；`build_video.bat` 尚未依頻道分流。
 
