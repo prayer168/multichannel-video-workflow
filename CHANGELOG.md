@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.40.1] - 2026-11-25
+### Changed
+- `references/real-base-motion-layers.md`：真實素材規則擴及所有照片與影片（不只地圖）；一定要先找到可商用的真實照片或影片，真的找不到時先回報「沒有」並列出查過的來源，之後才調用 Codex（OpenAI 圖像）API 生成並標「示意」；同類事件真實畫面替代時標「實拍：○○，非△△」。
+- `SKILL.md` 版本說明、`VERSION`、`README.md` 版本號。
+
 ## [2.40.0] - 2026-11-25
 ### Added
 - `references/real-base-motion-layers.md`：地圖、地景、天體、生物與實物一律以真實地圖或可商用圖片當底圖，Claude Code 只畫動態元件。收錄可商用來源清單與署名格式、不使用的來源、下載前同意、`assets/licensed/sources.json`＋`CREDITS.md` 授權記錄、畫面署名、驗收清單與底圖／動態層分開的場景規格。
