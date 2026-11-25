@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.41.0] - 2026-11-25
+### Added
+- `references/chapter-production-loop.md`：長片逐章製作與審片修正——每章擦聲關卡（逐檔＋整章人聲軌，兩類都 0 處才做下一章）、快語速 Style 與鏡長規則、依旁白關鍵詞加動態元件、角色台詞配音（小熊 Laomedeia，混音約 0.63，字卡保留）。
+- `scripts/build/voice_stem_from_timing.py`：依 Remotion 時間軸把一章的配音疊成純人聲軌，給擦聲檢核用。
+### Changed
+- `scripts/build/narration_noise_check.py`：相隔 ≤ 60 ms 的爆音併成一段再判斷（舊版漏抓夾一格靜音的檔尾爆音）；新增「句中換氣／擦聲」類別，`--fix` 一併靜音（不剪長度）；新增 `mute()`、`clean()` 給其他程式呼叫。
+- `scripts/build/gemini_tts.py`：切句後自動跑 `narration_noise_check.clean()`（`report.json` 記 `muted`）；新增 `--pace fast`（約 300 字／分）、`--speaker cub`（Laomedeia＋小熊 Style）。
+- `SKILL.md`、`references/fixed-settings.md`、`motion-explainer-workflow/SKILL.md`、`README.md`、`VERSION` 指向新規範。
+
 ## [2.40.1] - 2026-11-25
 ### Changed
 - `references/real-base-motion-layers.md`：真實素材規則擴及所有照片與影片（不只地圖）；一定要先找到可商用的真實照片或影片，真的找不到時先回報「沒有」並列出查過的來源，之後才調用 Codex（OpenAI 圖像）API 生成並標「示意」；同類事件真實畫面替代時標「實拍：○○，非△△」。

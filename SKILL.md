@@ -5,7 +5,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.40.1（2026-11-25）。照片與影片素材一律先找可商用的真實檔案（由 Claude 自行決定），真的找不到才回報「沒有」，再調用 Codex API 生成標「示意」的圖。2.40.0：**真實底圖＋程式動態層分工**：地圖、地景、天體、生物與實物一律用真實地圖或可商用圖片當底圖（Copernicus Sentinel、NASA、Natural Earth、GEBCO、OpenStreetMap、國土測繪中心開放圖層、CC0／CC BY 照片），找不到時才用標「示意」的 AI 生成圖；Claude Code 只畫隨旁白變化的動態元件（箭頭、定位點、路徑、高亮、長條、引線、淡出圖層、運鏡、字幕、角標），不從零畫地圖或地景。素材由 Claude 自行挑選下載（使用者授權），`assets/licensed/sources.json`＋`CREDITS.md` 記錄授權，畫面標來源。見 `references/real-base-motion-layers.md`。
+目前版本：2.41.0（2026-11-25）。**長片逐章製作與擦聲關卡**：每章做完先跑擦聲檢核（逐檔＋`voice_stem_from_timing.py` 整章人聲軌），「摩擦／爆音」「句中換氣／擦聲」都 0 處才交片、才做下一章；`narration_noise_check.py` 新增句中換氣偵測與爆音併段，`gemini_tts.py` 新增 `--pace fast`（約 300 字／分）、`--speaker cub`（小熊 Laomedeia）並自動清理；依旁白關鍵詞加動態元件、角色台詞要配音。見 `references/chapter-production-loop.md`。2.40.1：照片與影片素材一律先找可商用的真實檔案（由 Claude 自行決定），真的找不到才回報「沒有」，再調用 Codex API 生成標「示意」的圖。2.40.0：**真實底圖＋程式動態層分工**：地圖、地景、天體、生物與實物一律用真實地圖或可商用圖片當底圖（Copernicus Sentinel、NASA、Natural Earth、GEBCO、OpenStreetMap、國土測繪中心開放圖層、CC0／CC BY 照片），找不到時才用標「示意」的 AI 生成圖；Claude Code 只畫隨旁白變化的動態元件（箭頭、定位點、路徑、高亮、長條、引線、淡出圖層、運鏡、字幕、角標），不從零畫地圖或地景。素材由 Claude 自行挑選下載（使用者授權），`assets/licensed/sources.json`＋`CREDITS.md` 記錄授權，畫面標來源。見 `references/real-base-motion-layers.md`。
 
 2.39.0（2026-11-24）：**自然教室右下角改放小熊掌**：黑熊老師的自然教室影片右下角只放核定熊掌 `paw_approved.png`（約 104 px、右下各留 28／24 px），不再疊黑熊老師講課角色；AI 觀測站不變。規格與 ffmpeg 疊加指令見 `references/fixed-settings.md` 第四節；`build_video.bat` 尚未依頻道分流。
 
@@ -80,6 +80,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 本技能以案例式教學、生活化解釋、循序示範和清楚的觀眾成果為共用方法，並支援兩個彼此區隔的頻道：**黑熊老師的自然教室**與**AI 觀測站（AI Watch）**。本技能參考公開影片可觀察到的教學結構，不複製其他創作者的品牌素材、固定台詞或專屬視覺。
 
 每個專案必須先選定一個頻道設定檔，並**一定先讀 `references/fixed-settings.md`**（使用者定案的固定設定，兩頻道通用，優先於頻道設定檔的品牌影音條文）。詳細規則在 `references/` 與 `profiles/`，需要時再讀取：
+- `references/chapter-production-loop.md`：**長片逐章製作與審片修正**（2.41.0）——每章擦聲關卡、快語速 Style 與鏡長規則、依旁白加動態元件、角色台詞配音（小熊 Laomedeia）
 - `references/fixed-settings.md`：**固定製作設定**——配音（Gemini Achird＋固定 Style；暫定只能用 Zhiwei）、黑熊老師片頭、原創 lo-fi 配樂、黑熊老師講課角色、片尾、Windows 一鍵檔與踩坑紀錄
 - [youtube-thumbnail-strategist/SKILL.md](youtube-thumbnail-strategist/SKILL.md) 負責兩頻道成片後的主影片縮圖、Shorts 封面與 Facebook 分享圖（Codex × Images 2.6），或依需求改版既有縮圖。
 - `references/channel-routing.md`：頻道判定、共用規則與優先順序
@@ -224,7 +225,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 6. 配音稿
 一律依 `references/fixed-settings.md`：**AI Studio 產生與下載 WAV 一律由 AI 操作**（選 Achird、貼 Style、Run、下載、在使用者電腦確認檔案、改名 `Sxx-Syy.wav` 歸檔），不請使用者手動下載。正式配音 Gemini `gemini-3.8-flash-tts`／Achird＋固定 Style（只換最後一行術語清單）；暫定配音只能用 Windows Zhiwei，不得改用其他 TTS。畫面疊加核定黑熊老師講課角色（`scripts/build/bear_presenter.py` 預設右下）；動畫講解可採已確認的左側放大講者、右側動畫版型，依 `references/ui-narration-animation.md` 明確合成。雲端無法產生配音時，產生 `旁白資料.json`，連同 `scripts/build/make_narration.py`、`make_narration.bat` 放到使用者專案資料夾，請使用者雙擊產生 `配音/Sxx-Syy.wav`（見 `references/real-test-workflow.md` 第四節）。需要一句一檔（逐句排時間）時，在使用者 Windows 電腦用 `scripts/build/gemini_tts.py --lines 旁白逐句.json --out 配音/逐句`。
-**配音到齊後先跟核定聲線比聽**（`assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3`；語速不足時改 Style 重新產生，不可事後拉速）。**配音到齊後必做兩項檢核**（`references/fixed-settings.md` 第一節）：① `scripts/build/narration_noise_check.py` 去除摩擦聲／爆音（Gemini WAV 檔尾常有比人聲還大的短爆音），修到「摩擦／爆音」0 處；② 用 `scripts/build/narration_word_timing.py` 語音辨識核對是否離稿（同時產生動畫對時用的 `words.json`）；③ `scripts/build/voice_consistency_check.py` 聲線一致性檢核（2.17.0），偏離句與接縫列成聆聽清單交給使用者確認，不一致就整幕重做直到一致。成片輸出前再對最終旁白軌跑一次 ① 和 ③。
+**配音到齊後先跟核定聲線比聽**（`assets/brand-approved/v1/blackbear-science/voice/achird_reference_2026-11-03.mp3`；語速不足時改 Style 重新產生，不可事後拉速）。**配音到齊後必做兩項檢核**（`references/fixed-settings.md` 第一節）：① `scripts/build/narration_noise_check.py` 去除摩擦聲／爆音（Gemini WAV 檔尾常有比人聲還大的短爆音），修到「摩擦／爆音」0 處；② 用 `scripts/build/narration_word_timing.py` 語音辨識核對是否離稿（同時產生動畫對時用的 `words.json`）；③ `scripts/build/voice_consistency_check.py` 聲線一致性檢核（2.17.0），偏離句與接縫列成聆聽清單交給使用者確認，不一致就整幕重做直到一致。成片輸出前再對最終旁白軌跑一次 ① 和 ③。**長片逐章製作時，每章交片前都要過擦聲關卡**（逐檔＋整章人聲軌，「摩擦／爆音」「句中換氣／擦聲」都 0 處才做下一章，見 `references/chapter-production-loop.md`）。
 
 ### 7. 剪輯指示與發布檢查
 提供剪輯規範摘要（軌道配置、推拉、標註、BGM ducking、禁忌），並列出輸出與發布檢查清單（字幕語言與是否製作英文版依頻道設定檔、觀眾和使用者要求決定）。
