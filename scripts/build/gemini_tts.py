@@ -9,7 +9,7 @@
 - 照 references/fixed-settings.md 第一節：模型、聲音、Style 一字不改，只換最後一行術語（style(terms)）。
 - 每次請求一組（約 90 秒、400 字內），一句一行；同一組的句子一次產生，聲線最一致。
 - 產生後用 whisper.cpp 逐字對齊（同資料夾 narration_word_timing.py），在相鄰兩句之間找音量最低處切開，
-  每句再用 tidy() 去掉換氣與唇齒擦聲。對齊率、離稿字與「沒念到的句子」寫在 <out>/report.json。
+  每句再用 tidy() 去掉換氣與唇齒擦聲，接著用 narration_noise_check.clean() 去掉貼著字的句中換氣與檔尾爆音（2.41.0）。對齊率、離稿字與「沒念到的句子」寫在 <out>/report.json。
 - 需要環境變數 GEMINI_API_KEY（只在本機讀取，不寫進任何檔案；setx 設的也讀得到）。
   免費方案每分鐘 3 次、每天 10 次；已產生的組與句會跳過，隔天重跑從缺的接續。
 - 跟 make_narration.py 的分工：make_narration 產生「兩幕一檔」交給 build.py；本工具產生「一句一檔」，
@@ -34,19 +34,34 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import narration_word_timing as nwt  # noqa: E402
+import narration_noise_check as nnc  # noqa: E402
 
 MODEL = "gemini-3.8-flash-tts"
 VOICE = "Achird"
+CUB_VOICE = "Laomedeia"   # 小熊助教（2026-11-25《尼莫點》CH01 比聽：Puck、Leda 長句句尾有爆音）
 
 
-def style(terms="YouTube"):
-    """fixed-settings.md 第一節 Style 全文；只有最後一行的術語清單會換。"""
-    return (
+def style(terms="YouTube", pace="normal"):
+    """fixed-settings.md 第一節 Style 全文；只有最後一行的術語清單會換。
+    pace="fast"：2026-11-25《尼莫點》CH01 使用者嫌 278 字／分「會想睡著」，改這兩句重新產生，
+    實測約 304 字／分、亮度仍在核定範圍（不可事後拉速）。"""
+    s = (
         "自然的臺灣國語男聲，一位四十歲左右的自然科老師，在教師研習中耐心講解：溫暖、厚實、穩重，帶著親切的微笑感。\n"
         "是「講」不是「唸」：句子流暢連貫，語速稍快、輕快有精神（每分鐘約 270 到 290 字），重要概念前稍微停頓，「……」處停頓約 0.8 秒，\n"
         "每一行結尾停頓約半秒，「好，」開頭的句子前停頓稍長。重點詞自然加重，尾音自然收住不拖長。不要播報腔、廣告腔、朗誦腔。\n"
         f"英文術語用自然的英文發音，不要逐字母拼讀：{terms}。"
     )
+    if pace == "fast":
+        s = s.replace("語速稍快、輕快有精神（每分鐘約 270 到 290 字）", "語速明快、輕快有精神（每分鐘約 320 到 340 字），句與句之間緊湊銜接")
+        s = s.replace("每一行結尾停頓約半秒", "每一行結尾只短暫停頓約 0.2 秒")
+    return s
+
+
+def cub_style(terms="NASA"):
+    """小熊助教的 Style（聲音用 CUB_VOICE）。原檔比黑熊老師大聲約 4 dB，混音時音量壓到約 0.63。"""
+    return ("臺灣國語，一隻活潑可愛的小熊助教，聲音像十歲左右的孩子：好奇、俏皮、反應有點誇張但不尖叫，"
+            "像在跟老師抬槓。語速輕快（每分鐘約 320 字），句尾上揚自然，不要播報腔或卡通怪聲。\n"
+            f"英文術語用自然的英文發音：{terms}。")
 
 
 STYLE = style()
@@ -256,7 +271,9 @@ def split(raw, group, sr_y, report):
         cuts.append(quietest(y, sr, lo, hi) if hi > lo else (e + s) / 2)
     cuts.append(min(dur, sents[-1]["end"] + 0.35))
     for k, (_, _, path) in enumerate(chunks):
-        write_wav(path, tidy(y[int(cuts[k] * sr): int(cuts[k + 1] * sr)], sr), sr)
+        seg, n = nnc.clean(tidy(y[int(cuts[k] * sr): int(cuts[k + 1] * sr)], sr), sr)
+        report.setdefault("muted", {})[chunks[k][0]] = n   # 2.41.0：句中換氣與檔尾爆音（tidy 抓不到的）
+        write_wav(path, seg, sr)
     report["chunks"] = [dict(key=c[0], start=round(cuts[k], 2), end=round(cuts[k + 1], 2))
                         for k, c in enumerate(chunks)]
 
@@ -307,14 +324,20 @@ def prepare(blocks, work):
 
 def main():
     import argparse
-    global STYLE
+    global STYLE, VOICE
     ap = argparse.ArgumentParser(description="Gemini（Achird）逐句旁白：一組產生、對齊後切成一句一檔")
     ap.add_argument("--lines", required=True, help='JSON：{"lines": [["v01", "第一句。"], ...], "terms": "可省略"}')
     ap.add_argument("--out", required=True, help="輸出資料夾（<句 id>.wav、raw_*.wav、report.json）")
     ap.add_argument("--terms", help="Style 最後一行的英文術語清單（覆蓋 JSON 的 terms）")
+    ap.add_argument("--pace", choices=["normal", "fast"], default="normal", help="fast＝約 300 字／分（使用者嫌慢時）")
+    ap.add_argument("--speaker", choices=["teacher", "cub"], default="teacher", help="cub＝小熊助教（Laomedeia）")
     a = ap.parse_args()
     data = json.loads(Path(a.lines).read_text(encoding="utf-8"))
-    STYLE = style(a.terms or data.get("terms") or "YouTube")
+    terms = a.terms or data.get("terms") or "YouTube"
+    if a.speaker == "cub":
+        VOICE, STYLE = CUB_VOICE, cub_style(terms)
+    else:
+        STYLE = style(terms, a.pace)
     out = Path(a.out)
     blocks = [(f"e{k:03d}", [(lid, text, out / f"{lid}.wav")]) for k, (lid, text) in enumerate(data["lines"])]
     prepare(blocks, out)
