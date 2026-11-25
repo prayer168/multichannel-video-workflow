@@ -45,17 +45,46 @@ Composition: {構圖}. Brand: {品牌規則}.
 Do not add: results not visible in the reference, extra words, numbers, watermarks, logos, fake UI, real people's likeness that is not in the reference.
 ```
 
-## 從 Claude Code 交給 Codex
+## 從 Claude Code 交給 Codex（不用切換視窗）
 
-brief 和參考影格放好後，在主題根目錄執行（`<brief>` 換成實際檔名）：
+2026-11-25《尼莫點》定案（使用者：「在 Claude Code 調用 Codex，就不用切換來切換去」）：Claude Code 直接在本對話用 `codex exec` 把 brief 交給 Codex，Codex 用使用者的 Codex 帳號調用 Images 2.6，產出後回到 Claude Code 驗收、複製到交付資料夾。全程不必開 Codex 視窗。
+
+### 1. 在本機純英文路徑的工作資料夾執行
+
+Google 雲端硬碟（`G:\我的雲端硬碟\…`）路徑下，Codex 沙箱無法啟動任何程序（`helper_unknown_error: setup refresh had errors`），連 brief 都讀不到。所以：
+
+1. 建本機工作資料夾，例如 `C:\Users\<使用者>\<主題英文代號>_thumbs\`。
+2. 把 brief、`paw_approved.png`（自然教室）與各支 `製作後/縮圖候選/ref_*.jpg` 依**相同相對路徑**複製進去，並先建好 `製作後/臉書宣傳/` 等輸出資料夾。brief 內的路徑不用改。
+3. 參考圖用乾淨的原始照片或無字影格；成片截圖若已有標題、標籤、字卡，Images 2.6 容易照抄，改用 `public/real/` 的原圖。
+
+### 2. 先確認 Codex 可用（約 10 秒）
 
 ```bash
-codex exec -C "<主題根目錄>" -s workspace-write --skip-git-repo-check "讀取 <brief>，依每一節用 Images 2.6 生成圖片並存到指定路徑。每張生成後逐字核對圖上繁體中文與 brief 是否完全相同，不符就重生成，最多 3 次；完成後在 <brief> 同資料夾寫 codex_images_report.md，列出每張的路徑、像素、嘗試次數與核對結果。不要上傳或發布。"
+codex --version
+cd <工作資料夾> && codex exec --skip-git-repo-check "只回覆 OK 兩個字，不要做任何其他事。"
 ```
 
+回 `OK` 才下正式指令。若出現 `You've hit your usage limit … try again at <時間>`：狀態記 `planned`，在 `codex_images_report.md` 寫明原因與恢復時間，回報使用者；額度恢復後直接在本對話重跑，**不另外開排程**（使用者 2026-11-25 指定）。
+
+### 3. 正式指令（背景執行，約 10–25 分鐘）
+
+```bash
+cd <工作資料夾> && codex exec -C "<工作資料夾的 Windows 路徑>" -s workspace-write --skip-git-repo-check "讀取 <brief>，依每一節用 Images 2.6 生成圖片並存到指定路徑。每張生成後逐字核對圖上繁體中文與 brief 是否完全相同，不符就重生成，最多 3 次；完成後在 <brief> 同資料夾寫 codex_images_report.md，列出每張的路徑、像素、嘗試次數與核對結果。不要上傳或發布。"
+```
+
+- `-C`：工作資料夾；`-s workspace-write`：只准寫入該資料夾；引號內為交辦內容。
+- 在 Claude Code 用背景執行並等完成通知，不要輪詢；**同一批不要重複下指令**（會搶同一批輸出檔並重複扣額度）。使用者貼同一行指令時，先確認是否已在執行。
 - 參考影格也可用 `-i <檔案>` 附給 Codex；brief 裡已寫路徑時不必重複。
-- 指令跑完後，規劃端讀 `codex_images_report.md`，並以 `Read` 或圖片檢視親自看每張圖，再進入驗收。Codex 回報成功但檔案不存在，以檔案為準，記為失敗。
-- 使用者直接在 Codex 開啟本技能時，略過這段指令，Codex 依 brief 直接生成。
+
+### 4. 驗收與交付
+
+- 讀 `codex_images_report.md`，並以 `Read` 親自看每張圖：尺寸、逐字文字、繁體字、安全區、無第三方 Logo、無參考圖沒有的結果。Codex 回報成功但檔案不存在，以檔案為準，記為失敗。
+- 通過的圖依相同相對路徑複製回雲端硬碟交付資料夾，報告一併複製（狀態 `generated`／`qa_passed`／`fail`）。Shorts 封面轉 `製作後/縮圖.jpg`；主影片 A/B/C 由使用者選定後才轉 `縮圖.jpg`。
+- 使用者直接在 Codex 開啟本技能時，略過本節，Codex 依 brief 直接生成。
+
+### 不採用：直接呼叫 OpenAI 圖像 API
+
+不經 Codex、直接用 OpenAI API 生圖需要 `OPENAI_API_KEY` 與 `openai` 套件，並按 API 用量另外付費、不算在 Codex／ChatGPT 方案額度內。除非使用者明確要求並提供金鑰，一律走 `codex exec`。
 
 ## 文字核對與重生成
 
