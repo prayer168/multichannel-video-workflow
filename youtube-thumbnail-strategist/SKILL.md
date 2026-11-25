@@ -27,7 +27,7 @@ description: 為黑熊老師的自然教室與 AI 觀測站製作成片後的全
 | Codex | 依 brief 調用 Images 2.6 生成每張圖、存到指定路徑、逐字核對中文、不合格就重生成 |
 | 規劃端 | 尺寸檢查、手機預覽、事實／版權／品牌檢核、更新 manifest、交接上架 |
 
-在 Claude Code 中執行時，brief 寫好後以 `codex exec` 把 brief 交給 Codex（指令見交接文件）；使用者直接在 Codex 開啟本技能時，Codex 自己走完全部步驟。**沒有成功的 Images 2.6 輸出檔，就不能說圖已完成。**
+在 Claude Code 中執行時，brief 寫好後直接在本對話以 `codex exec` 把 brief 交給 Codex，不必切換到 Codex 視窗；**要在本機純英文路徑的工作資料夾執行**（雲端硬碟路徑會讓 Codex 沙箱失敗），先用一行測試確認額度，產出後回 Claude Code 驗收再複製到交付資料夾（流程見交接文件「從 Claude Code 交給 Codex」）；使用者直接在 Codex 開啟本技能時，Codex 自己走完全部步驟。**沒有成功的 Images 2.6 輸出檔，就不能說圖已完成。**
 
 ## Read supporting files as needed
 1. `references/codex-images-handoff.md` — 8 張圖的規格、brief 範本、提示詞範本、`codex exec` 指令、重生成規則。

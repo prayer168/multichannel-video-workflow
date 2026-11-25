@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.41.2] - 2026-11-25
+### Changed
+- `youtube-thumbnail-strategist/references/codex-images-handoff.md`「從 Claude Code 交給 Codex」改寫：在 Claude Code 直接以 `codex exec` 調用 Codex（不必切換視窗）；必須在本機純英文路徑的工作資料夾執行（Google 雲端硬碟路徑會讓 Codex 沙箱 `setup refresh had errors`），參考圖用無字原圖；先用一行測試確認額度，額度用完記 `planned` 並在恢復後於本對話重跑、不另開排程；背景執行、同批不重複下指令；驗收後依相對路徑複製回交付資料夾。註明不採用直接呼叫 OpenAI 圖像 API（需另外的金鑰與付費）。
+- `youtube-thumbnail-strategist/SKILL.md`、`SKILL.md`、`README.md`、`VERSION` 同步。
+
 ## [2.41.1] - 2026-11-25
 ### Changed
 - `scripts/build/gemini_tts.py`：whisper 對齊加 900 秒逾時，逾時時提示把該組 raw 移到 `_rejected/` 重產生（《尼莫點》一組漏念三句的配音讓 `-dtw` 卡住 46 分鐘以上）。
