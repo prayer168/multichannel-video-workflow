@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.42.0] - 2026-11-25
+### Added
+- `scripts/build/rights_precheck.py`：素材權利分級預審。對 `rights_audit.csv` 的 HOLD 列重算 SHA-256、以 Commons／NASA API 重查原頁授權、用文字線索與 OpenCV 人臉偵測找人物、標誌與第三方署名、辨識「非政府作者標公有領域」與「政府圖庫裡的非政府作者」；分成 T0 免審、T1 自動通過、T2 人工；`--apply` 寫回審查表（自動備份）。
+- `references/rights-tiered-review.md`：分級規則、工具用法、人臉偵測門檻、例外清單寫法、從源頭減少例外的選材規則、《尼莫點》實績（34 項 → 例外 11 項）。
+### Changed
+- `SKILL.md`、`references/real-base-motion-layers.md`、`README.md`、`VERSION` 指向新流程。
+
 ## [2.41.3] - 2026-11-25
 ### Changed
 - `youtube-publish/SKILL.md`：Shorts 的完整版連結在上架時才補。製作端交付的 Shorts 說明欄一律以 `{{LONG_VIDEO_URL}}` 預留；使用者在 Codex 上架時，主片公開並核實網址後替換為完整原始網址；舊交付的「連結待填」等字樣視同預留位置一併替換；主片未公開不上傳帶預留字樣的 Shorts。
