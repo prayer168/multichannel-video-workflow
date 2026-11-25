@@ -3,7 +3,7 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.41.3（2026-11-25）
+**Version:** 2.42.0（2026-11-25）
 
 ## 2.40.0：真實底圖＋程式動態層分工
 
@@ -343,7 +343,7 @@ multichannel-video-workflow/
 │   ├── md2txt.py            上架文案 .txt＋YouTube標記.txt＋置頂留言.txt
 │   ├── fb_post.py           臉書文一鍵複製頁（中英雙語；上傳後可代入 YouTube 網址）
 │   └── build/               一鍵產生影片：build.py、cards_lib.py（41 種圖卡版型）、anims_lib.py（教學模擬動畫）、say_batch.ps1、
-│                            bear_presenter.py（黑熊老師講課）、append_outro.py（接片尾）、subs_oneline.py（單行字幕軌；--burn 才燒錄）、narration_noise_check.py（去除摩擦聲／爆音／句中換氣檢核）、voice_stem_from_timing.py（整章人聲軌）、build_video.bat、make_narration.bat／make_narration.py（Gemini 旁白）
+│                            bear_presenter.py（黑熊老師講課）、append_outro.py（接片尾）、subs_oneline.py（單行字幕軌；--burn 才燒錄）、narration_noise_check.py（去除摩擦聲／爆音／句中換氣檢核）、voice_stem_from_timing.py（整章人聲軌）、rights_precheck.py（素材權利分級預審）、build_video.bat、make_narration.bat／make_narration.py（Gemini 旁白）
 ├── profiles/              自然教室與 AI 觀測站頻道設定
 │   ├── blackbear-science.md
 │   └── ai-watch.md
@@ -475,6 +475,7 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 | 2.18.0 | 2026-10-31 | 自然教室選題雷達五類延伸題材：自然科學相關節慶、天文大事、環境生態最新議題、自然科學相關最新研究、有趣的自然科學小故事；國際日月表、來源與查證規則 |
 | 2.17.0 | 2026-10-30 | 聲線一致性檢核：`voice_consistency_check.py` 逐句比對音高、亮度與音色，列出偏離句與接縫交使用者聆聽 |
 | 2.16.0 | 2026-10-23 | 旁白驅動畫面設計：`references/narration-led-visuals.md` 逐句映射畫面動作與交接提示詞 |
+| 2.42.0 | 2026-11-25 | 素材權利分級預審：`rights_precheck.py` 自動核對指紋、授權、人物、標誌與第三方，只把例外交給使用者 |
 | 2.41.0 | 2026-11-25 | 長片逐章製作與擦聲關卡：句中換氣偵測、整章人聲軌複檢、`gemini_tts.py --pace fast／--speaker cub`、依旁白加動態元件 |
 | 2.15.0 | 2026-10-22 | 去除摩擦聲／爆音檢核：`narration_noise_check.py`，配音到齊與成片前必跑 |
 | 2.14.0 | 2026-10-22 | 動態圖文第一支實作（地球近日點）：Remotion／HyperFrames 同鏡實測與選用原則、實作經驗；TTS 產生後用語音辨識核對、使用者不在時改用 make_narration.bat |

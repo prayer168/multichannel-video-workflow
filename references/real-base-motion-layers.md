@@ -2,6 +2,8 @@
 
 2026-11-25 使用者指定：影片裡的地圖、地景、天體、生物與實物，一律使用**真實地圖或可商用的圖片**當底圖；**Claude Code 只負責畫動態元件**。同日補充：不只地圖，影片裡所有照片與影片素材（海景、船、太空船、火箭、人物場景、水下畫面）都先找**可商用的真實照片或影片**，不再以 Codex／ChatGPT 生圖當預設。本規則適用兩個頻道，黑熊老師的自然教室必須遵守。它補充 [image-led-motion-graphics.md](image-led-motion-graphics.md) 的第 2、7 點，兩者衝突時以本檔為準。
 
+## （2.42.0）成片後先跑權利分級預審 `scripts/build/rights_precheck.py`，只把例外交給使用者，見 [rights-tiered-review.md](rights-tiered-review.md)。
+
 ## 1. 分工
 
 | 圖層 | 內容 | 由誰提供 |
