@@ -44,6 +44,8 @@ AI 觀測站（AI Watch）影片可分享至下列群組，名稱以既有對話
 
 各自讀取 `上架文案.txt` 的 `【YouTube 標題】`、`【說明欄】`、`【標記 Tags】`、`【置頂留言】`，保留最終文案、來源、章節及標籤，不把逐字稿貼進說明欄。不因缺少標準資料夾名稱拒絕其他清楚指定的交付格式。不自動重寫已核定文案；只做已授權的連結補入及必要格式整理。
 
+**Shorts 的完整版連結在上架時才補（2026-11-25 使用者定案）**：製作端交付時主片還沒有網址，Shorts `上架文案.txt` 的說明欄一律以 `{{LONG_VIDEO_URL}}` 預留完整版連結，製作端不必也不應自行填入。上架（使用者在 Codex 執行本技能）時，主片公開並核實網址後，再把每支 Shorts 說明欄的 `{{LONG_VIDEO_URL}}` 換成實際網址（`https://www.youtube.com/watch?v=<主片ID>`，完整原始網址、不用短網址）。舊交付若寫成「（連結待填）」「完整版連結待填」「【完整片連結】」等字樣，視同同一個預留位置一併替換，並在完成紀錄註明；`preflight.py` 會把這些字樣列為錯誤，先改成 `{{LONG_VIDEO_URL}}` 再預檢。主片尚未公開時不上傳帶預留字樣的 Shorts。
+
 製作端可直接交付 [assets/publish-manifest.example.json](assets/publish-manifest.example.json) 的格式。未提供時由代理整理成專案根目錄的 `youtube-publish.json`；相對路徑以該 JSON 所在位置解析，影片不必搬移。頻道別名不是 YouTube 的 `UC…` 頻道 ID。manifest 的 `items` 可只列本次影片；若保留完整清單，用 `upload_scope` 列出本次 item ID，預檢及上傳只處理此範圍。僅 Shorts 可用 `existing_long_video.video_id` 與 `url` 指定既有主片，Shorts 的 `related_to` 填 `long`。
 
 先找專案記錄與已登入 Studio 核實頻道；只有無法確定目標、正式檔或必要設定時，才一次詢問缺項。建立批次時將 D 存為 batch_upload_date，並將每支 Shorts 的確切排程時間存入 manifest 的 publish_at（含 +08:00）；續作沿用原批次日期與時間。僅 Shorts 且使用既有主片時，D 採本次 Shorts 批次開始上架的台灣日期。資料可推斷時先繼續準備，不逐欄問答。

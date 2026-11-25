@@ -3,7 +3,7 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.41.2（2026-11-25）
+**Version:** 2.41.3（2026-11-25）
 
 ## 2.40.0：真實底圖＋程式動態層分工
 
