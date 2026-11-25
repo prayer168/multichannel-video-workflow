@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.41.1] - 2026-11-25
+### Changed
+- `scripts/build/gemini_tts.py`：whisper 對齊加 900 秒逾時，逾時時提示把該組 raw 移到 `_rejected/` 重產生（《尼莫點》一組漏念三句的配音讓 `-dtw` 卡住 46 分鐘以上）。
+- `references/chapter-production-loop.md` 第五節：整片逐章實作踩坑——Gemini 整句漏念、整章人聲軌才抓得到的換氣、配音同步到 Remotion public 的核對、整章語音辨識會漏句、影片素材倍速長度、shot_list 畫面文字錯鏡。
+
 ## [2.41.0] - 2026-11-25
 ### Added
 - `references/chapter-production-loop.md`：長片逐章製作與審片修正——每章擦聲關卡（逐檔＋整章人聲軌，兩類都 0 處才做下一章）、快語速 Style 與鏡長規則、依旁白關鍵詞加動態元件、角色台詞配音（小熊 Laomedeia，混音約 0.63，字卡保留）。

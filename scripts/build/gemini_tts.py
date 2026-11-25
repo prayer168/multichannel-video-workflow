@@ -67,6 +67,7 @@ def cub_style(terms="NASA"):
 STYLE = style()
 GROUP_CHARS = 400      # 每組字數上限（約 90 秒）
 WAIT = 21.0            # 兩次請求間隔
+WHISPER_TIMEOUT = 900  # 對齊逾時秒數（正常 70 秒一組約 2–5 分鐘）
 
 
 def spoken_for_gemini(text):
@@ -198,8 +199,12 @@ def run_whisper(raw, work):
     if out.with_suffix(".json").exists():
         return out.with_suffix(".json")
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(raw), "-ar", "16000", "-ac", "1", str(wav)], check=True)
-    subprocess.run([str(exe), "-m", str(model), "-l", "zh", "-ojf", "-dtw", "medium", "-of", str(out), "-f", str(wav)],
-                   check=True, capture_output=True)
+    try:  # 2.41.1：《尼莫點》一組漏念整句的配音讓 -dtw 對齊卡住 46 分鐘以上；逾時就當這組有問題
+        subprocess.run([str(exe), "-m", str(model), "-l", "zh", "-ojf", "-dtw", "medium", "-of", str(out), "-f", str(wav)],
+                       check=True, capture_output=True, timeout=WHISPER_TIMEOUT)
+    except subprocess.TimeoutExpired:
+        raise SystemExit(f"whisper 對齊逾時（>{WHISPER_TIMEOUT} 秒）：{raw} 可能漏念或離稿。先用 main.exe -nt 轉寫核對；"
+                         "有缺句就把 raw 移到 _rejected/ 再重跑，會只重新產生這一組。")
     return out.with_suffix(".json")
 
 
