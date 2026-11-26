@@ -15,7 +15,7 @@ export const kwAt = (shot: TimingShot, word: string, fallback = 0) => {
     const i = e.text.indexOf(word);
     if (i >= 0) {
       const rel = e.ct ? e.ct[i] : Math.round((e.dur * i) / e.text.length);
-      return Math.max(0, e.from - shot.from + rel - LEAD);
+      return Math.max(1, e.from - shot.from + rel - LEAD);   // 至少第 1 格：場景常用 interpolate(f, [0, kw])，0 會讓區間不遞增而中止渲染
     }
   }
   return fallback;

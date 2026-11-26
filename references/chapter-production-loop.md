@@ -76,8 +76,8 @@
    - 有成片混音的 whisper 逐字結果 → `python scripts/build/char_marks.py timing.json mix words.json`
    - 只有整組原始配音的對齊結果 → `python scripts/build/char_marks.py timing.json raw <逐句資料夾> raw1.wav words1.json [raw2.wav words2.json …]`（以互相關找每句在原始配音中的位置；whisper 攤開的句首字自動改用外推）
    - 重排鏡長（build_timing）後要再跑一次 char_marks。
-2. `kwAt()` 讀 `ct`，並**提前 `LEAD = 10` 格（0.33 s）觸發**；沒有 `ct` 才退回字數比例。
-3. 彈出動畫要快：spring `stiffness ≈ 190、damping 14`（約 8 格到位）；場景裡「關鍵詞後再延遲」**不超過 +5 格**，連續元件用 4～8 格間隔。
+2. `kwAt()` 讀 `ct`，並**提前 `LEAD = 10` 格（0.33 s）觸發**；沒有 `ct` 才退回字數比例。回傳值**至少為第 1 格**（句首關鍵詞提前後會變成 0，`interpolate(f, [0, kw, …])` 區間不遞增會中止渲染；2.43.1）。
+3. 彈出動畫要快：spring `stiffness ≈ 190、damping 14`（約 8 格到位）；場景裡「關鍵詞後再延遲」**不超過 +5 格**，連續元件用 4～8 格間隔。快彈簧回彈較大（約放大 5%），上下相鄰的圖與字要多留 ≥40 px，否則 OverlapGuard 會擋下。
 4. 驗收：`python scripts/build/check_sync.py 成片.mp4 timing.json public/` 以「逐句配音 × 成片混音」互相關量配音實際位置（≤0.05 s 判 PASS，不需 whisper）；另抽 3～5 個關鍵詞影格目視，元件要在說到該詞時已經看得清楚。
 5. 範本：`assets/remotion-kit/sync_and_guard.tsx`（kwAt＋LEAD＋usePop＋OverlapGuard）。
 
