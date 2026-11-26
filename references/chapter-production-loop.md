@@ -66,3 +66,35 @@
   2. YouTube 說明欄的「重點與查證說明」與「素材來源」段落（寫明哪些是實拍、哪些是示意圖）。
 - AI 生成畫面仍要在角標寫「示意」；實拍替代畫面仍要寫「非○○」。不能因為拿掉分類標示就讓觀眾把示意當實拍。
 - `blackbear-science-video` 子技能的 visible labels 規則用於製作與審查階段；黑熊老師的自然教室正式版以本節為準。
+
+## 七、旁白與動畫同步（2.43.0；使用者審《如果洋流停止了》CH06：「旁白會比畫面（動畫元件）早一秒左右」）
+
+**原因（實測）**：動畫觸發點用「字數比例」推估關鍵詞位置，與實際發音誤差中位數 0.08 s、最大 1.8 s；場景裡又常寫「關鍵詞後 +8～+30 格才彈出」，加上彈簧動畫約 20 格才到位 → 畫面普遍晚旁白 0.5～1 秒。
+
+**規則**
+1. 時間軸存**每個字的實際發音影格**：事件加 `ct`（相對該句配音起點的影格陣列，長度＝句子字數）。來源：
+   - 有成片混音的 whisper 逐字結果 → `python scripts/build/char_marks.py timing.json mix words.json`
+   - 只有整組原始配音的對齊結果 → `python scripts/build/char_marks.py timing.json raw <逐句資料夾> raw1.wav words1.json [raw2.wav words2.json …]`（以互相關找每句在原始配音中的位置；whisper 攤開的句首字自動改用外推）
+   - 重排鏡長（build_timing）後要再跑一次 char_marks。
+2. `kwAt()` 讀 `ct`，並**提前 `LEAD = 10` 格（0.33 s）觸發**；沒有 `ct` 才退回字數比例。
+3. 彈出動畫要快：spring `stiffness ≈ 190、damping 14`（約 8 格到位）；場景裡「關鍵詞後再延遲」**不超過 +5 格**，連續元件用 4～8 格間隔。
+4. 驗收：`python scripts/build/check_sync.py 成片.mp4 timing.json public/` 以「逐句配音 × 成片混音」互相關量配音實際位置（≤0.05 s 判 PASS，不需 whisper）；另抽 3～5 個關鍵詞影格目視，元件要在說到該詞時已經看得清楚。
+5. 範本：`assets/remotion-kit/sync_and_guard.tsx`（kwAt＋LEAD＋usePop＋OverlapGuard）。
+
+## 八、畫面不留白、不可只有方框與文字（2.43.0；同一次審片：「畫面再豐富一點，儘量不要有空白，或只有簡單的方框與文字，一定要配合旁白有豐富與細緻的動畫」）
+
+1. **每個非實拍鏡頭都要有動態底層**：深色漸層背景一律墊 `assets/remotion-kit/ambience.tsx` 的 `OceanAmbience`（晃動光束、水面焦散紋、海洋雪、上升氣泡、擺動海帶與珊瑚、遠景游過的海洋生物、暗角）。內容很滿的圖表鏡用 `level 0.4～0.6`、`floor=false`。其他主題比照做「會動的環境層」（太空：星點與緩慢自轉；實驗室：桌面、器材反光；天空：雲層飄移）。
+2. **卡片裡要有插圖與動態**：概念卡不可只放大字；卡內放會動的小場景（例：聖嬰／反聖嬰卡內放赤道太平洋剖面——信風強弱、暖水東移或冷水湧升；事件比較卡放迷你地圖＋會動的天氣圖示）。
+3. **抽象量要畫成可感受的過程**：例「溫度＋鹽度→密度」畫成海水柱裡的水團隨刻度改變而下沉、天平傾斜，而不是兩個詞加箭頭。
+4. **海洋生物**用 `assets/remotion-kit/sealife.tsx`（多物種、真實配色、大小差距大、尾鰭擺動），不要單色橢圓。
+5. 抽影格（每鏡 80～85% 處）時，主畫面若只有方框＋文字、或大面積純色背景，就重做該鏡。
+6. 標籤一律 `whiteSpace: 'nowrap'`（版面變動時文字會被擠成直排而與其他元件重疊）。
+
+## 九、本機 whisper 很慢時的配音流程（2.43.0）
+
+本機 whisper medium 曾慢到 15 s 音檔要 11 分鐘，`gemini_tts.py` 內建對齊 900 s 逾時。改走：
+1. `python scripts/build/tts_raw.py 旁白.json 配音資料夾 --pace fast` —— 只產生整組原始配音（模型、聲音、Style、分組與 gemini_tts 相同），輸出 `groups.json`。
+2. 每組：`narration_word_timing.py --audio raw_*.wav --script 該組旁白.txt --out wN.json`（有旁白提示，不設逾時，背景跑）。
+3. `python scripts/build/resplit_voice.py raw_*.wav wN.json 配音資料夾` —— 以有提示對齊切句（切法與 gemini_tts.split 相同：句間最安靜處下刀、tidy、clean）。無提示的 whisper 遇到罕見詞（如「科氏效應」）會把整組切偏、切掉句尾。
+4. 驗切點：切點音量應比人聲中位數低 ≥30 dB；語速離群的句子另以 whisper 確認完整。
+5. 字幕可用 `make_srt` 的比例模式（字時間在每句配音範圍內依字數分配），驗收報告註明非逐字對齊。
