@@ -42,6 +42,8 @@
 
 三支 Shorts 與主影片採相同子目錄與交付規則，使用各自的逐字稿、文案、字幕與縮圖，不直接套用主片文案。若本次只授權部分影片，建立其目錄但標明其餘未製作，不虛構成片。主題根目錄可有 `專案卡.md` 或檔案導覽，素材歸入所屬影片的階段目錄，不再另造多層「上架包/videos/Gemini上架素材」。
 
+Claude Code 交付時可沒有任何圖片；縮圖、Shorts 封面與分享圖由接手上架的 Codex 製作。
+
 ## YouTube 縮圖交接
 
 依 [縮圖子技能](../youtube-thumbnail-strategist/SKILL.md)，主影片縮圖、三支 Shorts 封面和四張 Facebook 分享圖都由 Codex 調用 Images 2.6 生成。參考影格、`codex_images_brief.md`、Codex 報告、候選、manifest 與手機預覽集中在單支影片的 `製作後/縮圖候選/`。核定的主片縮圖（1280×720）和各支 Shorts 封面（1080×1920）都匯出為真正的 JPEG `製作後/縮圖.jpg`；分享圖存為 `製作後/臉書宣傳/臉書分享圖_1200x630.png`（主片）或 `臉書分享圖_1080x1350.png`（Shorts）。

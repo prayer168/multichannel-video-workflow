@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.44.0] - 2026-11-26
+### Changed
+- Claude Code 交付成片、字幕與上架文案，不生成縮圖或呼叫 Codex 生圖；接手上架的 Codex 自行產生與驗收縮圖、Shorts 封面及 Facebook 分享圖，保留已核定圖。
+- 更新主技能、發布子技能、縮圖子技能及交接文件；主片重畫前先提出多個方向供使用者選擇。
+
 ## [2.43.1] - 2026-11-26
 ### Fixed
 - `assets/remotion-kit/sync_and_guard.tsx`：`kwAt()` 最小回傳第 1 格（句首關鍵詞提前 10 格後變 0，`interpolate(f, [0, kw, …])` 區間不遞增會中止渲染；《如果洋流停止了》CH05 S054 實例）；`usePop` 範本同步 stiffness 190。

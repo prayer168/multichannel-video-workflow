@@ -3,7 +3,11 @@
 > 以案例式、生活化和可跟做的教學結構，規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」影片。使用獨立的頻道設定檔管理受眾、選題、查證、語氣與品牌影音。
 > A channel-aware YouTube production skill for Black Bear Teacher's Nature Classroom and AI Watch.
 
-**Version:** 2.43.1（2026-11-26）
+**Version:** 2.44.0（2026-11-26）
+
+## 2.44.0：Claude Code 製片、Codex 上架生圖
+
+Claude Code 交付影片、字幕及上架文案，不生成或委外生成縮圖；Codex 上架時再依成片生成並驗收 YouTube 縮圖、Shorts 封面及 Facebook 分享圖，既有核定圖沿用；明確要求重畫時，先提出多個構圖與文案方向供使用者選擇，再生成。
 
 ## 2.40.0：真實底圖＋程式動態層分工
 
@@ -449,6 +453,8 @@ git clone https://github.com/prayer168/multichannel-video-workflow.git ~/.claude
 不包含也不應使用 Papaya 電腦教室的 Logo、片頭動畫、音樂或縮圖素材；請建立自己的品牌資產。
 
 ## 最近更新
+
+- **2.44.0（2026-11-26）**：調整製片與上架分工，Claude Code 不生圖；Codex 上架時負責圖片。
 
 | 版本 | 日期 | 重點 |
 |------|------|------|

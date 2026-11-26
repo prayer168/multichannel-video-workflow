@@ -1,11 +1,11 @@
 ---
 name: multichannel-video-workflow
-description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站（AI Watch）」YouTube 影片的技能。當使用者要求自然科教學、AI 數位教材、教學紀錄、AI 趨勢、AI Coding、開源軟體、網站／App 開發、YouTube 腳本、選題雷達、SEO、分鏡、AI 配音、影片生成、生活化角色動畫、溫馨材質模板、進階動畫模組、剪輯企劃、素材剪輯或成片驗收、成片後 YouTube 縮圖、Shorts 封面與 Facebook 分享圖（交由 Codex 調用 Images 2.6）、實測腳本分支、素材 ZIP 打包、Claude Code／Codex 製作交接或上架文案時使用。每個專案先判定頻道並讀取對應設定檔；共用選題、查證、案例式教學、腳本、分鏡、製作與復盤流程，同時依頻道設定分開受眾、內容、語氣、查證來源及品牌影音。複雜素材剪輯、AI 輔助時間軸或程式化動畫剪輯時，搭配 `video-editing-workflow/SKILL.md`；旁白定稿後要做成動態圖文、動態標題卡或程式動畫（Remotion／HyperFrames 畫面、風格卡、分鏡、靜幀條審片、實證比例）時，轉讀 `motion-explainer-workflow/SKILL.md` 和 `motion-explainer-workflow/references/studio-style-production.md`；需要 AI 產生程式動畫／互動簡報時，另讀 `motion-explainer-workflow/references/code-motion-prompt-workflow.md`；動態圖文類影片採三停點（需求確認→風格幀→匯出前）並以 Motion Showreel 腳本渲染與驗收時，讀 `motion-explainer-workflow/references/motion-showreel-integration.md`；所有影片的旁白畫面覆蓋、照片／地圖運鏡、部位標註與示意素材標示，均讀 `references/image-led-motion-graphics.md`；底圖一律用真實地圖或可商用圖片、Claude Code 只畫動態元件的分工與授權記錄，讀 `references/real-base-motion-layers.md`；長篇科普紀錄片（例如 18 分鐘《尼莫點》、仿生科技）需要 A 研究→B 腳本→C1 風格→C2 毫秒分鏡→C2.5 科學／權利審查→C3 交接 ZIP 的證據關卡、檢查點還原或 FFmpeg 技術煙霧測試時，轉讀 `blackbear-science-video/SKILL.md`。Papaya 電腦教室只作為公開教學結構的研究參考，不使用其專屬素材或原句。
+description: 規劃、製作及上架「黑熊老師的自然教室」與「AI 觀測站」影片，涵蓋選題、查證、腳本、分鏡、配音、剪輯及上架文案。Claude Code 交付成片和文案；Codex 上架時製作縮圖、Shorts 封面與分享圖。依需求路由科普紀錄片、動態圖文、影片剪輯、縮圖和發布子技能。
 ---
 
 # 多頻道影片企劃與製作技能
 
-目前版本：2.43.1（2026-11-26）。kwAt 最小回傳第 1 格、快彈簧需留間距（2.43.1）。2.43.0：**旁白與動畫要同步、畫面不可留白**：時間軸存每個字的實際發音影格（`scripts/build/char_marks.py`），`kwAt()` 提前 10 格觸發、彈出動畫約 8 格到位、場景內延遲 ≤5 格，成片用 `scripts/build/check_sync.py` 互相關驗配音位置；非實拍鏡頭一律墊動態底層（`assets/remotion-kit/ambience.tsx`：光束、焦散、海洋雪、氣泡、海帶珊瑚、遠景生物），概念卡內要有會動的小場景，抽象量畫成過程，不可只有方框與文字。本機 whisper 太慢時改走 `tts_raw.py`＋有提示對齊＋`resplit_voice.py`。見 `references/chapter-production-loop.md` 第七～九節。2.42.2：**旁白畫面不可只有文字、方框、箭頭**：每句旁白講到的東西與過程都要畫成細緻、會動的圖像（細緻太空器、碎片粒子、電漿尾焰、軌道變化、解體），放在真實底圖上，文字只留關鍵詞；抽影格時主畫面是文字或流程圖就重做，見 `references/chapter-production-loop.md` 第三節。2.42.1：**正式版不放左上角素材分類標示與鏡號**（必要的「實拍：…非○○」「示意」說明留在各鏡角標與說明欄）；**鏡頭節奏再收緊**：配音後留白 ≤0.35 秒、頭 0.15／尾 0.25 秒、轉場淡入淡出 4 影格、純畫面鏡 60%（至少 4 秒）。見 `references/chapter-production-loop.md` 第二、六節。2.42.0：**素材權利分級預審**：成片後用 `scripts/build/rights_precheck.py` 自動重查檔案指紋、原頁授權、人物（含人臉偵測）、標誌、第三方署名，T0 免審／T1 自動通過直接標 APPROVED，只把 T2 例外附建議交給使用者（`references/rights-tiered-review.md`）。2.41.3：Shorts 說明欄的完整版連結交付時寫 `{{LONG_VIDEO_URL}}`，上架時由 `youtube-publish`（Codex）在主片公開後補上實際網址（見 `youtube-publish/SKILL.md`）。2.41.2：**縮圖在 Claude Code 直接調用 Codex**：`codex exec` 在本機純英文路徑工作資料夾執行（雲端硬碟路徑會讓沙箱失敗）、先測額度、產出後回 Claude Code 驗收再複製回交付資料夾，不必切換視窗，見 `youtube-thumbnail-strategist/references/codex-images-handoff.md`。2.41.1：whisper 對齊加逾時、整片逐章製作踩坑（漏念整句、整章人聲軌、public 同步）見 `references/chapter-production-loop.md` 第五節。2.41.0：**長片逐章製作與擦聲關卡**：每章做完先跑擦聲檢核（逐檔＋`voice_stem_from_timing.py` 整章人聲軌），「摩擦／爆音」「句中換氣／擦聲」都 0 處才交片、才做下一章；`narration_noise_check.py` 新增句中換氣偵測與爆音併段，`gemini_tts.py` 新增 `--pace fast`（約 300 字／分）、`--speaker cub`（小熊 Laomedeia）並自動清理；依旁白關鍵詞加動態元件、角色台詞要配音。見 `references/chapter-production-loop.md`。2.40.1：照片與影片素材一律先找可商用的真實檔案（由 Claude 自行決定），真的找不到才回報「沒有」，再調用 Codex API 生成標「示意」的圖。2.40.0：**真實底圖＋程式動態層分工**：地圖、地景、天體、生物與實物一律用真實地圖或可商用圖片當底圖（Copernicus Sentinel、NASA、Natural Earth、GEBCO、OpenStreetMap、國土測繪中心開放圖層、CC0／CC BY 照片），找不到時才用標「示意」的 AI 生成圖；Claude Code 只畫隨旁白變化的動態元件（箭頭、定位點、路徑、高亮、長條、引線、淡出圖層、運鏡、字幕、角標），不從零畫地圖或地景。素材由 Claude 自行挑選下載（使用者授權），`assets/licensed/sources.json`＋`CREDITS.md` 記錄授權，畫面標來源。見 `references/real-base-motion-layers.md`。
+目前版本：2.44.0（2026-11-26）。**分工更新**：Claude Code 完成影片、字幕、逐字稿、權利紀錄及上架文案後即可交付，不生成縮圖、Shorts 封面或 Facebook 分享圖，也不在製作階段呼叫 Codex 生圖；使用者交給 Codex 上架後，由 Codex 讀取成片與文案，依縮圖子技能生成、驗收並上架所需圖片，沿用已核定圖片。kwAt 最小回傳第 1 格、快彈簧需留間距（2.43.1）。2.43.0：**旁白與動畫要同步、畫面不可留白**：時間軸存每個字的實際發音影格（`scripts/build/char_marks.py`），`kwAt()` 提前 10 格觸發、彈出動畫約 8 格到位、場景內延遲 ≤5 格，成片用 `scripts/build/check_sync.py` 互相關驗配音位置；非實拍鏡頭一律墊動態底層（`assets/remotion-kit/ambience.tsx`：光束、焦散、海洋雪、氣泡、海帶珊瑚、遠景生物），概念卡內要有會動的小場景，抽象量畫成過程，不可只有方框與文字。本機 whisper 太慢時改走 `tts_raw.py`＋有提示對齊＋`resplit_voice.py`。見 `references/chapter-production-loop.md` 第七～九節。2.42.2：**旁白畫面不可只有文字、方框、箭頭**：每句旁白講到的東西與過程都要畫成細緻、會動的圖像（細緻太空器、碎片粒子、電漿尾焰、軌道變化、解體），放在真實底圖上，文字只留關鍵詞；抽影格時主畫面是文字或流程圖就重做，見 `references/chapter-production-loop.md` 第三節。2.42.1：**正式版不放左上角素材分類標示與鏡號**（必要的「實拍：…非○○」「示意」說明留在各鏡角標與說明欄）；**鏡頭節奏再收緊**：配音後留白 ≤0.35 秒、頭 0.15／尾 0.25 秒、轉場淡入淡出 4 影格、純畫面鏡 60%（至少 4 秒）。見 `references/chapter-production-loop.md` 第二、六節。2.42.0：**素材權利分級預審**：成片後用 `scripts/build/rights_precheck.py` 自動重查檔案指紋、原頁授權、人物（含人臉偵測）、標誌、第三方署名，T0 免審／T1 自動通過直接標 APPROVED，只把 T2 例外附建議交給使用者（`references/rights-tiered-review.md`）。2.41.3：Shorts 說明欄的完整版連結交付時寫 `{{LONG_VIDEO_URL}}`，上架時由 `youtube-publish`（Codex）在主片公開後補上實際網址（見 `youtube-publish/SKILL.md`）。2.41.2：**縮圖在 Claude Code 直接調用 Codex**：`codex exec` 在本機純英文路徑工作資料夾執行（雲端硬碟路徑會讓沙箱失敗）、先測額度、產出後回 Claude Code 驗收再複製回交付資料夾，不必切換視窗，見 `youtube-thumbnail-strategist/references/codex-images-handoff.md`。2.41.1：whisper 對齊加逾時、整片逐章製作踩坑（漏念整句、整章人聲軌、public 同步）見 `references/chapter-production-loop.md` 第五節。2.41.0：**長片逐章製作與擦聲關卡**：每章做完先跑擦聲檢核（逐檔＋`voice_stem_from_timing.py` 整章人聲軌），「摩擦／爆音」「句中換氣／擦聲」都 0 處才交片、才做下一章；`narration_noise_check.py` 新增句中換氣偵測與爆音併段，`gemini_tts.py` 新增 `--pace fast`（約 300 字／分）、`--speaker cub`（小熊 Laomedeia）並自動清理；依旁白關鍵詞加動態元件、角色台詞要配音。見 `references/chapter-production-loop.md`。2.40.1：照片與影片素材一律先找可商用的真實檔案（由 Claude 自行決定），真的找不到才回報「沒有」，再調用 Codex API 生成標「示意」的圖。2.40.0：**真實底圖＋程式動態層分工**：地圖、地景、天體、生物與實物一律用真實地圖或可商用圖片當底圖（Copernicus Sentinel、NASA、Natural Earth、GEBCO、OpenStreetMap、國土測繪中心開放圖層、CC0／CC BY 照片），找不到時才用標「示意」的 AI 生成圖；Claude Code 只畫隨旁白變化的動態元件（箭頭、定位點、路徑、高亮、長條、引線、淡出圖層、運鏡、字幕、角標），不從零畫地圖或地景。素材由 Claude 自行挑選下載（使用者授權），`assets/licensed/sources.json`＋`CREDITS.md` 記錄授權，畫面標來源。見 `references/real-base-motion-layers.md`。
 
 2.39.0（2026-11-24）：**自然教室右下角改放小熊掌**：黑熊老師的自然教室影片右下角只放核定熊掌 `paw_approved.png`（約 104 px、右下各留 28／24 px），不再疊黑熊老師講課角色；AI 觀測站不變。規格與 ffmpeg 疊加指令見 `references/fixed-settings.md` 第四節；`build_video.bat` 尚未依頻道分流。
 
@@ -150,7 +150,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 7. 讓使用者選定題目後，才進入階段 0.5
 
 ### 0.5 建立專案資料夾（題目選定後）
-先讀 `references/project-layout.md`。以「主影片名稱」建立根目錄，下設 `01_主影片`、`02_Shorts_短片一名稱`、`03_Shorts_短片二名稱`、`04_Shorts_短片三名稱`；每支皆有 `製作前/`、`製作中/`、`製作後/`。正式 MP4、整合 `上架文案.txt`、獨立 `最終逐字稿.txt`、縮圖與字幕集中在該支 `製作後/`。既有範本若仍是舊配置，依新規則調整後才使用；不要直接複製造成雙重交付目錄。
+先讀 `references/project-layout.md`。以「主影片名稱」建立根目錄，下設 `01_主影片`、`02_Shorts_短片一名稱`、`03_Shorts_短片二名稱`、`04_Shorts_短片三名稱`；每支皆有 `製作前/`、`製作中/`、`製作後/`。正式 MP4、整合 `上架文案.txt`、獨立 `最終逐字稿.txt` 與字幕集中在該支 `製作後/`；縮圖與分享圖由接手上架的 Codex 後補。既有範本若仍是舊配置，依新規則調整後才使用；不要直接複製造成雙重交付目錄。
 
 ### 0.8 SEO 關鍵字研究（適用時寫入 製作前/05_SEO關鍵字研究.md）
 僅在有明確搜尋意圖時執行；不適合工具名稱搜尋的題目以課堂、學習或工作需求等證據說明，不必使用 SEO 工具。
@@ -216,7 +216,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 5. 標題、縮圖、說明欄（SEO 版；寫入 04_標題與縮圖.md、製作後/上架文案.txt）
 - 標題候選 × 5，優先清楚、準確、符合該頻道語氣；主要關鍵字自然放入標題，不為了 SEO 堆疊或硬拉長。原有鉤子句型只在符合當前頻道設定檔與使用者要求時使用；不採用聳動、恐嚇、誇大或未經量測的數字承諾。
-- 先擬三組縮圖文案（主標 ≤6 字、副標 ≤12 字），依本頻道核定視覺選擇版型。成片驗收後依階段 7.1 回看實際畫面，調整文案與標題搭配，再做正式圖。
+- 可記錄縮圖構想，但 Claude Code 無須製作圖片或呼叫 Codex；Codex 上架時依成片和文案設計並製作。
 - 說明欄：**開頭 1–2 句含關鍵字的摘要（簡短且準確反映本集內容）** → 🔹 內容綱要（章節名稱用觀眾的搜尋詞）/ 🔹 提示詞連結 / 🔹 網站連結 / 🔹 支持 / 🔹 會員目錄 / Hashtag 3–5 個（依重要性排序）
 - 標籤：主要與次要關鍵字、工具名的中英文、簡體寫法、常見錯字，總長 500 字元以內
 - 英文標題與英文說明欄摘要依需求提供；置頂留言（重點＋提示詞連結＋一個問題）
@@ -240,7 +240,7 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 
 ### 7.1 成片後製作縮圖與分享圖（Codex × Images 2.6）
 
-黑熊老師的自然教室與 AI 觀測站的完整影片交付，於主影片與三支 Shorts 正式成片驗收後、上架前，讀取 [縮圖子技能](youtube-thumbnail-strategist/SKILL.md)。依各支成片、最終逐字稿和上架標題寫 `codex_images_brief.md`，交由 Codex 調用 Images 2.6 生成 8 張圖：主影片 YouTube 縮圖 A/B/C 三款（1280×720）、三支 Shorts 封面（1080×1920）、主片 Facebook 分享圖（1200×630）、三支 Shorts Facebook 分享圖（1080×1350）。繁體中文標題由 Images 2.6 直接畫上並逐字核對。候選與檢核放在該支影片的 `製作後/縮圖候選/`，核定圖以 `製作後/縮圖.jpg` 交接，分享圖放 `製作後/臉書宣傳/`。Codex 或 Images 2.6 無法使用時只交付 brief（`planned`），不改用截幀或本機疊字成品。只要求企劃或剪輯時，依使用者指定範圍交付。
+黑熊老師的自然教室與 AI 觀測站的完整影片交付，於主影片與三支 Shorts 正式成片驗收後、上架前，讀取 [縮圖子技能](youtube-thumbnail-strategist/SKILL.md)。Claude Code 在成片及上架文案完成後交付，不執行生圖；接手上架的 Codex 依各支成片、最終逐字稿和上架標題自行寫 `codex_images_brief.md`，調用 Images 2.6 生成 8 張圖：主影片 YouTube 縮圖 A/B/C 三款（1280×720）、三支 Shorts 封面（1080×1920）、主片 Facebook 分享圖（1200×630）、三支 Shorts Facebook 分享圖（1080×1350）。繁體中文標題由 Images 2.6 直接畫上並逐字核對。候選與檢核放在該支影片的 `製作後/縮圖候選/`，核定圖以 `製作後/縮圖.jpg` 交接，分享圖放 `製作後/臉書宣傳/`。Codex 或 Images 2.6 無法使用時只交付 brief（`planned`），不改用截幀或本機疊字成品。只要求企劃或剪輯時，依使用者指定範圍交付。
 
 ### 7.2 製作素材 ZIP 與代理交接
 使用者要求壓縮、素材包或交給 Claude Code／Codex 時，完成腳本、分鏡、動畫提示詞、角色表、實測提示詞與驗收表（適用時），把已有圖片、前集結尾和錄屏一併收錄。按 `references/animation-handoff.md` 與 `references/templates.md` 產生 README、START_HERE、白名單素材清單，執行 `scripts/pack_video_bundle.py` 驗證並打包，提供 ZIP 下載。缺素材列待補，未選旁白分支不能送進 TTS；交接沿用 fixed-settings 與 build-pipeline，不自動發布或換聲線。專案及最終 ZIP 依當前環境的檔案保存規則處理，不把單集素材混入技能。
@@ -251,6 +251,8 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 涉及工具比較、成長計畫或上架優化時必讀 `references/youtube-growth-experiment.md`。先記錄推薦／搜尋／外部流量來源，任何工具勝負或節省時間宣稱均需實測證據。長影片規劃 3 支可獨立觀看的 Shorts；發布後記錄 24h、72h、7d、28d，按數據調整。
 
 ### 7.5 臉書宣傳文（主影片與每支 Shorts 完成時都要製作；放在該支 製作後/臉書宣傳/）
+**Claude Code 交付文案即可；分享圖片由接手上架的 Codex 製作。**
+
 **先讀 `youtube-publish/references/facebook-post-safety.md`（發布安全規範 V1.0）**：以下寫法與該規範衝突時以規範為準；每支都要附 G 節八項檢核並判定 READY／REVIEW／BLOCK（寫入 `製作後/臉書宣傳/發布檢核.md`）。依使用者先前的固定要求，每支影片完成時一併產出臉書宣傳素材，不需再次詢問；**三支 Shorts 也各自要有一套**（2026-11-03 使用者要求，規格見本節末「Shorts 臉書文」）。文案、圖卡、Hashtag 和 CTA 依所選頻道設定檔；AI Watch 不自動加自然教室品牌標籤。分享圖由 7.1 的 Codex × Images 2.6 流程生成；熊掌等自然教室識別只用於自然教室，AI Watch 使用核定品牌素材或無品牌設計。產出中文文案、分享圖與複製頁；英文文案按需求：
 1. `臉書文_中文.txt`：活潑風格
    - 開頭一句「反差鉤子」（例：「一堂自然課用滿四套軟體，學生就會比較懂嗎？」），前兩句就給出科學問題、發現或讀者能得到的知識；不虛構事實
@@ -283,6 +285,8 @@ description: 規劃與製作「黑熊老師的自然教室」或「AI 觀測站�
 - 品牌（名稱、Logo、主色、聲線、吉祥物）尚未定案時，使用暫代方案，不要自行決定；見使用者工作區的 `04_品牌資產/品牌待建立清單.md`
 - 每次復盤得到的心得，建議使用者回寫到 references/style-guide.md
 
+
+**縮圖先選方向（2026-11-26 使用者指定）**：Codex 重畫主影片縮圖之前，先依成片和標題提出數個構圖與文案方向讓使用者選擇；取得選擇後才依選定方向生成圖片。不要把舊核定縮圖視為本次重畫的選擇；使用者明確要求重畫時保留舊檔作比較。其他封面與分享圖按本次指定範圍及已選方向處理。
 
 ## 技能版本更新與遠端核對
 

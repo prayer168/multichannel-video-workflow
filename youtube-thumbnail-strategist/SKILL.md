@@ -21,13 +21,17 @@ description: 為黑熊老師的自然教室與 AI 觀測站製作成片後的全
 
 ## 分工
 
+**2026-11-26 新規則（取代舊版 Claude Code 直接呼叫 Codex 流程）**：Claude Code 不生成或委外生成縮圖／封面／分享圖；成片、字幕、逐字稿、上架文案及權利資料交給 Codex 上架。Codex 自行完成以下規劃、生圖與驗收；已核定圖片直接沿用。
+
 | 角色 | 工作 |
 |---|---|
 | 規劃端（Claude Code 或 Codex 本身） | 看成片與逐字稿、取參考影格、寫概念與評分、產出 `codex_images_brief.md` |
 | Codex | 依 brief 調用 Images 2.6 生成每張圖、存到指定路徑、逐字核對中文、不合格就重生成 |
 | 規劃端 | 尺寸檢查、手機預覽、事實／版權／品牌檢核、更新 manifest、交接上架 |
 
-在 Claude Code 中執行時，brief 寫好後直接在本對話以 `codex exec` 把 brief 交給 Codex，不必切換到 Codex 視窗；**要在本機純英文路徑的工作資料夾執行**（雲端硬碟路徑會讓 Codex 沙箱失敗），先用一行測試確認額度，產出後回 Claude Code 驗收再複製到交付資料夾（流程見交接文件「從 Claude Code 交給 Codex」）；使用者直接在 Codex 開啟本技能時，Codex 自己走完全部步驟。**沒有成功的 Images 2.6 輸出檔，就不能說圖已完成。**
+在 Codex 上架階段自行完成 brief、生成、驗收與歸檔。Claude Code 不必生成 brief、參考影格或呼叫 `codex exec`。沒有成功的圖片輸出檔，就不能說圖已完成。
+
+**縮圖先選方向（2026-11-26 使用者指定）**：Codex 重畫主影片縮圖之前，先依成片和標題提出數個構圖與文案方向讓使用者選擇；取得選擇後才依選定方向生成圖片。不要把舊核定縮圖視為本次重畫的選擇；使用者明確要求重畫時保留舊檔作比較。其他封面與分享圖按本次指定範圍及已選方向處理。
 
 ## Read supporting files as needed
 1. `references/codex-images-handoff.md` — 8 張圖的規格、brief 範本、提示詞範本、`codex exec` 指令、重生成規則。
