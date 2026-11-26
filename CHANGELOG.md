@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.43.0] - 2026-11-26
+### Added
+- `scripts/build/char_marks.py`：把旁白每個字的實際發音影格寫進時間軸（`ct`），來源可為成片混音或整組原始配音的 whisper 對齊。
+- `scripts/build/check_sync.py`：逐句配音與成片混音互相關，量配音實際位置（≤0.05 s PASS），不需 whisper。
+- `scripts/build/tts_raw.py`、`scripts/build/resplit_voice.py`：只產生 Gemini 原始配音＋以有提示對齊重切（避開無提示 whisper 切偏與 900 s 逾時）。
+- `assets/remotion-kit/`：`ambience.tsx`（動態海底底層）、`sealife.tsx`（多物種真實配色海洋生物）、`sync_and_guard.tsx`（逐字同步 kwAt、LEAD、快速彈出、文字重疊守門員）。
+### Changed
+- `references/chapter-production-loop.md` 新增第七～九節：旁白與動畫同步（使用者審《如果洋流停止了》CH06：旁白比畫面早約 1 秒）、畫面不留白不可只有方框與文字、whisper 過慢時的配音流程。
+- `SKILL.md`、`README.md`、`VERSION` 同步。
+
 ## [2.42.2] - 2026-11-25
 ### Changed
 - `references/chapter-production-loop.md` 第三節：旁白畫面不可只靠文字卡、方框、箭頭、流程圖（使用者審《尼莫點》7:40–8:15）。主角物件要細緻（太空器格線、金箔、天線、桁架等）；過程用物理動態（碰撞閃光與上百片碎片、燒毀電漿與火花、推進器噴焰與軌道變化、解體與弓形震波）；放在真實底圖上並可加放大小窗與真實照片小窗；文字只留關鍵詞；抽影格時主畫面是文字或流程圖就重做。
