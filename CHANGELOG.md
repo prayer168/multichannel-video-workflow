@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.43.1] - 2026-11-26
+### Fixed
+- `assets/remotion-kit/sync_and_guard.tsx`：`kwAt()` 最小回傳第 1 格（句首關鍵詞提前 10 格後變 0，`interpolate(f, [0, kw, …])` 區間不遞增會中止渲染；《如果洋流停止了》CH05 S054 實例）；`usePop` 範本同步 stiffness 190。
+- `references/chapter-production-loop.md` 第七節補註：最小第 1 格、快彈簧回彈需留 ≥40 px 間距。
+- `SKILL.md`、`README.md`、`VERSION` 同步。
+
 ## [2.43.0] - 2026-11-26
 ### Added
 - `scripts/build/char_marks.py`：把旁白每個字的實際發音影格寫進時間軸（`ct`），來源可為成片混音或整組原始配音的 whisper 對齊。
